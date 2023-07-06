@@ -19,4 +19,5 @@ public class Partita {
 	//public void partitaVeloce(){}
 	
 	//public void partitaLunga(){}
+	
 }
