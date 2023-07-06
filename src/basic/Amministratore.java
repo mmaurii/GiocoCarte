@@ -8,4 +8,9 @@ public class Amministratore extends Giocatore{
 		super(nome, nVite, carte, punteggio);
 		this.password=password;
 	}
+	
+	public Amministratore(String nome, String password) {
+		super(nome);
+		this.password=password;
+	}
 }

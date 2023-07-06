@@ -13,4 +13,8 @@ public class Giocatore {
 		this.carte=carte;
 		this.punteggio=punteggio;
 	}
+
+	public Giocatore(String nome) {
+		this.nome=nome;
+	}
 }
