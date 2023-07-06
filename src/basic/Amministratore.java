@@ -13,7 +13,7 @@ public class Amministratore extends Giocatore{
 		this.password=password;
 	}
 	
-	public boolean VerificaAdmin(String username, String password) {
+	public boolean verificaAdmin(String username, String password) {
 		
 		String u;
 		String p;
