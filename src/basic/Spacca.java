@@ -1,29 +1,25 @@
 package basic;
 import java.util.*;
 
-public class Spacca {
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
+import javafx.stage.*;
+import javafx.application.Application;
+
+
+public class Spacca extends Application{
+	
 	public static void main(String[] args) {
-		Amministratore a1 = login();
-		if(a1!=null) {
-			System.out.println("giusto");
-		}
-		
+
+		launch(args);
 	}
 	
-	// metodo che avvia la procedura di login
-	public static Amministratore login() {
-		System.out.println("inserisci dati");
-		Amministratore a1;
-		boolean flag = false;
-		Scanner scan = new Scanner(System.in);
-		do {
-			System.out.println("inserisci nome e password");
-			String username = scan.nextLine();
-			String password = scan.nextLine();
-			a1= new Amministratore(username, password);
-			flag = a1.verificaAdmin();
-		}while(!flag);
-		scan.close();
-		return a1;
-	}
+	@Override
+		public void start(Stage stage) throws Exception {
+			Parent root = FXMLLoader.load(getClass().getResource("Form.fxml"));
+			stage.setTitle("Login Amministratore");
+			stage.setScene(new Scene(root));
+			stage.show();
+		}
 }
