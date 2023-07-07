@@ -17,9 +17,10 @@ public class Spacca extends Application{
 	
 	@Override
 		public void start(Stage stage) throws Exception {
-			Parent root = FXMLLoader.load(getClass().getResource("Form.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 			stage.setTitle("Login Amministratore");
-			stage.setScene(new Scene(root));
+			Scene interfacciaLogin = new Scene(root);
+			stage.setScene(interfacciaLogin);
 			stage.show();
 		}
 }
