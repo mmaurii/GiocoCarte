@@ -35,9 +35,8 @@ public class Controller {
         	stage.close();
         	
         	//apro la finestra delle impostazioni e creazine partite
-			Parent root;
 			try {
-				root = FXMLLoader.load(getClass().getResource("impostazioni.fxml"));
+				Parent root = FXMLLoader.load(getClass().getResource("Impostazioni.fxml"));
 				stage.setTitle("Impostazioni");
 				Scene interfacciaImpostazioni = new Scene(root);
 				stage.setScene(interfacciaImpostazioni);
@@ -49,4 +48,14 @@ public class Controller {
 
         }
     }
+    
+    public void CreaPartitaAction(ActionEvent actionEvent) {
+    }
+    
+    public void CreaTorneoAction(ActionEvent actionEvent) {
+    }
+    
+    public void avviaPartita(ActionEvent actionEvent) {
+    }
+    
 }
