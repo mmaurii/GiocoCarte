@@ -28,34 +28,78 @@ public class Controller {
         String username_text = txtUsername.getText();
         String password_text = txtPassword.getText();
         Amministratore a = new Amministratore(username_text, password_text);
+        //controllo nonme utente e password
         if(a.verificaAdmin())
         {
         	//se la password è corretta chiudo la finestra di login
         	Stage stage = (Stage)btnLogin.getScene().getWindow();
         	stage.close();
-        	
-        	//apro la finestra delle impostazioni e creazine partite
+        	//apro la finestra delle impostazioni e creazine partite e tornei
+			Parent root;
 			try {
-				Parent root = FXMLLoader.load(getClass().getResource("Impostazioni.fxml"));
-				stage.setTitle("Impostazioni");
-				Scene interfacciaImpostazioni = new Scene(root);
-				stage.setScene(interfacciaImpostazioni);
+				root = FXMLLoader.load(getClass().getResource("PartitaTorneo.fxml"));
+				stage.setTitle("Menu");
+				Scene interfacciaPartitaTorneo = new Scene(root);
+				stage.setScene(interfacciaPartitaTorneo);
 				stage.show();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+        }else {
+        	//avvisa dell' errore
         }
-    }
-    
-    public void CreaPartitaAction(ActionEvent actionEvent) {
-    }
-    
-    public void CreaTorneoAction(ActionEvent actionEvent) {
     }
     
     public void avviaPartita(ActionEvent actionEvent) {
     }
     
+    @FXML Button btnCreaPartita;
+    @FXML //crea partita
+    public void CreaPartitaAction(ActionEvent actionEvent) {
+    	//chiudo la finestra di scelta per la creazione di partite o tornei
+    	Stage stage = (Stage)btnCreaPartita.getScene().getWindow();
+    	stage.close();
+    	
+    	//apro la finestra per la creazine delle partite
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("CreaPartita.fxml"));
+			stage.setTitle("Crea una Partita");
+			Scene interfacciaCreaPartita = new Scene(root);
+			stage.setScene(interfacciaCreaPartita);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+    
+    @FXML Button btnCreaTorneo;
+
+    @FXML //crea torneo
+    public void CreaTorneoAction(ActionEvent actionEvent) {
+    	Stage stage = (Stage)btnCreaTorneo.getScene().getWindow();
+    	stage.close();
+    	
+    	//apro la finestra per la creazione del torneo
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("CreaTorneo.fxml"));
+			stage.setTitle("Crea un Torneo");
+			Scene interfacciaCreaTorneo = new Scene(root);
+			stage.setScene(interfacciaCreaTorneo);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    @FXML TextField txtAggiungiUtenti;
+    //aggiungo alla partita un utente
+    @FXML public void AggiungiUtente(ActionEvent actionEvent) {
+    	
+    }
 }

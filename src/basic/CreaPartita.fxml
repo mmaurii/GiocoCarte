@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:controller="basic.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="212.0">
+         <children>
+            <HBox prefHeight="46.0" prefWidth="212.0">
+               <children>
+                  <TextField fx:id="txtNomeUtente" prefHeight="48.0" prefWidth="148.0" promptText="nome utente" />
+                  <Button fx:id="btnAggiungiUtente" mnemonicParsing="false" onAction="#AggiungiUtente" prefHeight="49.0" prefWidth="66.0" text="Aggiungi Utente" textAlignment="CENTER" wrapText="true" />
+               </children>
+            </HBox>
+            <Label prefHeight="46.0" prefWidth="212.0" text="Lista Giocatori">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ListView fx:id="listUtentiPartita" prefHeight="310.0" prefWidth="212.0" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
