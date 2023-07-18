@@ -1,6 +1,10 @@
 package basic;
 
+import java.io.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
+import java.util.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -102,4 +107,42 @@ public class Controller {
     @FXML public void AggiungiUtente(ActionEvent actionEvent) {
     	
     }
+    
+    //Genero il codice per una nuova partita
+    @FXML Button btnGeneraCodice;
+    @FXML Label lblCodice;
+    final int lungCodice=10;
+    @FXML public void GeneraCodice(ActionEvent actionEvent) {
+    	try {
+    		File file = new File("src/Status.txt");
+    		Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
+    		String codPartita = scan.nextLine().split(" , ")[1];
+    		scan.close();
+    		
+    		//String unicoID = UUID.randomUUID().toString();
+    		//controllare univocita
+    		codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
+
+    		//aggiungo al codice gli 0 non rilevanti
+    		int nCifre = codPartita.length();
+    		for(int i=0; i<lungCodice-nCifre; i++) {
+    			codPartita="0"+codPartita;
+    		}
+
+    		lblCodice.setText(codPartita);
+    		btnGeneraCodice.setDisable(true);
+
+    		//salvo il codice corrente nel file di status
+    		FileWriter fw = new FileWriter(file);
+    		fw.write("codicePartita , "+codPartita);
+    		fw.close();
+    	}catch(FileNotFoundException e) {
+    		System.out.println(e);
+    	}catch(IOException eIO) {
+    		System.out.println(eIO);    		
+    	}
+    }
+
+
+
 }
