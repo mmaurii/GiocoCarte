@@ -143,6 +143,25 @@ public class Controller {
     	}
     }
 
-
+    
+    @FXML Button btnTornaAlLogin;
+    //torno alla Schermata di login
+    @FXML public void TornaAlLogin(ActionEvent actionEvent) {
+    	//chiudo la finestra di di creazione della partita e torno alla finestra di login
+    	Stage stage = (Stage)btnTornaAlLogin.getScene().getWindow();
+    	stage.close();
+    	
+    	//riapro la finestra di login
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+			Scene interfacciaLogin = new Scene(root);
+			stage.setScene(interfacciaLogin);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+    }
 
 }
