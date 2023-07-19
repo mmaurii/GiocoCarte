@@ -6,13 +6,17 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.*;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -60,8 +64,9 @@ public class Controller {
     }
     
     @FXML Button btnCreaPartita;
-    @FXML //crea partita
-    public void CreaPartitaAction(ActionEvent actionEvent) {
+    @FXML ComboBox<String> comboNVite;
+    //crea partita
+    @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
     	//chiudo la finestra di scelta per la creazione di partite o tornei
     	Stage stage = (Stage)btnCreaPartita.getScene().getWindow();
     	stage.close();
@@ -74,6 +79,10 @@ public class Controller {
 			Scene interfacciaCreaPartita = new Scene(root);
 			stage.setScene(interfacciaCreaPartita);
 			stage.show();
+			
+			//imposto le opzioni della ComboBox
+			ObservableList<String> comboItems = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10");
+			comboNVite.getItems().addAll(comboItems);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,16 +111,30 @@ public class Controller {
 		}
     }
     
-    @FXML TextField txtAggiungiUtenti;
-    //aggiungo alla partita un utente
+    //aggiungo alla partita un utente  
+    @FXML ListView<String> listUtentiPartita;
+    @FXML Button btnAggiungiUtente;
+    @FXML TextField txtNomeUtente; 
+    ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     @FXML public void AggiungiUtente(ActionEvent actionEvent) {
-    	
+    	String nome = txtNomeUtente.getText();
+    	//controllo che non vengano inseriti giocatori con lo stesso nome
+    	if(!listUtentiPartita.getItems().contains(nome)) {
+    		txtNomeUtente.clear();
+    		listUtentiPartita.getItems().add(nome);
+    		giocatoriPrt.add(new Giocatore(nome));
+    	}else {
+    		txtNomeUtente.clear();
+    	}
     }
-    
+
     //Genero il codice per una nuova partita
     @FXML Button btnGeneraCodice;
     @FXML Label lblCodice;
-    final int lungCodice=10;
+    final int lungCodicePartita=10;
+    final int nViteDefault=5;
+    Partita prt;
+    Mazzo mazzo;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
     	try {
     		File file = new File("src/Status.txt");
@@ -125,7 +148,7 @@ public class Controller {
 
     		//aggiungo al codice gli 0 non rilevanti
     		int nCifre = codPartita.length();
-    		for(int i=0; i<lungCodice-nCifre; i++) {
+    		for(int i=0; i<lungCodicePartita-nCifre; i++) {
     			codPartita="0"+codPartita;
     		}
 
@@ -136,6 +159,21 @@ public class Controller {
     		FileWriter fw = new FileWriter(file);
     		fw.write("codicePartita , "+codPartita);
     		fw.close();
+    		
+    		//do le vite e le carte ai giocatori
+    		String nVite = comboNVite.getSelectionModel().getSelectedItem();
+    		if(nVite!=null) {
+    			for(Giocatore i : giocatoriPrt) {
+    				i.setVite(Integer.parseInt(nVite));
+    			}
+    		}else {
+    			for(Giocatore i : giocatoriPrt) {
+    				i.setVite(nViteDefault);
+    			}
+    		}
+
+    		//creo una nuova partita
+    		prt = new Partita(codPartita, giocatoriPrt, mazzo);
     	}catch(FileNotFoundException e) {
     		System.out.println(e);
     	}catch(IOException eIO) {

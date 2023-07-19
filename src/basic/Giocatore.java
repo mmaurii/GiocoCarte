@@ -17,4 +17,8 @@ public class Giocatore {
 	public Giocatore(String nome) {
 		this.nome=nome;
 	}
+	
+	public void setVite(int nVite) {
+		this.nVite=nVite;
+	}
 }

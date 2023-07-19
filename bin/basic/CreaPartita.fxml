@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -24,7 +26,21 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <ListView fx:id="listUtentiPartita" prefHeight="310.0" prefWidth="212.0" />
+            <ListView fx:id="listUtentiPartita" prefHeight="168.0" prefWidth="210.0" />
+            <Pane prefHeight="140.0" prefWidth="210.0">
+               <children>
+                  <Label fx:id="lblNVite" layoutX="27.0" layoutY="31.0" text="Numero di vite a Giocatore:" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="comboNVite" layoutX="80.0" layoutY="57.0" prefHeight="25.0" prefWidth="48.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ComboBox>
+               </children>
+            </Pane>
          </children>
       </VBox>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="391.0">
