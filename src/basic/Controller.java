@@ -22,17 +22,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class Controller {
-    @FXML
-    private TextField txtUsername;
-
-    @FXML
-    private PasswordField txtPassword;
-    
-    @FXML
-    private Button btnLogin;
-
-    @FXML//login
-    public void loginAction(ActionEvent actionEvent) {
+    @FXML private TextField txtUsername;
+    @FXML private PasswordField txtPassword;
+    @FXML private Button btnLogin;
+    //login
+    @FXML public void loginAction(ActionEvent actionEvent) {
 
         String username_text = txtUsername.getText();
         String password_text = txtPassword.getText();
@@ -60,11 +54,9 @@ public class Controller {
         }
     }
     
-    public void avviaPartita(ActionEvent actionEvent) {
-    }
     
     @FXML Button btnCreaPartita;
-    @FXML ComboBox<String> comboNVite;
+    @FXML ComboBox<String> comboNVite = new ComboBox<String>();
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
     	//chiudo la finestra di scelta per la creazione di partite o tornei
@@ -81,8 +73,8 @@ public class Controller {
 			stage.show();
 			
 			//imposto le opzioni della ComboBox
-			ObservableList<String> comboItems = FXCollections.observableArrayList("1","2","3","4","5","6","7","8","9","10");
-			comboNVite.getItems().addAll(comboItems);
+			ObservableList<String> comboItems = FXCollections.observableArrayList("1","2","3","4","5");
+			comboNVite.setItems(comboItems);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,10 +82,9 @@ public class Controller {
     }
 
     
+    //crea torneo
     @FXML Button btnCreaTorneo;
-
-    @FXML //crea torneo
-    public void CreaTorneoAction(ActionEvent actionEvent) {
+    @FXML public void CreaTorneoAction(ActionEvent actionEvent) {
     	Stage stage = (Stage)btnCreaTorneo.getScene().getWindow();
     	stage.close();
     	
@@ -110,6 +101,7 @@ public class Controller {
 			e.printStackTrace();
 		}
     }
+    
     
     //aggiungo alla partita un utente  
     @FXML ListView<String> listUtentiPartita;
@@ -128,6 +120,7 @@ public class Controller {
     	}
     }
 
+    
     //Genero il codice per una nuova partita
     @FXML Button btnGeneraCodice;
     @FXML Label lblCodice;
@@ -202,4 +195,7 @@ public class Controller {
 		}	
     }
 
+    
+    @FXML public void avviaPartita(ActionEvent actionEvent) {
+    }
 }
