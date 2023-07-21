@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -56,7 +57,7 @@ public class Controller {
     
     
     @FXML Button btnCreaPartita;
-    @FXML ComboBox<String> comboNVite = new ComboBox<String>();
+    @FXML ComboBox<String> comboNVite;
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
     	//chiudo la finestra di scelta per la creazione di partite o tornei
@@ -71,10 +72,11 @@ public class Controller {
 			Scene interfacciaCreaPartita = new Scene(root);
 			stage.setScene(interfacciaCreaPartita);
 			stage.show();
-			
+			/*
 			//imposto le opzioni della ComboBox
 			ObservableList<String> comboItems = FXCollections.observableArrayList("1","2","3","4","5");
-			comboNVite.setItems(comboItems);
+			comboNVite.setTooltip(new Tooltip());
+			comboNVite.getItems().addAll(comboItems);*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,8 +167,9 @@ public class Controller {
     			}
     		}
 
-    		//creo una nuova partita
-    		prt = new Partita(codPartita, giocatoriPrt, mazzo);
+    		//imposto i dati di una nuova partita
+    		//errato inserimento dei dati    	
+    		prt=new Partita(codPartita, giocatoriPrt);
     	}catch(FileNotFoundException e) {
     		System.out.println(e);
     	}catch(IOException eIO) {
@@ -183,10 +186,15 @@ public class Controller {
     	stage.close();
     	
     	//riapro la finestra di login
-		Parent root;
+		//Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+			//root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+			Parent root = loader.load();
+			Controller controller = loader.getController();
 			Scene interfacciaLogin = new Scene(root);
+			controller.copiaInformazioni(prt);
+
 			stage.setScene(interfacciaLogin);
 			stage.show();
 		} catch (IOException e) {
@@ -195,7 +203,39 @@ public class Controller {
 		}	
     }
 
-    
+    //metodo che passa i dati in fase di run-time da un istanza della classe all'altra
+    private void copiaInformazioni(Partita prt2) {
+    	this.prt=prt2;
+	}
+
+
+	//avvio l'interfaccia di gioco
+    @FXML Button btnGioca;
+    @FXML TextField txtCodPartita = new TextField();
+    @FXML Label lblCodPartitaErrato;
     @FXML public void avviaPartita(ActionEvent actionEvent) {
+    	//ottengo il codice partita inserito dall'utente
+    	String cod = txtCodPartita.getText();
+    	if(prt!=null)//controllo che venga creata una partita per poterne confrontare il codice
+    		if(cod.equals(this.prt.getCodice())) {
+    			//chiudo la finestra di login e apro quella di gioco
+    			Stage stage = (Stage)btnGioca.getScene().getWindow();
+    			stage.close();
+
+    			//apro la finestra di gioco
+    			Parent root;
+    			try {
+    				root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
+    				Scene interfacciaDiGioco = new Scene(root);
+    				stage.setScene(interfacciaDiGioco);
+    				stage.show();
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+
+    		}else {
+    			lblCodPartitaErrato.setText("errore il codice partita è sbagliato");
+    		}
     }
 }
