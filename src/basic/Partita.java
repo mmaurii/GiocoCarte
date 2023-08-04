@@ -35,7 +35,7 @@ public class Partita {
 		this.elencoGiocatori=elencoGiocatori;
 	}
 	
-	public ArrayList<Giocatore> setElencoGiocatori(){
+	public ArrayList<Giocatore> getElencoGiocatori(){
 		return elencoGiocatori;
 	}
 	

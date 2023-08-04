@@ -21,4 +21,8 @@ public class Giocatore {
 	public void setVite(int nVite) {
 		this.nVite=nVite;
 	}
+
+	public String getNome() {
+		return nome;
+	}
 }

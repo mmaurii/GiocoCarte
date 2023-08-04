@@ -1,11 +1,15 @@
 package basic;
 
 import java.io.*;
-import java.io.FileNotFoundException;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.*;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -204,8 +208,8 @@ public class Controller {
     }
 
     //metodo che passa i dati in fase di run-time da un istanza della classe all'altra
-    private void copiaInformazioni(Partita prt2) {
-    	this.prt=prt2;
+    private void copiaInformazioni(Partita tempPrt) {
+    	this.prt=tempPrt;
 	}
 
 
@@ -213,7 +217,9 @@ public class Controller {
     @FXML Button btnGioca;
     @FXML TextField txtCodPartita = new TextField();
     @FXML Label lblCodPartitaErrato;
+    @FXML Label lblTurnoGiocatore;
     @FXML public void avviaPartita(ActionEvent actionEvent) {
+    	//System.out.print(this.prt.getElencoGiocatori().remove(0).getNome());
     	//ottengo il codice partita inserito dall'utente
     	String cod = txtCodPartita.getText();
     	if(prt!=null)//controllo che venga creata una partita per poterne confrontare il codice
@@ -223,9 +229,16 @@ public class Controller {
     			stage.close();
 
     			//apro la finestra di gioco
-    			Parent root;
+    			VBox root = new VBox();
     			try {
     				root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
+    				//definisco chi giocherà il primo turno
+        			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().remove(0).getNome());
+        			lblTurnoGiocatore.setTextFill(Color.BLACK);
+        			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
+        			lblTurnoGiocatore.setTranslateX(254);
+        			lblTurnoGiocatore.setTranslateY(236);
+        			root.getChildren().add(lblTurnoGiocatore);
     				Scene interfacciaDiGioco = new Scene(root);
     				stage.setScene(interfacciaDiGioco);
     				stage.show();
@@ -233,9 +246,22 @@ public class Controller {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
-
+    			
+    			//do le carte a ogni giocatore
     		}else {
     			lblCodPartitaErrato.setText("errore il codice partita è sbagliato");
     		}
     }
+    
+    
+    @FXML Label lblManoGiocatore;
+    @FXML Button btnInizioTurnoGiocatore;
+    
+   // private void copiaInformazioniLabel()
+    @FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
+    	lblTurnoGiocatore.setVisible(false);
+    	lblManoGiocatore.setVisible(true);
+    	btnInizioTurnoGiocatore.setDisable(true);
+    }
+
 }
