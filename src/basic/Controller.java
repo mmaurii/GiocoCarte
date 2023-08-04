@@ -286,9 +286,10 @@ public class Controller {
     	for(Carta c : prt.getElencoGiocatori().get(countGiocatore).getCarteMano()) {
     		for(ImageView img : outputCarte) {
     			//System.out.println(c.getPercorso());
-    			img.setImage(new Image("src/basic/IMGcarte/33.jpg"));
+    			//per windows è necessaria la stringa file:/// all'inizio del percorso in quanto è un URI
+    			img.setImage(new Image("file:///src/basic/IMGcarte/33.jpg"));
     		}
-    	}
+    	}//getClass().getResource("src/basic/IMGcarte/33.jpg").toURI().toString()
 
     }
     
