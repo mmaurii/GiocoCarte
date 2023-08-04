@@ -10,4 +10,8 @@ public class Carta {
 		this.s=s;
 		this.p=p;
 	}
+	
+	public String getPercorso() {
+		return p;
+	}
 }

@@ -25,4 +25,16 @@ public class Giocatore {
 	public String getNome() {
 		return nome;
 	}
+	
+	public void addCarteMano(Carta carta) {
+		carte.add(carta);
+	}
+	
+	public void setCarteMano(ArrayList<Carta> carte) {
+		this.carte=carte;
+	}	
+	
+	public ArrayList<Carta> getCarteMano() {
+		return carte;
+	}
 }

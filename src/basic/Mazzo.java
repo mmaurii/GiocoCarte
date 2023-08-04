@@ -9,8 +9,12 @@ public class Mazzo {
 	
 	ArrayList<Carta> mazzo = new ArrayList<Carta>();
 	
-	public Mazzo(ArrayList<Carta> mazzo) {
+	/*public Mazzo(ArrayList<Carta> mazzo) {
 		this.mazzo = mazzo;
+	}*/
+	
+	public Mazzo() {
+		popolaMazzo();
 	}
 	
 	public void popolaMazzo() {
@@ -25,13 +29,13 @@ public class Mazzo {
 
 			Scanner scan = new Scanner(f);
 			while(scan.hasNextLine()) {
-				String data[] = scan.nextLine().split(" , ");
+				String data[] = scan.nextLine().split(", ");
 				numero = Integer.parseInt(data[0]);
 				seme = Seme.valueOf(data[1]);
 				percorso = data[2];
 				
 				Carta c = new Carta(numero, seme, percorso);
-				System.out.println(numero + ", " + seme + ", " + percorso);
+				//System.out.println(numero + ", " + seme + ", " + percorso);
 				mazzo.add(c);
 				
 			}
@@ -45,4 +49,17 @@ public class Mazzo {
 		Collections.shuffle(mazzo);
 	}
 	
+	public ArrayList<Carta> getMazzo(){
+		return mazzo;
+	}
+	
+	public ArrayList<Carta> pescaCarte(int numeroCarte) {
+		ArrayList<Carta> cartePerGiocatore = new ArrayList<Carta>();
+		
+		for(int i =0;i<numeroCarte;i++) {
+			cartePerGiocatore.add(mazzo.remove(0));
+		}
+		
+		return cartePerGiocatore;
+	}
 }
