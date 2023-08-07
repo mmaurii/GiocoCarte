@@ -55,11 +55,10 @@ public class Mazzo {
 	
 	public ArrayList<Carta> pescaCarte(int numeroCarte) {
 		ArrayList<Carta> cartePerGiocatore = new ArrayList<Carta>();
-		
 		for(int i =0;i<numeroCarte;i++) {
 			cartePerGiocatore.add(mazzo.remove(0));
 		}
-		
+
 		return cartePerGiocatore;
 	}
 }

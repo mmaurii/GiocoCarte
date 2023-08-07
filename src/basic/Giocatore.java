@@ -26,7 +26,7 @@ public class Giocatore {
 		return nome;
 	}
 	
-	public void addCarteMano(Carta carta) {
+	public void addCartaMano(Carta carta) {
 		carte.add(carta);
 	}
 	

@@ -2,6 +2,7 @@ package basic;
 
 import java.io.*;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -13,6 +14,7 @@ import java.util.Scanner;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -210,7 +212,7 @@ public class Controller {
 		}	
     }
 
-    //metodo che passa i dati in fase di run-time da un istanza della classe all'altra
+    //metodo che passa i dati in fase di run-time da un istanza della classe controller all'altra
     private void copiaInformazioni(Partita tempPrt) {
     	this.prt=tempPrt;
 	}
@@ -220,7 +222,6 @@ public class Controller {
     @FXML Button btnGioca;
     @FXML TextField txtCodPartita = new TextField();
     @FXML Label lblCodPartitaErrato;
-    @FXML Label lblTurnoGiocatore;
     @FXML public void avviaPartita(ActionEvent actionEvent) {
     	//System.out.print(this.prt.getElencoGiocatori().remove(0).getNome());
     	//ottengo il codice partita inserito dall'utente
@@ -242,6 +243,7 @@ public class Controller {
         			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(0).getNome());
         			lblTurnoGiocatore.setTextFill(Color.BLACK);
         			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
+        			lblTurnoGiocatore.setId("lblTurnoGiocatore");
         			root.getChildren().add(lblTurnoGiocatore);
         			//lblTurnoGiocatore.setAlignment(Pos.CENTER);
     				Scene interfacciaDiGioco = new Scene(root);
@@ -254,7 +256,7 @@ public class Controller {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
-    			
+
     			//do le carte a ogni giocatore
     	    	mazzo.mescola();
     	    	for(Giocatore g : prt.getElencoGiocatori()) {
@@ -265,7 +267,7 @@ public class Controller {
     		}
     }
     
-    
+    @FXML Label lblTurnoGiocatore;
     @FXML Label lblManoGiocatore;
     @FXML Button btnInizioTurnoGiocatore;
     @FXML ImageView imgCarta1;
@@ -277,20 +279,24 @@ public class Controller {
     int countGiocatore=0;
    // private void copiaInformazioniLabel()
     @FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
-
+    	/*Da rivedere
+    	Group root = new Group();
+    	for(Node n : root.getChildren()) {
+    		if(n.getId().equals("lblTurnoGiocatore")) {
+    			n.setVisible(false);
+    			System.out.println("ole");
+    		}
+    	}*/
     	//lblTurnoGiocatore.setVisible(false);
     	lblManoGiocatore.setVisible(true);
     	btnInizioTurnoGiocatore.setDisable(true);
     	ArrayList<ImageView> outputCarte = new ArrayList<ImageView>(Arrays.asList(imgCarta1, imgCarta2, imgCarta3, imgCarta4, imgCarta5));
+    	
     	//mostro le carte in output relative al giocatore del turno corrente
-    	for(Carta c : prt.getElencoGiocatori().get(countGiocatore).getCarteMano()) {
-    		for(ImageView img : outputCarte) {
-    			//System.out.println(c.getPercorso());
-    			//per windows è necessaria la stringa file:/// all'inizio del percorso in quanto è un URI
-    			img.setImage(new Image("file:///src/basic/IMGcarte/33.jpg"));
-    		}
-    	}//getClass().getResource("src/basic/IMGcarte/33.jpg").toURI().toString()
-
+    	for(int i = 0; i<numeroCarteAGiocatore;i++) {	
+    		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countGiocatore).getCarteMano().get(i).getPercorso()));
+    		outputCarte.get(i).setImage(newImg);
+    	}
     }
     
     
