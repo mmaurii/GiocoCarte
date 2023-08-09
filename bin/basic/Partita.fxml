@@ -12,70 +12,46 @@
    <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="411.0" prefWidth="612.0">
          <children>
-            <ImageView fx:id="imgCarta1" fitHeight="104.0" fitWidth="64.0" layoutX="152.0" layoutY="269.0" onMouseClicked="#GiocaCarta1" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano1" fitHeight="104.0" fitWidth="64.0" layoutX="152.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano1" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCarta2" fitHeight="104.0" fitWidth="64.0" layoutX="215.0" layoutY="269.0" onMouseClicked="#GiocaCarta2" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano2" fitHeight="104.0" fitWidth="64.0" layoutX="215.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCarta3" fitHeight="104.0" fitWidth="64.0" layoutX="278.0" layoutY="269.0" onMouseClicked="#GiocaCarta3" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano3" fitHeight="104.0" fitWidth="64.0" layoutX="278.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano3" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCarta4" fitHeight="104.0" fitWidth="64.0" layoutX="341.0" layoutY="269.0" onMouseClicked="#GiocaCarta4" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano4" fitHeight="104.0" fitWidth="64.0" layoutX="341.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano4" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCarta5" fitHeight="104.0" fitWidth="64.0" layoutX="404.0" layoutY="269.0" onMouseClicked="#GiocaCarta5" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano5" fitHeight="104.0" fitWidth="64.0" layoutX="404.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano5" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="55.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco1" fitHeight="104.0" fitWidth="64.0" layoutX="55.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="118.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco2" fitHeight="104.0" fitWidth="64.0" layoutX="118.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="181.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco3" fitHeight="104.0" fitWidth="64.0" layoutX="181.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="244.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco4" fitHeight="104.0" fitWidth="64.0" layoutX="244.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="307.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco5" fitHeight="104.0" fitWidth="64.0" layoutX="307.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="370.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco6" fitHeight="104.0" fitWidth="64.0" layoutX="370.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="432.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco7" fitHeight="104.0" fitWidth="64.0" layoutX="432.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fitHeight="104.0" fitWidth="64.0" layoutX="495.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/1.jpg" />
-               </image>
+            <ImageView fx:id="imgCartaBanco8" fitHeight="104.0" fitWidth="64.0" layoutX="495.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
             <Label layoutX="274.0" layoutY="14.0" text="Banco">
                <font>
