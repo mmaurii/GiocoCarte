@@ -9,6 +9,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.*;
@@ -38,7 +40,9 @@ public class Controller {
     Partita prt;
     Mazzo mazzo = new Mazzo();
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-
+    String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
+    
+    
     //eventi FXML
     @FXML private TextField txtUsername;
     @FXML private PasswordField txtPassword;
@@ -282,9 +286,10 @@ public class Controller {
     		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countGiocatore).getCarteMano().get(i).getPercorso()));
     		outputCarte.get(i).setImage(newImg);
     	}
+    	
     }
-    
-    
+
+
     @FXML ImageView imgCartaBanco1;
     @FXML ImageView imgCartaBanco2;
     @FXML ImageView imgCartaBanco3;
@@ -294,15 +299,21 @@ public class Controller {
     @FXML ImageView imgCartaBanco7;
     @FXML ImageView imgCartaBanco8;
     //l'n giocatore gioca la carta1
-    @FXML public void GiocaCartaMano1(ActionEvent actionEvent) {
-    	//"sposto" la carta giocata dalla mano al banco
-    	
+    @FXML public void GiocaCartaMano1(MouseEvent actionEvent) {
+    	//controllo che il giocatore abbia iniziato il suo turno
+    	String pathImg = imgCartaMano5.getImage().getUrl();//errore se l'evento non viene scatenato come primo dell'interfaccia
+    	System.out.println(pathImg);
+    	if(!pathImg.substring(pathImg.lastIndexOf("/basic")).equals(pathRetroCarta)) {
+    		//"sposto" la carta giocata dalla mano al banco
+    		imgCartaBanco1.setImage(imgCartaMano1.getImage());
+    		imgCartaMano1.setVisible(false);
+    	}
     }    
-    
-    
+
+
     //l'n giocatore gioca la carta2
     @FXML public void GiocaCartaMano2(ActionEvent actionEvent) {
-    	
+
     }    
     
     
