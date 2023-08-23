@@ -260,7 +260,7 @@ public class Controller {
     	    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
     	    	}
     		}else {
-    			lblCodPartitaErrato.setText("errore il codice partita è sbagliato");
+    			lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninserirne uno corretto");
     		}
     }
     
@@ -274,19 +274,21 @@ public class Controller {
     @FXML ImageView imgCartaMano4;
     @FXML ImageView imgCartaMano5;
     int countGiocatore=0;
+    boolean btnInizioTurnoGiocatoreClicked=false;
     //inizia il turno dell'n giocatore
     @FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
     	lblTurnoGiocatore.setVisible(false);
     	lblManoGiocatore.setVisible(true);
     	btnInizioTurnoGiocatore.setDisable(true);
-    	ArrayList<ImageView> outputCarte = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+    	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     	
     	//mostro le carte in output relative al giocatore del turno corrente
     	for(int i = 0; i<numeroCarteAGiocatore;i++) {	
     		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countGiocatore).getCarteMano().get(i).getPercorso()));
-    		outputCarte.get(i).setImage(newImg);
+    		listaCarteMano.get(i).setImage(newImg);
     	}
     	
+    	 btnInizioTurnoGiocatoreClicked=true;
     }
 
 
@@ -299,41 +301,65 @@ public class Controller {
     @FXML ImageView imgCartaBanco7;
     @FXML ImageView imgCartaBanco8;
     //l'n giocatore gioca la carta1
-    @FXML public void GiocaCartaMano1(MouseEvent actionEvent) {
-    	//controllo che il giocatore abbia iniziato il suo turno
-    	String pathImg = imgCartaMano5.getImage().getUrl();//errore se l'evento non viene scatenato come primo dell'interfaccia
-    	System.out.println(pathImg);
-    	if(!pathImg.substring(pathImg.lastIndexOf("/basic")).equals(pathRetroCarta)) {
-    		//"sposto" la carta giocata dalla mano al banco
-    		imgCartaBanco1.setImage(imgCartaMano1.getImage());
-    		imgCartaMano1.setVisible(false);
-    	}
+    @FXML public void GiocaCartaMano1(MouseEvent mouseEvent) {
+       final int posCartaCliccata=0;
+       giocaCartaMano(posCartaCliccata);	
     }    
 
 
     //l'n giocatore gioca la carta2
-    @FXML public void GiocaCartaMano2(ActionEvent actionEvent) {
-
+    @FXML public void GiocaCartaMano2(MouseEvent mouseEvent) {
+    	final int posCartaCliccata=1;
+    	giocaCartaMano(posCartaCliccata);
     }    
-    
-    
+
+
     //l'n giocatore gioca la carta3
-    @FXML public void GiocaCartaMano3(ActionEvent actionEvent) {
-    	
+    @FXML public void GiocaCartaMano3(MouseEvent mouseEvent) {
+    	final int posCartaCliccata=2;
+    	giocaCartaMano(posCartaCliccata);	
     }    
     
     
     //l'n giocatore gioca la carta4
-    @FXML public void GiocaCartaMano4(ActionEvent actionEvent) {
-    	
+    @FXML public void GiocaCartaMano4(MouseEvent mouseEvent) {
+    	final int posCartaCliccata=3;
+    	giocaCartaMano(posCartaCliccata);
     }    
     
     
     //l'n giocatore gioca la carta5
-    @FXML public void GiocaCartaMano5(ActionEvent actionEvent) {
-    	
+    @FXML public void GiocaCartaMano5(MouseEvent mouseEvent) {
+    	final int posCartaCliccata=4;
+    	giocaCartaMano(posCartaCliccata);
     }
 
+    private void giocaCartaMano(int posCartaCliccata) {
+    	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+    	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+    	//controllo che il giocatore abbia iniziato il suo turno
+    	if(btnInizioTurnoGiocatoreClicked) {
+    		//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
+        	for(ImageView i : listaCarteBanco) {	
+    			if(i.getImage()==null) {
+    				i.setImage(new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countGiocatore).getCarteMano().get(posCartaCliccata).getPercorso())));
+    				listaCarteMano.get(posCartaCliccata).setVisible(false);
+    				btnInizioTurnoGiocatoreClicked=false;
+    				break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo
+    			}
+    		}
+    		
+        	//controllo che non si sfori il numero di giocatori
+        	if(countGiocatore<prt.getElencoGiocatori().size()) {
+        		//passo il turno al prossimo giocatore incrementando il contatore
+            	countGiocatore++;
+        	}else {
+        		btnInizioTurnoGiocatore.setDisable(true);
+        	}
+    	}	
+    }
+    
+    //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
     //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
     private void copiaInformazioniPartita(Partita tempPrt) {
     	this.prt=tempPrt;
@@ -344,4 +370,8 @@ public class Controller {
     	this.lblTurnoGiocatore=lblTurnoGiocatore;
 	}
 
+    //metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
+    private void copiaInformazioniCartaMano5(ImageView img) {
+    	this.imgCartaMano5=img;
+	}
 }
