@@ -41,7 +41,8 @@ public class Controller {
     Mazzo mazzo = new Mazzo();
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-    
+    int countTurnoGiocatore=0;
+ 
     
     //eventi FXML
     @FXML private TextField txtUsername;
@@ -234,7 +235,7 @@ public class Controller {
     				root = loader.load();
     				Controller controller = loader.getController();
     				//definisco chi giocherà il primo turno
-        			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(0).getNome());
+        			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
         			lblTurnoGiocatore.setTextFill(Color.BLACK);
         			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
         			lblTurnoGiocatore.setId("lblTurnoGiocatore");
@@ -273,18 +274,18 @@ public class Controller {
     @FXML ImageView imgCartaMano3;
     @FXML ImageView imgCartaMano4;
     @FXML ImageView imgCartaMano5;
-    int countGiocatore=0;
     boolean btnInizioTurnoGiocatoreClicked=false;
     //inizia il turno dell'n giocatore
     @FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
     	lblTurnoGiocatore.setVisible(false);
     	lblManoGiocatore.setVisible(true);
     	btnInizioTurnoGiocatore.setDisable(true);
+    	//btnFineTurnoGiocatore.setDisable(false);
     	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     	
     	//mostro le carte in output relative al giocatore del turno corrente
     	for(int i = 0; i<numeroCarteAGiocatore;i++) {	
-    		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countGiocatore).getCarteMano().get(i).getPercorso()));
+    		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
     		listaCarteMano.get(i).setImage(newImg);
     	}
     	
@@ -334,6 +335,26 @@ public class Controller {
     	giocaCartaMano(posCartaCliccata);
     }
 
+    
+    @FXML Button btnFineTurnoGiocatore;
+    //dispongo la fine del turno per il giocatore corrente
+    @FXML public void fineTurnoGiocatore(ActionEvent actionEvent) {
+    	//sistemo la visualizzazione dell'interfaccia
+    	lblManoGiocatore.setVisible(false);
+    	btnFineTurnoGiocatore.setDisable(true);
+    	btnInizioTurnoGiocatore.setDisable(false);
+    	//definisco chi giocherà il prossimo turno
+		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+		lblTurnoGiocatore.setVisible(true);
+		
+		//rimetto le carte coperte
+    	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+    	for(ImageView i : listaCarteMano) {
+    		i.setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+    	}
+    }
+    
+    
     private void giocaCartaMano(int posCartaCliccata) {
     	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
     	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
@@ -342,17 +363,18 @@ public class Controller {
     		//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
         	for(ImageView i : listaCarteBanco) {	
     			if(i.getImage()==null) {
-    				i.setImage(new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countGiocatore).getCarteMano().get(posCartaCliccata).getPercorso())));
-    				listaCarteMano.get(posCartaCliccata).setVisible(false);
+    				i.setImage(new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getPercorso())));
+    				listaCarteMano.get(posCartaCliccata).setImage(null);
     				btnInizioTurnoGiocatoreClicked=false;
+    				btnFineTurnoGiocatore.setDisable(false);
     				break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo
     			}
     		}
     		
         	//controllo che non si sfori il numero di giocatori
-        	if(countGiocatore<prt.getElencoGiocatori().size()) {
+        	if(countTurnoGiocatore<prt.getElencoGiocatori().size()) {
         		//passo il turno al prossimo giocatore incrementando il contatore
-            	countGiocatore++;
+        		countTurnoGiocatore++;
         	}else {
         		btnInizioTurnoGiocatore.setDisable(true);
         	}

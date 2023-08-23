@@ -63,7 +63,12 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnInizioTurnoGiocatore" layoutX="463.0" layoutY="211.0" mnemonicParsing="false" onAction="#inizioTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="inizia il turno" textAlignment="CENTER">
+            <Button fx:id="btnInizioTurnoGiocatore" layoutX="464.0" layoutY="206.0" mnemonicParsing="false" onAction="#inizioTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="inizia il turno" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnFineTurnoGiocatore" disable="true" layoutX="464.0" layoutY="236.0" mnemonicParsing="false" onAction="#fineTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
