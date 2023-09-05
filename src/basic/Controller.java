@@ -42,6 +42,7 @@ public class Controller {
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
     int countTurnoGiocatore=0;
+    private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
  
     
     //eventi FXML
@@ -179,7 +180,6 @@ public class Controller {
     		}
 
     		//imposto i dati di una nuova partita
-    		//errato inserimento dei dati, correggere	
     		prt=new Partita(codPartita, giocatoriPrt);
     	}catch(FileNotFoundException e) {
     		System.out.println(e);
@@ -261,7 +261,7 @@ public class Controller {
     	    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
     	    	}
     		}else {
-    			lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninserirne uno corretto");
+    			lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
     		}
     }
     
@@ -277,10 +277,10 @@ public class Controller {
     boolean btnInizioTurnoGiocatoreClicked=false;
     //inizia il turno dell'n giocatore
     @FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
+    	lblManoGiocatore.setText("Mano di "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
     	lblTurnoGiocatore.setVisible(false);
     	lblManoGiocatore.setVisible(true);
     	btnInizioTurnoGiocatore.setDisable(true);
-    	//btnFineTurnoGiocatore.setDisable(false);
     	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     	
     	//mostro le carte in output relative al giocatore del turno corrente
@@ -301,7 +301,7 @@ public class Controller {
     @FXML ImageView imgCartaBanco6;
     @FXML ImageView imgCartaBanco7;
     @FXML ImageView imgCartaBanco8;
-    //l'n giocatore gioca la carta1
+	//l'n giocatore gioca la carta1
     @FXML public void GiocaCartaMano1(MouseEvent mouseEvent) {
        final int posCartaCliccata=0;
        giocaCartaMano(posCartaCliccata);	
@@ -337,23 +337,71 @@ public class Controller {
 
     
     @FXML Button btnFineTurnoGiocatore;
+    @FXML Label lblVitaPersa;
+    @FXML Button btnIniziaNuovoRound;
     //dispongo la fine del turno per il giocatore corrente
     @FXML public void fineTurnoGiocatore(ActionEvent actionEvent) {
-    	//sistemo la visualizzazione dell'interfaccia
-    	lblManoGiocatore.setVisible(false);
-    	btnFineTurnoGiocatore.setDisable(true);
-    	btnInizioTurnoGiocatore.setDisable(false);
-    	//definisco chi giocherà il prossimo turno
-		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-		lblTurnoGiocatore.setVisible(true);
-		
+		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//rimetto le carte coperte
-    	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
-    	for(ImageView i : listaCarteMano) {
-    		i.setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+		for(ImageView i : listaCarteMano) {
+			i.setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+		}
+    	//controllo che non si sia chiuso un round
+    	if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
+    		//sistemo la visualizzazione dell'interfaccia
+    		lblManoGiocatore.setVisible(false);
+    		btnFineTurnoGiocatore.setDisable(true);
+    		btnInizioTurnoGiocatore.setDisable(false);
+    		//definisco chi giocherà il prossimo turno
+    		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+    		lblTurnoGiocatore.setVisible(true);
+    	}else {
+    		//Calcolo chi ha perso una vita e lo mostro in output
+    		int giocatoreVitaPersa = CalcolaPunti(lstCarteBanco);
+    		this.prt.getElencoGiocatori().get(giocatoreVitaPersa).perdiVita();
+    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreVitaPersa);
+    		if(gio.getVite()>0) {
+    			lblVitaPersa.setText(gio.getNome()+" ha perso una vita");
+    			lblVitaPersa.setVisible(true);
+
+    			lblManoGiocatore.setVisible(false);
+    			btnFineTurnoGiocatore.setDisable(true);
+    			btnIniziaNuovoRound.setVisible(true);
+    		}else {
+    			//rimuovo il giocatore eliminato
+    			if(this.prt.getElencoGiocatori().remove(gio)) {
+    				lblVitaPersa.setText(gio.getNome()+" è stato eliminato");
+    				lblVitaPersa.setVisible(true);
+
+    				lblManoGiocatore.setVisible(false);
+    				btnFineTurnoGiocatore.setDisable(true);
+    				btnIniziaNuovoRound.setVisible(true);
+    			}
+    		}
     	}
     }
+
+    @FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
+    	btnIniziaNuovoRound.setVisible(false);
+    	lblVitaPersa.setVisible(false);
+    }
+
     
+    //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
+    //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
+    private void copiaInformazioniPartita(Partita tempPrt) {
+    	this.prt=tempPrt;
+	}
+
+    //metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
+    private void copiaInformazioniLabel(Label lblTurnoGiocatore) {
+    	this.lblTurnoGiocatore=lblTurnoGiocatore;
+	}
+
+    //metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
+    private void copiaInformazioniCartaMano5(ImageView img) {
+    	this.imgCartaMano5=img;
+	}
     
     private void giocaCartaMano(int posCartaCliccata) {
     	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
@@ -371,6 +419,9 @@ public class Controller {
     			}
     		}
     		
+        	//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
+        	lstCarteBanco.add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).removeCartaMano(posCartaCliccata));
+        	
         	//controllo che non si sfori il numero di giocatori
         	if(countTurnoGiocatore<prt.getElencoGiocatori().size()) {
         		//passo il turno al prossimo giocatore incrementando il contatore
@@ -381,19 +432,31 @@ public class Controller {
     	}	
     }
     
-    //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
-    //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
-    private void copiaInformazioniPartita(Partita tempPrt) {
-    	this.prt=tempPrt;
-	}
+    //metodo che calcola quale giocatore ha perso il round appena concluso
+    private int CalcolaPunti(ArrayList<Carta> listaCarteBanco) {
+    	int posGiocatore=-1;
+    	Carta cartaTemp = null;
+    	//confronto le carte sul banco e trovo quella che ha il punteggio minore la sua posizione mi dirà la posizione del giocatore che ha giocato la carta e perderà la vita
+    	for(Carta i : listaCarteBanco) {
+    		if(posGiocatore==-1) {
+    			cartaTemp=i;
+    			posGiocatore=0;
+    		}else if(i.getValore()<cartaTemp.getValore()){
+    			cartaTemp=i;
+    			posGiocatore=listaCarteBanco.indexOf(i);
+    		}
+    	}
+    	
+    	return posGiocatore;
+    }
 
-    //metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
-    private void copiaInformazioniLabel(Label lblTurnoGiocatore) {
-    	this.lblTurnoGiocatore=lblTurnoGiocatore;
-	}
-
-    //metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
-    private void copiaInformazioniCartaMano5(ImageView img) {
-    	this.imgCartaMano5=img;
-	}
+    private int quanteCarteAGiocatore(int numeroGiocatori) {
+    	if(numeroGiocatori>4) {
+    		return 5;
+    	}else {
+    		return numeroGiocatori;
+    	}
+    	
+    	
+    }
 }

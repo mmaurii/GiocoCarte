@@ -1,17 +1,23 @@
 package basic;
 
 public class Carta {
-	int n;
-	Seme s;
-	String p;
-
-	public Carta(int n, Seme s, String p) {
-		this.n=n;
-		this.s=s;
-		this.p=p;
+	int numero;
+	Seme seme;
+	String percorso;
+	int valore;
+	
+	public Carta(int numero, Seme seme, String percorso, int valore) {
+		this.numero=numero;
+		this.seme=seme;
+		this.percorso=percorso;
+		this.valore=valore;
 	}
 	
 	public String getPercorso() {
-		return p;
+		return percorso;
+	}
+
+	public int getValore() {
+		return valore;
 	}
 }

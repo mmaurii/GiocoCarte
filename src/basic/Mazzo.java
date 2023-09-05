@@ -23,7 +23,8 @@ public class Mazzo {
 		int numero;
 		Seme seme;
 		String percorso;
-		
+		int valore;
+
 		try {
 			File f = new File("src/Carte.txt");
 
@@ -33,9 +34,9 @@ public class Mazzo {
 				numero = Integer.parseInt(data[0]);
 				seme = Seme.valueOf(data[1]);
 				percorso = data[2];
-				
-				Carta c = new Carta(numero, seme, percorso);
-				//System.out.println(numero + ", " + seme + ", " + percorso);
+				valore=Integer.parseInt(data[3]);
+				Carta c = new Carta(numero, seme, percorso, valore);
+				//System.out.println(numero + ", " + seme + ", " + percorso + ", " + valore);
 				mazzo.add(c);
 				
 			}

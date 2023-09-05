@@ -22,6 +22,10 @@ public class Giocatore {
 		this.nVite=nVite;
 	}
 
+	public int getVite() {
+		return nVite;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -30,11 +34,19 @@ public class Giocatore {
 		carte.add(carta);
 	}
 	
+	public Carta removeCartaMano(int posCarta) {
+		return carte.remove(posCarta);
+	}
+	
 	public void setCarteMano(ArrayList<Carta> carte) {
 		this.carte=carte;
 	}	
 	
 	public ArrayList<Carta> getCarteMano() {
 		return carte;
+	}
+	
+	public void perdiVita() {
+		this.nVite--;
 	}
 }
