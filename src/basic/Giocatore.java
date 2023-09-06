@@ -15,7 +15,7 @@ public class Giocatore {
 		this.carte=carte;
 		this.punteggio=punteggio;
 		this.preseDichiarate=-1;
-		this.preseEffettuate=-1;
+		this.preseEffettuate=0;
 	}
 
 	public Giocatore(String nome) {
@@ -40,6 +40,14 @@ public class Giocatore {
 	
 	public int getPreseEffettuate() {
 		return preseEffettuate;
+	}
+	
+	public void setPreseDichiarate(int nPrese) {
+		this.preseDichiarate=nPrese;
+	}
+	
+	public void setPreseEffettuate() {
+		this.preseEffettuate++;
 	}
 	
 	public void addCartaMano(Carta carta) {

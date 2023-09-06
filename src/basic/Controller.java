@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -366,16 +365,36 @@ public class Controller {
     		countTurnoGiocatore=0;
     		//Calcolo chi prende la mano
     		int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
-    		// this.prt.getElencoGiocatori().get(giocatoreChePrende).perdiVita();
+    		
     		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
-    		lblVitaPersa.setText(gio.getNome()+" ha preso in questo turno");
+			gio.setPreseEffettuate();
+    		lblVitaPersa.setText(gio.getNome()+" ha PRESO in questo turno");
     		lblVitaPersa.setVisible(true);
-
 			lblManoGiocatore.setVisible(false);
 			btnFineTurnoGiocatore.setDisable(true);
 			btnIniziaNuovoRound.setVisible(true);
+
     		
-    		/**
+    	
+			/**
+    		
+    		
+    		// Alla fine verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
+    		
+    		ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
+    		elencoGiocatori = this.prt.getElencoGiocatori();
+    		
+    		for(Giocatore g : elencoGiocatori) {
+        		if(g.getPreseDichiarate() != g.getPreseEffettuate())
+        		{
+        				g.perdiVita();
+        		}
+        	}
+    		 
+    		 
+    		 
+    		// ??
+    		 
     		if(gio.getVite()>0) {
     			lblVitaPersa.setText(gio.getNome()+" ha perso una vita");
     			lblVitaPersa.setVisible(true);
