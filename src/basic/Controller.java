@@ -344,7 +344,7 @@ public class Controller {
     	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     	//rimetto le carte coperte
     	for(int i=0; i< listaCarteMano.size();i++) {
-    		if(i<this.prt.getElencoGiocatori().get(0).getCarteMano().size()) {
+    		if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
     			listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
     		}else {
     			listaCarteMano.get(i).setImage(null);
