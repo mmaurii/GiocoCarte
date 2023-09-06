@@ -15,27 +15,27 @@
    <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="411.0" prefWidth="612.0">
          <children>
-            <ImageView fx:id="imgCartaMano1" fitHeight="104.0" fitWidth="64.0" layoutX="152.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano1" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano1" fitHeight="104.0" fitWidth="64.0" layoutX="151.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano1" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCartaMano2" fitHeight="104.0" fitWidth="64.0" layoutX="215.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano2" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano2" fitHeight="104.0" fitWidth="64.0" layoutX="214.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano2" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCartaMano3" fitHeight="104.0" fitWidth="64.0" layoutX="278.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano3" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano3" fitHeight="104.0" fitWidth="64.0" layoutX="277.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano3" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCartaMano4" fitHeight="104.0" fitWidth="64.0" layoutX="341.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano4" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano4" fitHeight="104.0" fitWidth="64.0" layoutX="340.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano4" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgCartaMano5" fitHeight="104.0" fitWidth="64.0" layoutX="404.0" layoutY="269.0" onMouseClicked="#GiocaCartaMano5" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCartaMano5" fitHeight="104.0" fitWidth="64.0" layoutX="403.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano5" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMGcarte/retro.jpg" />
                </image>
@@ -66,12 +66,12 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnInizioTurnoGiocatore" layoutX="467.0" layoutY="196.0" mnemonicParsing="false" onAction="#inizioTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="inizia il turno" textAlignment="CENTER">
+            <Button fx:id="btnInizioTurnoGiocatore" layoutX="479.0" layoutY="178.0" mnemonicParsing="false" onAction="#inizioTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="inizia il turno" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btnFineTurnoGiocatore" disable="true" layoutX="467.0" layoutY="226.0" mnemonicParsing="false" onAction="#fineTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER">
+            <Button fx:id="btnFineTurnoGiocatore" disable="true" layoutX="479.0" layoutY="208.0" mnemonicParsing="false" onAction="#fineTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -92,13 +92,23 @@
             </Pane>
             <ListView fx:id="lstViewVite" layoutX="467.0" layoutY="262.0" prefHeight="134.0" prefWidth="130.0" />
             <ListView fx:id="lstViewPrese" layoutX="14.0" layoutY="262.0" prefHeight="134.0" prefWidth="130.0" />
-            <Pane fx:id="paneNumeroPrese" layoutX="17.0" layoutY="163.0" prefHeight="92.0" prefWidth="124.0">
+            <Pane fx:id="paneNumeroPrese" layoutX="17.0" layoutY="154.0" prefHeight="92.0" prefWidth="124.0">
                <children>
                   <Label fx:id="lblPrese" layoutX="12.0" layoutY="14.0" text="Quante prese farai &#10;con questa mano?" wrapText="true" />
                   <TextField fx:id="txtNumeroPrese" layoutX="12.0" layoutY="53.0" prefHeight="25.0" prefWidth="101.0" promptText="numero prese" />
                   <Label fx:id="lblNumPreseNonValido" layoutX="-4.0" layoutY="78.0" text="numero prese non valido" textFill="RED" visible="false" />
                </children>
             </Pane>
+            <Label layoutX="34.0" layoutY="249.0" text="prese dichiarate">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="495.0" layoutY="249.0" text="numero vite">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
    </children>

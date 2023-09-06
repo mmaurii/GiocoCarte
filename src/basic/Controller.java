@@ -219,6 +219,7 @@ public class Controller {
     @FXML Button btnGioca;
     @FXML TextField txtCodPartita;
     @FXML Label lblCodPartitaErrato;
+    @FXML ListView<String> lstViewVite;
     @FXML public void avviaPartita(ActionEvent actionEvent) {
     	//ottengo il codice partita inserito dall'utente
     	String cod = txtCodPartita.getText();
@@ -241,9 +242,9 @@ public class Controller {
         			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
         			lblTurnoGiocatore.setId("lblTurnoGiocatore");
         			root.getChildren().add(lblTurnoGiocatore);
-    				Scene interfacciaDiGioco = new Scene(root);
-    				stage.setScene(interfacciaDiGioco);
-    				stage.show();
+        			Scene interfacciaDiGioco = new Scene(root);
+        			stage.setScene(interfacciaDiGioco);
+        			stage.show();
         			lblTurnoGiocatore.setTranslateX(190);
         			lblTurnoGiocatore.setTranslateY(220);
         			
@@ -356,142 +357,99 @@ public class Controller {
     			this.prt.getElencoGiocatori().get(countTurnoGiocatore).setPreseDichiarate(numeroPreseGiocatore);
     			presePerQuestaMano+=numeroPreseGiocatore;
     		}
-
+    		
+    		System.out.println(presePerQuestaMano);
+    		System.out.println(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1);
     		if(presePerQuestaMano<=this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1) {
     			//visualizzo il numero di prese per questo giocatore
-    			lstViewPrese.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" n.p. "+numeroPreseGiocatore);
+    			lstViewPrese.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+numeroPreseGiocatore+" prese");
+    			//visualizzo il numero di vite di questo giocatore
+    			//imposto le vite dei giocatori nella relativa list view
+    			lstViewVite.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getVite()+" vite");
+    		
+    		
+    			ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+    			//rimetto le carte coperte
+    			for(int i=0; i< listaCarteMano.size();i++) {
+    				if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
+    					listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+    				}else {
+    					listaCarteMano.get(i).setImage(null);
+    				}
+    			}
+
+    			//controllo che non si sfori il numero di giocatori
+    			if(countTurnoGiocatore<prt.getElencoGiocatori().size()) {
+    				//passo il turno al prossimo giocatore incrementando il contatore
+    				countTurnoGiocatore++;
+    			}else {
+    				btnInizioTurnoGiocatore.setDisable(true);
+    			}
+
+    			if(this.prt.getElencoGiocatori().get(this.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0)
+    			{
+    				//controllo che non si sia chiusa la mano
+    				if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
+    					//sistemo la visualizzazione dell'interfaccia
+    					lblManoGiocatore.setVisible(false);
+    					btnFineTurnoGiocatore.setDisable(true);
+    					btnInizioTurnoGiocatore.setDisable(false);
+    					//definisco chi giocherà il prossimo turno
+    					lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+    					lblTurnoGiocatore.setVisible(true);
+    				}else {
+    					//azzero il contatore dei turni
+    					countTurnoGiocatore=0;
+
+    					//disabilito la possibilità di dire quante prese si fanno
+    					paneNumeroPrese.setVisible(false);
+
+    					//Calcolo chi prende la mano
+    					int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
+
+    					Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
+    					gio.setPreseEffettuate();
+    					lblVitaPersa.setText(gio.getNome()+" ha PRESO");
+    					lblVitaPersa.setVisible(true);
+    					lstCarteBanco.clear();
+    					lblManoGiocatore.setVisible(false);
+    					btnFineTurnoGiocatore.setDisable(true);
+    					btnIniziaNuovoRound.setVisible(true);
+    				}
+    			}else {
+    				//verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
+    				for(Giocatore g : giocatoriPrt) {
+    					if(g.getPreseDichiarate() != g.getPreseEffettuate())
+    					{
+    						g.perdiVita();
+    					}
+    				}
+
+    				for(Giocatore g : giocatoriPrt) {
+    					if(g.getVite()==0)
+    					{	
+    						giocatoriPrt.remove(g);
+    						lblVitaPersa.setVisible(true);
+    						lblManoGiocatore.setVisible(false);
+    						btnFineTurnoGiocatore.setDisable(true);
+    						btnIniziaNuovoRound.setVisible(true);
+    					}
+    				}//controllare che non sia finita la partita e avvio una nuova mano
+    			}
     		}else {
     			lblNumPreseNonValido.setVisible(true);
-    			txtNumeroPrese.setText(null);
     		}
+			txtNumeroPrese.setText("");
+			
+			
     	}catch(NumberFormatException nfe){
     		lblPrese.setTextFill(Color.RED);
     		txtNumeroPrese.setText(null);
     	}
     	
-    	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
-    	//rimetto le carte coperte
-    	for(int i=0; i< listaCarteMano.size();i++) {
-    		if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
-    			listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
-    		}else {
-    			listaCarteMano.get(i).setImage(null);
-    		}
-    	}
-<<<<<<< Updated upstream
-    	
-    	if(listaCarteMano.size() != 0)
-    	{
-    	
-	    	//controllo che non si sia chiusa la mano
-	    	if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
-	    		//sistemo la visualizzazione dell'interfaccia
-	    		lblManoGiocatore.setVisible(false);
-	    		btnFineTurnoGiocatore.setDisable(true);
-	    		btnInizioTurnoGiocatore.setDisable(false);
-	    		//definisco chi giocherà il prossimo turno
-	    		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-	    		lblTurnoGiocatore.setVisible(true);
-	    	}else {
-	    		//azzero il contatore dei turni
-	    		countTurnoGiocatore=0;
-	    		//Calcolo chi prende la mano
-	    		int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
-	    		
-	    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
-				gio.setPreseEffettuate();
-	    		lblVitaPersa.setText(gio.getNome()+" ha PRESO in questo turno");
-	    		lblVitaPersa.setVisible(true);
-	    		lstCarteBanco.clear();
-				lblManoGiocatore.setVisible(false);
-				btnFineTurnoGiocatore.setDisable(true);
-				btnIniziaNuovoRound.setVisible(true);
-	    	}
-    	}else {
 
-    		// Alla fine verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
-    		
-    		
-    		
-    		for(Giocatore g : giocatoriPrt) {
-=======
-
-		//controllo che non si sfori il numero di giocatori
-		if(countTurnoGiocatore<prt.getElencoGiocatori().size()) {
-			//passo il turno al prossimo giocatore incrementando il contatore
-			countTurnoGiocatore++;
-		}else {
-			btnInizioTurnoGiocatore.setDisable(true);
-		}
-		
-    	//controllo che non si sia chiuso un giro di carte
-    	if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
-    		//sistemo la visualizzazione dell'interfaccia
-    		lblManoGiocatore.setVisible(false);
-    		btnFineTurnoGiocatore.setDisable(true);
-    		btnInizioTurnoGiocatore.setDisable(false);
-    		//definisco chi giocherà il prossimo turno
-    		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-    		lblTurnoGiocatore.setVisible(true);
-    	}else {
-    		//azzero il contatore dei turni
-    		countTurnoGiocatore=0;
-
-    		//disabilito la possibilità di dire quante prese si fanno
-    		//primoGiro=false;
-    		paneNumeroPrese.setVisible(false);
-
-    		//Calcolo chi prende la mano
-    		int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
-    		System.out.println(giocatoreChePrende);
-    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
-    		gio.setPreseEffettuate();
-    		lblVitaPersa.setText(gio.getNome()+" ha PRESO in questo turno");
-    		lblVitaPersa.setVisible(true);
-    		lblManoGiocatore.setVisible(false);
-    		btnFineTurnoGiocatore.setDisable(true);
-    		btnIniziaNuovoRound.setVisible(true);
-    	}
-
-
-    	/**
-
-
-    		// Alla fine verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
-
-    		ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
-    		elencoGiocatori = this.prt.getElencoGiocatori();
-
-    		for(Giocatore g : elencoGiocatori) {
->>>>>>> Stashed changes
-        		if(g.getPreseDichiarate() != g.getPreseEffettuate())
-        		{
-        				g.perdiVita();
-        		}
-        	}
-    		 
-    		 
-    		 
-    		for(Giocatore g : giocatoriPrt) {
-        		if(g.getVite()==0)
-        		{	
-        			giocatoriPrt.remove(g);
-        			lblVitaPersa.setVisible(true);
-    				lblManoGiocatore.setVisible(false);
-    				btnFineTurnoGiocatore.setDisable(true);
-    				btnIniziaNuovoRound.setVisible(true);
-<<<<<<< Updated upstream
-    				// avviaPartita();
-        		}
-        	}//controllare che non sia finita la partita
-    	}
-=======
-    			}
-    		}//controllare che non sia finita la partita
-    		**/
-    	
->>>>>>> Stashed changes
     }
+    
 
     @FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
     	//sistemo l'interfaccia perchè possa essere giocato un nuovo round
