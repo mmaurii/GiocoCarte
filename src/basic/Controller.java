@@ -350,41 +350,41 @@ public class Controller {
     			listaCarteMano.get(i).setImage(null);
     		}
     	}
-
-    	//controllo che non si sia chiuso un round
-    	if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
-    		//sistemo la visualizzazione dell'interfaccia
-    		lblManoGiocatore.setVisible(false);
-    		btnFineTurnoGiocatore.setDisable(true);
-    		btnInizioTurnoGiocatore.setDisable(false);
-    		//definisco chi giocherà il prossimo turno
-    		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-    		lblTurnoGiocatore.setVisible(true);
-    	}else {
-    		//azzero il contatore dei turni
-    		countTurnoGiocatore=0;
-    		//Calcolo chi prende la mano
-    		int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
-    		
-    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
-			gio.setPreseEffettuate();
-    		lblVitaPersa.setText(gio.getNome()+" ha PRESO in questo turno");
-    		lblVitaPersa.setVisible(true);
-			lblManoGiocatore.setVisible(false);
-			btnFineTurnoGiocatore.setDisable(true);
-			btnIniziaNuovoRound.setVisible(true);
-
-    		
     	
-			/**
-    		
-    		
+    	if(listaCarteMano.size() != 0)
+    	{
+    	
+	    	//controllo che non si sia chiusa la mano
+	    	if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
+	    		//sistemo la visualizzazione dell'interfaccia
+	    		lblManoGiocatore.setVisible(false);
+	    		btnFineTurnoGiocatore.setDisable(true);
+	    		btnInizioTurnoGiocatore.setDisable(false);
+	    		//definisco chi giocherà il prossimo turno
+	    		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+	    		lblTurnoGiocatore.setVisible(true);
+	    	}else {
+	    		//azzero il contatore dei turni
+	    		countTurnoGiocatore=0;
+	    		//Calcolo chi prende la mano
+	    		int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
+	    		
+	    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
+				gio.setPreseEffettuate();
+	    		lblVitaPersa.setText(gio.getNome()+" ha PRESO in questo turno");
+	    		lblVitaPersa.setVisible(true);
+	    		lstCarteBanco.clear();
+				lblManoGiocatore.setVisible(false);
+				btnFineTurnoGiocatore.setDisable(true);
+				btnIniziaNuovoRound.setVisible(true);
+	    	}
+    	}else {
+
     		// Alla fine verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
     		
-    		ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
-    		elencoGiocatori = this.prt.getElencoGiocatori();
     		
-    		for(Giocatore g : elencoGiocatori) {
+    		
+    		for(Giocatore g : giocatoriPrt) {
         		if(g.getPreseDichiarate() != g.getPreseEffettuate())
         		{
         				g.perdiVita();
@@ -393,27 +393,17 @@ public class Controller {
     		 
     		 
     		 
-    		// ??
-    		 
-    		if(gio.getVite()>0) {
-    			lblVitaPersa.setText(gio.getNome()+" ha perso una vita");
-    			lblVitaPersa.setVisible(true);
-
-    			lblManoGiocatore.setVisible(false);
-    			btnFineTurnoGiocatore.setDisable(true);
-    			btnIniziaNuovoRound.setVisible(true);
-    		}else {
-    			//rimuovo il giocatore eliminato
-    			if(this.prt.getElencoGiocatori().remove(gio)) {
-    				lblVitaPersa.setText(gio.getNome()+" è stato eliminato");
-    				lblVitaPersa.setVisible(true);
-
+    		for(Giocatore g : giocatoriPrt) {
+        		if(g.getVite()==0)
+        		{	
+        			giocatoriPrt.remove(g);
+        			lblVitaPersa.setVisible(true);
     				lblManoGiocatore.setVisible(false);
     				btnFineTurnoGiocatore.setDisable(true);
     				btnIniziaNuovoRound.setVisible(true);
-    			}
-    		}//controllare che non sia finita la partita
-    		**/
+    				// avviaPartita();
+        		}
+        	}//controllare che non sia finita la partita
     	}
     }
 
