@@ -284,7 +284,7 @@ public class Controller {
     	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     	
     	//mostro le carte in output relative al giocatore del turno corrente
-    	for(int i = 0; i<numeroCarteAGiocatore;i++) {	
+    	for(int i = 0; i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size();i++) {	
     		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
     		listaCarteMano.get(i).setImage(newImg);
     	}
@@ -341,11 +341,16 @@ public class Controller {
     @FXML Button btnIniziaNuovoRound;
     //dispongo la fine del turno per il giocatore corrente
     @FXML public void fineTurnoGiocatore(ActionEvent actionEvent) {
-		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
-		//rimetto le carte coperte
-		for(ImageView i : listaCarteMano) {
-			i.setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
-		}
+    	ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+    	//rimetto le carte coperte
+    	for(int i=0; i< listaCarteMano.size();i++) {
+    		if(i<this.prt.getElencoGiocatori().get(0).getCarteMano().size()) {
+    			listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+    		}else {
+    			listaCarteMano.get(i).setImage(null);
+    		}
+    	}
+
     	//controllo che non si sia chiuso un round
     	if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
     		//sistemo la visualizzazione dell'interfaccia
@@ -356,6 +361,8 @@ public class Controller {
     		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
     		lblTurnoGiocatore.setVisible(true);
     	}else {
+    		//azzero il contatore dei turni
+    		countTurnoGiocatore=0;
     		//Calcolo chi ha perso una vita e lo mostro in output
     		int giocatoreVitaPersa = CalcolaPunti(lstCarteBanco);
     		this.prt.getElencoGiocatori().get(giocatoreVitaPersa).perdiVita();
@@ -377,13 +384,20 @@ public class Controller {
     				btnFineTurnoGiocatore.setDisable(true);
     				btnIniziaNuovoRound.setVisible(true);
     			}
-    		}
+    		}//controllare che non sia finita la partita
     	}
     }
 
     @FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
+    	//sistemo l'interfaccia perchè possa essere giocato un nuovo round
     	btnIniziaNuovoRound.setVisible(false);
     	lblVitaPersa.setVisible(false);
+    	btnInizioTurnoGiocatore.setDisable(false);
+    	
+    	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+    	for(ImageView i : listaCarteBanco) {
+    		i.setImage(null);
+    	}
     }
 
     
