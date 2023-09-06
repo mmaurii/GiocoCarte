@@ -6,12 +6,16 @@ public class Giocatore {
 	int nVite;
 	ArrayList<Carta> carte = new ArrayList<Carta>();
 	long punteggio;
+	int preseDichiarate;
+	int preseEffettuate;
 	
 	public Giocatore(String nome, int nVite, ArrayList<Carta> carte, long punteggio) {
 		this.nome=nome;
 		this.nVite=nVite;
 		this.carte=carte;
 		this.punteggio=punteggio;
+		this.preseDichiarate=-1;
+		this.preseEffettuate=-1;
 	}
 
 	public Giocatore(String nome) {
@@ -28,6 +32,14 @@ public class Giocatore {
 	
 	public String getNome() {
 		return nome;
+	}
+	
+	public int getPreseDichiarate() {
+		return preseDichiarate;
+	}
+	
+	public int getPreseEffettuate() {
+		return preseEffettuate;
 	}
 	
 	public void addCartaMano(Carta carta) {

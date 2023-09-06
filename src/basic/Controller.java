@@ -363,10 +363,18 @@ public class Controller {
     	}else {
     		//azzero il contatore dei turni
     		countTurnoGiocatore=0;
-    		//Calcolo chi ha perso una vita e lo mostro in output
-    		int giocatoreVitaPersa = CalcolaPunti(lstCarteBanco);
-    		this.prt.getElencoGiocatori().get(giocatoreVitaPersa).perdiVita();
-    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreVitaPersa);
+    		//Calcolo chi prende la mano
+    		int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
+    		// this.prt.getElencoGiocatori().get(giocatoreChePrende).perdiVita();
+    		Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
+    		lblVitaPersa.setText(gio.getNome()+" ha preso in questo turno");
+    		lblVitaPersa.setVisible(true);
+
+			lblManoGiocatore.setVisible(false);
+			btnFineTurnoGiocatore.setDisable(true);
+			btnIniziaNuovoRound.setVisible(true);
+    		
+    		/**
     		if(gio.getVite()>0) {
     			lblVitaPersa.setText(gio.getNome()+" ha perso una vita");
     			lblVitaPersa.setVisible(true);
@@ -385,6 +393,7 @@ public class Controller {
     				btnIniziaNuovoRound.setVisible(true);
     			}
     		}//controllare che non sia finita la partita
+    		**/
     	}
     }
 
@@ -455,7 +464,7 @@ public class Controller {
     		if(posGiocatore==-1) {
     			cartaTemp=i;
     			posGiocatore=0;
-    		}else if(i.getValore()<cartaTemp.getValore()){
+    		}else if(i.getValore()>cartaTemp.getValore()){
     			cartaTemp=i;
     			posGiocatore=listaCarteBanco.indexOf(i);
     		}
