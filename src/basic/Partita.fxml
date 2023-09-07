@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Group xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.Controller">
+<Group xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.Controller">
    <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="411.0" prefWidth="612.0">
          <children>
@@ -83,7 +83,12 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnIniziaNuovoRound" layoutX="59.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia la prossima mano" visible="false">
+                  <Button fx:id="btnIniziaNuovaMano" layoutX="59.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovaMano" text="inizia la prossima mano" visible="false">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnIniziaNuovoRound1" layoutX="69.0" layoutY="75.0" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia nuovo round" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
