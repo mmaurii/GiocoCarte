@@ -260,8 +260,8 @@ public class Controller {
     			//do le carte a ogni giocatore
     	    	mazzo.mescola();
     	    	numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-    	    	for(Giocatore g : prt.getElencoGiocatori()) {
-    	    		g.setCarteMano(mazzo.pescaCarte(quanteCarteAGiocatore(prt.getElencoGiocatori().size())));
+    	    	for(Giocatore g : this.prt.getElencoGiocatori()) {
+    	    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
     	    	}
     		}else {
     			lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
@@ -289,6 +289,7 @@ public class Controller {
 
     	//mostro le carte in output relative al giocatore del turno corrente
     	for(int i = 0; i<listaCarteMano.size();i++) {	
+    		System.out.println(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size());
 			if(i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
     		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
     		listaCarteMano.get(i).setImage(newImg);
@@ -441,31 +442,28 @@ public class Controller {
 					
     				//verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
 							
-    				for(Giocatore g : this.prt.getElencoGiocatori()) {
-    					
-    					System.out.println(g.getPreseDichiarate());
-    					System.out.println(g.getPreseEffettuate());
-    					
+    				for(Giocatore g : this.prt.getElencoGiocatori()) {	
     					if(g.getPreseDichiarate() != g.getPreseEffettuate())
     					{
-    	    		    	System.out.println("nuova mano");
     						g.perdiVita();
-    						for(String s : lstViewVite.getItems()) {
-    							if(s.contains(g.getNome())) {
-    								s=g.getNome()+" "+g.getVite()+" vite";
+    						for(int i =0; i<lstViewVite.getItems().size();i++) {
+    							if(lstViewVite.getItems().get(i).contains(g.getNome())) {
+    								lstViewVite.getItems().remove(i);
+    								lstViewVite.getItems().add(g.getNome()+" "+g.getVite()+" vite");
     							}
     						}
     					}
     				}
 
     				
-    				for(Giocatore g : this.prt.getElencoGiocatori()) {
-    					if(g.getVite()==0)
+					for(int g =0; g<this.prt.getElencoGiocatori().size();g++) {
+    					if(this.prt.getElencoGiocatori().get(g).getVite()==0)
     					{	
-    						giocatoriPrt.remove(g);
-    						for(String s : lstViewVite.getItems()) {
-    							if(s.contains(g.getNome())) {
-    	    						lstViewVite.getItems().remove(s);
+    						this.prt.getElencoGiocatori().remove(g);
+    						for(int i =0; i<lstViewVite.getItems().size();i++) {
+    							if(lstViewVite.getItems().get(i).contains(this.prt.getElencoGiocatori().get(g).getNome())) {
+    								lstViewVite.getItems().remove(i);
+    								lstViewVite.getItems().add(this.prt.getElencoGiocatori().get(g).getNome()+" è eliminato");
     							}
     						}
     					}
@@ -473,8 +471,26 @@ public class Controller {
     				
     				//si è conclusa una mano quindi ne inizio un'altra se non c'è un vincitore
     				numeroCarteAGiocatore--;
-    				cominciaNuovaMano(numeroCarteAGiocatore);//il metodo conclude la partita quando rimane un solo giocatore
-    				
+    				//cominciaNuovaMano(numeroCarteAGiocatore);//il metodo conclude la partita quando rimane un solo giocatore
+    		    	if(this.prt.getElencoGiocatori().size()>1) {
+    		    		//inizio una nuova mano
+    					//do le carte a ogni giocatore
+    			    	System.out.println(mazzo.getMazzo().size());
+    			    	mazzo=new Mazzo();
+    			    	mazzo.mescola();
+    			    	for(Giocatore g : this.prt.getElencoGiocatori()) {
+    			    		System.out.println(g.getCarteMano().size());
+    			    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+    			    	}
+    			    	
+    			    	btnIniziaNuovaMano.setVisible(true);
+    			    	System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
+
+    			    	
+    		    	}else {
+    		    		//concludo la partita e ne annuncio il vincitore
+    		    		
+    		    	}
     			}
     		}else {
     			presePerQuestaMano-=numeroPreseGiocatore;
@@ -514,12 +530,15 @@ public class Controller {
 		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 		btnInizioTurnoGiocatore.setDisable(false);
 		paneNumeroPrese.setVisible(true);
-		
+		System.out.println(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size());
+
 		//rimetto le carte coperte
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		for(int i=0; i< listaCarteMano.size();i++) {
 			if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
 				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+	    		System.out.println("turno giocatore "+countTurnoGiocatore);
+
 			}else {
 				listaCarteMano.get(i).setImage(null);
 			}
@@ -531,7 +550,7 @@ public class Controller {
     		i.setImage(null);
 		}
     	
-    	System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
+    	//System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
     }
 
     
@@ -604,9 +623,10 @@ public class Controller {
     	if(this.prt.getElencoGiocatori().size()>1) {
     		//inizio una nuova mano
 			//do le carte a ogni giocatore
-    		mazzo.popolaMazzo();
+	    	System.out.println(mazzo.getMazzo().size());
+
 	    	mazzo.mescola();
-	    	for(Giocatore g : prt.getElencoGiocatori()) {
+	    	for(Giocatore g : this.prt.getElencoGiocatori()) {
 	    		g.setCarteMano(mazzo.pescaCarte(numCarte));
 	    	}
 	    	
