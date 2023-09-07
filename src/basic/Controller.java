@@ -352,22 +352,27 @@ public class Controller {
     	lblNumPreseNonValido.setVisible(false);
     	int numeroPreseGiocatore=0;
     	try {
-    		if(txtNumeroPrese.isVisible()) {
+    		if(paneNumeroPrese.isVisible()) {
+        		System.out.println("aaaaaaaaaaaaaaaa");
     			numeroPreseGiocatore=Integer.parseInt(txtNumeroPrese.getText());
     			this.prt.getElencoGiocatori().get(countTurnoGiocatore).setPreseDichiarate(numeroPreseGiocatore);
     			presePerQuestaMano+=numeroPreseGiocatore;
+    		}else {
+    			presePerQuestaMano=0;
     		}
     		
     		System.out.println(presePerQuestaMano);
     		System.out.println(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1);
     		if(presePerQuestaMano<=this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1) {
-    			//visualizzo il numero di prese per questo giocatore
-    			lstViewPrese.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+numeroPreseGiocatore+" prese");
-    			//visualizzo il numero di vite di questo giocatore
-    			//imposto le vite dei giocatori nella relativa list view
-    			lstViewVite.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getVite()+" vite");
-    		
-    		
+    			System.out.println("bbbbbbbbbbbbbb");
+    			if(paneNumeroPrese.isVisible()) {
+    				//visualizzo il numero di prese per questo giocatore
+    				lstViewPrese.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+numeroPreseGiocatore+" prese");
+    				//visualizzo il numero di vite di questo giocatore
+    				//imposto le vite dei giocatori nella relativa list view
+    				lstViewVite.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getVite()+" vite");
+    			}
+
     			ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     			//rimetto le carte coperte
     			for(int i=0; i< listaCarteMano.size();i++) {
@@ -388,7 +393,7 @@ public class Controller {
 
     			if(this.prt.getElencoGiocatori().get(this.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0)
     			{
-    				//controllo che non si sia chiusa la mano
+    				//controllo che non si sia chiuso un giro di carte 
     				if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
     					//sistemo la visualizzazione dell'interfaccia
     					lblManoGiocatore.setVisible(false);
@@ -434,9 +439,13 @@ public class Controller {
     						btnFineTurnoGiocatore.setDisable(true);
     						btnIniziaNuovoRound.setVisible(true);
     					}
-    				}//controllare che non sia finita la partita e avvio una nuova mano
+    				}
+    				
+    				//si è conclusa una mano quindi ne inizio un'altra se non c'è un vincitore
+    				cominciaNuovaMano();//il metodo conclude la partita quando rimane un solo giocatore
     			}
     		}else {
+    			presePerQuestaMano-=numeroPreseGiocatore;
     			lblNumPreseNonValido.setVisible(true);
     		}
 			txtNumeroPrese.setText("");
@@ -528,5 +537,19 @@ public class Controller {
     	}
     	
     	
+    }
+    
+    private void cominciaNuovaMano() {
+    	if(this.prt.getElencoGiocatori().size()>1) {
+    		//inizio una nuova mano
+			//do le carte a ogni giocatore
+    		mazzo.popolaMazzo();
+	    	mazzo.mescola();
+	    	for(Giocatore g : prt.getElencoGiocatori()) {
+	    		g.setCarteMano(mazzo.pescaCarte(quanteCarteAGiocatore(this.prt.getElencoGiocatori().size())));
+	    	}
+    	}else {
+    		//concludo la partita e ne annuncio il vincitore
+    	}
     }
 }
