@@ -425,13 +425,27 @@ public class Controller {
     			}else {
 					//azzero il contatore dei turni
 					countTurnoGiocatore=0;
+					
+					//Calcolo chi prende in base alle carte sul banco
+					int giocatoreChePrende = CalcolaPunti(lstCarteBanco);
 
+					Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
+					this.prt.getElencoGiocatori().get(giocatoreChePrende).setPreseEffettuate();
+					lblVitaPersa.setText(gio.getNome()+" ha PRESO questa mano");
+					lblVitaPersa.setVisible(true);
+					lstCarteBanco.clear();
 					lblManoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
+					
 					btnIniziaNuovaMano.setVisible(true);
 					
     				//verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
-    				for(Giocatore g : giocatoriPrt) {
+							
+    				for(Giocatore g : this.prt.getElencoGiocatori()) {
+    					
+    					System.out.println(g.getPreseDichiarate());
+    					System.out.println(g.getPreseEffettuate());
+    					
     					if(g.getPreseDichiarate() != g.getPreseEffettuate())
     					{
     	    		    	System.out.println("nuova mano");
@@ -444,7 +458,8 @@ public class Controller {
     					}
     				}
 
-    				for(Giocatore g : giocatoriPrt) {
+    				
+    				for(Giocatore g : this.prt.getElencoGiocatori()) {
     					if(g.getVite()==0)
     					{	
     						giocatoriPrt.remove(g);
