@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -16,29 +15,14 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="411.0" prefWidth="612.0">
          <children>
             <ImageView fx:id="imgCartaMano1" fitHeight="104.0" fitWidth="64.0" layoutX="151.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano1" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/retro.jpg" />
-               </image>
             </ImageView>
             <ImageView fx:id="imgCartaMano2" fitHeight="104.0" fitWidth="64.0" layoutX="214.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano2" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/retro.jpg" />
-               </image>
             </ImageView>
             <ImageView fx:id="imgCartaMano3" fitHeight="104.0" fitWidth="64.0" layoutX="277.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano3" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/retro.jpg" />
-               </image>
             </ImageView>
             <ImageView fx:id="imgCartaMano4" fitHeight="104.0" fitWidth="64.0" layoutX="340.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano4" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/retro.jpg" />
-               </image>
             </ImageView>
             <ImageView fx:id="imgCartaMano5" fitHeight="104.0" fitWidth="64.0" layoutX="403.0" layoutY="277.0" onMouseClicked="#GiocaCartaMano5" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@IMGcarte/retro.jpg" />
-               </image>
             </ImageView>
             <ImageView fx:id="imgCartaBanco1" fitHeight="104.0" fitWidth="64.0" layoutX="55.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
@@ -83,7 +67,12 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnIniziaNuovoRound" layoutX="59.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia la prossima mano" visible="false">
+                  <Button fx:id="btnIniziaNuovaMano" layoutX="59.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovaMano" text="inizia la prossima mano" visible="false">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnIniziaNuovoRound" layoutX="72.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia nuovo round" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
