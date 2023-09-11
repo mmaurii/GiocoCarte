@@ -47,6 +47,10 @@ public class Giocatore {
 	}
 	
 	public void setPreseEffettuate() {
+		this.preseEffettuate=0;
+	}
+	
+	public void incrementaPreseEffettuate() {
 		this.preseEffettuate++;
 	}
 	
