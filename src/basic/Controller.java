@@ -182,6 +182,7 @@ public class Controller {
 
     		//imposto i dati di una nuova partita
     		prt=new Partita(codPartita, giocatoriPrt);
+    		
     	}catch(FileNotFoundException e) {
     		System.out.println(e);
     	}catch(IOException eIO) {
@@ -204,8 +205,11 @@ public class Controller {
 			Parent root = loader.load();
 			Controller controller = loader.getController();
 			Scene interfacciaLogin = new Scene(root);
+			//copio le informazioni relative alla partita in corso
 			controller.copiaInformazioniPartita(prt);
-
+			//copio le informazioni relative ai giocatori della partita corrente
+			controller.copiaInformazioniElencoGiocatori(giocatoriPrt);
+			System.out.println(giocatoriPrt.size());
 			stage.setScene(interfacciaLogin);
 			stage.show();
 		} catch (IOException e) {
@@ -569,8 +573,19 @@ public class Controller {
     @FXML Button btnGiocaDiNuovo;
     //inizio una nuova partita
     @FXML public void GiocaDiNuovo(ActionEvent actionEvent) {
+    	//sistemo l'interfaccia per poter iniziare una nuova partita
     	btnGiocaDiNuovo.setVisible(false);
     	lblVitaPersa.setVisible(false);
+    	btnInizioTurnoGiocatore.setDisable(false);
+    	lstViewPrese.getItems().clear();
+    	lstViewVite.getItems().clear();
+    	paneNumeroPrese.setVisible(true);
+    	
+    	//elimino le carte dal banco
+    	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+    	for(ImageView i : listaCarteBanco) {	
+    		i.setImage(null);
+		}
 
     	//setto e ottengo tutti i dati per una nuova partita
     	//nuovo codice partita
@@ -594,20 +609,28 @@ public class Controller {
     		fw.write("codicePartita , "+codPartita);
     		fw.close();
     		
-    		//do le vite e le carte ai giocatori
-    		String nVite = comboNVite.getSelectionModel().getSelectedItem();
-    		if(nVite!=null) {
-    			for(Giocatore i : giocatoriPrt) {
-    				i.setVite(Integer.parseInt(nVite));
-    			}
-    		}else {
-    			for(Giocatore i : giocatoriPrt) {
-    				i.setVite(nViteDefault);
-    			}
+    		//do le vite e le carte ai giocatori le vite le setto di default a tre 
+    		for(Giocatore i : giocatoriPrt) {
+    			i.setVite(3);
     		}
 
     		//imposto i dati di una nuova partita
     		prt=new Partita(codPartita, giocatoriPrt);
+    		
+    		System.out.println(giocatoriPrt.size());//output: 0
+    		System.out.println(this.prt.getElencoGiocatori().size());//output: 0
+    		System.out.println(countTurnoGiocatore);//output: 0
+    		//scrivo in output chi giocherà il primo turno
+			lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+			
+    		
+			//do le carte a ogni giocatore
+	    	mazzo.mescola();
+	    	numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+	    	for(Giocatore g : this.prt.getElencoGiocatori()) {
+	    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+	    	}
+	    	
     	}catch(FileNotFoundException e) {
     		System.out.println(e);
     	}catch(IOException eIO) {
