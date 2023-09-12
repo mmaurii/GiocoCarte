@@ -259,8 +259,10 @@ public class Controller {
     				controller.copiaInformazioniPartita(prt);
     				//copio le informazioni relative alla label lblTurnoGiocatore
         			controller.copiaInformazioniLabel(lblTurnoGiocatore);
-    				//copio le informazioni relative al numero di carte per la mano corrente
+    				//copio le informazioni relative al numero di carte per la mano corrente 
         			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
+    				//copio le informazioni relative ai giocatori della partita corrente
+        			controller.copiaInformazioniElencoGiocatori(giocatoriPrt);
     			} catch (IOException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -468,9 +470,9 @@ public class Controller {
     				}
     				
         			//azzero i contatori delle prese relativi alla mano corrente
-    				g.setPreseEffettuate();
+    				g.setPreseEffettuate(0);
     				g.setPreseDichiarate(-1);
-    			}
+     			}
 
     			Iterator<Giocatore> g = this.prt.getElencoGiocatori().iterator();
     			while(g.hasNext()) {
@@ -484,6 +486,7 @@ public class Controller {
     			}else {//concludo la partita e ne annuncio il vincitore
     				lblVitaPersa.setText(this.prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
     				btnIniziaNuovaMano.setVisible(false);
+    				btnGiocaDiNuovo.setVisible(true);
     			}
     		}
     	}
@@ -502,6 +505,7 @@ public class Controller {
     		i.setImage(null);
     	}
     }
+    
     
     @FXML Button btnIniziaNuovaMano;
     @FXML public void IniziaNuovaMano(ActionEvent actionEvent) {
@@ -535,11 +539,91 @@ public class Controller {
     }
 
     
+    @FXML Button btnPartitaTornaAlLogin;
+    //torno all' interfaccia di login
+    @FXML public void PartitaTornaAlLogin(ActionEvent actionEvent) {
+    	//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
+    	Stage stage = (Stage)btnPartitaTornaAlLogin.getScene().getWindow();
+    	stage.close();
+    	
+    	//stabilire come fare il salvataggio della partita
+    	
+    	//riapro la finestra di login
+		try {
+			//root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+			Parent root = loader.load();
+			Controller controller = loader.getController();
+			Scene interfacciaLogin = new Scene(root);
+			controller.copiaInformazioniPartita(prt);
+
+			stage.setScene(interfacciaLogin);
+			stage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+    }
+
+
+    @FXML Button btnGiocaDiNuovo;
+    //inizio una nuova partita
+    @FXML public void GiocaDiNuovo(ActionEvent actionEvent) {
+    	btnGiocaDiNuovo.setVisible(false);
+    	lblVitaPersa.setVisible(false);
+
+    	//setto e ottengo tutti i dati per una nuova partita
+    	//nuovo codice partita
+    	try {
+    		File file = new File("src/Status.txt");
+    		Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
+    		String codPartita = scan.nextLine().split(" , ")[1];
+    		scan.close();
+
+    		//controllare univocita
+    		codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
+
+    		//aggiungo al codice gli 0 non rilevanti
+    		int nCifre = codPartita.length();
+    		for(int i=0; i<lungCodicePartita-nCifre; i++) {
+    			codPartita="0"+codPartita;
+    		}
+    		
+    		//salvo il codice corrente nel file di status
+    		FileWriter fw = new FileWriter(file);
+    		fw.write("codicePartita , "+codPartita);
+    		fw.close();
+    		
+    		//do le vite e le carte ai giocatori
+    		String nVite = comboNVite.getSelectionModel().getSelectedItem();
+    		if(nVite!=null) {
+    			for(Giocatore i : giocatoriPrt) {
+    				i.setVite(Integer.parseInt(nVite));
+    			}
+    		}else {
+    			for(Giocatore i : giocatoriPrt) {
+    				i.setVite(nViteDefault);
+    			}
+    		}
+
+    		//imposto i dati di una nuova partita
+    		prt=new Partita(codPartita, giocatoriPrt);
+    	}catch(FileNotFoundException e) {
+    		System.out.println(e);
+    	}catch(IOException eIO) {
+    		System.out.println(eIO);    		
+    	}
+
+    }
+    
+    
     //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
     //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
     private void copiaInformazioniPartita(Partita tempPrt) {
     	this.prt=tempPrt;
 	}    
+    
+    //metodo che passa il numero di carte in fase di run-time da un istanza della classe controller all'altra
     private void copiaInformazioniNumCarte(int numeroCarteAGiocatore)
     {
     	this.numeroCarteAGiocatore=numeroCarteAGiocatore;
@@ -549,6 +633,11 @@ public class Controller {
     private void copiaInformazioniLabel(Label lblTurnoGiocatore) {
     	this.lblTurnoGiocatore=lblTurnoGiocatore;
 	}
+    
+    //metodo che passa i dati dei giocatori in fase di run-time da un istanza della classe controller all'altra
+    private void copiaInformazioniElencoGiocatori(ArrayList<Giocatore> giocatoriPrt) {
+    	this.giocatoriPrt=giocatoriPrt;
+    }
     
     private void giocaCartaMano(int posCartaCliccata) {
     	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));

@@ -46,8 +46,8 @@ public class Giocatore {
 		this.preseDichiarate=nPrese;
 	}
 	
-	public void setPreseEffettuate() {
-		this.preseEffettuate=0;
+	public void setPreseEffettuate(int nPrese) {
+		this.preseEffettuate=nPrese;
 	}
 	
 	public void incrementaPreseEffettuate() {
