@@ -12,8 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
 import java.util.*;
+
+import javax.security.auth.login.AccountNotFoundException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -45,6 +47,8 @@ public class Controller {
     int countTurnoGiocatore=0;
     private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
     boolean primaMano=true;
+    String pathClassifica = "src/Classifica.txt";
+    String pathStatus = "src/Status.txt";
     
     //eventi FXML
     @FXML private TextField txtUsername;
@@ -146,7 +150,7 @@ public class Controller {
     @FXML Label lblCodice;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
     	try {
-    		File file = new File("src/Status.txt");
+    		File file = new File(pathStatus);
     		Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
     		String codPartita = scan.nextLine().split(" , ")[1];
     		scan.close();
@@ -207,9 +211,6 @@ public class Controller {
 			Scene interfacciaLogin = new Scene(root);
 			//copio le informazioni relative alla partita in corso
 			controller.copiaInformazioniPartita(prt);
-			//copio le informazioni relative ai giocatori della partita corrente
-			controller.copiaInformazioniElencoGiocatori(giocatoriPrt);
-			System.out.println(giocatoriPrt.size());
 			stage.setScene(interfacciaLogin);
 			stage.show();
 		} catch (IOException e) {
@@ -265,8 +266,6 @@ public class Controller {
         			controller.copiaInformazioniLabel(lblTurnoGiocatore);
     				//copio le informazioni relative al numero di carte per la mano corrente 
         			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
-    				//copio le informazioni relative ai giocatori della partita corrente
-        			controller.copiaInformazioniElencoGiocatori(giocatoriPrt);
     			} catch (IOException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -392,18 +391,12 @@ public class Controller {
     		txtNumeroPrese.setText(null);
     	}    
 
+
+		
     	if(lstViewPrese.getItems().size()-1==countTurnoGiocatore||!paneNumeroPrese.isVisible()) {
-
-    		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
     		//rimetto le carte coperte
-    		for(int i=0; i< listaCarteMano.size();i++) {
-    			if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
-    				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
-    			}else {
-    				listaCarteMano.get(i).setImage(null);
-    			}
-    		}
-
+    		copriCarteGiocatore();
+    		
     		//controllo che non si sfori il numero di giocatori
     		if(countTurnoGiocatore<prt.getElencoGiocatori().size()) {
     			//passo il turno al prossimo giocatore incrementando il contatore
@@ -427,7 +420,7 @@ public class Controller {
     			}else {
     				//azzero il contatore dei turni
     				countTurnoGiocatore=0;
-
+    				
     				//disabilito la possibilità di dire quante prese si fanno
     				paneNumeroPrese.setVisible(false);
 
@@ -442,6 +435,10 @@ public class Controller {
     				lblManoGiocatore.setVisible(false);
     				btnFineTurnoGiocatore.setDisable(true);
     				btnIniziaNuovoRound.setVisible(true);
+    				
+    				//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
+    				gio=this.prt.getElencoGiocatori().remove(0);
+    				this.prt.getElencoGiocatori().add(gio);
     			}
     		}else {
     			//azzero il contatore dei turni
@@ -487,10 +484,16 @@ public class Controller {
 
     			if(this.prt.getElencoGiocatori().size()>1) {//avvio una nuova mano
     				cominciaNuovaMano();
+
+    				//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
+    				gio=this.prt.getElencoGiocatori().remove(0);
+    				this.prt.getElencoGiocatori().add(gio);
     			}else {//concludo la partita e ne annuncio il vincitore
     				lblVitaPersa.setText(this.prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
     				btnIniziaNuovaMano.setVisible(false);
-    				btnGiocaDiNuovo.setVisible(true);
+    				
+    				//conteggio punti
+    				aggiornaClassifica(pathClassifica);
     			}
     		}
     	}
@@ -508,6 +511,9 @@ public class Controller {
     	for(ImageView i : listaCarteBanco) {
     		i.setImage(null);
     	}
+    	
+    	//mostro le carte coperte del giocatore che deve iniziare il turno
+    	copriCarteGiocatore();
     }
     
     
@@ -523,15 +529,8 @@ public class Controller {
 		btnInizioTurnoGiocatore.setDisable(false);
 		paneNumeroPrese.setVisible(true);
 
-		//rimetto le carte coperte
-		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
-		for(int i=0; i< listaCarteMano.size();i++) {
-			if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
-				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
-			}else {
-				listaCarteMano.get(i).setImage(null);
-			}
-		}
+		//rimetto le carte coperte;
+		copriCarteGiocatore();
 		
 		//elimino le carte dal banco
     	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
@@ -563,82 +562,13 @@ public class Controller {
 
 			stage.setScene(interfacciaLogin);
 			stage.show();
+			
+			//implementare salvataggio
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
     }
-
-
-    @FXML Button btnGiocaDiNuovo;
-    //inizio una nuova partita
-    @FXML public void GiocaDiNuovo(ActionEvent actionEvent) {
-    	//sistemo l'interfaccia per poter iniziare una nuova partita
-    	btnGiocaDiNuovo.setVisible(false);
-    	lblVitaPersa.setVisible(false);
-    	btnInizioTurnoGiocatore.setDisable(false);
-    	lstViewPrese.getItems().clear();
-    	lstViewVite.getItems().clear();
-    	paneNumeroPrese.setVisible(true);
-    	
-    	//elimino le carte dal banco
-    	ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-    	for(ImageView i : listaCarteBanco) {	
-    		i.setImage(null);
-		}
-
-    	//setto e ottengo tutti i dati per una nuova partita
-    	//nuovo codice partita
-    	try {
-    		File file = new File("src/Status.txt");
-    		Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
-    		String codPartita = scan.nextLine().split(" , ")[1];
-    		scan.close();
-
-    		//controllare univocita
-    		codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
-
-    		//aggiungo al codice gli 0 non rilevanti
-    		int nCifre = codPartita.length();
-    		for(int i=0; i<lungCodicePartita-nCifre; i++) {
-    			codPartita="0"+codPartita;
-    		}
-    		
-    		//salvo il codice corrente nel file di status
-    		FileWriter fw = new FileWriter(file);
-    		fw.write("codicePartita , "+codPartita);
-    		fw.close();
-    		
-    		//do le vite e le carte ai giocatori le vite le setto di default a tre 
-    		for(Giocatore i : giocatoriPrt) {
-    			i.setVite(3);
-    		}
-
-    		//imposto i dati di una nuova partita
-    		prt=new Partita(codPartita, giocatoriPrt);
-    		
-    		System.out.println(giocatoriPrt.size());//output: 0
-    		System.out.println(this.prt.getElencoGiocatori().size());//output: 0
-    		System.out.println(countTurnoGiocatore);//output: 0
-    		//scrivo in output chi giocherà il primo turno
-			lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-			
-    		
-			//do le carte a ogni giocatore
-	    	mazzo.mescola();
-	    	numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-	    	for(Giocatore g : this.prt.getElencoGiocatori()) {
-	    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
-	    	}
-	    	
-    	}catch(FileNotFoundException e) {
-    		System.out.println(e);
-    	}catch(IOException eIO) {
-    		System.out.println(eIO);    		
-    	}
-
-    }
-    
     
     //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
     //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
@@ -716,6 +646,10 @@ public class Controller {
     	//decremento se necessario il numero di carte
     	if(numeroCarteAGiocatore>1) {
     		numeroCarteAGiocatore--;
+    	}else if (numeroCarteAGiocatore==1) {//quando arrivo a una carta a giocatore rido le carte in base al numero di gioc atori
+    		numeroCarteAGiocatore = quanteCarteAGiocatore(this.prt.getElencoGiocatori().size());
+    	}else if (this.prt.getElencoGiocatori().size()==2) {
+    		numeroCarteAGiocatore=1;
     	}
     	
     	if(this.prt.getElencoGiocatori().size()>1) {
@@ -728,5 +662,42 @@ public class Controller {
 
     		btnIniziaNuovaMano.setVisible(true);
     	}
+    }
+    
+    private void copriCarteGiocatore() {
+		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+		//rimetto le carte coperte
+		for(int i=0; i< listaCarteMano.size();i++) {
+			if(countTurnoGiocatore+1<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore+1).getCarteMano().size()) {
+				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+			}else {
+				listaCarteMano.get(i).setImage(null);
+			}
+		}
+    }
+    
+    private void aggiornaClassifica(String path) {
+		try{
+	    	File file = new File(path);
+			Scanner scan = new Scanner(file);
+			while(scan.hasNext()) {
+				String line = scan.nextLine();
+				String[] data = line.split(" , ");
+				
+				//controllo il nome salvato su file e lo confronto col vincitore
+				if(data[0]==this.prt.getElencoGiocatori().get(0).getNome()) {
+					//incremento il punteggio
+				}else {
+					//aggiungo la voce del giocatore e il relativo punteggio
+				}
+				
+					
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 }
