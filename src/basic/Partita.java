@@ -1,7 +1,12 @@
 package basic;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Partita {
+public class Partita implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Mazzo m;
 	ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
 	String cod;

@@ -100,6 +100,7 @@ public class Controller {
 			Scene interfacciaCreaPartita = new Scene(root);
 			stage.setScene(interfacciaCreaPartita);
 			stage.show();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,6 +267,8 @@ public class Controller {
         			controller.copiaInformazioniLabel(lblTurnoGiocatore);
     				//copio le informazioni relative al numero di carte per la mano corrente 
         			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
+        			
+        			SalvaPartita(prt);
     			} catch (IOException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -564,6 +567,8 @@ public class Controller {
 			stage.show();
 			
 			//implementare salvataggio
+			Partita p = CaricaPartita(3);
+	    	System.out.println(p.getElencoGiocatori().size());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -678,26 +683,77 @@ public class Controller {
     
     private void aggiornaClassifica(String path) {
 		try{
+			final int puntiVincitore=10;
+			ArrayList<String> data = new ArrayList<String>();
 	    	File file = new File(path);
-			Scanner scan = new Scanner(file);
+			Scanner scan = new Scanner(file);			
+			boolean presenzaGiocatore=false;
 			while(scan.hasNext()) {
 				String line = scan.nextLine();
-				String[] data = line.split(" , ");
-				
+				String[] lineData = line.split(" , ");
 				//controllo il nome salvato su file e lo confronto col vincitore
-				if(data[0]==this.prt.getElencoGiocatori().get(0).getNome()) {
-					//incremento il punteggio
-				}else {
-					//aggiungo la voce del giocatore e il relativo punteggio
-				}
-				
+				if(lineData[0].equals(this.prt.getElencoGiocatori().get(0).getNome())) {
 					
+					//incremento il punteggio
+					lineData[1]=""+(puntiVincitore+Integer.parseInt(lineData[1]));
+					line = lineData[0]+" , "+lineData[1]+"\n";
+					presenzaGiocatore=true;
+				}	
+				
+				//mi salvo la riga appena letta
+				data.add(line+"\n");
 			}
+			scan.close();
 			
-		} catch (FileNotFoundException e) {
+			FileWriter fw = new FileWriter(file);
+			//Riscrivo il file con le opportune modifiche
+			for(String l : data) {
+				fw.write(l);
+			}
+			if(!presenzaGiocatore) {
+				fw.write(this.prt.getElencoGiocatori().get(0).getNome()+" , "+puntiVincitore);
+			}
+			fw.close();
+		} catch (FileNotFoundException FNFe) {
+			// TODO Auto-generated catch block
+			FNFe.printStackTrace();
+		} catch (IOException IOe) {
+			// TODO Auto-generated catch block
+			IOe.printStackTrace();
+		}
+    }
+    
+    
+    //controlla
+    private void SalvaPartita(Partita partita) {
+    	try {
+    		String path="src/SalvataggioPartite.txt";
+    		FileOutputStream file = new FileOutputStream(path);
+    		ObjectOutputStream objOutput = new ObjectOutputStream(file);
+    		objOutput.writeObject(partita);
+    		objOutput.close();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+    }
+    
+    private Partita CaricaPartita(int codicePartita) {
+    	try {
+    		String path="src/SalvataggioPartite.txt";
+    		FileInputStream file = new FileInputStream(path);
+    		ObjectInputStream objOutput = new ObjectInputStream(file);
+    		Partita partita= (Partita) objOutput.readObject();
+    		objOutput.close();
+    		
+    		return partita;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return null;
     }
 }

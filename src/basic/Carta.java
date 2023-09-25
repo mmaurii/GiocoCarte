@@ -1,6 +1,12 @@
 package basic;
 
-public class Carta {
+import java.io.Serializable;
+
+public class Carta implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int numero;
 	Seme seme;
 	String percorso;

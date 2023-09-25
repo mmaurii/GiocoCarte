@@ -1,12 +1,17 @@
 package basic;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Mazzo {
+public class Mazzo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<Carta> mazzo = new ArrayList<Carta>();
 	
 	/*public Mazzo(ArrayList<Carta> mazzo) {

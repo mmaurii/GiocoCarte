@@ -1,7 +1,12 @@
 package basic;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Giocatore {
+public class Giocatore implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String nome;
 	int nVite;
 	ArrayList<Carta> carte = new ArrayList<Carta>();
