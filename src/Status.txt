@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 codicePartita , 0000000015
+=======
+codicePartita , 0000000032
+>>>>>>> Stashed changes
