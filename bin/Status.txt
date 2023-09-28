@@ -1,5 +1,1 @@
-<<<<<<< Updated upstream
-codicePartita , 0000000014
-=======
-codicePartita , 0000000032
->>>>>>> Stashed changes
+codicePartita , 0000000022

@@ -625,27 +625,19 @@ public class Controller {
     
     @FXML Button btnClassifica;
     @FXML ListView<String> lstClassifica;
-
+    //creo un pop-up che visualizzi la classifica
     @FXML public void btnClassifica(ActionEvent actionEvent) {
-    	
     	VBox root = new VBox();
-    	 
 		try {
-
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("popupclassifica.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
 			
 			Stage stage = new Stage();
 			stage.setTitle("Classifica");
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
-			stage.show();
-			
-
-			
-			lstClassifica = new ListView<String>();	
-
-
+			stage.show();			
+			lstClassifica = new ListView<String>();				
 			try {
 				File file = new File(pathClassifica);
 				Scanner scan = new Scanner(file);			
@@ -654,19 +646,13 @@ public class Controller {
 					lstClassifica.getItems().add(line);	
 				}
 				scan.close();
-
-			} catch (FileNotFoundException FNFe) {
+			} catch (FileNotFoundException fnfe) {
 				// TODO Auto-generated catch block
-				FNFe.printStackTrace();
-			} catch (IOException IOe) {
-				// TODO Auto-generated catch block
-				IOe.printStackTrace();
+				fnfe.printStackTrace();
 			}
 			
-			
-			root.getChildren().add(lstClassifica);
-			
-								
+			lstClassifica.getItems().sort(Comparator.reverseOrder());
+			root.getChildren().add(lstClassifica);					
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -785,11 +771,11 @@ public class Controller {
 				String line = scan.nextLine();
 				String[] lineData = line.split(" , ");
 				//controllo il nome salvato su file e lo confronto col vincitore
-				if(lineData[0].equals(this.prt.getElencoGiocatori().get(0).getNome())) {
+				if(lineData[1].equals(this.prt.getElencoGiocatori().get(0).getNome())) {
 					
 					//incremento il punteggio
-					lineData[1]=""+(puntiVincitore+Integer.parseInt(lineData[1]));
-					line = lineData[0]+" , "+lineData[1]+"\n";
+					lineData[0]=""+(puntiVincitore+Integer.parseInt(lineData[0]));
+					line = lineData[1]+" , "+lineData[0]+"\n";
 					presenzaGiocatore=true;
 				}	
 				
@@ -804,7 +790,7 @@ public class Controller {
 				fw.write(l);
 			}
 			if(!presenzaGiocatore) {
-				fw.write(this.prt.getElencoGiocatori().get(0).getNome()+" , "+puntiVincitore);
+				fw.write(puntiVincitore+" , "+this.prt.getElencoGiocatori().get(0).getNome());
 			}
 			fw.close();
 		} catch (FileNotFoundException FNFe) {
