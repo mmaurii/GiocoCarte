@@ -228,54 +228,61 @@ public class Controller {
     @FXML ListView<String> lstViewVite;
     @FXML public void avviaPartita(ActionEvent actionEvent) {
     	//ottengo il codice partita inserito dall'utente
-    	String cod = txtCodPartita.getText();
-    	if(prt!=null)//controllo che venga creata una partita per poterne confrontare il codice
-    		if(cod.equals(this.prt.getCodice())) {
-    			//chiudo la finestra di login e apro quella di gioco
-    			Stage stage = (Stage)btnGioca.getScene().getWindow();
-    			stage.close();
+    	String codPartita = txtCodPartita.getText();
+    	//Partita p = CaricaPartita(codPartita);
+    	//if(p!=null)
+    		/*if(codPartita.equals(p.getCodice())) {
+    			this.prt = p;
+    			System.out.println("nice1");
+    		}else if(this.prt!=null)*/
+    		if(prt!=null)//controllo che venga creata una partita per poterne confrontare il codice
+    			if(codPartita.equals(this.prt.getCodice())) {
+    				//chiudo la finestra di login e apro quella di gioco
+    				Stage stage = (Stage)btnGioca.getScene().getWindow();
+    				stage.close();
 
-    			//apro la finestra di gioco
-    			Group root = new Group();
-    			try {
-    				//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
-    				FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
-    				root = loader.load();
-    				Controller controller = loader.getController();
-    				//definisco chi giocherà il primo turno
-        			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-        			lblTurnoGiocatore.setTextFill(Color.BLACK);
-        			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
-        			lblTurnoGiocatore.setId("lblTurnoGiocatore");
-        			root.getChildren().add(lblTurnoGiocatore);
-        			Scene interfacciaDiGioco = new Scene(root);
-        			stage.setScene(interfacciaDiGioco);
-        			stage.show();
-        			lblTurnoGiocatore.setTranslateX(190);
-        			lblTurnoGiocatore.setTranslateY(220);
-        			
-        			//do le carte a ogni giocatore
-        	    	mazzo.mescola();
-        	    	numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-        	    	for(Giocatore g : this.prt.getElencoGiocatori()) {
-        	    		g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
-        	    	}
-        	    	
-    				//copio le informazioni relative alla partita in corso
-    				controller.copiaInformazioniPartita(prt);
-    				//copio le informazioni relative alla label lblTurnoGiocatore
-        			controller.copiaInformazioniLabel(lblTurnoGiocatore);
-    				//copio le informazioni relative al numero di carte per la mano corrente 
-        			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
-        			
-        			SalvaPartita(prt);
-    			} catch (IOException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
+    				//apro la finestra di gioco
+    				Group root = new Group();
+    				try {
+    					//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
+    					FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+    					root = loader.load();
+    					Controller controller = loader.getController();
+    					//definisco chi giocherà il primo turno
+    					lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+    					lblTurnoGiocatore.setTextFill(Color.BLACK);
+    					lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
+    					lblTurnoGiocatore.setId("lblTurnoGiocatore");
+    					root.getChildren().add(lblTurnoGiocatore);
+    					Scene interfacciaDiGioco = new Scene(root);
+    					stage.setScene(interfacciaDiGioco);
+    					stage.show();
+    					lblTurnoGiocatore.setTranslateX(190);
+    					lblTurnoGiocatore.setTranslateY(220);
+
+    					//do le carte a ogni giocatore
+    					mazzo.mescola();
+    					numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+    					for(Giocatore g : this.prt.getElencoGiocatori()) {
+    						g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+    					}
+
+
+    					//copio le informazioni relative alla partita in corso
+    					controller.copiaInformazioniPartita(prt);
+    					//copio le informazioni relative alla label lblTurnoGiocatore
+    					controller.copiaInformazioniLabel(lblTurnoGiocatore);
+    					//copio le informazioni relative al numero di carte per la mano corrente 
+    					controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
+
+    				} catch (IOException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    			}else {
+    				lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
     			}
-    		}else {
-    			lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
-    		}
+
     }
 
 
@@ -299,12 +306,12 @@ public class Controller {
 
     	//mostro le carte in output relative al giocatore del turno corrente
     	for(int i = 0; i<listaCarteMano.size();i++) {	
-			if(i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
-    		Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
-    		listaCarteMano.get(i).setImage(newImg);
-			}else {
-				listaCarteMano.get(i).setImage(null);
-			}
+    		if(i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
+    			Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
+    			listaCarteMano.get(i).setImage(newImg);
+    		}else {
+    			listaCarteMano.get(i).setImage(null);
+    		}
     	}
     	btnInizioTurnoGiocatoreClicked=true;
     }
@@ -318,10 +325,10 @@ public class Controller {
     @FXML ImageView imgCartaBanco6;
     @FXML ImageView imgCartaBanco7;
     @FXML ImageView imgCartaBanco8;
-	//l'n giocatore gioca la carta1
+    //l'n giocatore gioca la carta1
     @FXML public void GiocaCartaMano1(MouseEvent mouseEvent) {
-       final int posCartaCliccata=0;
-       giocaCartaMano(posCartaCliccata);	
+    	final int posCartaCliccata=0;
+    	giocaCartaMano(posCartaCliccata);	
     }    
 
 
@@ -553,7 +560,10 @@ public class Controller {
     	stage.close();
     	
     	//stabilire come fare il salvataggio della partita
-    	
+		//implementare salvataggio
+		//SalvaPartita(this.prt);
+    	//System.out.println(prt.getElencoGiocatori().size());
+
     	//riapro la finestra di login
 		try {
 			//root = FXMLLoader.load(getClass().getResource("Login.fxml"));
@@ -561,14 +571,10 @@ public class Controller {
 			Parent root = loader.load();
 			Controller controller = loader.getController();
 			Scene interfacciaLogin = new Scene(root);
-			controller.copiaInformazioniPartita(prt);
+			controller.copiaInformazioniPartita(this.prt);
 
 			stage.setScene(interfacciaLogin);
 			stage.show();
-			
-			//implementare salvataggio
-			Partita p = CaricaPartita(3);
-	    	System.out.println(p.getElencoGiocatori().size());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -725,6 +731,7 @@ public class Controller {
     
     
     //controlla
+    /*
     private void SalvaPartita(Partita partita) {
     	try {
     		String path="src/SalvataggioPartite.txt";
@@ -738,15 +745,28 @@ public class Controller {
 		}
     }
     
-    private Partita CaricaPartita(int codicePartita) {
+    private Partita CaricaPartita(String codicePartita) {
     	try {
     		String path="src/SalvataggioPartite.txt";
     		FileInputStream file = new FileInputStream(path);
-    		ObjectInputStream objOutput = new ObjectInputStream(file);
-    		Partita partita= (Partita) objOutput.readObject();
-    		objOutput.close();
-    		
-    		return partita;
+    		ObjectInputStream objInput = new ObjectInputStream(file);
+    		//objInput.setObjectInputFilter(objInput.getObjectInputFilter());
+    		Partita partita=new Partita();
+    		while(true) {
+    		    try {
+    	    		partita= (Partita) objInput.readObject();
+    	    		if(partita.getCodice().equals(codicePartita)) {
+    	    			System.out.println("nice");
+    	    		}
+    		    } catch (EOFException e) {
+    		         // end of file reached
+    				//e.printStackTrace();
+	    			//System.out.println("male");
+    	    		objInput.close();
+    	    		return partita;
+
+    		    }
+    		}    		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -755,5 +775,5 @@ public class Controller {
 			e.printStackTrace();
 		}
     	return null;
-    }
+    }*/
 }
