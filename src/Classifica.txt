@@ -1,9 +1,12 @@
 h , 20
-
 marco , 10
 mario , 10
 b , 10
 gino , 10
 f , 10
+<<<<<<< Updated upstream
 a , 40
 
+=======
+a , 30
+>>>>>>> Stashed changes

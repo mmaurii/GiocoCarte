@@ -33,7 +33,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.animation.Interpolator;
+import javafx.animation.ScaleTransition;
 
 public class Controller {
 	//variabili di controllo
@@ -241,7 +245,7 @@ public class Controller {
     				//chiudo la finestra di login e apro quella di gioco
     				Stage stage = (Stage)btnGioca.getScene().getWindow();
     				stage.close();
-
+    				
     				//apro la finestra di gioco
     				Group root = new Group();
     				try {
@@ -267,7 +271,6 @@ public class Controller {
     					for(Giocatore g : this.prt.getElencoGiocatori()) {
     						g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
     					}
-
 
     					//copio le informazioni relative alla partita in corso
     					controller.copiaInformazioniPartita(prt);
@@ -588,6 +591,8 @@ public class Controller {
     @FXML Button btnPartitaTornaAlLogin;
     //torno all' interfaccia di login
     @FXML public void PartitaTornaAlLogin(ActionEvent actionEvent) {
+    	
+
     	//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
     	Stage stage = (Stage)btnPartitaTornaAlLogin.getScene().getWindow();
     	stage.close();
@@ -598,7 +603,10 @@ public class Controller {
     	//System.out.println(prt.getElencoGiocatori().size());
 
     	//riapro la finestra di login
+
+    	 
 		try {
+
 			//root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
 			Parent root = loader.load();
@@ -608,6 +616,57 @@ public class Controller {
 
 			stage.setScene(interfacciaLogin);
 			stage.show();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+    }
+    
+    @FXML Button btnClassifica;
+    @FXML ListView<String> lstClassifica;
+
+    @FXML public void btnClassifica(ActionEvent actionEvent) {
+    	
+    	VBox root = new VBox();
+    	 
+		try {
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popupclassifica.fxml"));
+			root = loader.load();
+			
+			Stage stage = new Stage();
+			stage.setTitle("Classifica");
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			
+
+			
+			lstClassifica = new ListView<String>();	
+
+
+			try {
+				File file = new File(pathClassifica);
+				Scanner scan = new Scanner(file);			
+				while(scan.hasNext()) {
+					String line = scan.nextLine();
+					lstClassifica.getItems().add(line);	
+				}
+				scan.close();
+
+			} catch (FileNotFoundException FNFe) {
+				// TODO Auto-generated catch block
+				FNFe.printStackTrace();
+			} catch (IOException IOe) {
+				// TODO Auto-generated catch block
+				IOe.printStackTrace();
+			}
+			
+			
+			root.getChildren().add(lstClassifica);
+			
+								
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Group xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.Controller">
+<Group xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.Controller">
    <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="411.0" prefWidth="612.0">
          <children>
@@ -98,7 +98,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="btnPartitaTornaAlLogin" layoutX="477.0" layoutY="19.0" mnemonicParsing="false" onAction="#PartitaTornaAlLogin" text="Torna alla Home">
+            <Button fx:id="btnPartitaTornaAlLogin" layoutX="483.0" layoutY="17.0" mnemonicParsing="false" onAction="#PartitaTornaAlLogin" text="Torna alla Home">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnClassifica" layoutX="500.0" layoutY="46.0" mnemonicParsing="false" onAction="#btnClassifica" text="Classifica">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
