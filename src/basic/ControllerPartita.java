@@ -38,6 +38,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.fxml.FXMLLoader;
+
 
 public class ControllerPartita {
 	//variabili di controllo
@@ -391,7 +393,7 @@ public class ControllerPartita {
     }
     
     @FXML Button btnClassifica;
-    @FXML ListView<String> lstClassifica;
+
     //creo un pop-up che visualizzi la classifica
     @FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
     	VBox root = new VBox();
@@ -399,27 +401,15 @@ public class ControllerPartita {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
 			
+			ControllerPopUpClassifica controller = loader.getController();
+			controller.populateListView();
+			
 			Stage stage = new Stage();
 			stage.setTitle("Classifica");
-			Scene scene = new Scene(root);
+			Scene scene = new Scene(root, 480, 310);
 			stage.setScene(scene);
 			stage.show();			
-			lstClassifica = new ListView<String>();				
-			try {
-				File file = new File(pathClassifica);
-				Scanner scan = new Scanner(file);			
-				while(scan.hasNext()) {
-					String line = scan.nextLine();
-					lstClassifica.getItems().add(line);	
-				}
-				scan.close();
-			} catch (FileNotFoundException fnfe) {
-				// TODO Auto-generated catch block
-				fnfe.printStackTrace();
-			}
-			
-			lstClassifica.getItems().sort(Comparator.reverseOrder());
-			root.getChildren().add(lstClassifica);					
+							
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

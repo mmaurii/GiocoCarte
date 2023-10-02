@@ -164,6 +164,26 @@ public class ControllerHome implements Initializable{
     	}
     }
     
+    @FXML ListView<String> lstClassifica;
+
+    public void populateListView() {
+    	
+		try {
+			File file = new File(pathClassifica);
+			Scanner scan = new Scanner(file);			
+			while(scan.hasNext()) {
+				String line = scan.nextLine();
+				lstClassifica.getItems().add(line);	
+			}
+			scan.close();
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		}
+		
+		lstClassifica.getItems().sort(Comparator.reverseOrder());
+    }
+    
     //controlla
     /*
     private void SalvaPartita(Partita partita) {

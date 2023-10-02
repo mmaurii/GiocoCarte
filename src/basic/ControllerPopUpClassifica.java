@@ -55,4 +55,25 @@ public class ControllerPopUpClassifica {
     String pathClassifica = "src/Classifica.txt";
     String pathStatus = "src/Status.txt";
     
+    
+    @FXML ListView<String> lstClassifica;
+
+    public void populateListView() {
+    	
+		try {
+			File file = new File(pathClassifica);
+			Scanner scan = new Scanner(file);			
+			while(scan.hasNext()) {
+				String line = scan.nextLine();
+				lstClassifica.getItems().add(line);	
+			}
+			scan.close();
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		}
+		
+		lstClassifica.getItems().sort(Comparator.reverseOrder());
+    }
+    
 }

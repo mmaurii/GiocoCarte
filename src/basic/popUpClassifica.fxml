@@ -6,15 +6,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPopUpClassifica">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPopUpClassifica">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="240.0" layoutY="61.0" text="CLASSIFICA">
+            <Label layoutX="163.0" layoutY="14.0" text="CLASSIFICA">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
+            <ListView fx:id="lstClassifica" layoutX="139.0" layoutY="76.0" prefHeight="177.0" prefWidth="200.0" AnchorPane.bottomAnchor="147.0" AnchorPane.leftAnchor="139.0" AnchorPane.rightAnchor="301.0" AnchorPane.topAnchor="76.0" />
          </children>
     </AnchorPane>
   </children>
