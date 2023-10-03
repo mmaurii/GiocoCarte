@@ -2,7 +2,6 @@ package basic;
 
 import java.io.*;
 import java.net.URL;
-
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -13,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import java.util.*;
+import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -87,58 +87,26 @@ public class ControllerHome implements Initializable{
     @FXML public void avviaPartita(ActionEvent actionEvent) {
     	//ottengo il codice partita inserito dall'utente
     	String codPartita = txtCodPartita.getText();
-    	//Partita p = CaricaPartita(codPartita);
-    	//if(p!=null)
+    	Partita p = CaricaPartita(codPartita);
+    	if(p==null) {
     		/*if(codPartita.equals(p.getCodice())) {
     			this.prt = p;
     			System.out.println("nice1");
     		}else if(this.prt!=null)*/
-    		if(prt!=null)//controllo che venga creata una partita per poterne confrontare il codice
+    		if(prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
     			if(codPartita.equals(this.prt.getCodice())) {
-    				//chiudo la finestra di home e apro quella di gioco
-    				Stage stage = (Stage)btnGioca.getScene().getWindow();
-    				stage.close();
-    				
-    				//apro la finestra di gioco
-    				Group root = new Group();
-    				try {
-    					//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
-    					FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
-    					root = loader.load();
-    					ControllerPartita controller = loader.getController();
-    					//definisco chi giocherà il primo turno
-    					lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-    					lblTurnoGiocatore.setTextFill(Color.BLACK);
-    					lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
-    					lblTurnoGiocatore.setId("lblTurnoGiocatore");
-    					root.getChildren().add(lblTurnoGiocatore);
-    					Scene interfacciaDiGioco = new Scene(root);
-    					stage.setScene(interfacciaDiGioco);
-    					stage.show();
-    					lblTurnoGiocatore.setTranslateX(190);
-    					lblTurnoGiocatore.setTranslateY(220);
-
-    					//do le carte a ogni giocatore
-    					mazzo.mescola();
-    					numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-    					for(Giocatore g : this.prt.getElencoGiocatori()) {
-    						g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
-    					}
-
-    					//copio le informazioni relative alla partita in corso
-    					controller.copiaInformazioniPartita(prt);
-    					//copio le informazioni relative alla label lblTurnoGiocatore
-    					controller.copiaInformazioniLabel(lblTurnoGiocatore);
-    					//copio le informazioni relative al numero di carte per la mano corrente 
-    					controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
-
-    				} catch (IOException e) {
-    					// TODO Auto-generated catch block
-    					e.printStackTrace();
-    				}
+    				avviaPartita();
     			}else {
     				lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
     			}
+    		}else {
+				lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
+    		}
+    	}else {
+    		//inizializzo la partita e la avvio
+    		this.prt=p;
+    		avviaPartita();
+    	}
 
     }
     
@@ -184,6 +152,49 @@ public class ControllerHome implements Initializable{
 		lstClassifica.getItems().sort(Comparator.reverseOrder());
     }
     
+    private void avviaPartita() {
+		//chiudo la finestra di home e apro quella di gioco
+		Stage stage = (Stage)btnGioca.getScene().getWindow();
+		stage.close();
+		
+		//apro la finestra di gioco
+		Group root = new Group();
+		try {
+			//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+			root = loader.load();
+			ControllerPartita controller = loader.getController();
+			//definisco chi giocherà il primo turno
+			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+			lblTurnoGiocatore.setTextFill(Color.BLACK);
+			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
+			lblTurnoGiocatore.setId("lblTurnoGiocatore");
+			root.getChildren().add(lblTurnoGiocatore);
+			Scene interfacciaDiGioco = new Scene(root);
+			stage.setScene(interfacciaDiGioco);
+			stage.show();
+			lblTurnoGiocatore.setTranslateX(190);
+			lblTurnoGiocatore.setTranslateY(220);
+
+			//do le carte a ogni giocatore
+			mazzo.mescola();
+			numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+			for(Giocatore g : this.prt.getElencoGiocatori()) {
+				g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+			}
+
+			//copio le informazioni relative alla partita in corso
+			controller.copiaInformazioniPartita(prt);
+			//copio le informazioni relative alla label lblTurnoGiocatore
+			controller.copiaInformazioniLabel(lblTurnoGiocatore);
+			//copio le informazioni relative al numero di carte per la mano corrente 
+			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     //controlla
     /*
     private void SalvaPartita(Partita partita) {
@@ -230,4 +241,51 @@ public class ControllerHome implements Initializable{
 		}
     	return null;
     }*/
+    
+	private Partita CaricaPartita(String codicePartita) {
+		try {
+			Gson gson = new Gson();
+			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
+			Boolean presenzaPrt=false;
+			Partita prtTrovata=null;
+			String path="src/SalvataggioPartite.json";
+			File file = new File(path);
+			Scanner scan;
+			scan = new Scanner(file);
+
+			scan.useDelimiter("%");
+
+			//carico il contenuto del file
+			while(scan.hasNext()) {
+				String dati =scan.next();
+				Partita p = gson.fromJson(dati, Partita.class);
+				if(p.getCodice().equals(codicePartita)) {
+					prtTrovata=p;
+				}else {
+					elencoPartite.add(p);
+				}
+			}
+			scan.close();
+			
+			//verifico che la partita cercata sia stata trovata
+			if(prtTrovata!=null) {
+				FileWriter fw = new FileWriter(file);
+
+				for(Partita p : elencoPartite) {
+					String datiGson = gson.toJson(p);
+					fw.write(datiGson+"%");
+				}
+				fw.close();
+			}
+			
+			return prtTrovata;
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			// TODO Auto-generated catch block
+			ioe.printStackTrace();
+		}
+		return null;
+	}
 }
