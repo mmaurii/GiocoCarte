@@ -2,6 +2,7 @@
 20 , gianni
 10 , pino
 40 , balto
-10 , b
+20 , b
+
 10 , mauri
 10 , h

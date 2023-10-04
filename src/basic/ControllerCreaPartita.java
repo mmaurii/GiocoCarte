@@ -69,54 +69,61 @@ public class ControllerCreaPartita {
     		txtNomeUtente.clear();
     	}
     }
-    
+
     //Genero il codice per una nuova partita
     @FXML Button btnGeneraCodice;
     @FXML Label lblCodice;
     @FXML ComboBox<String> comboNVite;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
-    	try {
-    		File file = new File(pathStatus);
-    		Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
-    		String codPartita = scan.nextLine().split(" , ")[1];
-    		scan.close();
-    		
-    		//controllare univocita
-    		codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
+    	if(listUtentiPartita.getItems().size()>1) {
+    		try {
+    			File file = new File(pathStatus);
+    			Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
+    			String codPartita = scan.nextLine().split(" , ")[1];
+    			scan.close();
 
-    		//aggiungo al codice gli 0 non rilevanti
-    		int nCifre = codPartita.length();
-    		for(int i=0; i<lungCodicePartita-nCifre; i++) {
-    			codPartita="0"+codPartita;
-    		}
+    			//controllare univocita
+    			codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
 
-    		lblCodice.setText(codPartita);
-    		btnGeneraCodice.setDisable(true);
-
-    		//salvo il codice corrente nel file di status
-    		FileWriter fw = new FileWriter(file);
-    		fw.write("codicePartita , "+codPartita);
-    		fw.close();
-    		
-    		//do le vite e le carte ai giocatori
-    		String nVite = comboNVite.getSelectionModel().getSelectedItem();
-    		if(nVite!=null) {
-    			for(Giocatore i : giocatoriPrt) {
-    				i.setVite(Integer.parseInt(nVite));
+    			//aggiungo al codice gli 0 non rilevanti
+    			int nCifre = codPartita.length();
+    			for(int i=0; i<lungCodicePartita-nCifre; i++) {
+    				codPartita="0"+codPartita;
     			}
-    		}else {
-    			for(Giocatore i : giocatoriPrt) {
-    				i.setVite(nViteDefault);
-    			}
-    		}
 
-    		//imposto i dati di una nuova partita
-    		prt=new Partita(codPartita, giocatoriPrt);
-    		
-    	}catch(FileNotFoundException e) {
-    		System.out.println(e);
-    	}catch(IOException eIO) {
-    		System.out.println(eIO);    		
+        		lblCodice.setTextFill(Color.BLACK);
+    			lblCodice.setText(codPartita);
+    			btnGeneraCodice.setDisable(true);
+
+    			//salvo il codice corrente nel file di status
+    			FileWriter fw = new FileWriter(file);
+    			fw.write("codicePartita , "+codPartita);
+    			fw.close();
+
+    			//do le vite e le carte ai giocatori
+    			String nVite = comboNVite.getSelectionModel().getSelectedItem();
+    			if(nVite!=null) {
+    				for(Giocatore i : giocatoriPrt) {
+    					i.setVite(Integer.parseInt(nVite));
+    				}
+    			}else {
+    				for(Giocatore i : giocatoriPrt) {
+    					i.setVite(nViteDefault);
+    				}
+    			}
+
+    			//imposto i dati di una nuova partita
+    			prt=new Partita(codPartita, giocatoriPrt);
+
+    		}catch(FileNotFoundException e) {
+    			System.out.println(e);
+    		}catch(IOException eIO) {
+    			System.out.println(eIO);    		
+    		}
+    	}else {
+    		lblCodice.setTextFill(Color.RED);
+    		lblCodice.setText("Aggiungi almeno due giocatori");
+			
     	}
     }
 

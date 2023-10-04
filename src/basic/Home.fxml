@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -55,14 +55,14 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <TextField id="username" fx:id="txtUsername" layoutX="359.0" layoutY="176.0" promptText="Inserire l'username" AnchorPane.leftAnchor="359.0" AnchorPane.rightAnchor="132.0" />
-            <PasswordField id="password" fx:id="txtPassword" layoutX="359.0" layoutY="220.0" promptText="Inserire la Password" AnchorPane.leftAnchor="359.0" AnchorPane.rightAnchor="132.0" />
+            <TextField id="username" fx:id="txtUsername" layoutX="360.0" layoutY="188.0" promptText="Inserire l'username" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="131.0" />
+            <PasswordField id="password" fx:id="txtPassword" layoutX="360.0" layoutY="232.0" promptText="Inserire la Password" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="131.0" />
             <Button id="login" fx:id="btnLogin" layoutX="411.0" layoutY="276.0" mnemonicParsing="false" onAction="#loginAction" text="Login" AnchorPane.leftAnchor="411.0" AnchorPane.rightAnchor="183.0" />
             <ListView fx:id="lstClassifica" layoutX="133.0" layoutY="69.0" prefHeight="254.0" prefWidth="188.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="133.0" AnchorPane.topAnchor="69.0" />
-            <TextField fx:id="txtCodPartita" layoutX="353.0" layoutY="69.0" promptText="Codice" AnchorPane.leftAnchor="353.0" AnchorPane.rightAnchor="138.0" />
-            <Button fx:id="btnGioca" layoutX="411.0" layoutY="117.0" mnemonicParsing="false" onAction="#avviaPartita" text="Gioca" AnchorPane.leftAnchor="411.0" AnchorPane.rightAnchor="183.0" />
+            <TextField fx:id="txtCodPartita" layoutX="360.0" layoutY="69.0" promptText="Codice" AnchorPane.leftAnchor="360.0" AnchorPane.rightAnchor="131.0" />
+            <Button fx:id="btnGioca" layoutX="411.0" layoutY="114.0" mnemonicParsing="false" onAction="#avviaPartita" text="Gioca" AnchorPane.leftAnchor="411.0" AnchorPane.rightAnchor="183.0" />
             <Label fx:id="lblDesc" layoutX="192.0" layoutY="33.0" prefHeight="10.0" prefWidth="70.0" text="CLASSIFICA" />
-            <Label fx:id="lblCodPartitaErrato" layoutX="414.0" layoutY="112.0" textFill="RED" />
+            <Label fx:id="lblCodPartitaErrato" layoutX="474.0" layoutY="117.0" prefHeight="18.0" prefWidth="149.0" textFill="RED" wrapText="true" />
       </children>
     </AnchorPane>
   </children>
