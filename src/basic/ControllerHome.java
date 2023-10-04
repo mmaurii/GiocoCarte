@@ -95,7 +95,11 @@ public class ControllerHome implements Initializable{
     		}else if(this.prt!=null)*/
     		if(prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
     			if(codPartita.equals(this.prt.getCodice())) {
-    				avviaPartita();
+    				if(this.prt.getElencoGiocatori().size()>1) {
+    					avviaPartita();
+    				}else {
+        				lblCodPartitaErrato.setText("la partita ha un solo giocatore,\nperchè si è già conclusa");
+    				}
     			}else {
     				lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
     			}
@@ -246,7 +250,6 @@ public class ControllerHome implements Initializable{
 		try {
 			Gson gson = new Gson();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			Boolean presenzaPrt=false;
 			Partita prtTrovata=null;
 			String path="src/SalvataggioPartite.json";
 			File file = new File(path);
