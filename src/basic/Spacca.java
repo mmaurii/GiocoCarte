@@ -28,7 +28,7 @@ public class Spacca extends Application{
 			stage.setTitle("Login Amministratore");
 			Scene interfacciaLogin = new Scene(root);
 			stage.setScene(interfacciaLogin);
-		    stage.setMaximized(true);
+		    stage.setFullScreen(true);
 			stage.show();
 		}
 }

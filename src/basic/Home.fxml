@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -56,13 +56,13 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <TextField id="username" fx:id="txtUsername" layoutX="986.0" layoutY="548.0" prefHeight="25.0" prefWidth="864.0" promptText="Inserire l'username" AnchorPane.leftAnchor="986.0" AnchorPane.rightAnchor="70.0" />
-            <PasswordField id="password" fx:id="txtPassword" layoutX="986.0" layoutY="589.0" prefHeight="25.0" prefWidth="864.0" promptText="Inserire la Password" AnchorPane.leftAnchor="986.0" AnchorPane.rightAnchor="70.0" />
-            <Button id="login" fx:id="btnLogin" layoutX="1046.0" layoutY="642.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="743.0" text="Login" AnchorPane.leftAnchor="1046.0" AnchorPane.rightAnchor="131.0" />
-            <ListView fx:id="lstClassifica" layoutX="29.0" layoutY="244.0" prefHeight="587.0" prefWidth="895.0" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="244.0" />
-            <TextField fx:id="txtCodPartita" layoutX="980.0" layoutY="388.0" prefHeight="25.0" prefWidth="864.0" promptText="Codice" AnchorPane.leftAnchor="980.0" AnchorPane.rightAnchor="76.0" />
-            <Button fx:id="btnGioca" layoutX="1046.0" layoutY="451.0" mnemonicParsing="false" onAction="#avviaPartita" prefHeight="25.0" prefWidth="743.0" text="Gioca" AnchorPane.leftAnchor="1046.0" AnchorPane.rightAnchor="131.0" />
-            <Label fx:id="lblDesc" layoutX="389.0" layoutY="111.0" prefHeight="81.0" prefWidth="176.0" text="CLASSIFICA">
+            <TextField id="username" fx:id="txtUsername" layoutX="851.0" layoutY="472.0" prefHeight="25.0" prefWidth="864.0" promptText="Inserire l'username" AnchorPane.leftAnchor="851.0" AnchorPane.rightAnchor="205.0" />
+            <PasswordField id="password" fx:id="txtPassword" layoutX="851.0" layoutY="513.0" prefHeight="25.0" prefWidth="864.0" promptText="Inserire la Password" AnchorPane.leftAnchor="851.0" AnchorPane.rightAnchor="205.0" />
+            <Button id="login" fx:id="btnLogin" layoutX="911.0" layoutY="566.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="743.0" text="Login" AnchorPane.leftAnchor="911.0" AnchorPane.rightAnchor="266.0" />
+            <ListView fx:id="lstClassifica" layoutX="76.0" layoutY="244.0" prefHeight="394.0" prefWidth="605.0" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="76.0" AnchorPane.topAnchor="244.0" />
+            <TextField fx:id="txtCodPartita" layoutX="845.0" layoutY="312.0" prefHeight="25.0" prefWidth="864.0" promptText="Codice" AnchorPane.leftAnchor="845.0" AnchorPane.rightAnchor="211.0" />
+            <Button fx:id="btnGioca" layoutX="911.0" layoutY="375.0" mnemonicParsing="false" onAction="#avviaPartita" prefHeight="25.0" prefWidth="743.0" text="Gioca" AnchorPane.leftAnchor="911.0" AnchorPane.rightAnchor="266.0" />
+            <Label fx:id="lblDesc" layoutX="285.0" layoutY="131.0" prefHeight="81.0" prefWidth="188.0" text="CLASSIFICA">
                <font>
                   <Font size="34.0" />
                </font></Label>
