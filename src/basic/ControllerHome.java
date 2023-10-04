@@ -2,7 +2,7 @@ package basic;
 
 import java.io.*;
 import java.net.URL;
-import javafx.scene.Group;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -158,7 +158,7 @@ public class ControllerHome implements Initializable{
 		stage.close();
 		
 		//apro la finestra di gioco
-		Group root = new Group();
+		VBox root = new VBox();
 		try {
 			//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
