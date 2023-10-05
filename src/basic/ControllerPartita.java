@@ -296,15 +296,17 @@ public class ControllerPartita {
 					//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
 					gio=this.prt.getElencoGiocatori().remove(0);
 					this.prt.getElencoGiocatori().add(gio);
-				}else {//concludo la partita e ne annuncio il vincitore
+				}else if (this.prt.getElencoGiocatori().size()==1){//concludo la partita e ne annuncio il vincitore 
 					lblVitaPersa.setText(this.prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
 					btnIniziaNuovaMano.setVisible(false);
 
 					//conteggio punti
 					aggiornaClassifica(pathClassifica);
+				}else{//concludo la partita e ne annuncio il pareggio
+					lblVitaPersa.setText("la partita è finita in PAREGGIO");
+					btnIniziaNuovaMano.setVisible(false);
 				}
-			}
-			//}
+			}	
 		}
 	}
 
