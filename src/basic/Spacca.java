@@ -25,10 +25,12 @@ public class Spacca extends Application{
 			controller.populateListView();
 			
 			
-			stage.setTitle("Login Amministratore");
+			stage.setTitle("HOME");
 			Scene interfacciaLogin = new Scene(root);
 			stage.setScene(interfacciaLogin);
-		    stage.setFullScreen(true);
+		    stage.setMinHeight(400);
+		    stage.setMinWidth(600);
+			//stage.setFullScreen(true);
 			stage.show();
 		}
 }
