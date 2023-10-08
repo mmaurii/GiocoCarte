@@ -2,73 +2,141 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerCreaPartita">
-   <children>
-      <VBox prefHeight="400.0" prefWidth="212.0">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerCreaPartita">
+   <top>
+      <AnchorPane prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="46.0" prefWidth="212.0">
-               <children>
-                  <TextField fx:id="txtNomeUtente" prefHeight="48.0" prefWidth="148.0" promptText="nome utente" />
-                  <Button fx:id="btnAggiungiUtente" mnemonicParsing="false" onAction="#AggiungiUtente" prefHeight="46.0" prefWidth="81.0" text="Aggiungi Utente" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Button>
-               </children>
-            </HBox>
-            <Label prefHeight="46.0" prefWidth="212.0" text="Lista Giocatori">
+            <Label alignment="CENTER" layoutX="237.0" layoutY="7.0" text="CREA PARTITA" textAlignment="CENTER" textFill="#301fcc" AnchorPane.bottomAnchor="8.2" AnchorPane.leftAnchor="237.00000000000003" AnchorPane.rightAnchor="237.4" AnchorPane.topAnchor="7.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnTornaAllaHome" layoutX="524.0" layoutY="15.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#TornaAllaHome" text="Indietro" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
-            </Label>
-            <ListView fx:id="listUtentiPartita" prefHeight="168.0" prefWidth="210.0" />
-            <Pane prefHeight="140.0" prefWidth="210.0">
+            </Button>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="246.3999755859375" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="354.40002441406244" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="65.99999389648437" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="49.20000610351562" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="0.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="191.99999999999997" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="60.59996337890624" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+              </rowConstraints>
                <children>
-                  <Label fx:id="lblNVite" layoutX="27.0" layoutY="31.0" text="Numero di vite a Giocatore:" textAlignment="CENTER">
+                  <Button fx:id="btnAggiungiUtente" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#AggiungiUtente" text="Aggiungi Utente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
-                  </Label>
-                  <ComboBox fx:id="comboNVite" layoutX="80.0" layoutY="57.0" prefHeight="25.0" prefWidth="48.0">
-                        <items>
-					        <FXCollections fx:factory="observableArrayList">
-					          <String fx:value="1" />
-					          <String fx:value="2" />
-					          <String fx:value="3" />
-					          <String fx:value="4" />
-					          <String fx:value="5" />
-					        </FXCollections>
-					      </items>
-			      </ComboBox>
+                  </Button>
+                  <TextField fx:id="txtNomeUtente" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="nome utente" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                </children>
-            </Pane>
-         </children>
-      </VBox>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="391.0">
-         <children>
-            <Pane prefHeight="178.0" prefWidth="390.0">
-               <children>
-                  <Button fx:id="btnTornaAllaHome" layoutX="324.0" layoutY="14.0" mnemonicParsing="false" onAction="#TornaAllaHome" text="Indietro">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Button>
-               </children>
-            </Pane>
-            <Button fx:id="btnGeneraCodice" mnemonicParsing="false" onAction="#GeneraCodice" prefHeight="54.0" prefWidth="166.0" text="Crea Partita" textAlignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </GridPane>
+            <Label alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Lista Giocatori" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <Label fx:id="lblCodice" prefHeight="59.0" prefWidth="194.0" textAlignment="CENTER" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </GridPane.margin>
+            </Label>
+            <ListView fx:id="listUtentiPartita" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </GridPane.margin>
+            </ListView>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <Label fx:id="lblNVite" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="170.0" text="Numero di vite a Giocatore:" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="1.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <ComboBox fx:id="comboNVite" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <items>
+      					        <FXCollections fx:factory="observableArrayList">
+      					          <String fx:value="1" />
+      					          <String fx:value="2" />
+      					          <String fx:value="3" />
+      					          <String fx:value="4" />
+      					          <String fx:value="5" />
+      					        </FXCollections>
+      					      </items>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="1.0" right="10.0" />
+                     </GridPane.margin>
+      			      </ComboBox>
+               </children>
+            </GridPane>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="154.20001220703125" minHeight="10.0" prefHeight="105.4000015258789" valignment="BOTTOM" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="97.60001983642579" minHeight="10.0" prefHeight="83.9999984741211" valignment="TOP" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="btnGeneraCodice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#GeneraCodice" text="Crea Partita" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="100.0" right="100.0" top="40.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Label fx:id="lblCodice" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+            </GridPane>
          </children>
-      </VBox>
-   </children>
-</HBox>
+      </GridPane>
+   </center>
+</BorderPane>
