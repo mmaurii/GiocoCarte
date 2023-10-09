@@ -1,114 +1,231 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPartita">
-   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="1080.0" prefWidth="1920.0">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPartita">
+   <center>
+      <GridPane>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="110.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="480.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="110.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="170.79999389648438" minHeight="10.0" prefHeight="47.79998168945312" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="290.00000762939453" minHeight="10.0" prefHeight="175.20001831054688" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="290.00000762939453" minHeight="10.0" prefHeight="116.79997558593749" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <ImageView fx:id="imgCartaMano1" fitHeight="104.0" fitWidth="64.0" layoutX="802.0" layoutY="853.0" onMouseClicked="#GiocaCartaMano1" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaMano2" fitHeight="104.0" fitWidth="64.0" layoutX="865.0" layoutY="853.0" onMouseClicked="#GiocaCartaMano2" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaMano3" fitHeight="104.0" fitWidth="64.0" layoutX="928.0" layoutY="853.0" onMouseClicked="#GiocaCartaMano3" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaMano4" fitHeight="104.0" fitWidth="64.0" layoutX="991.0" layoutY="853.0" onMouseClicked="#GiocaCartaMano4" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaMano5" fitHeight="104.0" fitWidth="64.0" layoutX="1054.0" layoutY="853.0" onMouseClicked="#GiocaCartaMano5" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco1" fitHeight="104.0" fitWidth="64.0" layoutX="708.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco2" fitHeight="104.0" fitWidth="64.0" layoutX="771.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco3" fitHeight="104.0" fitWidth="64.0" layoutX="834.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco4" fitHeight="104.0" fitWidth="64.0" layoutX="897.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco5" fitHeight="104.0" fitWidth="64.0" layoutX="960.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco6" fitHeight="104.0" fitWidth="64.0" layoutX="1023.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco7" fitHeight="104.0" fitWidth="64.0" layoutX="1085.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <ImageView fx:id="imgCartaBanco8" fitHeight="104.0" fitWidth="64.0" layoutX="1148.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
-            </ImageView>
-            <Label layoutX="928.0" layoutY="53.0" text="Banco">
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Banco" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
-                  <Font size="24.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblManoGiocatore" layoutX="574.0" layoutY="401.0" text="La Tua Mano" visible="false">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnInizioTurnoGiocatore" layoutX="1716.0" layoutY="467.0" mnemonicParsing="false" onAction="#inizioTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="inizia il turno" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnFineTurnoGiocatore" disable="true" layoutX="1716.0" layoutY="497.0" mnemonicParsing="false" onAction="#fineTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Pane layoutX="612.0" layoutY="482.0" prefHeight="104.0" prefWidth="611.0">
+            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="394.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="104.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="64.0" valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
                <children>
-                  <Label fx:id="lblVitaPersa" layoutX="13.0" layoutY="14.0" textAlignment="CENTER" visible="false">
+                  <ImageView fx:id="imgCartaBanco1" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco2" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco3" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco4" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco5" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco6" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco7" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaBanco8" fitHeight="104.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </GridPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblManoGiocatore" text="La Tua Mano" visible="false">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblVitaPersa" textAlignment="CENTER" visible="false">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnIniziaNuovaMano" layoutX="59.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovaMano" text="inizia la prossima mano" visible="false">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnIniziaNuovoRound" layoutX="72.0" layoutY="65.0" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia nuovo round" visible="false">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
                </children>
-            </Pane>
-            <ListView fx:id="lstViewVite" layoutX="1727.0" layoutY="914.0" prefHeight="134.0" prefWidth="130.0" />
-            <ListView fx:id="lstViewPrese" layoutX="22.0" layoutY="910.0" prefHeight="134.0" prefWidth="130.0" />
-            <Pane fx:id="paneNumeroPrese" layoutX="352.0" layoutY="349.0" prefHeight="83.0" prefWidth="124.0">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="40.0" right="40.0" />
+               </GridPane.margin>
+            </AnchorPane>
+            <Button fx:id="btnInizioTurnoGiocatore" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#inizioTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="inizia il turno" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnFineTurnoGiocatore" alignment="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#fineTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </Button>
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblNumPreseNonValido" layoutX="-5.0" layoutY="62.0" prefHeight="18.0" prefWidth="133.0" text="numero prese non valido" textFill="RED" visible="false" />
+                  <Button fx:id="btnIniziaNuovaMano" alignment="CENTER" layoutX="125.0" mnemonicParsing="false" onAction="#IniziaNuovaMano" text="inizia la prossima mano" visible="false">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnIniziaNuovoRound" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia nuovo round" visible="false">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
-            </Pane>
-            <Label layoutX="42.0" layoutY="888.0" text="prese dichiarate">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="40.0" right="40.0" />
+               </GridPane.margin>
+            </AnchorPane>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="8.800013160705568" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ListView fx:id="lstViewVite" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="134.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="numero vite" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ListView fx:id="lstViewPrese" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="134.0" prefWidth="130.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="prese dichiarate" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <GridPane GridPane.rowIndex="3">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="37.60002250671387" minHeight="10.0" prefHeight="26.4" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="27.199999999999996" minHeight="7.199977493286127" prefHeight="27.199999999999996" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <TextField fx:id="txtNumeroPrese" alignment="CENTER" prefHeight="25.0" prefWidth="101.0" promptText="numero prese" />
+                  <Label fx:id="lblNumPreseNonValido" prefHeight="18.0" prefWidth="133.0" text="numero prese non valido" textFill="RED" visible="false" wrapText="true" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
+               </children>
+            </GridPane>
+            <Label fx:id="lblPrese" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Quante prese farai &#10;con questa mano?" wrapText="true" GridPane.rowIndex="2" />
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <ImageView fx:id="imgCartaMano1" fitHeight="104.0" fitWidth="64.0" onMouseClicked="#GiocaCartaMano1" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaMano2" fitHeight="104.0" fitWidth="64.0" onMouseClicked="#GiocaCartaMano2" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaMano3" fitHeight="104.0" fitWidth="64.0" onMouseClicked="#GiocaCartaMano3" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaMano5" fitHeight="104.0" fitWidth="64.0" onMouseClicked="#GiocaCartaMano5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+                  <ImageView fx:id="imgCartaMano4" fitHeight="104.0" fitWidth="64.0" onMouseClicked="#GiocaCartaMano4" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            </ImageView>
+               </children>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </GridPane>
+            <Button fx:id="btnPartitaTornaAllaHome" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#TornaAllaHome" text="Torna alla Home" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
-            </Label>
-            <Label layoutX="1758.0" layoutY="892.0" text="numero vite">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnPartitaTornaAllaHome" layoutX="1764.0" layoutY="40.0" mnemonicParsing="false" onAction="#TornaAllaHome" text="Torna alla Home">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" />
+               </GridPane.margin>
             </Button>
-            <Button fx:id="btnClassifica" layoutX="1781.0" layoutY="69.0" mnemonicParsing="false" onAction="#VisualizzaClassifica" text="Classifica">
+            <Button fx:id="btnClassifica" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#VisualizzaClassifica" text="Classifica" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" />
+               </GridPane.margin>
             </Button>
-            <Label fx:id="lblPrese" layoutX="76.0" layoutY="466.0" text="Quante prese farai &#10;con questa mano?" wrapText="true" />
-            <TextField fx:id="txtNumeroPrese" layoutX="76.0" layoutY="500.0" prefHeight="25.0" prefWidth="101.0" promptText="numero prese" />
          </children>
-    </AnchorPane>
-   </children>
-</VBox>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <top>
+      <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="42.0" text="PARTITA" textAlignment="CENTER" textFill="#301fcc">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+   </top>
+</BorderPane>

@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import java.util.*;
 import javax.security.auth.login.AccountNotFoundException;
@@ -65,10 +66,11 @@ public class ControllerPartita {
 	@FXML ImageView imgCartaMano4;
 	@FXML ImageView imgCartaMano5;
 	@FXML TextField txtNumeroPrese;
+	@FXML GridPane gridPaneNumeroPrese=new GridPane();
 	boolean btnInizioTurnoGiocatoreClicked=false;
 	//inizia il turno dell'n giocatore
 	@FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
-		if(!paneNumeroPrese.isVisible()) {
+		if(!gridPaneNumeroPrese.isVisible()) {
 			lblManoGiocatore.setText("Mano di "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 			lblTurnoGiocatore.setVisible(false);
 			lblManoGiocatore.setVisible(true);
@@ -141,7 +143,6 @@ public class ControllerPartita {
 	@FXML Button btnFineTurnoGiocatore;
 	@FXML Label lblVitaPersa;
 	@FXML Button btnIniziaNuovoRound;
-	@FXML Pane paneNumeroPrese;
 	@FXML Label lblPrese;
 	@FXML Label lblNumPreseNonValido;
 	@FXML ListView<String> lstViewPrese;
@@ -153,7 +154,7 @@ public class ControllerPartita {
 		int numeroPreseGiocatore=0;
 		int giocatoreChePrende;
 
-		if(paneNumeroPrese.isVisible()) {
+		if(gridPaneNumeroPrese.isVisible()) {
 			try {
 				numeroPreseGiocatore=Integer.parseInt(txtNumeroPrese.getText());
 				this.prt.getElencoGiocatori().get(countTurnoGiocatore).setPreseDichiarate(numeroPreseGiocatore);
@@ -177,7 +178,7 @@ public class ControllerPartita {
 						if(countTurnoGiocatore>=this.prt.getElencoGiocatori().size()) {
 							countTurnoGiocatore=0;
 							//sistemo l'interfaccia per iniziare a giocare le carte
-							paneNumeroPrese.setVisible(false);
+							gridPaneNumeroPrese.setVisible(false);
 							lblManoGiocatore.setVisible(false);
 							btnIniziaNuovoRound.setVisible(true);
 							btnFineTurnoGiocatore.setDisable(true);
@@ -204,7 +205,7 @@ public class ControllerPartita {
 		}else {
 			presePerQuestaMano=0;
 
-			//if(lstViewPrese.getItems().size()-1==countTurnoGiocatore||!paneNumeroPrese.isVisible()) {
+			//if(lstViewPrese.getItems().size()-1==countTurnoGiocatore||!gridPaneNumeroPrese.isVisible()) {
 			//rimetto le carte coperte
 			copriCarteGiocatore();
 
@@ -342,7 +343,7 @@ public class ControllerPartita {
 		btnIniziaNuovaMano.setVisible(false);
 		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 		btnInizioTurnoGiocatore.setDisable(false);
-		paneNumeroPrese.setVisible(true);
+		gridPaneNumeroPrese.setVisible(true);
 
 		//rimetto le carte coperte;
 		//copriCarteGiocatore();

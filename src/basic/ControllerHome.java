@@ -27,6 +27,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 
 public class ControllerHome implements Initializable{
 	//variabili di controllo
@@ -162,7 +163,7 @@ public class ControllerHome implements Initializable{
 		stage.close();
 		
 		//apro la finestra di gioco
-		VBox root = new VBox();
+		BorderPane root = new BorderPane();
 		try {
 			//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
