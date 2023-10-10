@@ -38,6 +38,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
+import javafx.scene.layout.BorderPane;
 
 
 public class ControllerPartita {
@@ -399,7 +400,7 @@ public class ControllerPartita {
 
 	//creo un pop-up che visualizzi la classifica
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
-		VBox root = new VBox();
+		BorderPane root = new BorderPane();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
@@ -409,7 +410,9 @@ public class ControllerPartita {
 
 			Stage stage = new Stage();
 			stage.setTitle("Classifica");
-			Scene scene = new Scene(root, 480, 310);
+			Scene scene = new Scene(root);
+			stage.setMinHeight(400);
+		    stage.setMinWidth(200);
 			stage.setScene(scene);
 			stage.show();			
 
@@ -538,7 +541,6 @@ public class ControllerPartita {
 					line = lineData[0]+" , "+lineData[1]+"\n";
 					presenzaGiocatore=true;
 				}	
-
 				//mi salvo la riga appena letta
 				data.add(line+"\n");
 			}
@@ -561,54 +563,6 @@ public class ControllerPartita {
 			IOe.printStackTrace();
 		}
 	}
-
-
-	//controlla
-	/*
-    private void SalvaPartita(Partita partita) {
-    	try {
-    		String path="src/SalvataggioPartite.txt";
-    		FileOutputStream file = new FileOutputStream(path);
-    		ObjectOutputStream objOutput = new ObjectOutputStream(file);
-    		objOutput.writeObject(partita);
-    		objOutput.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
-    private Partita CaricaPartita(String codicePartita) {
-    	try {
-    		String path="src/SalvataggioPartite.txt";
-    		FileInputStream file = new FileInputStream(path);
-    		ObjectInputStream objInput = new ObjectInputStream(file);
-    		//objInput.setObjectInputFilter(objInput.getObjectInputFilter());
-    		Partita partita=new Partita();
-    		while(true) {
-    		    try {
-    	    		partita= (Partita) objInput.readObject();
-    	    		if(partita.getCodice().equals(codicePartita)) {
-    	    			System.out.println("nice");
-    	    		}
-    		    } catch (EOFException e) {
-    		         // end of file reached
-    				//e.printStackTrace();
-	    			//System.out.println("male");
-    	    		objInput.close();
-    	    		return partita;
-
-    		    }
-    		}    		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return null;
-    }*/
 
 	private void SalvaPartita(Partita partita) {
 		try {

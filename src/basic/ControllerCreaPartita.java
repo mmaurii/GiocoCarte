@@ -60,7 +60,7 @@ public class ControllerCreaPartita {
     @FXML TextField txtNomeUtente; 
     @FXML public void AggiungiUtente(ActionEvent actionEvent) {
     	String nome = txtNomeUtente.getText();
-    	//controllo che non vengano inseriti giocatori con lo stesso nome
+    	//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
     	if(!listUtentiPartita.getItems().contains(nome)) {
     		txtNomeUtente.clear();
     		listUtentiPartita.getItems().add(nome);
@@ -70,6 +70,21 @@ public class ControllerCreaPartita {
     	}
     }
 
+    //aggiungo alla partita un utente robot 
+    @FXML Button btnAggiungiUtenteRobot;
+    @FXML TextField txtNomeUtenteRobot; 
+    @FXML public void AggiungiUtenteRobot(ActionEvent actionEvent) {
+    	String nome = txtNomeUtenteRobot.getText();
+    	//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
+    	if(!listUtentiPartita.getItems().contains(nome)) {
+    		txtNomeUtenteRobot.clear();
+    		listUtentiPartita.getItems().add(nome);
+    		giocatoriPrt.add(new Bot(nome));
+    	}else {
+    		txtNomeUtenteRobot.clear();
+    	}
+    }
+    
     //Genero il codice per una nuova partita
     @FXML Button btnGeneraCodice;
     @FXML Label lblCodice;

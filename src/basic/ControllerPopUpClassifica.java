@@ -60,20 +60,33 @@ public class ControllerPopUpClassifica {
 
     public void populateListView() {
     	
-		try {
-			File file = new File(pathClassifica);
-			Scanner scan = new Scanner(file);			
-			while(scan.hasNext()) {
-				String line = scan.nextLine();
-				lstClassifica.getItems().add(line);	
-			}
-			scan.close();
-		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
-			fnfe.printStackTrace();
-		}
-		
-		lstClassifica.getItems().sort(Comparator.reverseOrder());
-    }
+ 		try {
+ 			File file = new File(pathClassifica);
+ 			Scanner scan = new Scanner(file);			
+ 			while(scan.hasNext()) {
+ 				String line = scan.nextLine();
+ 				lstClassifica.getItems().add(line);	
+ 			}
+ 			scan.close();
+ 		} catch (FileNotFoundException fnfe) {
+ 			// TODO Auto-generated catch block
+ 			fnfe.printStackTrace();
+ 		}
+ 		
+ 		lstClassifica.getItems().sort(Comparator.reverseOrder());
+ 		int counter=1;
+ 		ArrayList<String> listaNumerata = new ArrayList<String>();
+ 		for(String i : lstClassifica.getItems()) {
+ 			i=(counter+"\t"+i);
+ 			listaNumerata.add(i);
+ 			counter++;
+ 		}
+ 		
+ 		//metto il contenuto della listview in grassetto
+ 		lstClassifica.setStyle("-fx-font-weight: bold;");
+ 		//mostro in output la classifica
+ 		lstClassifica.getItems().setAll(listaNumerata);
+     }
+
     
 }

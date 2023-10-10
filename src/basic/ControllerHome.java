@@ -97,6 +97,7 @@ public class ControllerHome implements Initializable{
     	//ottengo il codice partita inserito dall'utente
     	String codPartita = txtCodPartita.getText();
     	Partita p = CaricaPartita(codPartita);
+    	boolean flagPartitaNuova=true;
     	if(p==null) {
     		/*if(codPartita.equals(p.getCodice())) {
     			this.prt = p;
@@ -105,7 +106,8 @@ public class ControllerHome implements Initializable{
     		if(prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
     			if(codPartita.equals(this.prt.getCodice())) {
     				if(this.prt.getElencoGiocatori().size()>1) {
-    					avviaPartita();
+    					
+    					avviaPartita(flagPartitaNuova);
     				}else {
         				lblCodPartitaErrato.setText("la partita ha un solo giocatore,\nperchè si è già conclusa");
     				}
@@ -118,7 +120,8 @@ public class ControllerHome implements Initializable{
     	}else {
     		//inizializzo la partita e la avvio
     		this.prt=p;
-    		avviaPartita();
+    		flagPartitaNuova=false;
+    		avviaPartita(flagPartitaNuova);
     	}
 
     }
@@ -162,8 +165,7 @@ public class ControllerHome implements Initializable{
 			fnfe.printStackTrace();
 		}
 	
-		lstClassifica.getItems().sort(Comparator.reverseOrder());
-		
+		lstClassifica.getItems().sort(Comparator.reverseOrder());		
 		lstClassifica.setCellFactory(param -> new ListCell<String>() {
 		    @Override
 		    protected void updateItem(String item, boolean empty) {
@@ -177,9 +179,22 @@ public class ControllerHome implements Initializable{
 		        }
 		    }
 		});	
+
+		int counter=1;
+		ArrayList<String> listaNumerata = new ArrayList<String>();
+		for(String i : lstClassifica.getItems()) {
+			i=(counter+"\t"+i);
+			listaNumerata.add(i);
+			counter++;
+		}
+		
+		//metto il contenuto della listview in grassetto
+		lstClassifica.setStyle("-fx-font-weight: bold;");
+		//mostro in output la classifica
+		lstClassifica.getItems().setAll(listaNumerata);
     }
     
-    private void avviaPartita() {
+    private void avviaPartita(Boolean flagPartitaNuova) {
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)btnGioca.getScene().getWindow();
 		stage.close();
@@ -187,7 +202,6 @@ public class ControllerHome implements Initializable{
 		//apro la finestra di gioco
 		BorderPane root = new BorderPane();
 		try {
-			//root = FXMLLoader.load(getClass().getResource("Partita.fxml"));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
 			root = loader.load();
 			ControllerPartita controller = loader.getController();
@@ -203,13 +217,15 @@ public class ControllerHome implements Initializable{
 			lblTurnoGiocatore.setTranslateX(190);
 			lblTurnoGiocatore.setTranslateY(220);
 
-			//do le carte a ogni giocatore
-			mazzo.mescola();
-			numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-			for(Giocatore g : this.prt.getElencoGiocatori()) {
-				g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+			if(flagPartitaNuova) {
+				//do le carte a ogni giocatore
+				mazzo.mescola();
+				numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+				for(Giocatore g : this.prt.getElencoGiocatori()) {
+					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+				}
 			}
-
+			
 			//copio le informazioni relative alla partita in corso
 			controller.copiaInformazioniPartita(prt);
 			//copio le informazioni relative alla label lblTurnoGiocatore
@@ -222,52 +238,6 @@ public class ControllerHome implements Initializable{
 			e.printStackTrace();
 		}
     }
-    //controlla
-    /*
-    private void SalvaPartita(Partita partita) {
-    	try {
-    		String path="src/SalvataggioPartite.txt";
-    		FileOutputStream file = new FileOutputStream(path);
-    		ObjectOutputStream objOutput = new ObjectOutputStream(file);
-    		objOutput.writeObject(partita);
-    		objOutput.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-    
-    private Partita CaricaPartita(String codicePartita) {
-    	try {
-    		String path="src/SalvataggioPartite.txt";
-    		FileInputStream file = new FileInputStream(path);
-    		ObjectInputStream objInput = new ObjectInputStream(file);
-    		//objInput.setObjectInputFilter(objInput.getObjectInputFilter());
-    		Partita partita=new Partita();
-    		while(true) {
-    		    try {
-    	    		partita= (Partita) objInput.readObject();
-    	    		if(partita.getCodice().equals(codicePartita)) {
-    	    			System.out.println("nice");
-    	    		}
-    		    } catch (EOFException e) {
-    		         // end of file reached
-    				//e.printStackTrace();
-	    			//System.out.println("male");
-    	    		objInput.close();
-    	    		return partita;
-
-    		    }
-    		}    		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	return null;
-    }*/
     
 	private Partita CaricaPartita(String codicePartita) {
 		try {
