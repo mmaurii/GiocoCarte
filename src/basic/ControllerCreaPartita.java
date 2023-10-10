@@ -90,6 +90,7 @@ public class ControllerCreaPartita {
     @FXML Label lblCodice;
     @FXML ComboBox<String> comboNVite;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
+    	System.out.println(giocatoriPrt.size());
     	if(listUtentiPartita.getItems().size()>1) {
     		try {
     			File file = new File(pathStatus);
@@ -129,6 +130,7 @@ public class ControllerCreaPartita {
 
     			//imposto i dati di una nuova partita
     			prt=new Partita(codPartita, giocatoriPrt);
+    	    	System.out.println(codPartita);
 
     		}catch(FileNotFoundException e) {
     			System.out.println(e);
@@ -159,11 +161,13 @@ public class ControllerCreaPartita {
 			controller.populateListView();
 			
 			stage.setTitle("HOME");
-			Scene interfacciaLogin = new Scene(root);
-			stage.setScene(interfacciaLogin);
+			Scene interfacciaHome = new Scene(root);
+			//copio le informazioni relative alla partita in corso
+			controller.copiaInformazioniPartita(this.prt);
+			stage.setScene(interfacciaHome);
 		    stage.setMinHeight(400);
 		    stage.setMinWidth(600);
-						stage.show();
+		    stage.show();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

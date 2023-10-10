@@ -33,12 +33,14 @@ public class Spacca extends Application{
 			
 			
 			stage.setTitle("HOME");
-
-			String audioFilePath = "file:///Users/lorenzomagrini/Desktop/GiocoCarte/src/audio.mp3";
-	        Media media = new Media(audioFilePath);
+			/*
+			String audioFilePath = ("src/audio.mp3");
+			File f = new File(audioFilePath);
+			System.out.println(f.getAbsolutePath());
+			Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
 	        MediaPlayer mediaPlayer = new MediaPlayer(media);
 	        mediaPlayer.setAutoPlay(true);
-	        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+	        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);*/
 		    
 			Scene interfacciaLogin = new Scene(root);
 			stage.setScene(interfacciaLogin);

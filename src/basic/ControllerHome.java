@@ -103,19 +103,22 @@ public class ControllerHome implements Initializable{
     			this.prt = p;
     			System.out.println("nice1");
     		}else if(this.prt!=null)*/
-    		if(prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
+    		if(this.prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
+    	    	System.out.println(this.prt.getCodice());
+
     			if(codPartita.equals(this.prt.getCodice())) {
+        	    	System.out.println(this.prt.getElencoGiocatori().size());
+
     				if(this.prt.getElencoGiocatori().size()>1) {
-    					
     					avviaPartita(flagPartitaNuova);
     				}else {
-        				lblCodPartitaErrato.setText("la partita ha un solo giocatore,\nperchè si è già conclusa");
+        				lblCodPartitaErrato.setText("la partita ha un solo giocatore, perchè si è già conclusa");
     				}
     			}else {
-    				lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
+    				lblCodPartitaErrato.setText("errore il codice partita è sbagliato, inseriscine uno corretto");
     			}
     		}else {
-				lblCodPartitaErrato.setText("errore il codice partita è sbagliato,\ninseriscine uno corretto");
+				lblCodPartitaErrato.setText("errore il codice partita è sbagliato, inseriscine uno corretto");
     		}
     	}else {
     		//inizializzo la partita e la avvio
@@ -165,7 +168,20 @@ public class ControllerHome implements Initializable{
 			fnfe.printStackTrace();
 		}
 	
-		lstClassifica.getItems().sort(Comparator.reverseOrder());		
+		//ordino in base al punteggio la listview
+		lstClassifica.getItems().sort(Comparator.reverseOrder());			
+		int counter=1;
+		ArrayList<String> listaNumerata = new ArrayList<String>();
+		for(String i : lstClassifica.getItems()) {
+			i=(counter+"\t"+i);
+			listaNumerata.add(i);
+			counter++;
+		}
+		
+		//metto il contenuto della listview in grassetto
+		lstClassifica.setStyle("-fx-font-weight: bold;");
+		
+		//centro le scritte all'interno della listview
 		lstClassifica.setCellFactory(param -> new ListCell<String>() {
 		    @Override
 		    protected void updateItem(String item, boolean empty) {
@@ -178,18 +194,8 @@ public class ControllerHome implements Initializable{
 		            setAlignment(javafx.geometry.Pos.CENTER);
 		        }
 		    }
-		});	
-
-		int counter=1;
-		ArrayList<String> listaNumerata = new ArrayList<String>();
-		for(String i : lstClassifica.getItems()) {
-			i=(counter+"\t"+i);
-			listaNumerata.add(i);
-			counter++;
-		}
+		});
 		
-		//metto il contenuto della listview in grassetto
-		lstClassifica.setStyle("-fx-font-weight: bold;");
 		//mostro in output la classifica
 		lstClassifica.getItems().setAll(listaNumerata);
     }
