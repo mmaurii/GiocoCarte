@@ -104,11 +104,7 @@ public class ControllerHome implements Initializable{
     			System.out.println("nice1");
     		}else if(this.prt!=null)*/
     		if(this.prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
-    	    	System.out.println(this.prt.getCodice());
-
     			if(codPartita.equals(this.prt.getCodice())) {
-        	    	System.out.println(this.prt.getElencoGiocatori().size());
-
     				if(this.prt.getElencoGiocatori().size()>1) {
     					avviaPartita(flagPartitaNuova);
     				}else {

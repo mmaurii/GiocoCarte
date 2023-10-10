@@ -90,7 +90,6 @@ public class ControllerCreaPartita {
     @FXML Label lblCodice;
     @FXML ComboBox<String> comboNVite;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
-    	System.out.println(giocatoriPrt.size());
     	if(listUtentiPartita.getItems().size()>1) {
     		try {
     			File file = new File(pathStatus);

@@ -33,15 +33,16 @@ public class Spacca extends Application{
 			
 			
 			stage.setTitle("HOME");
-			/*
+			
+			//implemento un sottofondo musicale
 			String audioFilePath = ("src/audio.mp3");
 			File f = new File(audioFilePath);
-			System.out.println(f.getAbsolutePath());
 			Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
 	        MediaPlayer mediaPlayer = new MediaPlayer(media);
 	        mediaPlayer.setAutoPlay(true);
-	        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);*/
+	        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		    
+	        //carico l'interfaccia
 			Scene interfacciaLogin = new Scene(root);
 			stage.setScene(interfacciaLogin);
 		    stage.setMinHeight(400);

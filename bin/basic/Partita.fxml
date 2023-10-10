@@ -72,14 +72,14 @@
             </GridPane>
             <AnchorPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="lblManoGiocatore" text="La Tua Mano" visible="false">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblVitaPersa" textAlignment="CENTER" visible="false">
+                  <Label fx:id="lblVitaPersa" layoutX="199.0" layoutY="-4.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" visible="false">
                      <font>
                         <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblManoGiocatore" alignment="CENTER" layoutX="130.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="La Tua Mano" visible="false">
+                     <font>
+                        <Font size="24.0" />
                      </font>
                   </Label>
                </children>
@@ -110,7 +110,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnIniziaNuovoRound" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia nuovo round" visible="false">
+                  <Button fx:id="btnIniziaNuovoRound" layoutX="138.0" layoutY="1.0" mnemonicParsing="false" onAction="#IniziaNuovoRound" text="inizia nuovo round" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
