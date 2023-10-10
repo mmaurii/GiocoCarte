@@ -157,13 +157,13 @@ public class ControllerCreaPartita {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
 			
-			ControllerHome controller = loader.getController();
-			controller.populateListView();
-			
+			ControllerHome controller = loader.getController();			
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(root);
-			//copio le informazioni relative alla partita in corso
+			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
 			controller.copiaInformazioniPartita(this.prt);
+			controller.populateListView();
+
 			stage.setScene(interfacciaHome);
 		    stage.setMinHeight(400);
 		    stage.setMinWidth(600);
