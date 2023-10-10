@@ -105,7 +105,7 @@
             </Button>
             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnIniziaNuovaMano" mnemonicParsing="false" onAction="#IniziaNuovaMano" text="inizia la prossima mano" visible="false">
+                  <Button fx:id="btnIniziaNuovaMano" alignment="CENTER" layoutX="125.0" mnemonicParsing="false" onAction="#IniziaNuovaMano" text="inizia la prossima mano" visible="false">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

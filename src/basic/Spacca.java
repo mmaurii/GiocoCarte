@@ -1,14 +1,21 @@
 package basic;
-import java.util.*;
-
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.stage.*;
+
+import java.io.File;
+import java.nio.file.Paths;
+
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 
 
 public class Spacca extends Application{
+	
 	
 	public static void main(String[] args) {
 
@@ -26,11 +33,17 @@ public class Spacca extends Application{
 			
 			
 			stage.setTitle("HOME");
+
+			String audioFilePath = "file:///Users/lorenzomagrini/Desktop/GiocoCarte/src/audio.mp3";
+	        Media media = new Media(audioFilePath);
+	        MediaPlayer mediaPlayer = new MediaPlayer(media);
+	        mediaPlayer.setAutoPlay(true);
+	        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		    
 			Scene interfacciaLogin = new Scene(root);
 			stage.setScene(interfacciaLogin);
 		    stage.setMinHeight(400);
 		    stage.setMinWidth(600);
-			//stage.setFullScreen(true);
 			stage.show();
 		}
 }

@@ -28,6 +28,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+
 
 public class ControllerHome implements Initializable{
 	//variabili di controllo
@@ -153,8 +161,22 @@ public class ControllerHome implements Initializable{
 			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		}
-		
+	
 		lstClassifica.getItems().sort(Comparator.reverseOrder());
+		
+		lstClassifica.setCellFactory(param -> new ListCell<String>() {
+		    @Override
+		    protected void updateItem(String item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty || item == null) {
+		            setText(null);
+		            setGraphic(null);
+		        } else {
+		            setText(item);
+		            setAlignment(javafx.geometry.Pos.CENTER);
+		        }
+		    }
+		});	
     }
     
     private void avviaPartita() {

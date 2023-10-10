@@ -137,15 +137,19 @@ public class ControllerCreaPartita {
     	
     	//riapro la finestra di login
 		try {
-			//root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
+			
 			ControllerHome controller = loader.getController();
-			Scene interfacciaHome = new Scene(root);
-			//copio le informazioni relative alla partita in corso
-			controller.copiaInformazioniPartita(prt);
-			stage.setScene(interfacciaHome);
-			stage.show();
+			controller.populateListView();
+			
+			stage.setTitle("HOME");
+			Scene interfacciaLogin = new Scene(root);
+			stage.setScene(interfacciaLogin);
+		    stage.setMinHeight(400);
+		    stage.setMinWidth(600);
+						stage.show();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
