@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -65,9 +66,16 @@ public class ControllerPartitaTorneo {
     	stage.close();
     	
     	//apro la finestra per la creazine delle partite
-		Parent root;
+
 		try {
-			root = FXMLLoader.load(getClass().getResource("CreaPartita.fxml"));
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaPartita.fxml"));
+			Parent root = loader.load();
+			
+			ControllerCreaPartita controller = loader.getController();
+			controller.populateListView();
+			
+			
 			stage.setTitle("Crea una Partita");
 			Scene interfacciaCreaPartita = new Scene(root);
 			stage.setScene(interfacciaCreaPartita);
@@ -98,5 +106,54 @@ public class ControllerPartitaTorneo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+    @FXML ListView<String> lstClassifica;
+
+    public void populateListView() {
+    	
+		try {
+			File file = new File(pathClassifica);
+			Scanner scan = new Scanner(file);			
+			while(scan.hasNext()) {
+				String line = scan.nextLine();
+				lstClassifica.getItems().add(line);	
+			}
+			scan.close();
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		}
+	
+		//ordino in base al punteggio la listview
+		lstClassifica.getItems().sort(Comparator.reverseOrder());			
+		int counter=1;
+		ArrayList<String> listaNumerata = new ArrayList<String>();
+		for(String i : lstClassifica.getItems()) {
+			i=(counter+"\t"+i);
+			listaNumerata.add(i);
+			counter++;
+		}
+		
+		//metto il contenuto della listview in grassetto
+		lstClassifica.setStyle("-fx-font-weight: bold;");
+		
+		//centro le scritte all'interno della listview
+		lstClassifica.setCellFactory(param -> new ListCell<String>() {
+		    @Override
+		    protected void updateItem(String item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty || item == null) {
+		            setText(null);
+		            setGraphic(null);
+		        } else {
+		            setText(item);
+		            setAlignment(javafx.geometry.Pos.CENTER);
+		        }
+		    }
+		});
+		
+		//mostro in output la classifica
+		lstClassifica.getItems().setAll(listaNumerata);
     }
 }

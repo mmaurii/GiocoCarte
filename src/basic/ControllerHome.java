@@ -70,9 +70,11 @@ public class ControllerHome implements Initializable{
         	Stage stage = (Stage)btnLogin.getScene().getWindow();
         	stage.close();
         	//apro la finestra delle impostazioni e creazine partite e tornei
-			Parent root;
+			
 			try {
-				root = FXMLLoader.load(getClass().getResource("PartitaTorneo.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
+				Parent root = loader.load();
+				
 				stage.setTitle("Menu");
 				Scene interfacciaPartitaTorneo = new Scene(root);
 				stage.setScene(interfacciaPartitaTorneo);

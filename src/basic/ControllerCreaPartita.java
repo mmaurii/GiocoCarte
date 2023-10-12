@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -37,6 +38,8 @@ import javafx.util.Duration;
 import javafx.scene.layout.VBox;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class ControllerCreaPartita {
 	//variabili di controllo
@@ -53,22 +56,74 @@ public class ControllerCreaPartita {
     boolean primoTurno=true;
     String pathClassifica = "src/Classifica.txt";
     String pathStatus = "src/Status.txt";
+    String pathGiocatoriRegistrati = "src/GiocatoriRegistrati.txt";
+    
+    @FXML ListView<String> lstGiocatoriRegistrati;
 
     //aggiungo alla partita un utente  
     @FXML ListView<String> listUtentiPartita;
     @FXML Button btnAggiungiUtente;
     @FXML TextField txtNomeUtente; 
     @FXML public void AggiungiUtente(ActionEvent actionEvent) {
+    	
+    	
+    	
+    	
     	String nome = txtNomeUtente.getText();
     	//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-    	if(!listUtentiPartita.getItems().contains(nome)) {
+    	if(!listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
     		txtNomeUtente.clear();
     		listUtentiPartita.getItems().add(nome);
+    		lstGiocatoriRegistrati.getItems().add(nome);
     		giocatoriPrt.add(new Giocatore(nome));
+    		
+    		try{
+
+    			FileWriter fw = new FileWriter(pathGiocatoriRegistrati, true);
+    			fw.write(nome + '\n');
+    			fw.close();
+    			
+    		} catch (FileNotFoundException FNFe) {
+    			// TODO Auto-generated catch block
+    			FNFe.printStackTrace();
+    		} catch (IOException IOe) {
+    			// TODO Auto-generated catch block
+    			IOe.printStackTrace();
+    		}
+    		
+    		
     	}else {
     		txtNomeUtente.clear();
+    		
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText(null);
+            alert.setContentText("Il Nickname inserito è già stato selezionato da un altro giocatore, riprova con un altro Nickname");
+
+            alert.showAndWait();
     	}
+    	
     }
+    
+    //aggiungo alla partita un utente  
+    
+    
+    @FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
+    	
+        String nome = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
+        
+        if(!listUtentiPartita.getItems().contains(nome) && nome != null) {
+    		listUtentiPartita.getItems().add(nome);
+    		giocatoriPrt.add(new Giocatore(nome));
+
+    		
+    		
+    	}
+    	
+    	
+    	
+    }
+    
 
     //aggiungo alla partita un utente robot 
     @FXML Button btnAggiungiUtenteRobot;
@@ -92,6 +147,13 @@ public class ControllerCreaPartita {
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
     	if(listUtentiPartita.getItems().size()>1) {
     		try {
+    			
+    			UUID uniqueID = UUID.randomUUID();
+    	        String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+    			File file = new File(pathStatus);
+
+    			
+    			/**
     			File file = new File(pathStatus);
     			Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
     			String codPartita = scan.nextLine().split(" , ")[1];
@@ -104,15 +166,15 @@ public class ControllerCreaPartita {
     			int nCifre = codPartita.length();
     			for(int i=0; i<lungCodicePartita-nCifre; i++) {
     				codPartita="0"+codPartita;
-    			}
+    			}**/
 
         		lblCodice.setTextFill(Color.BLACK);
-    			lblCodice.setText(codPartita);
+    			lblCodice.setText(uniqueCode);
     			btnGeneraCodice.setDisable(true);
 
     			//salvo il codice corrente nel file di status
     			FileWriter fw = new FileWriter(file);
-    			fw.write("codicePartita , "+codPartita);
+    			fw.write("codicePartita , "+uniqueCode);
     			fw.close();
 
     			//do le vite e le carte ai giocatori
@@ -128,8 +190,7 @@ public class ControllerCreaPartita {
     			}
 
     			//imposto i dati di una nuova partita
-    			prt=new Partita(codPartita, giocatoriPrt);
-    	    	System.out.println(codPartita);
+    			prt=new Partita(uniqueCode, giocatoriPrt);
 
     		}catch(FileNotFoundException e) {
     			System.out.println(e);
@@ -141,6 +202,10 @@ public class ControllerCreaPartita {
     		lblCodice.setText("Aggiungi almeno due giocatori");
 			
     	}
+    	
+    	
+    	
+    	
     }
 
     
@@ -173,4 +238,38 @@ public class ControllerCreaPartita {
 			e.printStackTrace();
 		}	
     }   
+
+    public void populateListView() {
+    	
+		try {
+			File file = new File(pathGiocatoriRegistrati);
+			Scanner scan = new Scanner(file);			
+			while(scan.hasNext()) {
+				String line = scan.nextLine();
+				lstGiocatoriRegistrati.getItems().add(line.trim());	
+			}
+			scan.close();
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		}
+		
+		//metto il contenuto della listview in grassetto
+		lstGiocatoriRegistrati.setStyle("-fx-font-weight: bold;");
+		
+		//centro le scritte all'interno della listview
+		lstGiocatoriRegistrati.setCellFactory(param -> new ListCell<String>() {
+		    @Override
+		    protected void updateItem(String item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty || item == null) {
+		            setText(null);
+		            setGraphic(null);
+		        } else {
+		            setText(item);
+		            setAlignment(javafx.geometry.Pos.CENTER);
+		        }
+		    }
+		});
+    }
 }
