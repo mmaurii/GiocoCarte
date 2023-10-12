@@ -136,7 +136,7 @@ public class ControllerCreaPartita {
     
     //Genero il codice per una nuova partita
     @FXML Button btnGeneraCodice;
-    @FXML TextField lblCodice;
+    @FXML TextField txtCodice;
     @FXML ComboBox<String> comboNVite;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
     	if(listUtentiPartita.getItems().size()>1) {
@@ -163,7 +163,7 @@ public class ControllerCreaPartita {
     			}**/
 
     	        //lblCodice.setStyle("-fx-control-inner-background: grey;");
-    			lblCodice.setText(uniqueCode);
+    			txtCodice.setText(uniqueCode);
     			btnGeneraCodice.setDisable(true);
 
     			//salvo il codice corrente nel file di status
@@ -191,9 +191,9 @@ public class ControllerCreaPartita {
     			System.out.println(eIO);    		
     		}
     	}else {
-    		lblCodice.setStyle("-fx-text-fill: red;");
+    		txtCodice.setStyle("-fx-text-fill: red;");
 
-    		lblCodice.setText("Aggiungi almeno due giocatori");
+    		txtCodice.setText("Aggiungi almeno due giocatori");
 			
     	}
     }

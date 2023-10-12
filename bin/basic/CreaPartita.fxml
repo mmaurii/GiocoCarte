@@ -128,7 +128,7 @@
                         <Insets bottom="10.0" left="100.0" right="100.0" top="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <TextField fx:id="lblCodice" alignment="CENTER" editable="false" GridPane.rowIndex="2">
+                  <TextField fx:id="txtCodice" alignment="CENTER" editable="false" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="50.0" right="50.0" />
                      </GridPane.margin>

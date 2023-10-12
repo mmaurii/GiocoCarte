@@ -241,7 +241,7 @@ public class ControllerHome implements Initializable{
 			if(gio instanceof Bot) {
 				//gio.wait(10);
 				Bot b = (Bot)gio;
-				b.giocaTurno(root);
+				b.giocaTurno(root, this.prt);
 			}
 
 		} catch (IOException e) {

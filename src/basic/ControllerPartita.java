@@ -180,6 +180,7 @@ public class ControllerPartita {
 							countTurnoGiocatore=0;
 							//sistemo l'interfaccia per iniziare a giocare le carte
 							gridPaneNumeroPrese.setVisible(false);
+							lblPrese.setVisible(false);
 							lblManoGiocatore.setVisible(false);
 							btnIniziaNuovoRound.setVisible(true);
 							btnFineTurnoGiocatore.setDisable(true);
@@ -345,7 +346,7 @@ public class ControllerPartita {
 		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 		btnInizioTurnoGiocatore.setDisable(false);
 		gridPaneNumeroPrese.setVisible(true);
-
+		lblPrese.setVisible(true);
 		//rimetto le carte coperte;
 		//copriCarteGiocatore();
 
