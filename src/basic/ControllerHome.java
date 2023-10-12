@@ -210,7 +210,8 @@ public class ControllerHome implements Initializable{
 			root = loader.load();
 			ControllerPartita controller = loader.getController();
 			//definisco chi giocherà il primo turno
-			lblTurnoGiocatore = new Label("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			lblTurnoGiocatore.setTextFill(Color.BLACK);
 			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
 			lblTurnoGiocatore.setId("lblTurnoGiocatore");
@@ -220,7 +221,7 @@ public class ControllerHome implements Initializable{
 			stage.show();
 			lblTurnoGiocatore.setTranslateX(190);
 			lblTurnoGiocatore.setTranslateY(220);
-
+			
 			if(flagPartitaNuova) {
 				//do le carte a ogni giocatore
 				mazzo.mescola();
@@ -236,6 +237,12 @@ public class ControllerHome implements Initializable{
 			controller.copiaInformazioniLabel(lblTurnoGiocatore);
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
+			
+			if(gio instanceof Bot) {
+				//gio.wait(10);
+				Bot b = (Bot)gio;
+				b.giocaTurno(root);
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

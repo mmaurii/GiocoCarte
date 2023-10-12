@@ -191,7 +191,6 @@ public class ControllerCreaPartita {
 
     			//imposto i dati di una nuova partita
     			prt=new Partita(uniqueCode, giocatoriPrt);
-
     		}catch(FileNotFoundException e) {
     			System.out.println(e);
     		}catch(IOException eIO) {
