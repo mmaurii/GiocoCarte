@@ -2,7 +2,6 @@ package basic;
 
 import java.io.*;
 import java.net.URL;
-
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -60,7 +59,7 @@ public class ControllerCreaPartita {
     
     @FXML ListView<String> lstGiocatoriRegistrati;
 
-    //aggiungo alla partita un utente  
+    //aggiungo alla partita un nuovo utente  
     @FXML ListView<String> listUtentiPartita;
     @FXML Button btnAggiungiUtente;
     @FXML TextField txtNomeUtente; 
@@ -83,13 +82,13 @@ public class ControllerCreaPartita {
     			fw.write(nome + '\n');
     			fw.close();
     			
-    		} catch (FileNotFoundException FNFe) {
-    			// TODO Auto-generated catch block
-    			FNFe.printStackTrace();
-    		} catch (IOException IOe) {
-    			// TODO Auto-generated catch block
-    			IOe.printStackTrace();
-    		}
+	    		} catch (FileNotFoundException FNFe) {
+	    			// TODO Auto-generated catch block
+	    			FNFe.printStackTrace();
+	    		} catch (IOException IOe) {
+	    			// TODO Auto-generated catch block
+	    			IOe.printStackTrace();
+	    		}
     		
     		
     	}else {
@@ -105,23 +104,18 @@ public class ControllerCreaPartita {
     	
     }
     
-    //aggiungo alla partita un utente  
+    //aggiungo alla partita un utente già registrato
     
     
     @FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
     	
         String nome = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
         
-        if(!listUtentiPartita.getItems().contains(nome) && nome != null) {
+        if(!listUtentiPartita.getItems().contains(nome) && nome != null)
+        {
     		listUtentiPartita.getItems().add(nome);
-    		giocatoriPrt.add(new Giocatore(nome));
-
-    		
-    		
+    		giocatoriPrt.add(new Giocatore(nome));	
     	}
-    	
-    	
-    	
     }
     
 
@@ -142,7 +136,7 @@ public class ControllerCreaPartita {
     
     //Genero il codice per una nuova partita
     @FXML Button btnGeneraCodice;
-    @FXML Label lblCodice;
+    @FXML TextField lblCodice;
     @FXML ComboBox<String> comboNVite;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
     	if(listUtentiPartita.getItems().size()>1) {
@@ -168,7 +162,7 @@ public class ControllerCreaPartita {
     				codPartita="0"+codPartita;
     			}**/
 
-        		lblCodice.setTextFill(Color.BLACK);
+    	        //lblCodice.setStyle("-fx-control-inner-background: grey;");
     			lblCodice.setText(uniqueCode);
     			btnGeneraCodice.setDisable(true);
 
@@ -197,14 +191,11 @@ public class ControllerCreaPartita {
     			System.out.println(eIO);    		
     		}
     	}else {
-    		lblCodice.setTextFill(Color.RED);
+    		lblCodice.setStyle("-fx-text-fill: red;");
+
     		lblCodice.setText("Aggiungi almeno due giocatori");
 			
     	}
-    	
-    	
-    	
-    	
     }
 
     
