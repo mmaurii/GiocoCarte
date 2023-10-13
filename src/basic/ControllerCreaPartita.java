@@ -64,10 +64,6 @@ public class ControllerCreaPartita {
     @FXML Button btnAggiungiUtente;
     @FXML TextField txtNomeUtente; 
     @FXML public void AggiungiUtente(ActionEvent actionEvent) {
-    	
-    	
-    	
-    	
     	String nome = txtNomeUtente.getText();
     	//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
     	if(!listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
@@ -89,8 +85,6 @@ public class ControllerCreaPartita {
 	    			// TODO Auto-generated catch block
 	    			IOe.printStackTrace();
 	    		}
-    		
-    		
     	}else {
     		txtNomeUtente.clear();
     		
@@ -105,8 +99,6 @@ public class ControllerCreaPartita {
     }
     
     //aggiungo alla partita un utente già registrato
-    
-    
     @FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
     	
         String nome = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
@@ -139,6 +131,7 @@ public class ControllerCreaPartita {
     @FXML TextField txtCodice;
     @FXML ComboBox<String> comboNVite;
     @FXML public void GeneraCodice(ActionEvent actionEvent) {
+    	if(listUtentiPartita.getItems().size()<=8) {
     	if(listUtentiPartita.getItems().size()>1) {
     		try {
     			
@@ -192,9 +185,12 @@ public class ControllerCreaPartita {
     		}
     	}else {
     		txtCodice.setStyle("-fx-text-fill: red;");
+    		txtCodice.setText("Aggiungi almeno 2 giocatori");
+    	}
+    	}else {
+    		txtCodice.setStyle("-fx-text-fill: red;");
+    		txtCodice.setText("Puoi aggiungere al massimo 8 giocatori");
 
-    		txtCodice.setText("Aggiungi almeno due giocatori");
-			
     	}
     }
 

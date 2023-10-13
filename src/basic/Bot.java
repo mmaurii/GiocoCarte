@@ -41,7 +41,7 @@ public class Bot extends Giocatore{
 				Object o = i.next();
 				System.out.println(o.getClass().descriptorString());
 			}*/
-			//cerco il bottone associato all'id 
+			//cerco la label associato all'id 
 			while(i.hasNext()) {
 				Object o = i.next();
 				if(o instanceof Label) {
@@ -69,31 +69,66 @@ public class Bot extends Giocatore{
 					}
 				}
 			}
-/*
+			/*
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		*/
+			 */
 
 	}
-	
+
 	private void dichiaraPrese() {
-		String idNodo ="txtNumeroPrese";
+		String idNodoFinale ="txtNumeroPrese";
+		String idNodoIntermedio ="gridPaneNumeroPrese";
+
 		Iterator i = interfaccia.getChildren().iterator();
 
 		//cerco il nodo associato all'id e ne scateno l'evento
 		while(i.hasNext()) {
 			Object o = i.next();
-			if(o instanceof TextField) {
-				TextField tf = (TextField)o;
-				if(tf.getName().equals(idNodo)) {
-					//controlla giustizia numero inserito
-					Random rand = new Random();
-					int n = rand.nextInt(6);
-					tf.setText(""+n);
+			if(o instanceof GridPane) {
+				GridPane gp = (GridPane)o;
+				if(gp.getId()==idNodoIntermedio) {
+					Iterator y = gp.getChildren().iterator();
+					while(y.hasNext()) {
+						o=y.next();
+						if(o instanceof TextField) {
+							TextField tf = (TextField)o;
+							System.out.println(tf.getText());					
+							if(tf.getName().equals(idNodoFinale)) {
+								//controlla giustizia numero inserito
+								Random rand = new Random();
+
+								//controllo che il numero di prese dichiarate sia appropriato
+								int nPrese=0;
+								for(Giocatore gio : this.prt.getElencoGiocatori()) {
+									nPrese+=gio.getPreseDichiarate();
+								}
+
+								int n = rand.nextInt(carte.size()+1);
+								nPrese+=n;
+								System.out.println(n);					
+								System.out.println(nPrese);
+								if(nPrese==carte.size()) {
+									tf.setText(""+(n+1));
+								}else {
+									tf.setText(""+n);
+								}
+
+							}
+						}
+					}
 				}
 			}
 		}
+
+		try {
+			TimeUnit.SECONDS.sleep(2);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	private void giocaCarta() {
