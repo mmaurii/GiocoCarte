@@ -40,9 +40,16 @@ public class Mazzo implements Serializable{
 				seme = Seme.valueOf(data[1]);
 				percorso = data[2];
 				valore=Integer.parseInt(data[3]);
-				Carta c = new Carta(numero, seme, percorso, valore);
-				//System.out.println(numero + ", " + seme + ", " + percorso + ", " + valore);
-				mazzo.add(c);
+				if(valore == 40)
+				{
+					CartaSpeciale cs = new CartaSpeciale(numero, seme, percorso, valore);
+					mazzo.add(cs);
+				}else
+				{
+					Carta c = new Carta(numero, seme, percorso, valore);
+					//System.out.println(numero + ", " + seme + ", " + percorso + ", " + valore);
+					mazzo.add(c);
+				}
 				
 			}
 			scan.close();
