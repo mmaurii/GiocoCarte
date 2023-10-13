@@ -23,6 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
@@ -39,6 +41,10 @@ import javafx.animation.ScaleTransition;
 import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import javafx.scene.control.ButtonBar.ButtonData;
+
 
 
 public class ControllerPartita {
@@ -448,6 +454,26 @@ public class ControllerPartita {
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
+					if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() == 40)
+					{
+						Alert alert = new Alert(AlertType.ERROR);
+			            alert.setTitle("Carta Speciale");
+			            alert.setHeaderText(null);
+			            alert.setContentText("Selezionare il valore della carta speciale");
+			            ButtonType buttonTypeMassimo = new ButtonType("Massimo");
+			            ButtonType buttonTypeMinimo = new ButtonType("Minimo");
+			            
+			            alert.getButtonTypes().setAll(buttonTypeMassimo, buttonTypeMinimo);
+			            Optional<ButtonType> result = alert.showAndWait();
+			            
+			            if (result.isPresent() && result.get() == buttonTypeMinimo) {
+							CartaSpeciale cs = (CartaSpeciale)(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata));
+							cs.setValore(0);
+
+			                
+			            }
+					}
+
 					i.setImage(new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getPercorso())));
 					listaCarteMano.get(posCartaCliccata).setImage(null);
 					btnInizioTurnoGiocatoreClicked=false;

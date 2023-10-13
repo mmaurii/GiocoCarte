@@ -157,6 +157,7 @@ public class ControllerCreaPartita {
 
     	        //lblCodice.setStyle("-fx-control-inner-background: grey;");
     			txtCodice.setText(uniqueCode);
+
     			btnGeneraCodice.setDisable(true);
 
     			//salvo il codice corrente nel file di status
