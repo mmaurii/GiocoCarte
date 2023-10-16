@@ -1,12 +1,13 @@
 package basic;
 
-import java.awt.TextField;
+import javafx.scene.control.TextField;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.layout.GridPane;
 import javafx.event.Event;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -29,12 +30,13 @@ public class Bot extends Giocatore{
 		/*try {
 			TimeUnit.SECONDS.sleep(2);
 			*/
+		Thread t=new Thread();
 			this.interfaccia = (GridPane)root.getCenter();
 			this.prt=prt;
 			
 			//controllo se devo giocare una carta o dichiarare le prese()
 			String idNodo ="lblPrese";
-			Iterator i = interfaccia.getChildren().iterator();
+			Iterator<Node> i = interfaccia.getChildren().iterator();
 
 			//cerco il bottone associato all'id 
 	/*		while(i.hasNext()) {
@@ -62,10 +64,10 @@ public class Bot extends Giocatore{
 				
 				if(o instanceof Button) {
 					Button b = (Button)o;
-					if(b.getId().equals("btnIniziaNuovoRound")) {
-						iniziaNuovoRound();
-					}else if(b.getId().equals("BtnIniziaNuovaMano")) {
-						iniziaNuovaMano();
+					if(b.getId().equals("btnIniziaNuovoRound")&&b.isVisible()) {
+						iniziaNuovoRound(b);
+					}else if(b.getId().equals("BtnIniziaNuovaMano")&&b.isVisible()) {
+						iniziaNuovaMano(b);
 					}
 				}
 			}
@@ -81,21 +83,20 @@ public class Bot extends Giocatore{
 		String idNodoFinale ="txtNumeroPrese";
 		String idNodoIntermedio ="gridPaneNumeroPrese";
 
-		Iterator i = interfaccia.getChildren().iterator();
+		Iterator<Node> i = interfaccia.getChildren().iterator();
 
 		//cerco il nodo associato all'id e ne scateno l'evento
 		while(i.hasNext()) {
 			Object o = i.next();
 			if(o instanceof GridPane) {
 				GridPane gp = (GridPane)o;
-				if(gp.getId()==idNodoIntermedio) {
-					Iterator y = gp.getChildren().iterator();
+				if(gp.getId().equals(idNodoIntermedio)) {
+					Iterator<Node> y = gp.getChildren().iterator();
 					while(y.hasNext()) {
 						o=y.next();
 						if(o instanceof TextField) {
 							TextField tf = (TextField)o;
-							System.out.println(tf.getText());					
-							if(tf.getName().equals(idNodoFinale)) {
+							if(tf.getId().equals(idNodoFinale)) {
 								//controlla giustizia numero inserito
 								Random rand = new Random();
 
@@ -107,8 +108,8 @@ public class Bot extends Giocatore{
 
 								int n = rand.nextInt(carte.size()+1);
 								nPrese+=n;
-								System.out.println(n);					
-								System.out.println(nPrese);
+								//System.out.println(n);					
+								//System.out.println(nPrese);
 								if(nPrese==carte.size()) {
 									tf.setText(""+(n+1));
 								}else {
@@ -121,35 +122,51 @@ public class Bot extends Giocatore{
 				}
 			}
 		}
-
+		
+		/*
 		try {
 			TimeUnit.SECONDS.sleep(2);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		*/
 	}
 	
 	private void giocaCarta() {
 		String idNodo ="imgCartaMano";
-		Iterator i = interfaccia.getChildren().iterator();
+		String idNodoIntermedio = "gridPaneCarteMano";
+		Iterator<Node> i = interfaccia.getChildren().iterator();
 
 		//cerco il nodo associato all'id e ne scateno l'evento
 		while(i.hasNext()) {
 			Object o = i.next();
-			if(o instanceof ImageView) {
-				ImageView iv = (ImageView)o;
-				Random rand = new Random();
-				int n = rand.nextInt(carte.size()+1);
-				if(iv.getId().equals(idNodo+n)) {
-					Event e = new Event(MouseEvent.MOUSE_CLICKED);
-					iv.fireEvent(e);
+			if(o instanceof GridPane) {
+				GridPane gp=(GridPane)o;
+				System.out.println("a");
+				if(gp.getId().equals(idNodoIntermedio)) {
+					System.out.println("b");
+					Iterator<Node> y = gp.getChildren().iterator();
+					while(y.hasNext()) {
+						o = y.next();
+						if(o instanceof ImageView) {
+							ImageView iv = (ImageView)o;
+							Random rand = new Random();
+							int n = rand.nextInt(carte.size())+1;
+							System.out.println(idNodo+n);
+							if(iv.getId().equals(idNodo+n)) {
+								System.out.println("c");
+								Event e = new Event(MouseEvent.MOUSE_CLICKED);
+								iv.fireEvent(e);
+							}
+						}
+					}
 				}
 			}
 		}
+
 	}
-	
+
 	private void iniziaTurno() {
 		String idNodo ="btnInizioTurnoGiocatore";
 		trovaNodoInterfaccia(idNodo);
@@ -161,19 +178,20 @@ public class Bot extends Giocatore{
 
 	}
 	
-	private void iniziaNuovoRound() {
-		String idNodo ="btnIniziaNuovoRound";
-		trovaNodoInterfaccia(idNodo);
-
+	private void iniziaNuovoRound(Button b) {
+		//String idNodo ="btnIniziaNuovoRound";
+		//trovaNodoInterfaccia(idNodo);
+		b.fire();
 	}
 	
-	private void iniziaNuovaMano() {
-		String idNodo ="BtnIniziaNuovaMano";
-		trovaNodoInterfaccia(idNodo);
+	private void iniziaNuovaMano(Button b) {
+		//String idNodo ="BtnIniziaNuovaMano";
+		//trovaNodoInterfaccia(idNodo);
+		b.fire();
 	}
 	
 	private void trovaNodoInterfaccia(String idNodo) {
-		Iterator i = interfaccia.getChildren().iterator();
+		Iterator<Node> i = interfaccia.getChildren().iterator();
 
 		//cerco il bottone associato all'id e ne scateno l'evento
 		while(i.hasNext()) {

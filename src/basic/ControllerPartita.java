@@ -1,6 +1,8 @@
 package basic;
 
 import java.io.*;
+import java.net.URL;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -20,6 +22,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -61,9 +64,15 @@ public class ControllerPartita {
 	boolean dichiaraPrese=true;
 	boolean primoTurno=true;
 	String pathClassifica = "src/Classifica.txt";
-	String pathStatus = "src/Status.txt";
+	String pathStatus = "src/Status.txt";	
+	
+	@FXML private void initialize() {
+		//this.prt=(Partita) resources.getObject("Partita");
 
+	}
 
+	
+	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Label lblManoGiocatore;
 	@FXML Button btnInizioTurnoGiocatore;
@@ -206,7 +215,16 @@ public class ControllerPartita {
 					lblNumPreseNonValido.setVisible(true);
 				}
 				txtNumeroPrese.setText("");
-			}catch(NumberFormatException nfe){
+				
+				//se il prossimo giocatore che deve giocare è un bot lo avvio
+/*				Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+				if(gio instanceof Bot) {
+					//gio.wait(10);
+					Bot b = (Bot)gio;
+
+					b.giocaTurno(borderPanePartita, this.prt);
+				}
+*/			}catch(NumberFormatException nfe){
 				lblPrese.setTextFill(Color.RED);
 				txtNumeroPrese.setText(null);
 			}    
@@ -225,9 +243,8 @@ public class ControllerPartita {
 				btnInizioTurnoGiocatore.setDisable(true);
 			}
 
-			//controllo che non sia conclusa una mano
-			if(this.prt.getElencoGiocatori().get(this.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0)
-			{
+			//controllo che non si sia conclusa una mano
+			if(this.prt.getElencoGiocatori().get(this.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0){
 				//controllo che non si sia chiuso un giro di carte 
 				if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
 					//sistemo la visualizzazione dell'interfaccia
@@ -320,6 +337,22 @@ public class ControllerPartita {
 	}
 
 
+	@FXML public void fineTurnoGiocatoreControlloBot() {
+		//controllo che la partita non sia conclusa
+		if(this.prt.getElencoGiocatori().size()>1) {
+			//se il prossimo giocatore che deve giocare è un bot lo avvio
+			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+			System.out.println(gio instanceof Bot);
+			if(gio instanceof Bot) {
+				//gio.wait(10);
+				Bot b = (Bot)gio;
+
+				b.giocaTurno(borderPanePartita, this.prt);
+			}
+		}
+	}
+
+
 	@FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
 		//sistemo l'interfaccia perchè possa essere giocato un nuovo round
 		primoTurno=false;
@@ -339,7 +372,17 @@ public class ControllerPartita {
 		//mostro le carte coperte del giocatore che deve iniziare il turno
 		copriCarteGiocatore();
 	}
+	
 
+	@FXML public void iniziaNuovoRoundControlloBot(MouseEvent mouseEvent) {
+		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		if(gio instanceof Bot) {
+			//gio.wait(10);
+			Bot b = (Bot)gio;
+
+			b.giocaTurno(borderPanePartita, this.prt);
+		}
+	}
 
 	@FXML Button btnIniziaNuovaMano;
 	@FXML public void IniziaNuovaMano(ActionEvent actionEvent) {
@@ -350,6 +393,7 @@ public class ControllerPartita {
 		lblVitaPersa.setVisible(false);
 		btnIniziaNuovaMano.setVisible(false);
 		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 		gridPaneNumeroPrese.setVisible(true);
 		lblPrese.setVisible(true);
@@ -361,10 +405,20 @@ public class ControllerPartita {
 		for(ImageView i : listaCarteBanco) {	
 			i.setImage(null);
 		}
-
 		//System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
 	}
 
+	
+	@FXML public void iniziaNuovaManoControlloBot(MouseEvent mouseEvent) {
+		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		if(gio instanceof Bot) {
+			//gio.wait(10);
+			Bot b = (Bot)gio;
+
+			b.giocaTurno(borderPanePartita, this.prt);
+		}	
+	}
+	
 
 	@FXML Button btnPartitaTornaAllaHome;
 	//torno all' interfaccia di login
@@ -443,7 +497,7 @@ public class ControllerPartita {
 
 	//metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
 	public void copiaInformazioniLabel(Label lblTurnoGiocatore) {
-		this.lblTurnoGiocatore=lblTurnoGiocatore;
+		this.lblTurnoGiocatore.setText(lblTurnoGiocatore.getText());
 	} 
 
 	private void giocaCartaMano(int posCartaCliccata) {

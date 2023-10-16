@@ -207,20 +207,16 @@ public class ControllerHome implements Initializable{
 		BorderPane root = new BorderPane();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+			//Locale locale = new Locale(); "Partita",this.prt
+			//loader.setResources(ResourceBundle.getBundle("Partita",));
 			root = loader.load();
 			ControllerPartita controller = loader.getController();
 			//definisco chi giocherà il primo turno
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
-			lblTurnoGiocatore.setTextFill(Color.BLACK);
-			lblTurnoGiocatore.setFont(Font.font("System", FontWeight.NORMAL, FontPosture.REGULAR, 24));
-			lblTurnoGiocatore.setId("lblTurnoGiocatore");
-			root.getChildren().add(lblTurnoGiocatore);
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
 			stage.show();
-			lblTurnoGiocatore.setTranslateX(190);
-			lblTurnoGiocatore.setTranslateY(220);
 			
 			if(flagPartitaNuova) {
 				//do le carte a ogni giocatore
@@ -238,12 +234,12 @@ public class ControllerHome implements Initializable{
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
 			
+			//controlla e testa
 			if(gio instanceof Bot) {
 				//gio.wait(10);
 				Bot b = (Bot)gio;
 				b.giocaTurno(root, this.prt);
 			}
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
