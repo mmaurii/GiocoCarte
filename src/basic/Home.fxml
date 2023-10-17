@@ -12,102 +12,115 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
-   <top>
-      <Label alignment="CENTER" text="SPACCA" textAlignment="CENTER" textFill="#301fcc" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </Label>
-   </top>
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #38b6ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
    <center>
-      <GridPane maxHeight="480.0" maxWidth="820.0" BorderPane.alignment="CENTER">
+      <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="229.99999694824214" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="369.2000030517578" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="38.4" vgrow="ALWAYS" />
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="314.4" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label fx:id="lblDesc" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="CLASSIFICA" textAlignment="CENTER">
-               <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <ListView fx:id="lstClassifica" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-               <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </GridPane.margin>
-            </ListView>
-            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="AVVIA PARTITA" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane maxHeight="480.0" maxWidth="820.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="229.99999694824214" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="369.2000030517578" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="106.6" minHeight="10.0" prefHeight="36.39997558593748" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="71.79999389648438" minHeight="0.0" prefHeight="18.399986267089844" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="88.40003356933593" minHeight="10.0" prefHeight="70.8000274658203" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                  <RowConstraints />
+                  <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="38.4" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="314.4" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
-                  <TextField fx:id="txtCodPartita" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Codice">
+                  <Label fx:id="lblDesc" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="CLASSIFICA" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <Button fx:id="btnGioca" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#avviaPartita" text="Gioca" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" left="100.0" right="100.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Label fx:id="lblCodPartitaErrato" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" wrapText="true" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LOGIN AMMINISTRATORE" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button id="login" fx:id="btnLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAction" text="Login" GridPane.rowIndex="6">
-                     <GridPane.margin>
-                        <Insets bottom="10.0" left="100.0" right="100.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <TextField id="username" fx:id="txtUsername" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Inserire l'username" GridPane.rowIndex="4">
+                  <ListView fx:id="lstClassifica" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </GridPane.margin>
-                  </TextField>
-                  <PasswordField id="password" fx:id="txtPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Inserire la Password" GridPane.rowIndex="5">
+                  </ListView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="AVVIA PARTITA" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </GridPane.margin>
-                  </PasswordField>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="106.6" minHeight="10.0" prefHeight="36.39997558593748" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="71.79999389648438" minHeight="0.0" prefHeight="18.399986267089844" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="88.40003356933593" minHeight="10.0" prefHeight="70.8000274658203" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <TextField fx:id="txtCodPartita" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Codice">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnGioca" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#avviaPartita" text="Gioca" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="100.0" right="100.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Label fx:id="lblCodPartitaErrato" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" wrapText="true" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LOGIN AMMINISTRATORE" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Button id="login" fx:id="btnLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAction" text="Login" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="100.0" right="100.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <TextField id="username" fx:id="txtUsername" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Inserire l'username" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <PasswordField id="password" fx:id="txtPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Inserire la Password" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </GridPane.margin>
+                        </PasswordField>
+                     </children>
+                  </GridPane>
                </children>
+            </GridPane>
+            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="54.0" prefWidth="200.0" styleClass="body" stylesheets="@../style.css">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+               <GridPane.margin>
+                  <Insets left="200.0" right="200.0" />
+               </GridPane.margin>
             </GridPane>
          </children>
       </GridPane>
