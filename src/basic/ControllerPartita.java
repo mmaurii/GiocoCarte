@@ -334,15 +334,12 @@ public class ControllerPartita {
 				}
 			}	
 		}
-	}
-
-
-	@FXML public void fineTurnoGiocatoreControlloBot() {
+		
+		
 		//controllo che la partita non sia conclusa
 		if(this.prt.getElencoGiocatori().size()>1) {
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
-			System.out.println(gio instanceof Bot);
 			if(gio instanceof Bot) {
 				//gio.wait(10);
 				Bot b = (Bot)gio;
@@ -350,6 +347,11 @@ public class ControllerPartita {
 				b.giocaTurno(borderPanePartita, this.prt);
 			}
 		}
+	}
+
+
+	@FXML public void fineTurnoGiocatoreControlloBot() {
+
 	}
 
 

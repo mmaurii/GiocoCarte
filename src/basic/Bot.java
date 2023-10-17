@@ -16,6 +16,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class Bot extends Giocatore{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	GridPane interfaccia;
 	Partita prt;
 	public Bot(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {
@@ -50,7 +54,6 @@ public class Bot extends Giocatore{
 					Label l = (Label)o;
 					if(l.getId().equals(idNodo)) {
 						iniziaTurno();
-
 						//controllo se devo dichiarare le prese o giocare una carta
 						if(l.isVisible()) {
 							dichiaraPrese();
@@ -59,6 +62,8 @@ public class Bot extends Giocatore{
 							giocaCarta();
 							finisciTurno();
 						}
+						
+						break;
 					}
 				}
 				
@@ -103,14 +108,16 @@ public class Bot extends Giocatore{
 								//controllo che il numero di prese dichiarate sia appropriato
 								int nPrese=0;
 								for(Giocatore gio : this.prt.getElencoGiocatori()) {
-									nPrese+=gio.getPreseDichiarate();
+									if(gio.getPreseDichiarate()>=0) {//controllo che prese dichiarate non abbia il valores di default
+										nPrese+=gio.getPreseDichiarate();
+									}
 								}
 
-								int n = rand.nextInt(carte.size()+1);
+								int n = rand.nextInt(this.carte.size()+1);
 								nPrese+=n;
-								//System.out.println(n);					
-								//System.out.println(nPrese);
-								if(nPrese==carte.size()) {
+
+								//controllo che il numero generato non vada in conflitto 
+								if(nPrese==this.carte.size()) {
 									tf.setText(""+(n+1));
 								}else {
 									tf.setText(""+n);
@@ -143,21 +150,24 @@ public class Bot extends Giocatore{
 			Object o = i.next();
 			if(o instanceof GridPane) {
 				GridPane gp=(GridPane)o;
-				System.out.println("a");
 				if(gp.getId().equals(idNodoIntermedio)) {
-					System.out.println("b");
 					Iterator<Node> y = gp.getChildren().iterator();
 					while(y.hasNext()) {
 						o = y.next();
 						if(o instanceof ImageView) {
 							ImageView iv = (ImageView)o;
 							Random rand = new Random();
-							int n = rand.nextInt(carte.size())+1;
-							System.out.println(idNodo+n);
+							int n = rand.nextInt(this.carte.size())+1;
 							if(iv.getId().equals(idNodo+n)) {
-								System.out.println("c");
-								Event e = new Event(MouseEvent.MOUSE_CLICKED);
-								iv.fireEvent(e);
+								MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
+										iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento
+										0, 0, 
+										null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
+										);
+
+								iv.fireEvent(mouseEvent);
+								
+								break;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
 							}
 						}
 					}
@@ -199,7 +209,7 @@ public class Bot extends Giocatore{
 			if(o instanceof Button) {
 				Button b = (Button)o;
 				if(b.getId().equals(idNodo)) {
-					b.fire();
+					b.fire();					
 				}
 			}
 		}

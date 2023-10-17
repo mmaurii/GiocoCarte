@@ -3,6 +3,5 @@
 10 , pino
 40 , balto
 20 , b
-
 10 , mauri
 10 , h
