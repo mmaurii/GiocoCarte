@@ -41,6 +41,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
 import javafx.scene.layout.BorderPane;
@@ -60,6 +61,7 @@ public class ControllerPartita {
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	int countTurnoGiocatore=0;
+	int valCartaSpeciale=40;
 	private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
 	boolean dichiaraPrese=true;
 	boolean primoTurno=true;
@@ -338,13 +340,21 @@ public class ControllerPartita {
 		
 		//controllo che la partita non sia conclusa
 		if(this.prt.getElencoGiocatori().size()>1) {
+            System.out.println(
+                    "Thread " + Thread.currentThread().getId()
+                    + " is running");
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
 				//gio.wait(10);
 				Bot b = (Bot)gio;
-
 				b.giocaTurno(borderPanePartita, this.prt);
+				Thread t = new Thread(b);
+				Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
+				//t.start();		
+	            System.out.println(
+	                    "Thread " + Thread.currentThread().getId()
+	                    + " is running");
 			}
 		}
 	}
@@ -373,17 +383,21 @@ public class ControllerPartita {
 
 		//mostro le carte coperte del giocatore che deve iniziare il turno
 		copriCarteGiocatore();
-	}
-	
-
-	@FXML public void iniziaNuovoRoundControlloBot(MouseEvent mouseEvent) {
+		
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			//gio.wait(10);
 			Bot b = (Bot)gio;
-
 			b.giocaTurno(borderPanePartita, this.prt);
+			Thread t = new Thread(b);
+			Platform.runLater(t);
+			//t.start();
 		}
+	}
+	
+
+	@FXML public void iniziaNuovoRoundControlloBot(MouseEvent mouseEvent) {
+
 	}
 
 	@FXML Button btnIniziaNuovaMano;
@@ -408,17 +422,27 @@ public class ControllerPartita {
 			i.setImage(null);
 		}
 		//System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
-	}
-
-	
-	@FXML public void iniziaNuovaManoControlloBot(MouseEvent mouseEvent) {
+		
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			//gio.wait(10);
 			Bot b = (Bot)gio;
-
 			b.giocaTurno(borderPanePartita, this.prt);
-		}	
+			Thread t = new Thread(b);
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Platform.runLater(t);
+			//t.start();
+		}
+	}
+
+	
+	@FXML public void iniziaNuovaManoControlloBot(MouseEvent mouseEvent) {
+	
 	}
 	
 
@@ -510,7 +534,7 @@ public class ControllerPartita {
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
-					if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() == 40)
+					if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() == valCartaSpeciale && !(prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot))
 					{
 						Alert alert = new Alert(AlertType.ERROR);
 			            alert.setTitle("Carta Speciale");

@@ -5,3 +5,5 @@
 20 , b
 10 , mauri
 10 , h
+10 , baldo
+10 , pippo

@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class Bot extends Giocatore{
+public class Bot extends Giocatore implements Runnable{
 	/**
 	 * 
 	 */
@@ -30,13 +30,22 @@ public class Bot extends Giocatore{
 		super(nome);
 	}
 	
-	public void giocaTurno(BorderPane root, Partita prt) {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		giocaTurno();
+	}
+	
+	public void giocaTurno(BorderPane root, Partita prt) {
+		this.interfaccia = (GridPane)root.getCenter();
+		this.prt=prt;
+	}
+	
+	private void giocaTurno() {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
 		/*try {
 			TimeUnit.SECONDS.sleep(2);
 			*/
-		Thread t=new Thread();
-			this.interfaccia = (GridPane)root.getCenter();
-			this.prt=prt;
+
 			
 			//controllo se devo giocare una carta o dichiarare le prese()
 			String idNodo ="lblPrese";
@@ -62,8 +71,6 @@ public class Bot extends Giocatore{
 							giocaCarta();
 							finisciTurno();
 						}
-						
-						break;
 					}
 				}
 				
@@ -71,7 +78,7 @@ public class Bot extends Giocatore{
 					Button b = (Button)o;
 					if(b.getId().equals("btnIniziaNuovoRound")&&b.isVisible()) {
 						iniziaNuovoRound(b);
-					}else if(b.getId().equals("BtnIniziaNuovaMano")&&b.isVisible()) {
+					}else if(b.getId().equals("btnIniziaNuovaMano")&&b.isVisible()) {
 						iniziaNuovaMano(b);
 					}
 				}
@@ -164,7 +171,12 @@ public class Bot extends Giocatore{
 										0, 0, 
 										null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
 										);
-
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}	
 								iv.fireEvent(mouseEvent);
 								
 								break;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
@@ -179,28 +191,40 @@ public class Bot extends Giocatore{
 
 	private void iniziaTurno() {
 		String idNodo ="btnInizioTurnoGiocatore";
-		trovaNodoInterfaccia(idNodo);
+		scatenaNodoInterfaccia (idNodo);
 	}
 	
 	private void finisciTurno() {
 		String idNodo ="btnFineTurnoGiocatore";
-		trovaNodoInterfaccia(idNodo);
+		scatenaNodoInterfaccia(idNodo);
 
 	}
 	
 	private void iniziaNuovoRound(Button b) {
 		//String idNodo ="btnIniziaNuovoRound";
 		//trovaNodoInterfaccia(idNodo);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		b.fire();
 	}
 	
 	private void iniziaNuovaMano(Button b) {
 		//String idNodo ="BtnIniziaNuovaMano";
 		//trovaNodoInterfaccia(idNodo);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		b.fire();
 	}
 	
-	private void trovaNodoInterfaccia(String idNodo) {
+	private void scatenaNodoInterfaccia(String idNodo) {
 		Iterator<Node> i = interfaccia.getChildren().iterator();
 
 		//cerco il bottone associato all'id e ne scateno l'evento
@@ -209,7 +233,13 @@ public class Bot extends Giocatore{
 			if(o instanceof Button) {
 				Button b = (Button)o;
 				if(b.getId().equals(idNodo)) {
-					b.fire();					
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+					b.fire();
 				}
 			}
 		}
