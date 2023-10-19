@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import javafx.scene.layout.GridPane;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -164,19 +165,21 @@ public class Bot extends Giocatore implements Runnable{
 						if(o instanceof ImageView) {
 							ImageView iv = (ImageView)o;
 							Random rand = new Random();
-							int n = rand.nextInt(this.carte.size())+1;
+							System.out.println(this.carte.size());
+							try {
+								TimeUnit.SECONDS.sleep(30);
+								//Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							int n = rand.nextInt(this.carte.size())+1;//due thread si scambiano e ho un errore desecuzione
 							if(iv.getId().equals(idNodo+n)) {
 								MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
 										iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento
 										0, 0, 
 										null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
 										);
-								try {
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}	
 								iv.fireEvent(mouseEvent);
 								
 								break;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
@@ -202,25 +205,13 @@ public class Bot extends Giocatore implements Runnable{
 	
 	private void iniziaNuovoRound(Button b) {
 		//String idNodo ="btnIniziaNuovoRound";
-		//trovaNodoInterfaccia(idNodo);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		//trovaNodoInterfaccia(idNodo);	
 		b.fire();
 	}
 	
 	private void iniziaNuovaMano(Button b) {
 		//String idNodo ="BtnIniziaNuovaMano";
 		//trovaNodoInterfaccia(idNodo);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
 		b.fire();
 	}
 	
@@ -232,13 +223,7 @@ public class Bot extends Giocatore implements Runnable{
 			Object o = i.next();
 			if(o instanceof Button) {
 				Button b = (Button)o;
-				if(b.getId().equals(idNodo)) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
+				if(b.getId().equals(idNodo)) {	
 					b.fire();
 				}
 			}

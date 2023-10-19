@@ -66,7 +66,7 @@ public class ControllerCreaPartita {
     @FXML public void AggiungiUtente(ActionEvent actionEvent) {
     	String nome = txtNomeUtente.getText();
     	//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-    	if(!listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
+    	if(!nome.trim().equals("") && !listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
     		txtNomeUtente.clear();
     		listUtentiPartita.getItems().add(nome);
     		lstGiocatoriRegistrati.getItems().add(nome);
@@ -117,7 +117,7 @@ public class ControllerCreaPartita {
     @FXML public void AggiungiUtenteRobot(ActionEvent actionEvent) {
     	String nome = txtNomeUtenteRobot.getText();
     	//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-    	if(!listUtentiPartita.getItems().contains(nome)) {
+    	if(!nome.trim().equals("") && !listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
     		txtNomeUtenteRobot.clear();
     		listUtentiPartita.getItems().add(nome);
     		giocatoriPrt.add(new Bot(nome));

@@ -15,6 +15,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import javax.security.auth.login.AccountNotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -340,17 +342,21 @@ public class ControllerPartita {
 		
 		//controllo che la partita non sia conclusa
 		if(this.prt.getElencoGiocatori().size()>1) {
-            System.out.println(
-                    "Thread " + Thread.currentThread().getId()
-                    + " is running");
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
+				try {
+					TimeUnit.SECONDS.sleep(2);
+					//Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 				//gio.wait(10);
 				Bot b = (Bot)gio;
 				b.giocaTurno(borderPanePartita, this.prt);
 				Thread t = new Thread(b);
-				Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
+				Platform.runLater(b);//non credo funzioni correttamente, verifica ordine esecuzione
 				//t.start();		
 	            System.out.println(
 	                    "Thread " + Thread.currentThread().getId()
@@ -386,11 +392,18 @@ public class ControllerPartita {
 		
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
+			try {
+				TimeUnit.SECONDS.sleep(2);
+				//Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//gio.wait(10);
 			Bot b = (Bot)gio;
 			b.giocaTurno(borderPanePartita, this.prt);
 			Thread t = new Thread(b);
-			Platform.runLater(t);
+			Platform.runLater(b);
 			//t.start();
 		}
 	}
@@ -425,17 +438,19 @@ public class ControllerPartita {
 		
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
+			try {
+				TimeUnit.SECONDS.sleep(2);
+				//Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 			//gio.wait(10);
 			Bot b = (Bot)gio;
 			b.giocaTurno(borderPanePartita, this.prt);
 			Thread t = new Thread(b);
-			try {
-				t.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Platform.runLater(t);
+
+			Platform.runLater(b);
 			//t.start();
 		}
 	}

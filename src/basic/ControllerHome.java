@@ -238,13 +238,10 @@ public class ControllerHome implements Initializable{
 			//controlla e testa
 			if(gio instanceof Bot) {
 				//gio.wait(10);
-	            System.out.println(
-	                    "Thread " + Thread.currentThread().getId()
-	                    + " is running");
 				Bot b = (Bot)gio;
 				b.giocaTurno(root, this.prt);
 				Thread t = new Thread(b);
-				Platform.runLater(t);
+				Platform.runLater(b);
 				//t.start();
 	            System.out.println(
 	                    "Thread " + Thread.currentThread().getId()
