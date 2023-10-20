@@ -240,7 +240,7 @@ public class ControllerHome implements Initializable{
 				//gio.wait(10);
 				Bot b = (Bot)gio;
 				b.giocaTurno(root, this.prt);
-				Thread t = new Thread(b);
+				//Thread t = new Thread(b);
 				Platform.runLater(b);
 				//t.start();
 	            System.out.println(

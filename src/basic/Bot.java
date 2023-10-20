@@ -40,6 +40,7 @@ public class Bot extends Giocatore implements Runnable{
 	public void giocaTurno(BorderPane root, Partita prt) {
 		this.interfaccia = (GridPane)root.getCenter();
 		this.prt=prt;
+		//giocaTurno();
 	}
 	
 	private void giocaTurno() {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
@@ -166,14 +167,7 @@ public class Bot extends Giocatore implements Runnable{
 							ImageView iv = (ImageView)o;
 							Random rand = new Random();
 							System.out.println(this.carte.size());
-							try {
-								TimeUnit.SECONDS.sleep(30);
-								//Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							int n = rand.nextInt(this.carte.size())+1;//due thread si scambiano e ho un errore desecuzione
+							int n = rand.nextInt(this.carte.size())+1;//due thread si scambiano e ho un errore d'esecuzione
 							if(iv.getId().equals(idNodo+n)) {
 								MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
 										iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento

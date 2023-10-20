@@ -1,6 +1,6 @@
 .body{
 
-	-fx-background-image:  url("file:///Users/lorenzomagrini/Desktop/GiocoCarte/src/SP.png");
+	-fx-background-image:  url("../src/SP.png");
 	-fx-background-size: contain;
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: center;

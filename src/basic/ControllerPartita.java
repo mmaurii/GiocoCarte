@@ -22,6 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -113,6 +114,16 @@ public class ControllerPartita {
 			}else {
 				listaCarteMano.get(i).setImage(null);
 			}
+		}
+		
+		if(this.prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot) {//inserisco un timer per i bot
+			try {
+				TimeUnit.SECONDS.sleep(2);
+				//Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 	}
 
@@ -355,7 +366,7 @@ public class ControllerPartita {
 				//gio.wait(10);
 				Bot b = (Bot)gio;
 				b.giocaTurno(borderPanePartita, this.prt);
-				Thread t = new Thread(b);
+				//Thread t = new Thread(b);
 				Platform.runLater(b);//non credo funzioni correttamente, verifica ordine esecuzione
 				//t.start();		
 	            System.out.println(
@@ -389,7 +400,7 @@ public class ControllerPartita {
 
 		//mostro le carte coperte del giocatore che deve iniziare il turno
 		copriCarteGiocatore();
-		
+		/*
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			try {
@@ -402,10 +413,13 @@ public class ControllerPartita {
 			//gio.wait(10);
 			Bot b = (Bot)gio;
 			b.giocaTurno(borderPanePartita, this.prt);
-			Thread t = new Thread(b);
-			Platform.runLater(b);
+			//Thread t = new Thread(b);
+			
+
+			
+			//Platform.runLater(b);
 			//t.start();
-		}
+		}*/
 	}
 	
 
@@ -435,7 +449,7 @@ public class ControllerPartita {
 			i.setImage(null);
 		}
 		//System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
-		
+		/*
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			try {
@@ -448,11 +462,11 @@ public class ControllerPartita {
 			//gio.wait(10);
 			Bot b = (Bot)gio;
 			b.giocaTurno(borderPanePartita, this.prt);
-			Thread t = new Thread(b);
+			//Thread t = new Thread(b);
 
-			Platform.runLater(b);
+			//Platform.runLater(b);
 			//t.start();
-		}
+		}*/
 	}
 
 	

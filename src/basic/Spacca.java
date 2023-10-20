@@ -21,32 +21,32 @@ public class Spacca extends Application{
 
 		launch(args);
 	}
-	
-	@Override
-		public void start(Stage stage) throws Exception {
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-			Parent root = loader.load();
-			
-			ControllerHome controller = loader.getController();
-			controller.populateListView();
-			
-			
-			stage.setTitle("HOME");
-			
-			//implemento un sottofondo musicale
-			String audioFilePath = ("src/audio.mp3");
-			File f = new File(audioFilePath);
-			Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
-	        MediaPlayer mediaPlayer = new MediaPlayer(media);
-	        mediaPlayer.setAutoPlay(true);
-	        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-		    
-	        //carico l'interfaccia
-			Scene interfacciaLogin = new Scene(root);
-			stage.setScene(interfacciaLogin);
-		    stage.setMinHeight(400);
-		    stage.setMinWidth(600);
-			stage.show();
-		}
+	@Override
+	public void start(Stage stage) throws Exception {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+		Parent root = loader.load();
+
+		ControllerHome controller = loader.getController();
+		controller.populateListView();
+
+
+		stage.setTitle("HOME");
+
+		//implemento un sottofondo musicale
+		String audioFilePath = ("src/audio.mp3");
+		File f = new File(audioFilePath);
+		Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setAutoPlay(true);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+		//carico l'interfaccia
+		Scene interfacciaLogin = new Scene(root);
+		stage.setScene(interfacciaLogin);
+		stage.setMinHeight(400);
+		stage.setMinWidth(600);
+		stage.show();
+	}
 }
