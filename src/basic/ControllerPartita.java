@@ -54,7 +54,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 
 
 
-public class ControllerPartita {
+public class ControllerPartita{
 	//variabili di controllo
 	int numeroCarteAGiocatore;
 	final int lungCodicePartita=10;
@@ -68,6 +68,7 @@ public class ControllerPartita {
 	private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
 	boolean dichiaraPrese=true;
 	boolean primoTurno=true;
+	boolean isLocked = false;
 	String pathClassifica = "src/Classifica.txt";
 	String pathStatus = "src/Status.txt";	
 	
@@ -114,16 +115,6 @@ public class ControllerPartita {
 			}else {
 				listaCarteMano.get(i).setImage(null);
 			}
-		}
-		
-		if(this.prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot) {//inserisco un timer per i bot
-			try {
-				TimeUnit.SECONDS.sleep(2);
-				//Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
 		}
 	}
 
@@ -349,29 +340,24 @@ public class ControllerPartita {
 				}
 			}	
 		}
-		
-		
+
+
 		//controllo che la partita non sia conclusa
 		if(this.prt.getElencoGiocatori().size()>1) {
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
-				try {
-					TimeUnit.SECONDS.sleep(2);
-					//Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-				//gio.wait(10);
-				Bot b = (Bot)gio;
-				b.giocaTurno(borderPanePartita, this.prt);
-				//Thread t = new Thread(b);
-				Platform.runLater(b);//non credo funzioni correttamente, verifica ordine esecuzione
-				//t.start();		
-	            System.out.println(
-	                    "Thread " + Thread.currentThread().getId()
-	                    + " is running");
+				if(!isLocked) {	
+					//gio.wait(10);
+					Bot b = (Bot)gio;
+					b.giocaTurno(borderPanePartita, this.prt);
+					Thread t = new Thread(b);
+					Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
+					synchronized (borderPanePartita) {
+						isLocked = false;
+						borderPanePartita.notify();
+					}
+				}
 			}
 		}
 	}
@@ -400,26 +386,6 @@ public class ControllerPartita {
 
 		//mostro le carte coperte del giocatore che deve iniziare il turno
 		copriCarteGiocatore();
-		/*
-		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
-		if(gio instanceof Bot) {
-			try {
-				TimeUnit.SECONDS.sleep(2);
-				//Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//gio.wait(10);
-			Bot b = (Bot)gio;
-			b.giocaTurno(borderPanePartita, this.prt);
-			//Thread t = new Thread(b);
-			
-
-			
-			//Platform.runLater(b);
-			//t.start();
-		}*/
 	}
 	
 
@@ -448,25 +414,6 @@ public class ControllerPartita {
 		for(ImageView i : listaCarteBanco) {	
 			i.setImage(null);
 		}
-		//System.out.println(this.prt.getElencoGiocatori().get(0).getCarteMano().size());
-		/*
-		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
-		if(gio instanceof Bot) {
-			try {
-				TimeUnit.SECONDS.sleep(2);
-				//Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-			//gio.wait(10);
-			Bot b = (Bot)gio;
-			b.giocaTurno(borderPanePartita, this.prt);
-			//Thread t = new Thread(b);
-
-			//Platform.runLater(b);
-			//t.start();
-		}*/
 	}
 
 	
@@ -489,7 +436,6 @@ public class ControllerPartita {
 		if(this.prt.getElencoGiocatori().size()>1) {
 			SalvaPartita(this.prt);
 		}
-		//System.out.println(prt.getElencoGiocatori().size());
 
 		//riapro la finestra di login
 
