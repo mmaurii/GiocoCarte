@@ -7,6 +7,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -88,8 +91,19 @@ public class ControllerHome implements Initializable{
         	//avvisa dell' errore
         }
     }
-
-
+    
+    @FXML public void MouseEntra2(MouseEvent mouseEvent) {
+    	
+    	btnLogin.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
+    	
+    }
+    
+    @FXML public void MouseEsce2(MouseEvent mouseEvent) {
+    	
+    	btnLogin.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
+    	
+    }
+    
 	//avvio l'interfaccia di gioco
     @FXML Label lblTurnoGiocatore;
     @FXML Button btnGioca;
@@ -126,6 +140,18 @@ public class ControllerHome implements Initializable{
     		avviaPartita(flagPartitaNuova);
     	}
 
+    }
+    
+    @FXML public void MouseEntra(MouseEvent mouseEvent) {
+    	
+	 	btnGioca.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
+    	
+    }
+    
+    @FXML public void MouseEsce(MouseEvent mouseEvent) {
+    	
+    	btnGioca.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
+    	
     }
     
     //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
@@ -189,12 +215,19 @@ public class ControllerHome implements Initializable{
 		            setText(null);
 		            setGraphic(null);
 		        } else {
-		            setText(item);
-		            setAlignment(javafx.geometry.Pos.CENTER);
+		            TextFlow textFlow = new TextFlow();
+		            Text text = new Text(item);
+		            text.setStyle("-fx-fill: black; -fx-font-size: 14px;"); // Imposta lo stile del testo
+		            textFlow.getChildren().add(text);
+
+		            // Imposta l'allineamento del testo a giustificato
+		            textFlow.setTextAlignment(TextAlignment.JUSTIFY);
+		            textFlow.setLineSpacing(5); // Regola lo spaziamento tra le righe se necessario
+
+		            setGraphic(textFlow);
 		        }
 		    }
 		});
-		
 		//mostro in output la classifica
 		lstClassifica.getItems().setAll(listaNumerata);
     }

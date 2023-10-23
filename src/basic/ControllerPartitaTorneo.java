@@ -59,6 +59,7 @@ public class ControllerPartitaTorneo {
     
     @FXML Button btnCreaPartita;
     @FXML ComboBox<String> comboNVite;
+    
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
     	//chiudo la finestra di scelta per la creazione di partite o tornei
@@ -86,6 +87,18 @@ public class ControllerPartitaTorneo {
 			e.printStackTrace();
 		}
     }
+    
+    @FXML public void MouseEntra(MouseEvent mouseEvent) {
+    	
+        btnCreaPartita.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
+    	
+    }
+    
+    @FXML public void MouseEsce(MouseEvent mouseEvent) {
+    	
+    	btnCreaPartita.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
+    	
+    }
 
     
     //crea torneo
@@ -106,6 +119,18 @@ public class ControllerPartitaTorneo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+ @FXML public void MouseEntra2(MouseEvent mouseEvent) {
+    	
+	 btnCreaTorneo.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
+    	
+    }
+    
+    @FXML public void MouseEsce2(MouseEvent mouseEvent) {
+    	
+    	btnCreaTorneo.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
+    	
     }
     
     @FXML ListView<String> lstClassifica;

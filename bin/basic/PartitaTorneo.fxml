@@ -19,7 +19,7 @@
             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1200.0" prefHeight="65.0" prefWidth="600.0" styleClass="body" stylesheets="@../style.2css">
+            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1200.0" prefHeight="65.0" prefWidth="600.0" styleClass="body" stylesheets="@../style2.css">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                </columnConstraints>
@@ -39,7 +39,7 @@
                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
-                  <Button id="btnCreaPartita" fx:id="btnCreaPartita" alignment="CENTER" maxHeight="94.0" maxWidth="254.0" mnemonicParsing="false" onAction="#CreaPartitaAction" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: white;" text="CREA PARTITA" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button id="btnCreaTorneo" fx:id="btnCreaTorneo" alignment="CENTER" maxHeight="94.0" maxWidth="254.0" mnemonicParsing="false" onAction="#CreaTorneoAction" onMouseEntered="#MouseEntra2" onMouseExited="#MouseEsce2" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" text="CREA TORNEO" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="150.0" left="70.0" right="70.0" top="130.0" />
                      </GridPane.margin>
@@ -47,7 +47,7 @@
                         <Font name="Khmer MN" size="18.0" />
                      </font>
                   </Button>
-                  <Button id="btnCreaTorneo" fx:id="btnCreaTorneo" alignment="CENTER" maxHeight="94.0" maxWidth="254.0" mnemonicParsing="false" onAction="#CreaTorneoAction" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: white;" text="CREA TORNEO" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button id="btnCreaPartita" fx:id="btnCreaPartita" alignment="CENTER" maxHeight="94.0" maxWidth="254.0" mnemonicParsing="false" onAction="#CreaPartitaAction" onMouseEntered="#MouseEntra" onMouseExited="#MouseEsce" prefHeight="47.0" prefWidth="127.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" text="CREA PARTITA" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="150.0" left="70.0" right="70.0" top="130.0" />
                      </GridPane.margin>
