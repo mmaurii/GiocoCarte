@@ -74,7 +74,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btnGioca" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#avviaPartita" onMouseEntered="#MouseEntra" onMouseExited="#MouseEsce" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" text="Gioca" textAlignment="CENTER" GridPane.rowIndex="1">
+                        <Button fx:id="btnGioca" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#avviaPartita" stylesheets="@../style3.css" text="Gioca" textAlignment="CENTER" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="100.0" right="100.0" />
                            </GridPane.margin>
@@ -92,7 +92,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button id="login" fx:id="btnLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAction" onMouseEntered="#MouseEntra2" onMouseExited="#MouseEsce2" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" text="Login" GridPane.rowIndex="6">
+                        <Button id="login" fx:id="btnLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#loginAction" stylesheets="@../style3.css" text="Login" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets bottom="10.0" left="100.0" right="100.0" />
                            </GridPane.margin>

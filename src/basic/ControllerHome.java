@@ -92,18 +92,6 @@ public class ControllerHome implements Initializable{
         }
     }
     
-    @FXML public void MouseEntra2(MouseEvent mouseEvent) {
-    	
-    	btnLogin.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
-    
-    @FXML public void MouseEsce2(MouseEvent mouseEvent) {
-    	
-    	btnLogin.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
-    
 	//avvio l'interfaccia di gioco
     @FXML Label lblTurnoGiocatore;
     @FXML Button btnGioca;
@@ -142,17 +130,6 @@ public class ControllerHome implements Initializable{
 
     }
     
-    @FXML public void MouseEntra(MouseEvent mouseEvent) {
-    	
-	 	btnGioca.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
-    
-    @FXML public void MouseEsce(MouseEvent mouseEvent) {
-    	
-    	btnGioca.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
     
     //METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
     //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra

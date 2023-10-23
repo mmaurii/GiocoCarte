@@ -87,18 +87,6 @@ public class ControllerPartitaTorneo {
 			e.printStackTrace();
 		}
     }
-    
-    @FXML public void MouseEntra(MouseEvent mouseEvent) {
-    	
-        btnCreaPartita.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
-    
-    @FXML public void MouseEsce(MouseEvent mouseEvent) {
-    	
-    	btnCreaPartita.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
 
     
     //crea torneo
@@ -119,18 +107,6 @@ public class ControllerPartitaTorneo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    
- @FXML public void MouseEntra2(MouseEvent mouseEvent) {
-    	
-	 btnCreaTorneo.setStyle("-fx-background-color:  lightblue; -fx-border-color: black; -fx-border-width: 2;");
-    	
-    }
-    
-    @FXML public void MouseEsce2(MouseEvent mouseEvent) {
-    	
-    	btnCreaTorneo.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;");
-    	
     }
     
     @FXML ListView<String> lstClassifica;
