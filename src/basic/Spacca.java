@@ -18,6 +18,9 @@ import javafx.scene.media.MediaView;
 
 
 public class Spacca extends Application {
+	String videoFilePath = "src/SPACCA.mp4";
+    String audioFilePath = "src/audio.mp3";
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -25,7 +28,6 @@ public class Spacca extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Carica il video
-        String videoFilePath = "src/SPACCA.mp4";
         Media videoMedia = new Media(new File(videoFilePath).toURI().toString());
         MediaPlayer videoPlayer = new MediaPlayer(videoMedia);
         MediaView mediaView = new MediaView(videoPlayer);
@@ -52,7 +54,6 @@ public class Spacca extends Application {
             ControllerHome controller = loader.getController();
             controller.populateListView();
             
-            String audioFilePath = ("src/audio.mp3");
     		File f = new File(audioFilePath);
     		Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
     		MediaPlayer mediaPlayer = new MediaPlayer(media);

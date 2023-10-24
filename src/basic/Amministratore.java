@@ -4,6 +4,10 @@ import java.util.*;
 import java.io.*;
 
 public class Amministratore extends Giocatore{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String password;
 	public Amministratore(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {
 		super(nome, nVite, carte, punteggio);

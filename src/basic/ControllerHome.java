@@ -1,7 +1,11 @@
 package basic;
 
 import java.io.*;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 import java.net.URL;
+import java.sql.Time;
+
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,6 +19,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import java.util.*;
+
+//import javax.management.timer.Timer;
+
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +40,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -46,6 +54,7 @@ public class ControllerHome implements Initializable{
 	int numeroCarteAGiocatore;
     final int lungCodicePartita=10;
     final int nViteDefault=5;
+    boolean isLocked=false;
     Partita prt;
     Mazzo mazzo = new Mazzo();
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
@@ -244,18 +253,23 @@ public class ControllerHome implements Initializable{
 			controller.copiaInformazioniLabel(lblTurnoGiocatore);
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
-			
+
 			//controlla e testa
 			if(gio instanceof Bot) {
 				//gio.wait(10);
-				Bot b = (Bot)gio;
-				b.giocaTurno(root, this.prt);
-				//Thread t = new Thread(b);
-				Platform.runLater(b);
-				//t.start();
-	            System.out.println(
-	                    "Thread " + Thread.currentThread().getId()
-	                    + " is running");
+				if (!isLocked) {
+					// Acquire the lock
+					isLocked = true;
+					Bot b = (Bot)gio;
+					b.giocaTurno(root, this.prt);
+					Thread t = new Thread(b);
+					Platform.runLater(t);
+					synchronized (root) {
+						isLocked = false;
+						root.notify();
+					}
+
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
