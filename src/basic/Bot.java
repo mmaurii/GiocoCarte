@@ -1,21 +1,14 @@
 package basic;
 
 import javafx.scene.control.TextField;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.TimerTask;
 import java.util.UUID;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 import javafx.scene.layout.GridPane;
-import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -40,8 +33,8 @@ public class Bot extends Giocatore implements Runnable{
 	
 	@Override
 	public void run() {
-		UUID uniqueID = UUID.randomUUID();
-		nm = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+		UUID uniqueID = UUID.randomUUID();//cancellare
+		nm = uniqueID.toString().replaceAll("-", "").substring(0, 8);//cancellare
 		giocaTurno();
 	}
 
@@ -49,27 +42,21 @@ public class Bot extends Giocatore implements Runnable{
 		this.interfaccia = (GridPane)root.getCenter();
 		this.prt=prt;
 	}
-	public boolean flag1 =false;
+
 	private void giocaTurno() {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
 		//controllo se devo giocare una carta o dichiarare le prese()
-		String idNodo ="lblPrese";
+		String idNodoLabel ="lblPrese";
+		String idNodoBtnNuovoRound ="btnIniziaNuovoRound";
+		String idNodoBtnNuovaMano ="btnIniziaNuovaMano";		
 		Iterator<Node> i = interfaccia.getChildren().iterator();
-		boolean flag = false;
-		
-		//cerco la label associato all'id 
+		System.out.println("\t"+nm);
+
+		//cerco il bottone associato all'id 
 		while(i.hasNext()) {
 			Object o = i.next();
-			if(o instanceof Label) {
-				Label l = (Label)o;
-				if(l.getId().equals(idNodo)) {
-					flag=true;
-					flag1=l.isVisible();
-				}
-			}
-
 			if(o instanceof Button) {
 				Button b = (Button)o;
-				if(b.getId().equals("btnIniziaNuovoRound")&&b.isVisible()) {
+				if(b.getId().equals(idNodoBtnNuovoRound)&&b.isVisible()) {
 					Task<Void> t2 = taskDelay(delay);
 					new Thread(t2).start();//avvio il task per il delay
 					t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
@@ -77,7 +64,8 @@ public class Bot extends Giocatore implements Runnable{
 						System.out.println("iniziaNuovoRound");
 						iniziaNuovoRound(b);
 					});
-				}else if(b.getId().equals("btnIniziaNuovaMano")&&b.isVisible()) {
+					return;
+				}else if(b.getId().equals(idNodoBtnNuovaMano)&&b.isVisible()) {
 					Task<Void> t2 = taskDelay(delay);
 					new Thread(t2).start();//avvio il task per il delay
 					t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
@@ -85,8 +73,20 @@ public class Bot extends Giocatore implements Runnable{
 						System.out.println("iniziaNuovaMano");
 						iniziaNuovaMano(b);
 					});
-				}else if(flag && !b.isVisible() && (b.getId().equals("btnIniziaNuovoRound")||b.getId().equals("btnIniziaNuovoRound"))) {
-					flag=false;
+					return;
+				} 
+			}
+		}
+		
+		//reset iteratore
+		i=interfaccia.getChildren().iterator();
+		
+		//cerco la label associato all'id e ne controllo alcuni parametri se il ciclo prima non ha fatto return e quindi btnIniziaNuovaMano e btnIniziaNuovoRound sono visibili
+		while(i.hasNext()) {
+			Object o = i.next();
+			if(o instanceof Label) {
+				Label l = (Label)o;
+				if(l.getId().equals(idNodoLabel)) {
 					Task<Void> t = taskDelay(delay);
 					new Thread(t).start();//avvio il task per il delay
 					t.setOnSucceeded(event ->{//finito il delay procedo con le operazioni
@@ -96,23 +96,24 @@ public class Bot extends Giocatore implements Runnable{
 						new Thread(t1).start();//avvio il task per il delay
 						t1.setOnSucceeded(event1 -> {//finito il delay procedo con le operazioni
 							//controllo se devo dichiarare le prese o giocare una carta
-							if(flag1) {
-								flag1=false;
+							if(l.isVisible()) {
 								System.out.println(nm);
 								System.out.println("dichiaro le prese");
 								dichiaraPrese();
 							}else {
 								System.out.println(nm);
-								System.out.println("gioca le carta");
+								System.out.println("gioca la carta");
 								giocaCarta();
 							}
 
 							Task<Void> t2 = taskDelay(delay);
 							new Thread(t2).start();//avvio il task per il delay
 							t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
-								finisciTurno();});
+								finisciTurno();
+							});
 						});
 					});
+					return;
 				}
 			}
 		}
@@ -152,10 +153,8 @@ public class Bot extends Giocatore implements Runnable{
 								
 								//controllo che il numero generato non vada in conflitto 
 								if(nPrese==this.carte.size()) {
-									System.out.println(""+(n+1));
 									tf.setText(""+(n+1));
 								}else {
-									System.out.println(""+(n));
 									tf.setText(""+n);
 								}
 							}
@@ -183,8 +182,8 @@ public class Bot extends Giocatore implements Runnable{
 						if(o instanceof ImageView) {
 							ImageView iv = (ImageView)o;
 							Random rand = new Random();
-							//System.out.println(this.carte.size());
-							int n = rand.nextInt(this.carte.size())+1;//due thread si scambiano e ho un errore d'esecuzione
+							System.out.println(this.carte.size());
+							int n = rand.nextInt(this.carte.size())+1;
 							if(iv.getId().equals(idNodo+n)) {
 								MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
 										iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento
@@ -192,7 +191,7 @@ public class Bot extends Giocatore implements Runnable{
 										null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
 										);	
 								iv.fireEvent(mouseEvent);
-								break;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
+								return;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
 							}
 						}
 					}

@@ -72,12 +72,6 @@ public class ControllerPartita{
 	String pathClassifica = "src/Classifica.txt";
 	String pathStatus = "src/Status.txt";	
 	
-	@FXML private void initialize() {
-		//this.prt=(Partita) resources.getObject("Partita");
-
-	}
-
-	
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Label lblManoGiocatore;
@@ -218,16 +212,7 @@ public class ControllerPartita{
 					lblNumPreseNonValido.setVisible(true);
 				}
 				txtNumeroPrese.setText("");
-				
-				//se il prossimo giocatore che deve giocare è un bot lo avvio
-/*				Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
-				if(gio instanceof Bot) {
-					//gio.wait(10);
-					Bot b = (Bot)gio;
-
-					b.giocaTurno(borderPanePartita, this.prt);
-				}
-*/			}catch(NumberFormatException nfe){
+			}catch(NumberFormatException nfe){
 				lblPrese.setTextFill(Color.RED);
 				txtNumeroPrese.setText(null);
 			}    
@@ -344,17 +329,10 @@ public class ControllerPartita{
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
-				//if(!isLocked) {	
-					//gio.wait(10);
-					Bot b = (Bot)gio;
-					b.giocaTurno(borderPanePartita, this.prt);
-					Thread t = new Thread(b);
-					Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
-//					synchronized (borderPanePartita) {
-//						isLocked = false;
-//						borderPanePartita.notify();
-//					}
-//				}
+				Bot b = (Bot)gio;
+				b.giocaTurno(borderPanePartita, this.prt);
+				Thread t = new Thread(b);
+				Platform.runLater(t);
 			}
 		}
 	}
@@ -372,8 +350,6 @@ public class ControllerPartita{
 		lblVitaPersa.setVisible(false);
 		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 		lblTurnoGiocatore.setVisible(true);
-		//lblManoGiocatore.setText(pathClassifica);
-		//lblManoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 
 		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
@@ -390,14 +366,10 @@ public class ControllerPartita{
 			Bot b = (Bot)gio;
 			b.giocaTurno(borderPanePartita, this.prt);
 			Thread t = new Thread(b);
-			Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
+			Platform.runLater(t);
 		}
 	}
 	
-
-	@FXML public void iniziaNuovoRoundControlloBot(MouseEvent mouseEvent) {
-
-	}
 
 	@FXML Button btnIniziaNuovaMano;
 	@FXML public void IniziaNuovaMano(ActionEvent actionEvent) {
@@ -420,11 +392,15 @@ public class ControllerPartita{
 		for(ImageView i : listaCarteBanco) {	
 			i.setImage(null);
 		}
-	}
-
-	
-	@FXML public void iniziaNuovaManoControlloBot(MouseEvent mouseEvent) {
-	
+		
+		//se il prossimo giocatore che deve giocare è un bot lo avvio
+		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		if(gio instanceof Bot) {
+			Bot b = (Bot)gio;
+			b.giocaTurno(borderPanePartita, this.prt);
+			Thread t = new Thread(b);
+			Platform.runLater(t);
+		}
 	}
 	
 

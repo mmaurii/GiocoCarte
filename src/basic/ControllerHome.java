@@ -60,7 +60,6 @@ public class ControllerHome implements Initializable{
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
     int countTurnoGiocatore=0;
-    private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
     boolean dichiaraPrese=true;
     boolean primoTurno=true;
     String pathClassifica = "src/Classifica.txt";
@@ -254,22 +253,13 @@ public class ControllerHome implements Initializable{
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
 
-			//controlla e testa
+			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			if(gio instanceof Bot) {
-				//gio.wait(10);
-			//	if (!isLocked) {
-					// Acquire the lock
 					isLocked = true;
 					Bot b = (Bot)gio;
 					b.giocaTurno(root, this.prt);
 					Thread t = new Thread(b);
 					Platform.runLater(t);
-//					synchronized (root) {
-//						isLocked = false;
-//						root.notify();
-//					}
-//
-//				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
