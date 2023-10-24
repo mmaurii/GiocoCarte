@@ -6,5 +6,4 @@
 10 , mauri
 10 , h
 70 , pippo
-
 50 , baldo

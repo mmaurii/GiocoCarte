@@ -257,19 +257,19 @@ public class ControllerHome implements Initializable{
 			//controlla e testa
 			if(gio instanceof Bot) {
 				//gio.wait(10);
-				if (!isLocked) {
+			//	if (!isLocked) {
 					// Acquire the lock
 					isLocked = true;
 					Bot b = (Bot)gio;
 					b.giocaTurno(root, this.prt);
 					Thread t = new Thread(b);
 					Platform.runLater(t);
-					synchronized (root) {
-						isLocked = false;
-						root.notify();
-					}
-
-				}
+//					synchronized (root) {
+//						isLocked = false;
+//						root.notify();
+//					}
+//
+//				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

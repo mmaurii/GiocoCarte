@@ -92,17 +92,14 @@ public class ControllerPartita{
 	boolean btnInizioTurnoGiocatoreClicked=false;
 	//inizia il turno dell'n giocatore
 	@FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
+		lblTurnoGiocatore.setVisible(false);
+		lblManoGiocatore.setVisible(true);
+		btnInizioTurnoGiocatore.setDisable(true);
 		if(!gridPaneNumeroPrese.isVisible()) {
 			lblManoGiocatore.setText("Mano di "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
-			lblTurnoGiocatore.setVisible(false);
-			lblManoGiocatore.setVisible(true);
-			btnInizioTurnoGiocatore.setDisable(true);
 			btnInizioTurnoGiocatoreClicked=true;
 		}else {
 			lblManoGiocatore.setText(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" dichiara le prese");
-			lblTurnoGiocatore.setVisible(false);
-			lblManoGiocatore.setVisible(true);
-			btnInizioTurnoGiocatore.setDisable(true);
 			btnFineTurnoGiocatore.setDisable(false);
 		}
 
@@ -347,17 +344,17 @@ public class ControllerPartita{
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
-				if(!isLocked) {	
+				//if(!isLocked) {	
 					//gio.wait(10);
 					Bot b = (Bot)gio;
 					b.giocaTurno(borderPanePartita, this.prt);
 					Thread t = new Thread(b);
 					Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
-					synchronized (borderPanePartita) {
-						isLocked = false;
-						borderPanePartita.notify();
-					}
-				}
+//					synchronized (borderPanePartita) {
+//						isLocked = false;
+//						borderPanePartita.notify();
+//					}
+//				}
 			}
 		}
 	}
@@ -386,6 +383,15 @@ public class ControllerPartita{
 
 		//mostro le carte coperte del giocatore che deve iniziare il turno
 		copriCarteGiocatore();
+		
+		//se il prossimo giocatore che deve giocare è un bot lo avvio
+		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		if(gio instanceof Bot) {
+			Bot b = (Bot)gio;
+			b.giocaTurno(borderPanePartita, this.prt);
+			Thread t = new Thread(b);
+			Platform.runLater(t);//non credo funzioni correttamente, verifica ordine esecuzione
+		}
 	}
 	
 
