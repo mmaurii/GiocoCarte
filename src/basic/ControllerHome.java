@@ -23,6 +23,8 @@ import java.util.*;
 //import javax.management.timer.Timer;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -273,32 +275,30 @@ public class ControllerHome implements Initializable{
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;
 			String path="src/SalvataggioPartite.json";
-			File file = new File(path);
-			Scanner scan;
-			scan = new Scanner(file);
-
-			scan.useDelimiter("%");
-
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+			jsnReader.beginArray();
+			
 			//carico il contenuto del file
-			while(scan.hasNext()) {
-				String dati =scan.next();
-				Partita p = gson.fromJson(dati, Partita.class);
+			while(jsnReader.hasNext()) {
+				Partita p = gson.fromJson(jsnReader, Partita.class);
 				if(p.getCodice().equals(codicePartita)) {
 					prtTrovata=p;
 				}else {
 					elencoPartite.add(p);
 				}
 			}
-			scan.close();
+			jsnReader.close();
 			
 			//verifico che la partita cercata sia stata trovata
 			if(prtTrovata!=null) {
-				FileWriter fw = new FileWriter(file);
-
+				FileWriter fw = new FileWriter(path);
+				fw.write("[");
 				for(Partita p : elencoPartite) {
 					String datiGson = gson.toJson(p);
-					fw.write(datiGson+"%");
+					fw.write(datiGson+",");
 				}
+				fw.write("]");
 				fw.close();
 			}
 			

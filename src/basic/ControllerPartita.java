@@ -47,6 +47,9 @@ import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
@@ -630,21 +633,21 @@ public class ControllerPartita{
 
 	private void SalvaPartita(Partita partita) {
 		try {
+			boolean presenzaPrt = false;
 			Gson gson = new Gson();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			Boolean presenzaPrt=false;
+			Partita prtTrovata=null;
 			String path="src/SalvataggioPartite.json";
-			File file = new File(path);
-			Scanner scan = new Scanner(file);
-			scan.useDelimiter("%");
-
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+			jsnReader.beginArray();
+			
 			//carico il contenuto del file
-			while(scan.hasNext()) {
-				String dati =scan.next();
-				Partita p = gson.fromJson(dati, Partita.class);
+			while(jsnReader.hasNext()) {
+				Partita p = gson.fromJson(jsnReader, Partita.class);
 				elencoPartite.add(p);
 			}
-			scan.close();
+			jsnReader.close();
 
 			//controllo se la partita da salvare era già presente nel file
 			for(Partita p : elencoPartite) {
@@ -656,19 +659,32 @@ public class ControllerPartita{
 
 			//se la partita non era presente nel file la aggiungo in coda e la salvo
 			if(!presenzaPrt) {
-				FileWriter fw = new FileWriter(file, true);
+				FileWriter fw = new FileWriter(path, true);
+				JsonWriter jsnWriter = new JsonWriter(fw);
+				jsnWriter.beginArray();
+				jsnWriter.beginObject();
+				gson.toJson(partita, Partita.class, jsnWriter);
+				jsnWriter.endObject();
+				jsnWriter.endArray();
 
-				String datiGson = gson.toJson(partita);
-				fw.write(datiGson+"%");
-				fw.close();
+//				String datiGson = gson.toJson(partita);
+//				fw.write(datiGson+",");
+//				fw.close();
+				jsnWriter.close();
 			}else { //salvo la lista di partite caricate dal file
-				FileWriter fw = new FileWriter(file);
-
-				for(Partita p : elencoPartite) {
-					String datiGson = gson.toJson(p);
-					fw.write(datiGson+"%");
-				}
-				fw.close();
+				FileWriter fw = new FileWriter(path);
+				JsonWriter jsnWriter = new JsonWriter(fw);
+				jsnWriter.beginArray();
+				jsnWriter.beginObject();
+				gson.toJson(partita, Partita.class, jsnWriter);
+				jsnWriter.endObject();
+				jsnWriter.endArray();
+//				for(Partita p : elencoPartite) {
+//					String datiGson = gson.toJson(p);
+//					fw.write(datiGson+",");
+//				}
+//				fw.close();
+				jsnWriter.close();
 			}
 		} catch (FileNotFoundException fnfe) {
 			// TODO Auto-generated catch block
