@@ -15,6 +15,12 @@ import javafx.scene.layout.Pane;
 import javafx.fxml.Initializable;
 import java.util.*;
 import javax.security.auth.login.AccountNotFoundException;
+
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -174,9 +180,19 @@ public class ControllerCreaPartita {
     					i.setVite(nViteDefault);
     				}
     			}
-
+				
     			//imposto i dati di una nuova partita
-    			prt=new Partita(uniqueCode, giocatoriPrt);
+    			this.prt=new Partita(uniqueCode, giocatoriPrt);
+    			
+				//do le carte a ogni giocatore
+				mazzo.mescola();
+				numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+				for(Giocatore g : this.prt.getElencoGiocatori()) {
+					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+				}
+				
+				//salvo la partita su file.json
+				SalvaPartita(this.prt);
     		}catch(FileNotFoundException e) {
     			System.out.println(e);
     		}catch(IOException eIO) {
@@ -257,4 +273,54 @@ public class ControllerCreaPartita {
 		    }
 		});
     }
+    
+    private int quanteCarteAGiocatore(int numeroGiocatori) {
+    	if(numeroGiocatori>4) {
+    		return 5;
+    	}else if(numeroGiocatori == 2){
+    		return 1;
+    	}else {
+    		return numeroGiocatori;
+    	}
+    }
+    
+    private void SalvaPartita(Partita partita) {
+		try {
+			Gson gson = new Gson();
+			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
+			String path="src/SalvataggioPartite.json";
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+
+			if(jsnReader.peek() != JsonToken.NULL){
+				jsnReader.beginArray();
+				//carico il contenuto del file
+				while(jsnReader.hasNext()) {
+					Partita p = gson.fromJson(jsnReader, Partita.class);
+					elencoPartite.add(p);
+				}
+				jsnReader.endArray();
+				jsnReader.close();
+
+				elencoPartite.add(partita);
+				//salvo la lista di partite caricate dal file
+				FileWriter fw = new FileWriter(path);
+				JsonWriter jsnWriter = new JsonWriter(fw);
+				jsnWriter.beginArray();
+				for (Partita p : elencoPartite) {
+					gson.toJson(p, Partita.class, jsnWriter);
+					fw.write('\n');
+				}
+				jsnWriter.endArray();
+				jsnWriter.close();
+			}
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			// TODO Auto-generated catch block
+			ioe.printStackTrace();
+		}
+	}
+
 }

@@ -113,7 +113,7 @@ public class ControllerHome implements Initializable{
     @FXML public void avviaPartita(ActionEvent actionEvent) {
     	//ottengo il codice partita inserito dall'utente
     	String codPartita = txtCodPartita.getText();
-    	Partita p = CaricaPartita(codPartita);
+    	Partita p = verificaDisponibilitaPartita(codPartita); //se la partita è presente sul file.json la carico
     	boolean flagPartitaNuova=true;
     	if(p==null) {
     		/*if(codPartita.equals(p.getCodice())) {
@@ -154,19 +154,8 @@ public class ControllerHome implements Initializable{
 		// TODO Auto-generated method stub
 		
 	} 
-
-    private int quanteCarteAGiocatore(int numeroGiocatori) {
-    	if(numeroGiocatori>4) {
-    		return 5;
-    	}else if(numeroGiocatori == 2){
-    		return 1;
-    	}else {
-    		return numeroGiocatori;
-    	}
-    }
     
     @FXML ListView<String> lstClassifica;
-
     public void populateListView() {
     	
 		try {
@@ -241,14 +230,14 @@ public class ControllerHome implements Initializable{
 			stage.setScene(interfacciaDiGioco);
 			stage.show();
 			
-			if(flagPartitaNuova) {
-				//do le carte a ogni giocatore
-				mazzo.mescola();
-				numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-				for(Giocatore g : this.prt.getElencoGiocatori()) {
-					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
-				}
-			}
+//			if(flagPartitaNuova) {
+//				//do le carte a ogni giocatore
+//				mazzo.mescola();
+//				numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+//				for(Giocatore g : this.prt.getElencoGiocatori()) {
+//					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+//				}
+//			}
 			
 			//copio le informazioni relative alla partita in corso
 			controller.copiaInformazioniPartita(prt);
@@ -259,11 +248,11 @@ public class ControllerHome implements Initializable{
 
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			if(gio instanceof Bot) {
-					isLocked = true;
-					Bot b = (Bot)gio;
-					b.giocaTurno(root, this.prt);
-					Thread t = new Thread(b);
-					Platform.runLater(t);
+				isLocked = true;
+				Bot b = (Bot)gio;
+				b.giocaTurno(root, this.prt);
+				Thread t = new Thread(b);
+				Platform.runLater(t);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -271,50 +260,59 @@ public class ControllerHome implements Initializable{
 		}
     }
 
-    private Partita CaricaPartita(String codicePartita) {
-    	try {
-    		Gson gson = new Gson();
-    		ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-    		Partita prtTrovata=null;
-    		String path="src/SalvataggioPartite.json";
-    		FileReader fr = new FileReader(path);
-    		JsonReader jsnReader=new JsonReader(fr);
+    //    private int quanteCarteAGiocatore(int numeroGiocatori) {
+    //    	if(numeroGiocatori>4) {
+    //    		return 5;
+    //    	}else if(numeroGiocatori == 2){
+    //    		return 1;
+    //    	}else {
+    //    		return numeroGiocatori;
+    //    	}
+    //    }
 
-    		if(jsnReader.peek() != JsonToken.NULL){
-    			jsnReader.beginArray();
-    			//carico il contenuto del file
-    			while(jsnReader.hasNext()) {
-    				Partita p = gson.fromJson(jsnReader, Partita.class);
-    				if(p.getCodice().equals(codicePartita)) {
-    					prtTrovata=p;
-    				}else {
-    					elencoPartite.add(p);
-    				}
-    			}
-    			jsnReader.endArray();
-    			jsnReader.close();
-
-    			//verifico che la partita cercata sia stata trovata
-    			if(prtTrovata!=null) {
-    				FileWriter fw = new FileWriter(path);
-    				JsonWriter jsnWriter = new JsonWriter(fw);
-    				jsnWriter.beginArray();
-    				for (Partita p : elencoPartite) {
-    					gson.toJson(p, Partita.class, jsnWriter);
-    					fw.write('\n');
-    				}
-    				jsnWriter.endArray();
-    				jsnWriter.close();
-    			}
+    private Partita verificaDisponibilitaPartita(String codicePartita) {
+    	if(this.prt!=null) {
+    		if(!this.prt.getCodice().equals(codicePartita)) {
+    			return CaricaPartita(codicePartita);
     		}
-    		return prtTrovata;
-    	} catch (FileNotFoundException fnfe) {
-    		// TODO Auto-generated catch block
-    		fnfe.printStackTrace();
-    	} catch (IOException ioe) {
-    		// TODO Auto-generated catch block
+    	}else {
+    		return CaricaPartita(codicePartita);
+    	}
+    		
+    	return null;
+    }
+    
+    private Partita CaricaPartita(String codicePartita) {
+		try {
+	    	Gson gson = new Gson();
+			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
+			Partita prtTrovata=null;
+			String path="src/SalvataggioPartite.json";
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+
+			if(jsnReader.peek() != JsonToken.NULL){
+				jsnReader.beginArray();
+				//carico il contenuto del file
+				while(jsnReader.hasNext()) {
+					Partita p = gson.fromJson(jsnReader, Partita.class);
+					if(p.getCodice().equals(codicePartita)) {
+						prtTrovata=p;
+					}else {
+						elencoPartite.add(p);
+					}
+				}
+				jsnReader.endArray();
+				jsnReader.close();
+			}
+			return prtTrovata;
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 		return null;
-	}
+    }
 }
