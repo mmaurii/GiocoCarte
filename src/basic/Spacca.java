@@ -6,7 +6,6 @@ import javafx.scene.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -32,18 +31,20 @@ public class Spacca extends Application {
         MediaPlayer videoPlayer = new MediaPlayer(videoMedia);
         MediaView mediaView = new MediaView(videoPlayer);
 
-        // Avvia la riproduzione del video
+        //quondo finisce la riproduzione del video avvio l'interfaccia
         videoPlayer.setOnEndOfMedia(() -> {
             videoPlayer.stop();
             showHomeScreen(stage);
         });
-        videoPlayer.play();
-
+        
         // Mostra il video nella finestra
         StackPane videoPane = new StackPane(mediaView);
         Scene videoScene = new Scene(videoPane, 600, 400);
         stage.setScene(videoScene);
         stage.show();
+        
+        // Avvia la riproduzione del video
+        videoPlayer.play();
     }
 
     private void showHomeScreen(Stage stage) {
@@ -52,8 +53,9 @@ public class Spacca extends Application {
             Parent root = loader.load();
 
             ControllerHome controller = loader.getController();
+            //carico la classifica
             controller.populateListView();
-            
+            //carico il sottofondo musicale
     		File f = new File(audioFilePath);
     		Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
     		MediaPlayer mediaPlayer = new MediaPlayer(media);

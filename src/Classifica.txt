@@ -6,4 +6,7 @@
 10 , mauri
 10 , h
 80 , pippo
-50 , baldo
+60 , baldo
+10 , marco
+10 , luigi
+10 , gigi

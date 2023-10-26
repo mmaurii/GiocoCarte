@@ -1,6 +1,8 @@
 package basic;
 
 import javafx.scene.control.TextField;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -14,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.concurrent.Task;
 
-public class Bot extends Giocatore implements Runnable{
+public class Bot extends Giocatore implements Runnable,Serializable{
 	/**
 	 * 
 	 */
@@ -177,14 +179,15 @@ public class Bot extends Giocatore implements Runnable{
 				GridPane gp=(GridPane)o;
 				if(gp.getId().equals(idNodoIntermedio)) {
 					Iterator<Node> y = gp.getChildren().iterator();
+					Random rand = new Random();
+					int n = rand.nextInt(this.carte.size())+1;
 					while(y.hasNext()) {
+						System.out.println(this.carte.size());
 						o = y.next();
 						if(o instanceof ImageView) {
 							ImageView iv = (ImageView)o;
-							Random rand = new Random();
-							System.out.println(this.carte.size());
-							int n = rand.nextInt(this.carte.size())+1;
 							if(iv.getId().equals(idNodo+n)) {
+								System.out.println(iv.getId());
 								MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
 										iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento
 										0, 0, 

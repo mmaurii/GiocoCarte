@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #38b6ff;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPartitaTorneo">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #38b6ff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPartitaTorneo">
    <center>
       <GridPane stylesheets="@../style2.css" BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -39,17 +39,17 @@
                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
-                  <Button id="btnCreaTorneo" fx:id="btnCreaTorneo" alignment="CENTER" maxHeight="95.0" maxWidth="255.0" mnemonicParsing="false" onAction="#CreaTorneoAction" prefHeight="50.0" prefWidth="130.0" stylesheets="@../style3.css" text="CREA TORNEO" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button id="btnCreaPartita" fx:id="btnCreaPartita" alignment="CENTER" maxHeight="95.0" maxWidth="255.0" mnemonicParsing="false" onAction="#CreaPartitaAction" prefHeight="50.0" prefWidth="130.0" stylesheets="@../style3.css" text="CREA PARTITA" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
-                        <Insets bottom="150.0" left="70.0" right="70.0" top="130.0" />
+                        <Insets bottom="170.0" left="70.0" right="70.0" top="110.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="Khmer MN" size="18.0" />
                      </font>
                   </Button>
-                  <Button id="btnCreaPartita" fx:id="btnCreaPartita" alignment="CENTER" maxHeight="95.0" maxWidth="255.0" mnemonicParsing="false" onAction="#CreaPartitaAction" prefHeight="50.0" prefWidth="130.0" stylesheets="@../style3.css" text="CREA PARTITA" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button id="btnCreaTorneo" fx:id="btnCreaTorneo" alignment="CENTER" maxHeight="95.0" maxWidth="255.0" mnemonicParsing="false" onAction="#CreaTorneoAction" prefHeight="50.0" prefWidth="130.0" stylesheets="@../style3.css" text="CREA TORNEO" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
-                        <Insets bottom="150.0" left="70.0" right="70.0" top="130.0" />
+                        <Insets bottom="170.0" left="70.0" right="70.0" top="110.0" />
                      </GridPane.margin>
                      <font>
                         <Font name="Khmer MN" size="18.0" />

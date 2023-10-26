@@ -50,10 +50,8 @@ public class ControllerCreaPartita {
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
     int countTurnoGiocatore=0;
-    private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
     boolean dichiaraPrese=true;
     boolean primoTurno=true;
-    String pathClassifica = "src/Classifica.txt";
     String pathStatus = "src/Status.txt";
     String pathGiocatoriRegistrati = "src/GiocatoriRegistrati.txt";
     
