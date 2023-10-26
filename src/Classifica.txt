@@ -8,5 +8,6 @@
 80 , pippo
 60 , baldo
 10 , marco
-10 , luigi
+20 , luigi
+
 10 , gigi

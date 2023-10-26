@@ -24,6 +24,8 @@ import java.util.*;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -268,46 +270,49 @@ public class ControllerHome implements Initializable{
 			e.printStackTrace();
 		}
     }
-    
-	private Partita CaricaPartita(String codicePartita) {
-		try {
-			Gson gson = new Gson();
-			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			Partita prtTrovata=null;
-			String path="src/SalvataggioPartite.json";
-			FileReader fr = new FileReader(path);
-			JsonReader jsnReader=new JsonReader(fr);
-			jsnReader.beginArray();
-			
-			//carico il contenuto del file
-			while(jsnReader.hasNext()) {
-				Partita p = gson.fromJson(jsnReader, Partita.class);
-				if(p.getCodice().equals(codicePartita)) {
-					prtTrovata=p;
-				}else {
-					elencoPartite.add(p);
-				}
-			}
-			jsnReader.close();
-			
-			//verifico che la partita cercata sia stata trovata
-			if(prtTrovata!=null) {
-				FileWriter fw = new FileWriter(path);
-				fw.write("[");
-				for(Partita p : elencoPartite) {
-					String datiGson = gson.toJson(p);
-					fw.write(datiGson+",");
-				}
-				fw.write("]");
-				fw.close();
-			}
-			
-			return prtTrovata;
-		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
-			fnfe.printStackTrace();
-		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
+
+    private Partita CaricaPartita(String codicePartita) {
+    	try {
+    		Gson gson = new Gson();
+    		ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
+    		Partita prtTrovata=null;
+    		String path="src/SalvataggioPartite.json";
+    		FileReader fr = new FileReader(path);
+    		JsonReader jsnReader=new JsonReader(fr);
+
+    		if(jsnReader.peek() != JsonToken.NULL){
+    			jsnReader.beginArray();
+    			//carico il contenuto del file
+    			while(jsnReader.hasNext()) {
+    				Partita p = gson.fromJson(jsnReader, Partita.class);
+    				if(p.getCodice().equals(codicePartita)) {
+    					prtTrovata=p;
+    				}else {
+    					elencoPartite.add(p);
+    				}
+    			}
+    			jsnReader.endArray();
+    			jsnReader.close();
+
+    			//verifico che la partita cercata sia stata trovata
+    			if(prtTrovata!=null) {
+    				FileWriter fw = new FileWriter(path);
+    				JsonWriter jsnWriter = new JsonWriter(fw);
+    				jsnWriter.beginArray();
+    				for (Partita p : elencoPartite) {
+    					gson.toJson(p, Partita.class, jsnWriter);
+    					fw.write('\n');
+    				}
+    				jsnWriter.endArray();
+    				jsnWriter.close();
+    			}
+    		}
+    		return prtTrovata;
+    	} catch (FileNotFoundException fnfe) {
+    		// TODO Auto-generated catch block
+    		fnfe.printStackTrace();
+    	} catch (IOException ioe) {
+    		// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 		return null;

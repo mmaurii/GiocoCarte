@@ -48,6 +48,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import javafx.scene.layout.BorderPane;
@@ -640,50 +641,39 @@ public class ControllerPartita{
 			String path="src/SalvataggioPartite.json";
 			FileReader fr = new FileReader(path);
 			JsonReader jsnReader=new JsonReader(fr);
-			jsnReader.beginArray();
-			
-			//carico il contenuto del file
-			while(jsnReader.hasNext()) {
-				Partita p = gson.fromJson(jsnReader, Partita.class);
-				elencoPartite.add(p);
-			}
-			jsnReader.close();
 
-			//controllo se la partita da salvare era già presente nel file
-			for(Partita p : elencoPartite) {
-				if(p.getCodice().equals(partita.getCodice())) {
-					presenzaPrt=true;
-					p=partita;
+			if(jsnReader.peek() != JsonToken.NULL){
+				jsnReader.beginArray();
+				//carico il contenuto del file
+				while(jsnReader.hasNext()) {
+					Partita p = gson.fromJson(jsnReader, Partita.class);
+					elencoPartite.add(p);
 				}
-			}
+				jsnReader.endArray();
+				jsnReader.close();
 
-			//se la partita non era presente nel file la aggiungo in coda e la salvo
-			if(!presenzaPrt) {
-				FileWriter fw = new FileWriter(path, true);
-				JsonWriter jsnWriter = new JsonWriter(fw);
-				jsnWriter.beginArray();
-				jsnWriter.beginObject();
-				gson.toJson(partita, Partita.class, jsnWriter);
-				jsnWriter.endObject();
-				jsnWriter.endArray();
+				//controllo se la partita da salvare era già presente nel file
+				for(Partita p : elencoPartite) {
+					if(p.getCodice().equals(partita.getCodice())) {
+						presenzaPrt=true;
+						p=partita;
+					}
+				}
 
-//				String datiGson = gson.toJson(partita);
-//				fw.write(datiGson+",");
-//				fw.close();
-				jsnWriter.close();
-			}else { //salvo la lista di partite caricate dal file
+				//se la partita non era presente nel file la aggiungo in coda e la salvo
+				if(!presenzaPrt) {
+					elencoPartite.add(partita);
+				}
+
+				//salvo la lista di partite caricate dal file
 				FileWriter fw = new FileWriter(path);
 				JsonWriter jsnWriter = new JsonWriter(fw);
 				jsnWriter.beginArray();
-				jsnWriter.beginObject();
-				gson.toJson(partita, Partita.class, jsnWriter);
-				jsnWriter.endObject();
+				for (Partita p : elencoPartite) {
+					gson.toJson(p, Partita.class, jsnWriter);
+					fw.write('\n');
+				}
 				jsnWriter.endArray();
-//				for(Partita p : elencoPartite) {
-//					String datiGson = gson.toJson(p);
-//					fw.write(datiGson+",");
-//				}
-//				fw.close();
 				jsnWriter.close();
 			}
 		} catch (FileNotFoundException fnfe) {
