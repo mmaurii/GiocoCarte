@@ -24,8 +24,8 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	GridPane interfaccia;
 	Partita prt;
     final int delay = 3;//in secondi 
-    String nm;
-	public Bot(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {
+
+    public Bot(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {
 		super(nome, nVite, carte, punteggio);
 	}
 
@@ -35,8 +35,6 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	
 	@Override
 	public void run() {
-		UUID uniqueID = UUID.randomUUID();//cancellare
-		nm = uniqueID.toString().replaceAll("-", "").substring(0, 8);//cancellare
 		giocaTurno();
 	}
 
@@ -51,7 +49,6 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 		String idNodoBtnNuovoRound ="btnIniziaNuovoRound";
 		String idNodoBtnNuovaMano ="btnIniziaNuovaMano";		
 		Iterator<Node> i = interfaccia.getChildren().iterator();
-		System.out.println("\t"+nm);
 
 		//cerco il bottone associato all'id 
 		while(i.hasNext()) {
@@ -62,8 +59,6 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 					Task<Void> t2 = taskDelay(delay);
 					new Thread(t2).start();//avvio il task per il delay
 					t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
-						System.out.println(nm);
-						System.out.println("iniziaNuovoRound");
 						iniziaNuovoRound(b);
 					});
 					return;
@@ -71,8 +66,6 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 					Task<Void> t2 = taskDelay(delay);
 					new Thread(t2).start();//avvio il task per il delay
 					t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
-						System.out.println(nm);
-						System.out.println("iniziaNuovaMano");
 						iniziaNuovaMano(b);
 					});
 					return;
@@ -99,12 +92,8 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 						t1.setOnSucceeded(event1 -> {//finito il delay procedo con le operazioni
 							//controllo se devo dichiarare le prese o giocare una carta
 							if(l.isVisible()) {
-								System.out.println(nm);
-								System.out.println("dichiaro le prese");
 								dichiaraPrese();
 							}else {
-								System.out.println(nm);
-								System.out.println("gioca la carta");
 								giocaCarta();
 							}
 
@@ -182,12 +171,10 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 					Random rand = new Random();
 					int n = rand.nextInt(this.carte.size())+1;
 					while(y.hasNext()) {
-						System.out.println(this.carte.size());
 						o = y.next();
 						if(o instanceof ImageView) {
 							ImageView iv = (ImageView)o;
 							if(iv.getId().equals(idNodo+n)) {
-								System.out.println(iv.getId());
 								MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
 										iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento
 										0, 0, 
@@ -251,5 +238,9 @@ public class Bot extends Giocatore implements Runnable,Serializable{
         };
     	
     	return slowTask;
+    }
+    
+    public Giocatore getGiocatore(){
+    	return new Giocatore(this.nome, this.nVite, this.carte, this.punteggio);
     }
 }

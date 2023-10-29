@@ -301,14 +301,26 @@ public class ControllerCreaPartita {
 				}
 				jsnReader.endArray();
 				jsnReader.close();
-
+				
+				//tentativo di trasformare i bot in giocatori();
+				ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
+				elencoGiocatori = partita.getElencoGiocatori();
+				for(Giocatore g : elencoGiocatori) {
+					if(g instanceof Bot) {
+						g=(Giocatore)g;
+					}
+				}
+				
+				partita.setElencoGiocatori(elencoGiocatori);
 				elencoPartite.add(partita);
 				//salvo la lista di partite caricate dal file
 				FileWriter fw = new FileWriter(path);
 				JsonWriter jsnWriter = new JsonWriter(fw);
 				jsnWriter.beginArray();
+				jsnWriter.setLenient(true);
+				
 				for (Partita p : elencoPartite) {
-					gson.toJson(p, Partita.class, jsnWriter);
+					gson.toJson(p, Partita.class, jsnWriter);//va in errore perchè non riesce a salvare alcune variabili dell'oggetto bot come per esembio GridPane
 					fw.write('\n');
 				}
 				jsnWriter.endArray();

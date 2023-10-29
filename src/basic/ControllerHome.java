@@ -290,7 +290,7 @@ public class ControllerHome implements Initializable{
 			String path="src/SalvataggioPartite.json";
 			FileReader fr = new FileReader(path);
 			JsonReader jsnReader=new JsonReader(fr);
-
+			
 			if(jsnReader.peek() != JsonToken.NULL){
 				jsnReader.beginArray();
 				//carico il contenuto del file
