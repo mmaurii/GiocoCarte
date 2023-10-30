@@ -1,59 +1,30 @@
 package basic;
 
 import java.io.*;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
-import java.net.URL;
-import java.sql.Time;
-
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import java.util.*;
-
-//import javax.management.timer.Timer;
-
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
-import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 
 
-public class ControllerHome implements Initializable{
+public class ControllerHome {
 	//variabili di controllo
 	int numeroCarteAGiocatore;
     final int lungCodicePartita=10;
@@ -114,16 +85,15 @@ public class ControllerHome implements Initializable{
     	//ottengo il codice partita inserito dall'utente
     	String codPartita = txtCodPartita.getText();
     	Partita p = verificaDisponibilitaPartita(codPartita); //se la partita è presente sul file.json la carico
-    	boolean flagPartitaNuova=true;
     	if(p==null) {
     		/*if(codPartita.equals(p.getCodice())) {
     			this.prt = p;
     			System.out.println("nice1");
     		}else if(this.prt!=null)*/
     		if(this.prt!=null){//controllo che venga creata una partita per poterne confrontare il codice
-    			if(codPartita.equals(this.prt.getCodice())) {
+    			if(codPartita.equals(this.prt.getCodice())) {	//può essere efficentato
     				if(this.prt.getElencoGiocatori().size()>1) {
-    					avviaPartita(flagPartitaNuova);
+    					avviaPartita();
     				}else {
         				lblCodPartitaErrato.setText("la partita ha un solo giocatore, perchè si è già conclusa");
     				}
@@ -136,8 +106,7 @@ public class ControllerHome implements Initializable{
     	}else {
     		//inizializzo la partita e la avvio
     		this.prt=p;
-    		flagPartitaNuova=false;
-    		avviaPartita(flagPartitaNuova);
+    		avviaPartita();
     	}
 
     }
@@ -148,12 +117,6 @@ public class ControllerHome implements Initializable{
     public void copiaInformazioniPartita(Partita tempPrt) {
     	this.prt=tempPrt;
 	}    
-    
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-	} 
     
     @FXML ListView<String> lstClassifica;
     public void populateListView() {
@@ -210,7 +173,7 @@ public class ControllerHome implements Initializable{
 		lstClassifica.getItems().setAll(listaNumerata);
     }
     
-    private void avviaPartita(Boolean flagPartitaNuova) {
+    private void avviaPartita() {
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)btnGioca.getScene().getWindow();
 		stage.close();
@@ -230,15 +193,6 @@ public class ControllerHome implements Initializable{
 			stage.setScene(interfacciaDiGioco);
 			stage.show();
 			
-//			if(flagPartitaNuova) {
-//				//do le carte a ogni giocatore
-//				mazzo.mescola();
-//				numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-//				for(Giocatore g : this.prt.getElencoGiocatori()) {
-//					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
-//				}
-//			}
-			
 			//copio le informazioni relative alla partita in corso
 			controller.copiaInformazioniPartita(prt);
 			//copio le informazioni relative alla label lblTurnoGiocatore
@@ -246,40 +200,36 @@ public class ControllerHome implements Initializable{
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
 
-			//se il prossimo giocatore che deve giocare è un bot lo avvio
+			for(Giocatore g : this.prt.getElencoGiocatori()) {
+				if(g instanceof Bot) {
+					System.out.println("stampa1");
+
+				}
+			}
+			
 			if(gio instanceof Bot) {
-				isLocked = true;
+				System.out.println("stampa2");
 				Bot b = (Bot)gio;
-				b.giocaTurno(root, this.prt);
+				b.giocaTurno(this.prt);
 				Thread t = new Thread(b);
 				Platform.runLater(t);
 			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
 
-    //    private int quanteCarteAGiocatore(int numeroGiocatori) {
-    //    	if(numeroGiocatori>4) {
-    //    		return 5;
-    //    	}else if(numeroGiocatori == 2){
-    //    		return 1;
-    //    	}else {
-    //    		return numeroGiocatori;
-    //    	}
-    //    }
-
     private Partita verificaDisponibilitaPartita(String codicePartita) {
     	if(this.prt!=null) {
     		if(!this.prt.getCodice().equals(codicePartita)) {
     			return CaricaPartita(codicePartita);
     		}
+        	return null;
     	}else {
     		return CaricaPartita(codicePartita);
     	}
-    		
-    	return null;
     }
     
     private Partita CaricaPartita(String codicePartita) {

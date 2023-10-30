@@ -54,10 +54,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 
 
 
-public class ControllerPartita{
+public class ControllerPartita {
 	//variabili di controllo
 	int numeroCarteAGiocatore;
 	final int lungCodicePartita=10;
@@ -75,7 +78,8 @@ public class ControllerPartita{
 	String pathClassifica = "src/Classifica.txt";
 	String pathStatus = "src/Status.txt";	
 	
-	@FXML BorderPane borderPanePartita;
+	
+	@FXML static BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Label lblManoGiocatore;
 	@FXML Button btnInizioTurnoGiocatore;
@@ -333,7 +337,7 @@ public class ControllerPartita{
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
-				b.giocaTurno(borderPanePartita, this.prt);
+				b.giocaTurno(this.prt);
 				Thread t = new Thread(b);
 				Platform.runLater(t);
 			}
@@ -367,7 +371,7 @@ public class ControllerPartita{
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
-			b.giocaTurno(borderPanePartita, this.prt);
+			b.giocaTurno(this.prt);
 			Thread t = new Thread(b);
 			Platform.runLater(t);
 		}
@@ -400,7 +404,7 @@ public class ControllerPartita{
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
-			b.giocaTurno(borderPanePartita, this.prt);
+			b.giocaTurno(this.prt);
 			Thread t = new Thread(b);
 			Platform.runLater(t);
 		}

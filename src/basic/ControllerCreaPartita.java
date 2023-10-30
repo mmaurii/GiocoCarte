@@ -1,48 +1,23 @@
 package basic;
 
 import java.io.*;
-import java.net.URL;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.fxml.Initializable;
 import java.util.*;
-import javax.security.auth.login.AccountNotFoundException;
-
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.layout.VBox;
-import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -302,16 +277,6 @@ public class ControllerCreaPartita {
 				jsnReader.endArray();
 				jsnReader.close();
 				
-				//tentativo di trasformare i bot in giocatori();
-				ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
-				elencoGiocatori = partita.getElencoGiocatori();
-				for(Giocatore g : elencoGiocatori) {
-					if(g instanceof Bot) {
-						g=(Giocatore)g;
-					}
-				}
-				
-				partita.setElencoGiocatori(elencoGiocatori);
 				elencoPartite.add(partita);
 				//salvo la lista di partite caricate dal file
 				FileWriter fw = new FileWriter(path);
@@ -320,7 +285,7 @@ public class ControllerCreaPartita {
 				jsnWriter.setLenient(true);
 				
 				for (Partita p : elencoPartite) {
-					gson.toJson(p, Partita.class, jsnWriter);//va in errore perchè non riesce a salvare alcune variabili dell'oggetto bot come per esembio GridPane
+					gson.toJson(p, Partita.class, jsnWriter);
 					fw.write('\n');
 				}
 				jsnWriter.endArray();

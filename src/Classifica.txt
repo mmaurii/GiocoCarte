@@ -9,5 +9,4 @@
 60 , baldo
 10 , marco
 20 , luigi
-
 10 , gigi
