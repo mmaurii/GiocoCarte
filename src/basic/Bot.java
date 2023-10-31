@@ -27,7 +27,7 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Partita prt;
+	//private Partita prt;
 	final int delay = 3;//in secondi 
 
 	public Bot(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {
@@ -38,14 +38,18 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 		super(nome);
 	}
 
+	public Bot(Giocatore g) {
+		super(g.getNome(), g.getVite(), g.getCarteMano(), g.getPunteggio());
+	}
+
 	@Override
 	public void run() {
 		giocaTurno();
 	}
 
-	public void giocaTurno(Partita prt) {
-		this.prt=prt;
-	}
+//	public void giocaTurno(Partita prt) {
+//		this.prt=prt;
+//	}
 
 	private void giocaTurno() {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
 		//ottengo il gridpane relativo all'interfaccia della Partita
@@ -64,14 +68,18 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 					Button b = (Button)o;
 					if(b.getId().equals(idNodoBtnNuovoRound)&&b.isVisible()) {
 						Task<Void> t2 = taskDelay(delay);
-						new Thread(t2).start();//avvio il task per il delay
+						Thread t = new Thread(t2);//avvio il task per il delay
+						t.setDaemon(true);
+						t.start();
 						t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
 							iniziaNuovoRound(b);
 						});
 						return;
 					}else if(b.getId().equals(idNodoBtnNuovaMano)&&b.isVisible()) {
 						Task<Void> t2 = taskDelay(delay);
-						new Thread(t2).start();//avvio il task per il delay
+						Thread t = new Thread(t2);//avvio il task per il delay
+						t.setDaemon(true);
+						t.start();
 						t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
 							iniziaNuovaMano(b);
 						});
@@ -89,14 +97,18 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 				if(o instanceof Label) {
 					Label l = (Label)o;
 					if(l.getId().equals(idNodoLabel)) {
-						Task<Void> t = taskDelay(delay);
-						new Thread(t).start();//avvio il task per il delay
-						t.setOnSucceeded(event ->{//finito il delay procedo con le operazioni
+						Task<Void> taskDelay = taskDelay(delay);
+						Thread t = new Thread(taskDelay);//avvio il task per il delay
+						t.setDaemon(true);
+						t.start();	
+						taskDelay.setOnSucceeded(event ->{//finito il delay procedo con le operazioni
 							iniziaTurno();
 
-							Task<Void> t1 = taskDelay(delay);
-							new Thread(t1).start();//avvio il task per il delay
-							t1.setOnSucceeded(event1 -> {//finito il delay procedo con le operazioni
+							Task<Void> taskDelay1 = taskDelay(delay);
+							Thread t1 = new Thread(taskDelay1);//avvio il task per il delay
+							t1.setDaemon(true);
+							t1.start();
+							taskDelay1.setOnSucceeded(event1 -> {//finito il delay procedo con le operazioni
 								//controllo se devo dichiarare le prese o giocare una carta
 								if(l.isVisible()) {
 									dichiaraPrese();
@@ -104,9 +116,11 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 									giocaCarta();
 								}
 
-								Task<Void> t2 = taskDelay(delay);
-								new Thread(t2).start();//avvio il task per il delay
-								t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
+								Task<Void> taskDelay2 = taskDelay(delay);
+								Thread t2 = new Thread(taskDelay2);//avvio il task per il delay
+								t2.setDaemon(true);
+								t2.start();								
+								taskDelay2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
 									finisciTurno();
 								});
 							});
@@ -147,8 +161,8 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 
 									//controllo che il numero di prese dichiarate sia appropriato
 									int nPrese=0;
-									for(Giocatore gio : this.prt.getElencoGiocatori()) {
-										if(gio.getPreseDichiarate()>=0) {//controllo che prese dichiarate non abbia il valores di default
+									for(Giocatore gio : ControllerPartita.prt.getElencoGiocatori()) {
+										if(gio.getPreseDichiarate()>=0) {//controllo che prese dichiarate non abbia il valore di default
 											nPrese+=gio.getPreseDichiarate();
 										}
 									}
@@ -270,13 +284,13 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 		return new Giocatore(this.nome, this.nVite, this.carte, this.punteggio);
 	}
 
-	public Partita getPrt() {
-		return prt;
-	}
-
-	public void setPrt(Partita prt) {
-		this.prt = prt;
-	}
+//	public Partita getPrt() {
+//		return prt;
+//	}
+//
+//	public void setPrt(Partita prt) {
+//		this.prt = prt;
+//	}
 
 	//restituisce il gridPane contenuto nel center del borderpane(root) dell'interfaccia partita.fxml
 	private GridPane getNodeInterfaccia() {

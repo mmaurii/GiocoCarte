@@ -3,6 +3,7 @@ package basic;
 import java.io.*;
 import java.util.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -261,7 +262,11 @@ public class ControllerCreaPartita {
     
     private void SalvaPartita(Partita partita) {
 		try {
-			Gson gson = new Gson();
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
+			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
+			gsonBuilder.registerTypeAdapter(Giocatore.class, new ElencoGiocatoriTypeAdapter());
+			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			String path="src/SalvataggioPartite.json";
 			FileReader fr = new FileReader(path);
@@ -282,7 +287,7 @@ public class ControllerCreaPartita {
 				FileWriter fw = new FileWriter(path);
 				JsonWriter jsnWriter = new JsonWriter(fw);
 				jsnWriter.beginArray();
-				jsnWriter.setLenient(true);
+				//jsnWriter.setLenient(true);
 				
 				for (Partita p : elencoPartite) {
 					gson.toJson(p, Partita.class, jsnWriter);

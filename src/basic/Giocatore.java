@@ -11,6 +11,10 @@ public class Giocatore implements Serializable{
 	int nVite;
 	ArrayList<Carta> carte = new ArrayList<Carta>();
 	long punteggio;
+	public long getPunteggio() {
+		return punteggio;
+	}
+
 	int preseDichiarate;
 	int preseEffettuate;
 	
@@ -26,7 +30,7 @@ public class Giocatore implements Serializable{
 	public Giocatore(String nome) {
 		this.nome=nome;
 	}
-	
+
 	public void setVite(int nVite) {
 		this.nVite=nVite;
 	}

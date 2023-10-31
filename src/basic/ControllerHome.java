@@ -6,6 +6,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.util.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import javafx.event.ActionEvent;
@@ -210,8 +211,10 @@ public class ControllerHome {
 			if(gio instanceof Bot) {
 				System.out.println("stampa2");
 				Bot b = (Bot)gio;
-				b.giocaTurno(this.prt);
+				//sb.giocaTurno(this.prt);
 				Thread t = new Thread(b);
+				t.setDaemon(true);
+
 				Platform.runLater(t);
 			}
 
@@ -234,7 +237,11 @@ public class ControllerHome {
     
     private Partita CaricaPartita(String codicePartita) {
 		try {
-	    	Gson gson = new Gson();
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
+			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
+			gsonBuilder.registerTypeAdapter(Giocatore.class, new ElencoGiocatoriTypeAdapter());
+			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;
 			String path="src/SalvataggioPartite.json";
@@ -255,6 +262,7 @@ public class ControllerHome {
 				jsnReader.endArray();
 				jsnReader.close();
 			}
+			
 			return prtTrovata;
 		} catch (FileNotFoundException fnfe) {
 			// TODO Auto-generated catch block

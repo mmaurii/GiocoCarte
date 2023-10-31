@@ -47,6 +47,7 @@ import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
@@ -65,7 +66,7 @@ public class ControllerPartita {
 	int numeroCarteAGiocatore;
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
-	Partita prt;
+	static Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
@@ -78,8 +79,7 @@ public class ControllerPartita {
 	String pathClassifica = "src/Classifica.txt";
 	String pathStatus = "src/Status.txt";	
 	
-	
-	@FXML static BorderPane borderPanePartita;
+	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Label lblManoGiocatore;
 	@FXML Button btnInizioTurnoGiocatore;
@@ -337,8 +337,9 @@ public class ControllerPartita {
 			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
-				b.giocaTurno(this.prt);
+	//			b.giocaTurno(this.prt);
 				Thread t = new Thread(b);
+				t.setDaemon(true);
 				Platform.runLater(t);
 			}
 		}
@@ -371,8 +372,9 @@ public class ControllerPartita {
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
-			b.giocaTurno(this.prt);
+	//		b.giocaTurno(this.prt);
 			Thread t = new Thread(b);
+			t.setDaemon(true);
 			Platform.runLater(t);
 		}
 	}
@@ -404,8 +406,9 @@ public class ControllerPartita {
 		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
-			b.giocaTurno(this.prt);
+		//	b.giocaTurno(this.prt);
 			Thread t = new Thread(b);
+			t.setDaemon(true);
 			Platform.runLater(t);
 		}
 	}
@@ -414,7 +417,7 @@ public class ControllerPartita {
 	@FXML Button btnPartitaTornaAllaHome;
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
-
+		//elimino i possibili bot in esecuzione
 
 		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
 		Stage stage = (Stage)btnPartitaTornaAllaHome.getScene().getWindow();
@@ -638,7 +641,11 @@ public class ControllerPartita {
 	private void SalvaPartita(Partita partita) {
 		try {
 			boolean presenzaPrt = false;
-			Gson gson = new Gson();
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
+			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
+			gsonBuilder.registerTypeAdapter(Giocatore.class, new ElencoGiocatoriTypeAdapter());
+			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;
 			String path="src/SalvataggioPartite.json";
