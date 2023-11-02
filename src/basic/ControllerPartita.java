@@ -640,11 +640,12 @@ public class ControllerPartita {
 
 	private void SalvaPartita(Partita partita) {
 		try {
+			ArrayList<Giocatore> tempObj = new ArrayList<Giocatore>();
 			boolean presenzaPrt = false;
 			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
-			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
-			gsonBuilder.registerTypeAdapter(Giocatore.class, new ElencoGiocatoriTypeAdapter());
+//			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
+//			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
+			gsonBuilder.registerTypeAdapter(ArrayList.class, new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;

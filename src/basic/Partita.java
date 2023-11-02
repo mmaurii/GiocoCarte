@@ -7,9 +7,9 @@ public class Partita implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Mazzo m;
-	ArrayList<Giocatore> elencoGiocatori = new ArrayList<Giocatore>();
-	String cod;
+	private Mazzo m;
+	private ArrayList<Giocatore> elencoGiocatori;
+	private String cod;
 
 	public Partita() {}
 	

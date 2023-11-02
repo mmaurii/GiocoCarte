@@ -23,13 +23,10 @@ public class Mazzo implements Serializable{
 	}
 	
 	public void popolaMazzo() {
-		
-
 		int numero;
 		Seme seme;
 		String percorso;
 		int valore;
-
 		try {
 			File f = new File("src/Carte.txt");
 

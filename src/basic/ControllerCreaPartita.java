@@ -167,6 +167,10 @@ public class ControllerCreaPartita {
 					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
 				}
 				
+				for(Giocatore g : this.prt.getElencoGiocatori()) {
+					if(g instanceof Bot)
+						System.out.println("BOT");
+				}
 				//salvo la partita su file.json
 				SalvaPartita(this.prt);
     		}catch(FileNotFoundException e) {
@@ -262,10 +266,11 @@ public class ControllerCreaPartita {
     
     private void SalvaPartita(Partita partita) {
 		try {
+			ArrayList<Giocatore> tempObj = new ArrayList<Giocatore>();
 			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
-			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
-			gsonBuilder.registerTypeAdapter(Giocatore.class, new ElencoGiocatoriTypeAdapter());
+//			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
+//			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
+			gsonBuilder.registerTypeAdapter(ArrayList.class, new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			String path="src/SalvataggioPartite.json";

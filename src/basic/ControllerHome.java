@@ -201,13 +201,10 @@ public class ControllerHome {
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
 
-			for(Giocatore g : this.prt.getElencoGiocatori()) {
-				if(g instanceof Bot) {
-					System.out.println("stampa1");
-
-				}
+			if(this.prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot) {
+				System.out.println("stampa1");
 			}
-			
+
 			if(gio instanceof Bot) {
 				System.out.println("stampa2");
 				Bot b = (Bot)gio;
@@ -237,10 +234,11 @@ public class ControllerHome {
     
     private Partita CaricaPartita(String codicePartita) {
 		try {
+			ArrayList<Giocatore> tempObj = new ArrayList<Giocatore>();
 			GsonBuilder gsonBuilder = new GsonBuilder();
-			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
-			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
-			gsonBuilder.registerTypeAdapter(Giocatore.class, new ElencoGiocatoriTypeAdapter());
+//			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
+//			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
+			gsonBuilder.registerTypeAdapter(ArrayList.class, new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;
@@ -262,7 +260,10 @@ public class ControllerHome {
 				jsnReader.endArray();
 				jsnReader.close();
 			}
-			
+			for(Giocatore g : prtTrovata.getElencoGiocatori()) {
+				if(g instanceof Bot)
+					System.out.println("bot");
+			}
 			return prtTrovata;
 		} catch (FileNotFoundException fnfe) {
 			// TODO Auto-generated catch block
