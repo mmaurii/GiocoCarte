@@ -10,6 +10,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -251,6 +253,7 @@ public class ControllerHome {
 				while(jsnReader.hasNext()) {
 					Partita p = gson.fromJson(jsnReader, Partita.class);
 					if(p.getCodice().equals(codicePartita)) {
+						//mi salvo la partita richiesta
 						prtTrovata=p;
 					}else {
 						elencoPartite.add(p);
@@ -259,9 +262,22 @@ public class ControllerHome {
 				jsnReader.endArray();
 				jsnReader.close();
 			}
-			for(Giocatore g : prtTrovata.getElencoGiocatori()) {
-				if(g instanceof Bot)
-					System.out.println("bot");
+
+			//salvo la lista di partite senza quella richiesta se trovata
+			if(prtTrovata!=null) {
+				FileWriter fw = new FileWriter(path);
+				JsonWriter jsnWriter = new JsonWriter(fw);
+				
+				//rimuovo la partita richiesta dall'elenco e lo salvo
+				elencoPartite.remove(prtTrovata);
+				
+				jsnWriter.beginArray();
+				for (Partita p : elencoPartite) {
+					gson.toJson(p, Partita.class, jsnWriter);
+					fw.write('\n');
+				}
+				jsnWriter.endArray();
+				jsnWriter.close();
 			}
 			return prtTrovata;
 		} catch (FileNotFoundException fnfe) {

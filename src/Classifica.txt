@@ -10,3 +10,4 @@
 10 , marco
 20 , luigi
 10 , gigi
+10 , bot1

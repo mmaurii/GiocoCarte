@@ -281,7 +281,7 @@ public class ControllerCreaPartita {
 			jsnReader.close();
 
 			elencoPartite.add(partita);
-			//salvo la lista di partite caricate dal file
+			//salvo la lista di partite caricate dal file + quella creata
 			FileWriter fw = new FileWriter(path);
 			JsonWriter jsnWriter = new JsonWriter(fw);
 			jsnWriter.beginArray();
