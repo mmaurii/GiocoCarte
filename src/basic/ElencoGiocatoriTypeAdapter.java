@@ -11,56 +11,46 @@ import com.google.gson.JsonSyntaxException;
 public class ElencoGiocatoriTypeAdapter extends TypeAdapter<ArrayList<Giocatore>> {
 	@Override
 	public void write(JsonWriter out, ArrayList<Giocatore> elencoGiocatori) throws IOException {
-    	System.out.println("eii");
-		Gson gson = new Gson();
-        //out.name("elencoGiocatori");
-    //    out.beginArray();
-        for (Giocatore giocatore : elencoGiocatori) {
-            out.beginObject();
-            if(giocatore instanceof Bot) {
-            	System.out.println("bot");
-            }else {
-            	System.out.println(giocatore.getClass().getName());
-            }
-            out.name("tipo").value(giocatore.getClass().getName()); // Salva il nome della classe
-            out.name("datiGiocatore");
-            out.jsonValue(new Gson().toJson(giocatore)); // Serializza il giocatore
-            out.endObject();
-        }
-  //      out.endArray();
-		gson.toJson(elencoGiocatori, Giocatore.class, out);	
-
+		out.beginArray();
+		for (Giocatore giocatore : elencoGiocatori) {
+			out.beginObject();
+			out.name("tipo").value(giocatore.getClass().getName()); // Salva il nome della classe (Bot o Giocatore)
+			out.name("datiGiocatore");
+			out.jsonValue(new Gson().toJson(giocatore)); // Serializzo il giocatore
+			out.endObject();
+		}
+		out.endArray();
 	}
-	
+
 	@Override
 	public ArrayList<Giocatore> read(JsonReader in) {
-	    ArrayList<Giocatore> elencoGiocatori = new ArrayList<>();
-	    try {
-//		    in.beginArray();
+		ArrayList<Giocatore> elencoGiocatori = new ArrayList<>();
+		try {
+			in.beginArray();
 
-	    	while (in.hasNext()) {
-			    in.beginObject();
-			    String tipo = null;
-			    Giocatore giocatore = null;
-			    while (in.hasNext()) {
-			        String name = in.nextName();
-			        if ("tipo".equals(name)) {
-			            tipo = in.nextString();
-			        } else if ("datiGiocatore".equals(name)) {
-			            if (tipo.equals(Giocatore.class.getName())) {
-			                giocatore = new Gson().fromJson(in.nextString(), Giocatore.class);
-			            } else if (tipo.equals(Bot.class.getName())) {
-			                giocatore = new Gson().fromJson(in.nextString(), Bot.class);
-			            }
-			        } else {
-			            in.skipValue();
-			        }
-			    }
-			    in.endObject();
-			    elencoGiocatori.add(giocatore);
+			while (in.hasNext()) {
+				in.beginObject();
+				String tipo = null;
+				Giocatore giocatore = null;
+				while (in.hasNext()) {
+					String name = in.nextName();
+					if ("tipo".equals(name)) {//controllo il tipo di classe (Bot o Giocatore)
+						tipo = in.nextString();
+					} else if ("datiGiocatore".equals(name)) {//controllo se sto per leggere la lista di giocatori
+						if (tipo.equals(Giocatore.class.getName())) {//controllo se sto per leggere un Giocatore o un Bot
+							giocatore = new Gson().fromJson(in, Giocatore.class);
+						} else if (tipo.equals(Bot.class.getName())) {
+							giocatore = new Gson().fromJson(in, Bot.class);
+						}
+					} else {
+						in.skipValue();
+					}
+				}
+				in.endObject();
+				elencoGiocatori.add(giocatore);
 			}
-			
-		//	in.endArray();
+
+			in.endArray();
 		} catch (JsonSyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,6 +58,6 @@ public class ElencoGiocatoriTypeAdapter extends TypeAdapter<ArrayList<Giocatore>
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    return elencoGiocatori;
+		return elencoGiocatori;
 	}
 }

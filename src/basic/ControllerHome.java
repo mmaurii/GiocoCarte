@@ -7,6 +7,7 @@ import javafx.scene.text.TextFlow;
 import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import javafx.event.ActionEvent;
@@ -234,11 +235,9 @@ public class ControllerHome {
     
     private Partita CaricaPartita(String codicePartita) {
 		try {
-			ArrayList<Giocatore> tempObj = new ArrayList<Giocatore>();
 			GsonBuilder gsonBuilder = new GsonBuilder();
-//			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
-//			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
-			gsonBuilder.registerTypeAdapter(ArrayList.class, new ElencoGiocatoriTypeAdapter());
+			//imposto un TypeAdapter per salvare correttamente l'elenco dei giocatori che contiene sia Bot che Giocatori
+			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;

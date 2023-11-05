@@ -1,2 +1,263 @@
-[ 
-]
+[ {
+  "elencoGiocatori" : [ {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 1,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/31.jpg",
+        "valore" : 1
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Giocatore",
+    "datiGiocatore" : {
+      "nome" : "marco",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 1,
+        "seme" : "DENARI",
+        "percorso" : "/basic/IMGcarte/1.jpg",
+        "valore" : 40
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  } ],
+  "cod" : "60fc2694"
+}, {
+  "elencoGiocatori" : [ {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 2,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/22.jpg",
+        "valore" : 12
+      }, {
+        "numero" : 6,
+        "seme" : "DENARI",
+        "percorso" : "/basic/IMGcarte/6.jpg",
+        "valore" : 35
+      }, {
+        "numero" : 6,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/26.jpg",
+        "valore" : 16
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Giocatore",
+    "datiGiocatore" : {
+      "nome" : "marco",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 9,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/39.jpg",
+        "valore" : 9
+      }, {
+        "numero" : 10,
+        "seme" : "DENARI",
+        "percorso" : "/basic/IMGcarte/10.jpg",
+        "valore" : 39
+      }, {
+        "numero" : 6,
+        "seme" : "COPPE",
+        "percorso" : "/basic/IMGcarte/16.jpg",
+        "valore" : 26
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot1",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 9,
+        "seme" : "COPPE",
+        "percorso" : "/basic/IMGcarte/19.jpg",
+        "valore" : 29
+      }, {
+        "numero" : 9,
+        "seme" : "DENARI",
+        "percorso" : "/basic/IMGcarte/9.jpg",
+        "valore" : 38
+      }, {
+        "numero" : 9,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/29.jpg",
+        "valore" : 19
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  } ],
+  "cod" : "601402b5"
+}, {
+  "elencoGiocatori" : [ {
+    "tipo" : "basic.Giocatore",
+    "datiGiocatore" : {
+      "nome" : "marco",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 5,
+        "seme" : "DENARI",
+        "percorso" : "/basic/IMGcarte/5.jpg",
+        "valore" : 34
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Giocatore",
+    "datiGiocatore" : {
+      "nome" : "luigi",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 4,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/34.jpg",
+        "valore" : 4
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  } ],
+  "cod" : "af578964"
+}, {
+  "elencoGiocatori" : [ {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 6,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/26.jpg",
+        "valore" : 16
+      }, {
+        "numero" : 7,
+        "seme" : "COPPE",
+        "percorso" : "/basic/IMGcarte/17.jpg",
+        "valore" : 27
+      }, {
+        "numero" : 1,
+        "seme" : "COPPE",
+        "percorso" : "/basic/IMGcarte/11.jpg",
+        "valore" : 21
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot1",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 1,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/31.jpg",
+        "valore" : 1
+      }, {
+        "numero" : 8,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/38.jpg",
+        "valore" : 8
+      }, {
+        "numero" : 4,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/24.jpg",
+        "valore" : 14
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot2",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 10,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/40.jpg",
+        "valore" : 10
+      }, {
+        "numero" : 10,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/30.jpg",
+        "valore" : 20
+      }, {
+        "numero" : 6,
+        "seme" : "DENARI",
+        "percorso" : "/basic/IMGcarte/6.jpg",
+        "valore" : 35
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  } ],
+  "cod" : "6205df1f"
+}, {
+  "elencoGiocatori" : [ {
+    "tipo" : "basic.Bot",
+    "datiGiocatore" : {
+      "delay" : 3,
+      "nome" : "bot",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 9,
+        "seme" : "SPADE",
+        "percorso" : "/basic/IMGcarte/29.jpg",
+        "valore" : 19
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  }, {
+    "tipo" : "basic.Giocatore",
+    "datiGiocatore" : {
+      "nome" : "luigi",
+      "nVite" : 5,
+      "carte" : [ {
+        "numero" : 2,
+        "seme" : "BASTONI",
+        "percorso" : "/basic/IMGcarte/32.jpg",
+        "valore" : 2
+      } ],
+      "punteggio" : 0,
+      "preseDichiarate" : 0,
+      "preseEffettuate" : 0
+    }
+  } ],
+  "cod" : "a59d17ec"
+} ]

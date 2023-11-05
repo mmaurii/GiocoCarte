@@ -1,64 +1,33 @@
 package basic;
 
 import java.io.*;
-import java.net.URL;
-
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import javafx.scene.layout.*;
-import javax.security.auth.login.AccountNotFoundException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
-
 
 
 public class ControllerPartita {
@@ -97,17 +66,17 @@ public class ControllerPartita {
 		lblManoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(true);
 		if(!gridPaneNumeroPrese.isVisible()) {
-			lblManoGiocatore.setText("Mano di "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+			lblManoGiocatore.setText("Mano di "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 			btnInizioTurnoGiocatoreClicked=true;
 		}else {
-			lblManoGiocatore.setText(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" dichiara le prese");
+			lblManoGiocatore.setText(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" dichiara le prese");
 			btnFineTurnoGiocatore.setDisable(false);
 		}
 
 		//mostro le carte in output relative al giocatore del turno corrente
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		for(int i = 0; i<listaCarteMano.size();i++) {	
-			if(i<this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
+			if(i<ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
 				Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
 				listaCarteMano.get(i).setImage(newImg);
 			}else {
@@ -177,17 +146,17 @@ public class ControllerPartita {
 		if(gridPaneNumeroPrese.isVisible()) {
 			try {
 				numeroPreseGiocatore=Integer.parseInt(txtNumeroPrese.getText());
-				this.prt.getElencoGiocatori().get(countTurnoGiocatore).setPreseDichiarate(numeroPreseGiocatore);
+				ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).setPreseDichiarate(numeroPreseGiocatore);
 				presePerQuestaMano+=numeroPreseGiocatore;
 
 				//System.out.println(presePerQuestaMano+" != "+(Integer)(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1)+" || "+(Integer)(countTurnoGiocatore+1)+" != "+this.prt.getElencoGiocatori().size());
-				if(presePerQuestaMano!=this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()||countTurnoGiocatore!=this.prt.getElencoGiocatori().size()-1) {
+				if(presePerQuestaMano!=ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()||countTurnoGiocatore!=ControllerPartita.prt.getElencoGiocatori().size()-1) {
 					//visualizzo il numero di prese per questo giocatore
-					lstViewPrese.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+numeroPreseGiocatore+" prese");
+					lstViewPrese.getItems().add(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+numeroPreseGiocatore+" prese");
 					if(dichiaraPrese) {
 						//visualizzo il numero di vite di questo giocatore se è il primo turno
 						if(primoTurno) {
-							lstViewVite.getItems().add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getVite()+" vite");
+							lstViewVite.getItems().add(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getVite()+" vite");
 						}
 
 						//incremento il contatore dei giocatori
@@ -195,7 +164,7 @@ public class ControllerPartita {
 						//rimetto le carte coperte
 						copriCarteGiocatore();
 
-						if(countTurnoGiocatore>=this.prt.getElencoGiocatori().size()) {
+						if(countTurnoGiocatore>=ControllerPartita.prt.getElencoGiocatori().size()) {
 							countTurnoGiocatore=0;
 							//sistemo l'interfaccia per iniziare a giocare le carte
 							gridPaneNumeroPrese.setVisible(false);
@@ -210,7 +179,7 @@ public class ControllerPartita {
 							btnFineTurnoGiocatore.setDisable(true);
 							btnInizioTurnoGiocatore.setDisable(false);
 							//definisco chi giocherà il prossimo turno
-							lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+							lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 							lblTurnoGiocatore.setVisible(true);
 						}
 					}
@@ -239,15 +208,15 @@ public class ControllerPartita {
 			}
 
 			//controllo che non si sia conclusa una mano
-			if(this.prt.getElencoGiocatori().get(this.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0){
+			if(ControllerPartita.prt.getElencoGiocatori().get(ControllerPartita.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0){
 				//controllo che non si sia chiuso un giro di carte 
-				if(countTurnoGiocatore<this.prt.getElencoGiocatori().size()) {
+				if(countTurnoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()) {
 					//sistemo la visualizzazione dell'interfaccia
 					lblManoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
 					btnInizioTurnoGiocatore.setDisable(false);
 					//definisco chi giocherà il prossimo turno
-					lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+					lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 					lblTurnoGiocatore.setVisible(true);
 				}else {
 					//azzero il contatore dei turni
@@ -256,8 +225,8 @@ public class ControllerPartita {
 					//Calcolo chi prende in base alle carte sul banco
 					giocatoreChePrende = CalcolaPunti(lstCarteBanco);
 
-					Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
-					this.prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
+					Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende);
+					ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
 					lblVitaPersa.setText(gio.getNome()+" ha PRESO questo turno");
 					lblVitaPersa.setVisible(true);
 					lstCarteBanco.clear();
@@ -266,8 +235,8 @@ public class ControllerPartita {
 					btnIniziaNuovoRound.setVisible(true);
 
 					//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
-					gio=this.prt.getElencoGiocatori().remove(0);
-					this.prt.getElencoGiocatori().add(gio);
+					gio=ControllerPartita.prt.getElencoGiocatori().remove(0);
+					ControllerPartita.prt.getElencoGiocatori().add(gio);
 				}
 			}else {
 				//azzero il contatore dei turni
@@ -276,8 +245,8 @@ public class ControllerPartita {
 				//Calcolo chi prende in base alle carte sul banco
 				giocatoreChePrende = CalcolaPunti(lstCarteBanco);
 
-				Giocatore gio = this.prt.getElencoGiocatori().get(giocatoreChePrende);
-				this.prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
+				Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende);
+				ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
 				lblVitaPersa.setText(gio.getNome()+" ha PRESO questo turno");
 				lblVitaPersa.setVisible(true);
 				lstCarteBanco.clear();
@@ -288,7 +257,7 @@ public class ControllerPartita {
 
 				//verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
 				lstViewVite.getItems().clear();
-				for(Giocatore g : this.prt.getElencoGiocatori()) {	
+				for(Giocatore g : ControllerPartita.prt.getElencoGiocatori()) {	
 					if(g.getPreseDichiarate() != g.getPreseEffettuate())
 					{
 						g.perdiVita();
@@ -304,21 +273,21 @@ public class ControllerPartita {
 					g.setPreseDichiarate(-1);
 				}
 
-				Iterator<Giocatore> g = this.prt.getElencoGiocatori().iterator();
+				Iterator<Giocatore> g = ControllerPartita.prt.getElencoGiocatori().iterator();
 				while(g.hasNext()) {
 					if(g.next().getVite()==0) {
 						g.remove();
 					}
 				}
 
-				if(this.prt.getElencoGiocatori().size()>1) {//avvio una nuova mano
+				if(ControllerPartita.prt.getElencoGiocatori().size()>1) {//avvio una nuova mano
 					cominciaNuovaMano();
 
 					//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
-					gio=this.prt.getElencoGiocatori().remove(0);
-					this.prt.getElencoGiocatori().add(gio);
-				}else if (this.prt.getElencoGiocatori().size()==1){//concludo la partita e ne annuncio il vincitore 
-					lblVitaPersa.setText(this.prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
+					gio=ControllerPartita.prt.getElencoGiocatori().remove(0);
+					ControllerPartita.prt.getElencoGiocatori().add(gio);
+				}else if (ControllerPartita.prt.getElencoGiocatori().size()==1){//concludo la partita e ne annuncio il vincitore 
+					lblVitaPersa.setText(ControllerPartita.prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
 					btnIniziaNuovaMano.setVisible(false);
 
 					//conteggio punti
@@ -332,9 +301,9 @@ public class ControllerPartita {
 
 
 		//controllo che la partita non sia conclusa
-		if(this.prt.getElencoGiocatori().size()>1) {
+		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
-			Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+			Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore);
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
 	//			b.giocaTurno(this.prt);
@@ -356,7 +325,7 @@ public class ControllerPartita {
 		primoTurno=false;
 		btnIniziaNuovoRound.setVisible(false);
 		lblVitaPersa.setVisible(false);
-		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+		lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 
@@ -369,7 +338,7 @@ public class ControllerPartita {
 		copriCarteGiocatore();
 		
 		//se il prossimo giocatore che deve giocare è un bot lo avvio
-		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
 	//		b.giocaTurno(this.prt);
@@ -388,7 +357,7 @@ public class ControllerPartita {
 		lstViewPrese.getItems().clear();
 		lblVitaPersa.setVisible(false);
 		btnIniziaNuovaMano.setVisible(false);
-		lblTurnoGiocatore.setText("è il turno di: "+this.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+		lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 		gridPaneNumeroPrese.setVisible(true);
@@ -403,7 +372,7 @@ public class ControllerPartita {
 		}
 		
 		//se il prossimo giocatore che deve giocare è un bot lo avvio
-		Giocatore gio = this.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore);
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
 		//	b.giocaTurno(this.prt);
@@ -425,8 +394,8 @@ public class ControllerPartita {
 
 		//stabilire come fare il salvataggio della partita
 		//implementare salvataggio
-		if(this.prt.getElencoGiocatori().size()>1) {
-			SalvaPartita(this.prt);
+		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
+			SalvaPartita(ControllerPartita.prt);
 		}
 
 		//riapro la finestra di login
@@ -439,7 +408,7 @@ public class ControllerPartita {
 			Parent root = loader.load();
 			ControllerHome controller = loader.getController();
 			Scene interfacciaHome = new Scene(root);
-			controller.copiaInformazioniPartita(this.prt);
+			controller.copiaInformazioniPartita(ControllerPartita.prt);
 
 			stage.setScene(interfacciaHome);
 			stage.show();
@@ -479,7 +448,7 @@ public class ControllerPartita {
 	//METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
 	//metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
 	public void copiaInformazioniPartita(Partita tempPrt) {
-		this.prt=tempPrt;
+		ControllerPartita.prt=tempPrt;
 	}    
 
 	//metodo che passa il numero di carte in fase di run-time da un istanza della classe controller all'altra
@@ -530,7 +499,7 @@ public class ControllerPartita {
 			}
 
 			//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
-			lstCarteBanco.add(this.prt.getElencoGiocatori().get(countTurnoGiocatore).removeCartaMano(posCartaCliccata));
+			lstCarteBanco.add(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).removeCartaMano(posCartaCliccata));
 		}	
 	}
 
@@ -568,16 +537,16 @@ public class ControllerPartita {
 		if(numeroCarteAGiocatore>1) {
 			numeroCarteAGiocatore--;
 		}else if (numeroCarteAGiocatore==1) {//quando arrivo a una carta a giocatore rido le carte in base al numero di gioc atori
-			numeroCarteAGiocatore = quanteCarteAGiocatore(this.prt.getElencoGiocatori().size());
-		}else if (this.prt.getElencoGiocatori().size()==2) {
+			numeroCarteAGiocatore = quanteCarteAGiocatore(ControllerPartita.prt.getElencoGiocatori().size());
+		}else if (ControllerPartita.prt.getElencoGiocatori().size()==2) {
 			numeroCarteAGiocatore=1;
 		}
 
-		if(this.prt.getElencoGiocatori().size()>1) {
+		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
 			//inizio una nuova mano e do le carte a ogni giocatore
 			mazzo=new Mazzo();
 			mazzo.mescola();
-			for(Giocatore g : this.prt.getElencoGiocatori()) {
+			for(Giocatore g : ControllerPartita.prt.getElencoGiocatori()) {
 				g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
 			}
 
@@ -589,7 +558,7 @@ public class ControllerPartita {
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//rimetto le carte coperte
 		for(int i=0; i< listaCarteMano.size();i++) {
-			if(countTurnoGiocatore+1<this.prt.getElencoGiocatori().size()&&i<this.prt.getElencoGiocatori().get(countTurnoGiocatore+1).getCarteMano().size()) {
+			if(countTurnoGiocatore+1<ControllerPartita.prt.getElencoGiocatori().size()&&i<ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore+1).getCarteMano().size()) {
 				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
 			}else {
 				listaCarteMano.get(i).setImage(null);
@@ -608,7 +577,7 @@ public class ControllerPartita {
 				String line = scan.nextLine();
 				String[] lineData = line.split(" , ");
 				//controllo il nome salvato su file e lo confronto col vincitore
-				if(lineData[1].equals(this.prt.getElencoGiocatori().get(0).getNome())) {
+				if(lineData[1].equals(ControllerPartita.prt.getElencoGiocatori().get(0).getNome())) {
 
 					//incremento il punteggio
 					lineData[0]=""+(puntiVincitore+Integer.parseInt(lineData[0]));
@@ -626,7 +595,7 @@ public class ControllerPartita {
 				fw.write(l);
 			}
 			if(!presenzaGiocatore) {
-				fw.write(puntiVincitore+" , "+this.prt.getElencoGiocatori().get(0).getNome());
+				fw.write(puntiVincitore+" , "+ControllerPartita.prt.getElencoGiocatori().get(0).getNome());
 			}
 			fw.close();
 		} catch (FileNotFoundException FNFe) {
@@ -640,15 +609,12 @@ public class ControllerPartita {
 
 	private void SalvaPartita(Partita partita) {
 		try {
-			ArrayList<Giocatore> tempObj = new ArrayList<Giocatore>();
 			boolean presenzaPrt = false;
 			GsonBuilder gsonBuilder = new GsonBuilder();
-//			gsonBuilder.registerTypeAdapter(Bot.class, new BotTypeAdapter());
-//			gsonBuilder.registerTypeAdapter(Giocatore.class, new GiocatoreTypeAdapter());
-			gsonBuilder.registerTypeAdapter(ArrayList.class, new ElencoGiocatoriTypeAdapter());
+			//imposto un TypeAdapter per salvare correttamente l'elenco dei giocatori che contiene sia Bot che Giocatori
+			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			Partita prtTrovata=null;
 			String path="src/SalvataggioPartite.json";
 			FileReader fr = new FileReader(path);
 			JsonReader jsnReader=new JsonReader(fr);
