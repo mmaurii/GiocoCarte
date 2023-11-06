@@ -105,6 +105,12 @@ public class ControllerCreaPartita {
 			txtNomeUtenteRobot.clear();
 		}
 	}
+	
+	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
+
+		listUtentiPartita.getItems().remove(listUtentiPartita.getSelectionModel().getSelectedItem()); 
+
+	}
 
 	//Genero il codice per una nuova partita
 	@FXML Button btnGeneraCodice;

@@ -1,40 +1,40 @@
-1, DENARI, /basic/IMGcarte/1.jpg, 40
-2, DENARI, /basic/IMGcarte/2.jpg, 31
-3, DENARI, /basic/IMGcarte/3.jpg, 32
-4, DENARI, /basic/IMGcarte/4.jpg, 33
-5, DENARI, /basic/IMGcarte/5.jpg, 34
-6, DENARI, /basic/IMGcarte/6.jpg, 35
-7, DENARI, /basic/IMGcarte/7.jpg, 36
-8, DENARI, /basic/IMGcarte/8.jpg, 37
-9, DENARI, /basic/IMGcarte/9.jpg, 38
-10, DENARI, /basic/IMGcarte/10.jpg, 39
-1, COPPE, /basic/IMGcarte/11.jpg, 21
-2, COPPE, /basic/IMGcarte/12.jpg, 22
-3, COPPE, /basic/IMGcarte/13.jpg, 23
-4, COPPE, /basic/IMGcarte/14.jpg, 24
-5, COPPE, /basic/IMGcarte/15.jpg, 25
-6, COPPE, /basic/IMGcarte/16.jpg, 26
-7, COPPE, /basic/IMGcarte/17.jpg, 27
-8, COPPE, /basic/IMGcarte/18.jpg, 28
-9, COPPE, /basic/IMGcarte/19.jpg, 29
-10, COPPE, /basic/IMGcarte/20.jpg, 30
-1, SPADE, /basic/IMGcarte/21.jpg, 11
-2, SPADE, /basic/IMGcarte/22.jpg, 12
-3, SPADE, /basic/IMGcarte/23.jpg, 13
-4, SPADE, /basic/IMGcarte/24.jpg, 14
-5, SPADE, /basic/IMGcarte/25.jpg, 15
-6, SPADE, /basic/IMGcarte/26.jpg, 16
-7, SPADE, /basic/IMGcarte/27.jpg, 17
-8, SPADE, /basic/IMGcarte/28.jpg, 18
-9, SPADE, /basic/IMGcarte/29.jpg, 19
-10, SPADE, /basic/IMGcarte/30.jpg, 20
-1, BASTONI, /basic/IMGcarte/31.jpg, 1
-2, BASTONI, /basic/IMGcarte/32.jpg, 2
-3, BASTONI, /basic/IMGcarte/33.jpg, 3
-4, BASTONI, /basic/IMGcarte/34.jpg, 4
-5, BASTONI, /basic/IMGcarte/35.jpg, 5
-6, BASTONI, /basic/IMGcarte/36.jpg, 6
-7, BASTONI, /basic/IMGcarte/37.jpg, 7
-8, BASTONI, /basic/IMGcarte/38.jpg, 8
-9, BASTONI, /basic/IMGcarte/39.jpg, 9
-10, BASTONI, /basic/IMGcarte/40.jpg, 10
+1, DENARI, /basic/IMGcarte/1.jpg, 40, 1
+2, DENARI, /basic/IMGcarte/2.jpg, 31, 0
+3, DENARI, /basic/IMGcarte/3.jpg, 32, 0
+4, DENARI, /basic/IMGcarte/4.jpg, 33, 0
+5, DENARI, /basic/IMGcarte/5.jpg, 34, 0
+6, DENARI, /basic/IMGcarte/6.jpg, 35, 0
+7, DENARI, /basic/IMGcarte/7.jpg, 36, 0
+8, DENARI, /basic/IMGcarte/8.jpg, 37, 0
+9, DENARI, /basic/IMGcarte/9.jpg, 38, 0
+10, DENARI, /basic/IMGcarte/10.jpg, 39, 0
+1, COPPE, /basic/IMGcarte/11.jpg, 21, 0
+2, COPPE, /basic/IMGcarte/12.jpg, 22, 0
+3, COPPE, /basic/IMGcarte/13.jpg, 23, 0
+4, COPPE, /basic/IMGcarte/14.jpg, 24, 0
+5, COPPE, /basic/IMGcarte/15.jpg, 25, 0
+6, COPPE, /basic/IMGcarte/16.jpg, 26, 0
+7, COPPE, /basic/IMGcarte/17.jpg, 27, 0
+8, COPPE, /basic/IMGcarte/18.jpg, 28, 0
+9, COPPE, /basic/IMGcarte/19.jpg, 29, 0
+10, COPPE, /basic/IMGcarte/20.jpg, 30, 0
+1, SPADE, /basic/IMGcarte/21.jpg, 11, 0
+2, SPADE, /basic/IMGcarte/22.jpg, 12, 0
+3, SPADE, /basic/IMGcarte/23.jpg, 13, 0
+4, SPADE, /basic/IMGcarte/24.jpg, 14, 0
+5, SPADE, /basic/IMGcarte/25.jpg, 15, 0
+6, SPADE, /basic/IMGcarte/26.jpg, 16, 0
+7, SPADE, /basic/IMGcarte/27.jpg, 17, 0
+8, SPADE, /basic/IMGcarte/28.jpg, 18, 0
+9, SPADE, /basic/IMGcarte/29.jpg, 19, 0
+10, SPADE, /basic/IMGcarte/30.jpg, 20, 0
+1, BASTONI, /basic/IMGcarte/31.jpg, 1, 0
+2, BASTONI, /basic/IMGcarte/32.jpg, 2, 0
+3, BASTONI, /basic/IMGcarte/33.jpg, 3, 0
+4, BASTONI, /basic/IMGcarte/34.jpg, 4, 0
+5, BASTONI, /basic/IMGcarte/35.jpg, 5, 0
+6, BASTONI, /basic/IMGcarte/36.jpg, 6, 0
+7, BASTONI, /basic/IMGcarte/37.jpg, 7, 0
+8, BASTONI, /basic/IMGcarte/38.jpg, 8, 0
+9, BASTONI, /basic/IMGcarte/39.jpg, 9, 0
+10, BASTONI, /basic/IMGcarte/40.jpg, 10, 0

@@ -11,12 +11,14 @@ public class Carta implements Serializable{
 	Seme seme;
 	String percorso;
 	int valore;
+	int speciale;
 	
-	public Carta(int numero, Seme seme, String percorso, int valore) {
+	public Carta(int numero, Seme seme, String percorso, int valore, int speciale) {
 		this.numero=numero;
 		this.seme=seme;
 		this.percorso=percorso;
 		this.valore=valore;
+		this.speciale=speciale;
 	}
 	
 	public String getPercorso() {

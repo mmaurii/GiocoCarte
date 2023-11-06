@@ -545,7 +545,9 @@ public class ControllerPartita {
 		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
 			//inizio una nuova mano e do le carte a ogni giocatore
 			mazzo=new Mazzo();
+			mazzo.speciale();
 			mazzo.mescola();
+
 			for(Giocatore g : ControllerPartita.prt.getElencoGiocatori()) {
 				g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
 			}

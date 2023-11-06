@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Mazzo implements Serializable{
@@ -27,6 +28,7 @@ public class Mazzo implements Serializable{
 		Seme seme;
 		String percorso;
 		int valore;
+		int speciale;
 		try {
 			File f = new File("src/Carte.txt");
 
@@ -37,13 +39,14 @@ public class Mazzo implements Serializable{
 				seme = Seme.valueOf(data[1]);
 				percorso = data[2];
 				valore=Integer.parseInt(data[3]);
+				speciale=Integer.parseInt(data[4]);
 				if(valore == 40)
 				{
-					CartaSpeciale cs = new CartaSpeciale(numero, seme, percorso, valore);
+					CartaSpeciale cs = new CartaSpeciale(numero, seme, percorso, valore, speciale);
 					mazzo.add(cs);
 				}else
 				{
-					Carta c = new Carta(numero, seme, percorso, valore);
+					Carta c = new Carta(numero, seme, percorso, valore, speciale);
 					//System.out.println(numero + ", " + seme + ", " + percorso + ", " + valore);
 					mazzo.add(c);
 				}
@@ -57,6 +60,19 @@ public class Mazzo implements Serializable{
 	
 	public void mescola() {
 		Collections.shuffle(mazzo);
+		Random random = new Random();
+        int r = random.nextInt(39) + 1;
+		mazzo.get(r).speciale = 1;
+        System.out.println("Numero casuale: " + r);
+        System.out.println("aaaaaa");
+	}
+	
+	
+	public void speciale() {
+		Random random = new Random();
+        int r = random.nextInt(39) + 1;
+        System.out.println("Numero casuale: " + r);
+		mazzo.get(r).speciale = 1;
 	}
 	
 	public ArrayList<Carta> getMazzo(){
