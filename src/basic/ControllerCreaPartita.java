@@ -167,6 +167,7 @@ public class ControllerCreaPartita {
 					this.prt=new Partita(uniqueCode, giocatoriPrt);
 
 					//do le carte a ogni giocatore
+					mazzo.setSpeciale();
 					mazzo.mescola();
 					numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
 					for(Giocatore g : this.prt.getElencoGiocatori()) {

@@ -60,19 +60,16 @@ public class Mazzo implements Serializable{
 	
 	public void mescola() {
 		Collections.shuffle(mazzo);
-		Random random = new Random();
-        int r = random.nextInt(39) + 1;
-		mazzo.get(r).speciale = 1;
-        System.out.println("Numero casuale: " + r);
-        System.out.println("aaaaaa");
 	}
 	
 	
-	public void speciale() {
+	public void setSpeciale() {
 		Random random = new Random();
         int r = random.nextInt(39) + 1;
         System.out.println("Numero casuale: " + r);
 		mazzo.get(r).speciale = 1;
+        System.out.println(mazzo.get(r).percorso + "\n" +  mazzo.get(r).valore + "\n" + mazzo.get(r).speciale);
+
 	}
 	
 	public ArrayList<Carta> getMazzo(){

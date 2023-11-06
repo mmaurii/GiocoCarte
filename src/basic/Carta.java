@@ -28,4 +28,8 @@ public class Carta implements Serializable{
 	public int getValore() {
 		return valore;
 	}
+	
+	public int getSpeciale() {
+		return speciale;
+	}
 }

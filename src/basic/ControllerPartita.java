@@ -470,7 +470,7 @@ public class ControllerPartita {
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
-					if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() == valCartaSpeciale && !(prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot))
+					if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() == valCartaSpeciale && prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot))
 					{
 						Alert alert = new Alert(AlertType.ERROR);
 			            alert.setTitle("Carta Speciale");
@@ -488,6 +488,18 @@ public class ControllerPartita {
 
 			                
 			            }
+					}else if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() != valCartaSpeciale && prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot))
+					{
+						prt.getElencoGiocatori().get(countTurnoGiocatore).nVite = prt.getElencoGiocatori().get(countTurnoGiocatore).nVite + 1;
+						Alert alert = new Alert(AlertType.ERROR);
+			            alert.setTitle("Carta Speciale");
+			            alert.setHeaderText(null);
+			            alert.setContentText("Hai vinto una VITA!!!");
+			            alert.showAndWait();
+						lstViewVite.getItems().clear();
+						for(Giocatore g : ControllerPartita.prt.getElencoGiocatori()) {	
+							lstViewVite.getItems().add(g.getNome()+" "+g.getVite()+" vite");
+						}
 					}
 
 					i.setImage(new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getPercorso())));
@@ -545,7 +557,6 @@ public class ControllerPartita {
 		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
 			//inizio una nuova mano e do le carte a ogni giocatore
 			mazzo=new Mazzo();
-			mazzo.speciale();
 			mazzo.mescola();
 
 			for(Giocatore g : ControllerPartita.prt.getElencoGiocatori()) {
