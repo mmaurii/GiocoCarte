@@ -24,6 +24,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.application.Platform;
 import javafx.scene.control.ListCell;
 
@@ -63,11 +64,19 @@ public class ControllerHome {
         	//apro la finestra delle impostazioni e creazine partite e tornei
 			
 			try {
+	            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 				Parent root = loader.load();
 				
+	            StackPane stackPane = new StackPane();
+	            stackPane.setStyle("-fx-background-color: #38B6FF;");
+	            stackPane.getChildren().addAll(videoBackgroundPane, root);
+				
 				stage.setTitle("Menu");
-				Scene interfacciaPartitaTorneo = new Scene(root);
+				Scene interfacciaPartitaTorneo = new Scene(stackPane, 600, 400);
+				
+				
 				stage.setScene(interfacciaPartitaTorneo);
 				stage.show();
 			} catch (IOException e) {

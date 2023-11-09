@@ -18,6 +18,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -202,19 +203,24 @@ public class ControllerCreaPartita {
 
 		//riapro la finestra di login
 		try {
+            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
 
-			ControllerHome controller = loader.getController();			
+			ControllerHome controller = loader.getController();	
+			
+			StackPane stackPane = new StackPane();
+            stackPane.setStyle("-fx-background-color: #38B6FF;");
+            stackPane.getChildren().addAll(videoBackgroundPane, root);
+            
 			stage.setTitle("HOME");
-			Scene interfacciaHome = new Scene(root);
+			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
 			controller.copiaInformazioniPartita(this.prt);
 			controller.populateListView();
 
 			stage.setScene(interfacciaHome);
-			stage.setMinHeight(400);
-			stage.setMinWidth(600);
 			stage.show();
 
 		} catch (IOException e) {

@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import java.util.*;
 
@@ -69,16 +70,21 @@ public class ControllerPartitaTorneo {
     	//apro la finestra per la creazine delle partite
 
 		try {
-			
+            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaPartita.fxml"));
 			Parent root = loader.load();
 			
+			StackPane stackPane = new StackPane();
+            stackPane.setStyle("-fx-background-color: #38B6FF;");
+            stackPane.getChildren().addAll(videoBackgroundPane, root);
+
 			ControllerCreaPartita controller = loader.getController();
 			controller.populateListView();
 			
 			
 			stage.setTitle("Crea una Partita");
-			Scene interfacciaCreaPartita = new Scene(root);
+			Scene interfacciaCreaPartita = new Scene(stackPane, 600, 400);
 			stage.setScene(interfacciaCreaPartita);
 			stage.show();
 			

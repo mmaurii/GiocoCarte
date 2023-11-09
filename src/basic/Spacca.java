@@ -47,40 +47,35 @@ public class Spacca extends Application {
 
     private void showHomeScreen(Stage stage) {
         try {
-            // Carica il layout principale dal file FXML
+            // Creare un'istanza di VideoBackgroundPane con il percorso del video
+            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
+            // Caricare il layout principale dalla classe Home.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
             Parent root = loader.load();
 
-            // Carica il video di sfondo
-            File f = new File(v);
-            Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setAutoPlay(true);
-            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-
-            // Crea un MediaView per il video di sfondo
-            MediaView mediaView = new MediaView(mediaPlayer);
-
-            // Imposta il MediaView per coprire l'intera scena
-            mediaView.setFitWidth(1920);
-            mediaView.setFitHeight(1080);
-
-            // Aggiungi il MediaView alla radice del layout
-            ((Pane) root).getChildren().add(mediaView);
-
-            // Recupera il controller del layout principale
+            // Recuperare il controller del layout principale
             ControllerHome controller = loader.getController();
-            //carico la classifica
+            // Caricare la classifica
             controller.populateListView();
-            stage.setTitle("HOME");
-            Scene homeScene = new Scene(root, 600, 400);
 
-            // Imposta lo stile del MediaView in modo che sia dietro agli altri elementi
-            mediaView.toBack();
+            // Aggiungere il layout principale sopra il VideoBackgroundPane
+            StackPane stackPane = new StackPane();
+
+            // Aggiungere un colore di fallback o un'immagine di fallback
+            // Puoi personalizzare questa parte in base alle tue esigenze
+            stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+
+            stackPane.getChildren().addAll(videoBackgroundPane, root);
+
+            stage.setTitle("HOME");
+            Scene homeScene = new Scene(stackPane, 600, 400);
 
             stage.setScene(homeScene);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 }
