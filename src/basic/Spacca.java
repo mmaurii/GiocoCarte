@@ -4,19 +4,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 public class Spacca extends Application {
-	String videoFilePath = "src/SPACCA.mp4";
-	String v = "src/v1.mp4";
-
+	final String pathVideoAnimazione = "src/SPACCA.mp4";
+	final String pathVideoSfondo = "src/v1.mp4";
 
     public static void main(String[] args) {
         launch(args);
@@ -25,7 +29,7 @@ public class Spacca extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Carica il video
-        Media videoMedia = new Media(new File(videoFilePath).toURI().toString());
+        Media videoMedia = new Media(new File(pathVideoAnimazione).toURI().toString());
         MediaPlayer videoPlayer = new MediaPlayer(videoMedia);
         MediaView mediaView = new MediaView(videoPlayer);
 
@@ -44,7 +48,7 @@ public class Spacca extends Application {
         // Avvia la riproduzione del video
         videoPlayer.play();
     }
-
+    
     private void showHomeScreen(Stage stage) {
         try {
             // Creare un'istanza di VideoBackgroundPane con il percorso del video

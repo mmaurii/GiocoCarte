@@ -10,6 +10,16 @@ public class Partita implements Serializable{
 	private Mazzo m;
 	private ArrayList<Giocatore> elencoGiocatori;
 	private String cod;
+	private int countTurnoGiocatore=0;
+
+
+	public int getCountTurnoGiocatore() {
+		return countTurnoGiocatore;
+	}
+
+	public void setCountTurnoGiocatore(int countTurnoGiocatore) {
+		this.countTurnoGiocatore = countTurnoGiocatore;
+	}
 
 	public Partita() {}
 	
@@ -51,8 +61,12 @@ public class Partita implements Serializable{
 	public void setMazzo(Mazzo m) {
 		this.m=m;
 	}
-	//public void partitaVeloce(){}
 	
-	//public void partitaLunga(){}
+	public Giocatore getGiocatoreCorrente() {
+		return elencoGiocatori.get(countTurnoGiocatore);
+	}
 	
+	public Giocatore getGiocatore(int pos) {
+		return elencoGiocatori.get(pos);
+	}
 }

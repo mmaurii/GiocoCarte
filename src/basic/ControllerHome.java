@@ -13,6 +13,7 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.application.Platform;
@@ -204,6 +206,14 @@ public class ControllerHome {
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent e) {
+                 Platform.exit();
+                 controller.SalvaPartita(prt);
+                 System.exit(0);
+                }
+              });
 			stage.show();
 			
 			//copio le informazioni relative alla partita in corso
@@ -213,17 +223,11 @@ public class ControllerHome {
 			//copio le informazioni relative al numero di carte per la mano corrente 
 			controller.copiaInformazioniNumCarte(numeroCarteAGiocatore);
 
-			if(this.prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot) {
-				System.out.println("stampa1");
-			}
-
 			if(gio instanceof Bot) {
-				System.out.println("stampa2");
 				Bot b = (Bot)gio;
-				//sb.giocaTurno(this.prt);
 				Thread t = new Thread(b);
+				
 				t.setDaemon(true);
-
 				Platform.runLater(t);
 			}
 

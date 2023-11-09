@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import java.util.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.application.Platform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,15 +40,14 @@ public class ControllerPartita {
 	static Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	int countTurnoGiocatore=0;
-	int valCartaSpeciale=40;
+	final int valCartaSpeciale=40;
 	private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
 	boolean dichiaraPrese=true;
 	boolean primoTurno=true;
-	boolean isLocked = false;
-	String pathClassifica = "src/Classifica.txt";
-	String pathStatus = "src/Status.txt";	
+	final String pathClassifica = "src/Classifica.txt";
+	final String pathStatus = "src/Status.txt";	
+	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
+	Thread t;
 	
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
@@ -66,18 +67,18 @@ public class ControllerPartita {
 		lblManoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(true);
 		if(!gridPaneNumeroPrese.isVisible()) {
-			lblManoGiocatore.setText("Mano di "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+			lblManoGiocatore.setText("Mano di "+prt.getGiocatoreCorrente().getNome());
 			btnInizioTurnoGiocatoreClicked=true;
 		}else {
-			lblManoGiocatore.setText(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" dichiara le prese");
+			lblManoGiocatore.setText(prt.getGiocatoreCorrente().getNome()+" dichiara le prese");
 			btnFineTurnoGiocatore.setDisable(false);
 		}
 
 		//mostro le carte in output relative al giocatore del turno corrente
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		for(int i = 0; i<listaCarteMano.size();i++) {	
-			if(i<ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()) {
-				Image newImg = new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(i).getPercorso()));
+			if(i<prt.getGiocatoreCorrente().getCarteMano().size()) {
+				Image newImg = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
 				listaCarteMano.get(i).setImage(newImg);
 			}else {
 				listaCarteMano.get(i).setImage(null);
@@ -146,26 +147,26 @@ public class ControllerPartita {
 		if(gridPaneNumeroPrese.isVisible()) {
 			try {
 				numeroPreseGiocatore=Integer.parseInt(txtNumeroPrese.getText());
-				ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).setPreseDichiarate(numeroPreseGiocatore);
+				prt.getGiocatoreCorrente().setPreseDichiarate(numeroPreseGiocatore);
 				presePerQuestaMano+=numeroPreseGiocatore;
 
 				//System.out.println(presePerQuestaMano+" != "+(Integer)(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1)+" || "+(Integer)(countTurnoGiocatore+1)+" != "+this.prt.getElencoGiocatori().size());
-				if(presePerQuestaMano!=ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()||countTurnoGiocatore!=ControllerPartita.prt.getElencoGiocatori().size()-1) {
+				if(presePerQuestaMano!=prt.getGiocatoreCorrente().getCarteMano().size()||prt.getCountTurnoGiocatore()!=ControllerPartita.prt.getElencoGiocatori().size()-1) {
 					//visualizzo il numero di prese per questo giocatore
-					lstViewPrese.getItems().add(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+numeroPreseGiocatore+" prese");
+					lstViewPrese.getItems().add(prt.getGiocatoreCorrente().getNome()+" "+numeroPreseGiocatore+" prese");
 					if(dichiaraPrese) {
 						//visualizzo il numero di vite di questo giocatore se è il primo turno
 						if(primoTurno) {
-							lstViewVite.getItems().add(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome()+" "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getVite()+" vite");
+							lstViewVite.getItems().add(prt.getGiocatoreCorrente().getNome()+" "+prt.getGiocatoreCorrente().getVite()+" vite");
 						}
 
 						//incremento il contatore dei giocatori
-						countTurnoGiocatore++;
+						prt.setCountTurnoGiocatore(prt.getCountTurnoGiocatore()+1);;
 						//rimetto le carte coperte
 						copriCarteGiocatore();
 
-						if(countTurnoGiocatore>=ControllerPartita.prt.getElencoGiocatori().size()) {
-							countTurnoGiocatore=0;
+						if(prt.getCountTurnoGiocatore()>=ControllerPartita.prt.getElencoGiocatori().size()) {
+							prt.setCountTurnoGiocatore(0);
 							//sistemo l'interfaccia per iniziare a giocare le carte
 							gridPaneNumeroPrese.setVisible(false);
 							lblPrese.setVisible(false);
@@ -179,7 +180,7 @@ public class ControllerPartita {
 							btnFineTurnoGiocatore.setDisable(true);
 							btnInizioTurnoGiocatore.setDisable(false);
 							//definisco chi giocherà il prossimo turno
-							lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+							lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 							lblTurnoGiocatore.setVisible(true);
 						}
 					}
@@ -200,9 +201,9 @@ public class ControllerPartita {
 			copriCarteGiocatore();
 
 			//controllo che non si sfori il numero di giocatori
-			if(countTurnoGiocatore<prt.getElencoGiocatori().size()) {
+			if(prt.getCountTurnoGiocatore()<prt.getElencoGiocatori().size()) {
 				//passo il turno al prossimo giocatore incrementando il contatore
-				countTurnoGiocatore++;
+				prt.setCountTurnoGiocatore(prt.getCountTurnoGiocatore()+1);
 			}else {
 				btnInizioTurnoGiocatore.setDisable(true);
 			}
@@ -210,17 +211,17 @@ public class ControllerPartita {
 			//controllo che non si sia conclusa una mano
 			if(ControllerPartita.prt.getElencoGiocatori().get(ControllerPartita.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0){
 				//controllo che non si sia chiuso un giro di carte 
-				if(countTurnoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()) {
+				if(prt.getCountTurnoGiocatore()<ControllerPartita.prt.getElencoGiocatori().size()) {
 					//sistemo la visualizzazione dell'interfaccia
 					lblManoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
 					btnInizioTurnoGiocatore.setDisable(false);
 					//definisco chi giocherà il prossimo turno
-					lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+					lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 					lblTurnoGiocatore.setVisible(true);
 				}else {
 					//azzero il contatore dei turni
-					countTurnoGiocatore=0;
+					prt.setCountTurnoGiocatore(0);
 
 					//Calcolo chi prende in base alle carte sul banco
 					giocatoreChePrende = CalcolaPunti(lstCarteBanco);
@@ -240,7 +241,7 @@ public class ControllerPartita {
 				}
 			}else {
 				//azzero il contatore dei turni
-				countTurnoGiocatore=0;
+				prt.setCountTurnoGiocatore(0);
 
 				//Calcolo chi prende in base alle carte sul banco
 				giocatoreChePrende = CalcolaPunti(lstCarteBanco);
@@ -303,11 +304,10 @@ public class ControllerPartita {
 		//controllo che la partita non sia conclusa
 		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
-			Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore);
+			Giocatore gio = prt.getGiocatoreCorrente();
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
-	//			b.giocaTurno(this.prt);
-				Thread t = new Thread(b);
+				t = new Thread(b);
 				t.setDaemon(true);
 				Platform.runLater(t);
 			}
@@ -325,7 +325,7 @@ public class ControllerPartita {
 		primoTurno=false;
 		btnIniziaNuovoRound.setVisible(false);
 		lblVitaPersa.setVisible(false);
-		lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+		lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 
@@ -338,11 +338,10 @@ public class ControllerPartita {
 		copriCarteGiocatore();
 		
 		//se il prossimo giocatore che deve giocare è un bot lo avvio
-		Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		Giocatore gio = prt.getGiocatoreCorrente();
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
-	//		b.giocaTurno(this.prt);
-			Thread t = new Thread(b);
+			t = new Thread(b);
 			t.setDaemon(true);
 			Platform.runLater(t);
 		}
@@ -357,7 +356,7 @@ public class ControllerPartita {
 		lstViewPrese.getItems().clear();
 		lblVitaPersa.setVisible(false);
 		btnIniziaNuovaMano.setVisible(false);
-		lblTurnoGiocatore.setText("è il turno di: "+ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).getNome());
+		lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 		gridPaneNumeroPrese.setVisible(true);
@@ -372,11 +371,10 @@ public class ControllerPartita {
 		}
 		
 		//se il prossimo giocatore che deve giocare è un bot lo avvio
-		Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore);
+		Giocatore gio = prt.getGiocatoreCorrente();
 		if(gio instanceof Bot) {
 			Bot b = (Bot)gio;
-		//	b.giocaTurno(this.prt);
-			Thread t = new Thread(b);
+			t = new Thread(b);
 			t.setDaemon(true);
 			Platform.runLater(t);
 		}
@@ -386,11 +384,22 @@ public class ControllerPartita {
 	@FXML Button btnPartitaTornaAllaHome;
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
-		//elimino i possibili bot in esecuzione
-
 		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
 		Stage stage = (Stage)btnPartitaTornaAllaHome.getScene().getWindow();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+//            	shuttingDown.set(true);
+                System.out.println(Thread.currentThread().getName());
+            	t.interrupt();
+            	//Platform.exit();
+             //SalvaPartita(prt);
+             //System.exit(0);
+            }
+        });
 		stage.close();
+
+		//elimino i possibili bot in esecuzione
 
 		//stabilire come fare il salvataggio della partita
 		//implementare salvataggio
@@ -470,7 +479,7 @@ public class ControllerPartita {
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
-					if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() == valCartaSpeciale && prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot))
+					if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpeciale && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
 					{
 						Alert alert = new Alert(AlertType.ERROR);
 			            alert.setTitle("Carta Speciale");
@@ -483,14 +492,14 @@ public class ControllerPartita {
 			            Optional<ButtonType> result = alert.showAndWait();
 			            
 			            if (result.isPresent() && result.get() == buttonTypeMinimo) {
-							CartaSpeciale cs = (CartaSpeciale)(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata));
+							CartaSpeciale cs = (CartaSpeciale)(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata));
 							cs.setValore(0);
 
 			                
 			            }
-					}else if(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getValore() != valCartaSpeciale && prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getElencoGiocatori().get(countTurnoGiocatore) instanceof Bot))
+					}else if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() != valCartaSpeciale && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
 					{
-						prt.getElencoGiocatori().get(countTurnoGiocatore).nVite = prt.getElencoGiocatori().get(countTurnoGiocatore).nVite + 1;
+						prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;
 						Alert alert = new Alert(AlertType.ERROR);
 			            alert.setTitle("Carta Speciale");
 			            alert.setHeaderText(null);
@@ -502,7 +511,7 @@ public class ControllerPartita {
 						}
 					}
 
-					i.setImage(new Image(getClass().getResourceAsStream(prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().get(posCartaCliccata).getPercorso())));
+					i.setImage(new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso())));
 					listaCarteMano.get(posCartaCliccata).setImage(null);
 					btnInizioTurnoGiocatoreClicked=false;
 					btnFineTurnoGiocatore.setDisable(false);
@@ -511,7 +520,7 @@ public class ControllerPartita {
 			}
 
 			//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
-			lstCarteBanco.add(ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore).removeCartaMano(posCartaCliccata));
+			lstCarteBanco.add(prt.getGiocatoreCorrente().removeCartaMano(posCartaCliccata));
 		}	
 	}
 
@@ -571,7 +580,8 @@ public class ControllerPartita {
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//rimetto le carte coperte
 		for(int i=0; i< listaCarteMano.size();i++) {
-			if(countTurnoGiocatore+1<ControllerPartita.prt.getElencoGiocatori().size()&&i<ControllerPartita.prt.getElencoGiocatori().get(countTurnoGiocatore+1).getCarteMano().size()) {
+			int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
+			if(posProssimoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posProssimoGiocatore).getCarteMano().size()) {
 				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
 			}else {
 				listaCarteMano.get(i).setImage(null);
@@ -620,7 +630,7 @@ public class ControllerPartita {
 		}
 	}
 
-	private void SalvaPartita(Partita partita) {
+	public void SalvaPartita(Partita partita) {
 		try {
 			boolean presenzaPrt = false;
 			GsonBuilder gsonBuilder = new GsonBuilder();

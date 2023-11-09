@@ -27,7 +27,6 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//private Partita prt;
 	final int delay = 3;//in secondi 
 
 	public Bot(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {
@@ -45,11 +44,8 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	@Override
 	public void run() {
 		giocaTurno();
+		Thread.currentThread().setName("bot");
 	}
-
-//	public void giocaTurno(Partita prt) {
-//		this.prt=prt;
-//	}
 
 	private void giocaTurno() {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
 		//ottengo il gridpane relativo all'interfaccia della Partita
@@ -283,14 +279,6 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	public Giocatore getGiocatore(){
 		return new Giocatore(this.nome, this.nVite, this.carte, this.punteggio);
 	}
-
-//	public Partita getPrt() {
-//		return prt;
-//	}
-//
-//	public void setPrt(Partita prt) {
-//		this.prt = prt;
-//	}
 
 	//restituisce il gridPane contenuto nel center del borderpane(root) dell'interfaccia partita.fxml
 	private GridPane getNodeInterfaccia() {
