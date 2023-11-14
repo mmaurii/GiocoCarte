@@ -47,7 +47,7 @@ public class ControllerPartita {
 	final String pathClassifica = "src/Classifica.txt";
 	final String pathStatus = "src/Status.txt";	
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	Thread t;
+	public Thread t;
 	
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
@@ -310,6 +310,7 @@ public class ControllerPartita {
 				t = new Thread(b);
 				t.setDaemon(true);
 				Platform.runLater(t);
+				System.out.println("bot");
 			}
 		}
 	}
@@ -344,6 +345,7 @@ public class ControllerPartita {
 			t = new Thread(b);
 			t.setDaemon(true);
 			Platform.runLater(t);
+			System.out.println("bot");
 		}
 	}
 	
@@ -377,6 +379,7 @@ public class ControllerPartita {
 			t = new Thread(b);
 			t.setDaemon(true);
 			Platform.runLater(t);
+			System.out.println("bot");
 		}
 	}
 	
@@ -386,23 +389,29 @@ public class ControllerPartita {
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
 		Stage stage = (Stage)btnPartitaTornaAllaHome.getScene().getWindow();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-//            	shuttingDown.set(true);
-                System.out.println(Thread.currentThread().getName());
-            	t.interrupt();
-            	//Platform.exit();
-             //SalvaPartita(prt);
-             //System.exit(0);
-            }
-        });
+//        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//            @Override
+//            public void handle(WindowEvent e) {
+////            	shuttingDown.set(true);
+//                System.out.println(Thread.currentThread().getName());
+//            	t.interrupt();
+//            	//Platform.exit();
+//             //SalvaPartita(prt);
+//             //System.exit(0);
+//            }
+//        });
+
 		stage.close();
 
 		//elimino i possibili bot in esecuzione
-
-		//stabilire come fare il salvataggio della partita
-		//implementare salvataggio
+		if(prt.getGiocatoreCorrente() instanceof Bot) {
+			System.out.println(Thread.currentThread().getName());
+			//Thread.currentThread().interrupt();
+			t.interrupt();;
+			//Platform.exit();
+		}
+		
+		//salvo la partita
 		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
 			SalvaPartita(ControllerPartita.prt);
 		}

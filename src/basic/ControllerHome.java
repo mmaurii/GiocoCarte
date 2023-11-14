@@ -225,10 +225,10 @@ public class ControllerHome {
 
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
-				Thread t = new Thread(b);
-				
-				t.setDaemon(true);
-				Platform.runLater(t);
+				controller.t = new Thread(b);			
+				controller.t.setDaemon(true);
+				Platform.runLater(controller.t);
+				System.out.println("bot");
 			}
 
 		} catch (IOException e) {

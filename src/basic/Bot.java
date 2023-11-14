@@ -44,88 +44,89 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 	@Override
 	public void run() {
 		giocaTurno();
-		Thread.currentThread().setName("bot");
+		//Thread.currentThread().setName("bot");
 	}
 
 	private void giocaTurno() {//metodo principale che permette di far giocare il bot e di conseguenza avanzare la partita
 		//ottengo il gridpane relativo all'interfaccia della Partita
-		GridPane interfaccia = getNodeInterfaccia();
+			GridPane interfaccia = getNodeInterfaccia();
 
-		if(interfaccia != null) {
-			String idNodoLabel ="lblPrese";
-			String idNodoBtnNuovoRound ="btnIniziaNuovoRound";
-			String idNodoBtnNuovaMano ="btnIniziaNuovaMano";		
-			Iterator<Node> i = interfaccia.getChildren().iterator();
+			if(interfaccia != null) {
+				String idNodoLabel ="lblPrese";
+				String idNodoBtnNuovoRound ="btnIniziaNuovoRound";
+				String idNodoBtnNuovaMano ="btnIniziaNuovaMano";		
+				Iterator<Node> i = interfaccia.getChildren().iterator();
 
-			//cerco il bottone associato all'id 
-			while(i.hasNext()) {
-				Object o = i.next();
-				if(o instanceof Button) {
-					Button b = (Button)o;
-					if(b.getId().equals(idNodoBtnNuovoRound)&&b.isVisible()) {
-						Task<Void> t2 = taskDelay(delay);
-						Thread t = new Thread(t2);//avvio il task per il delay
-						t.setDaemon(true);
-						t.start();
-						t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
-							iniziaNuovoRound(b);
-						});
-						return;
-					}else if(b.getId().equals(idNodoBtnNuovaMano)&&b.isVisible()) {
-						Task<Void> t2 = taskDelay(delay);
-						Thread t = new Thread(t2);//avvio il task per il delay
-						t.setDaemon(true);
-						t.start();
-						t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
-							iniziaNuovaMano(b);
-						});
-						return;
-					} 
+				//cerco il bottone associato all'id 
+				while(i.hasNext()) {
+					Object o = i.next();
+					if(o instanceof Button) {
+						Button b = (Button)o;
+						if(b.getId().equals(idNodoBtnNuovoRound)&&b.isVisible()) {
+							Task<Void> t2 = taskDelay(delay);
+							Thread t = new Thread(t2);//avvio il task per il delay
+							t.setDaemon(true);
+							t.start();
+							t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
+								iniziaNuovoRound(b);
+							});
+							return;
+						}else if(b.getId().equals(idNodoBtnNuovaMano)&&b.isVisible()) {
+							Task<Void> t2 = taskDelay(delay);
+							Thread t = new Thread(t2);//avvio il task per il delay
+							t.setDaemon(true);
+							t.start();
+							t2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
+								iniziaNuovaMano(b);
+							});
+							return;
+						} 
+					}
 				}
-			}
 
-			//reset iteratore
-			i=interfaccia.getChildren().iterator();
+				//reset iteratore
+				i=interfaccia.getChildren().iterator();
 
-			//cerco la label associato all'id e ne controllo alcuni parametri se il ciclo prima non ha fatto return e quindi btnIniziaNuovaMano e btnIniziaNuovoRound sono visibili
-			while(i.hasNext()) {
-				Object o = i.next();
-				if(o instanceof Label) {
-					Label l = (Label)o;
-					if(l.getId().equals(idNodoLabel)) {
-						Task<Void> taskDelay = taskDelay(delay);
-						Thread t = new Thread(taskDelay);//avvio il task per il delay
-						t.setDaemon(true);
-						t.start();	
-						taskDelay.setOnSucceeded(event ->{//finito il delay procedo con le operazioni
-							iniziaTurno();
+				//cerco la label associato all'id e ne controllo alcuni parametri se il ciclo prima non ha fatto return e quindi btnIniziaNuovaMano e btnIniziaNuovoRound sono visibili
+				while(i.hasNext()) {
+					Object o = i.next();
+					if(o instanceof Label) {
+						Label l = (Label)o;
+						if(l.getId().equals(idNodoLabel)) {
+							Task<Void> taskDelay = taskDelay(delay);
+							Thread t = new Thread(taskDelay);//avvio il task per il delay
+							t.setDaemon(true);
+							t.start();	
+							taskDelay.setOnSucceeded(event ->{//finito il delay procedo con le operazioni
+								iniziaTurno();
 
-							Task<Void> taskDelay1 = taskDelay(delay);
-							Thread t1 = new Thread(taskDelay1);//avvio il task per il delay
-							t1.setDaemon(true);
-							t1.start();
-							taskDelay1.setOnSucceeded(event1 -> {//finito il delay procedo con le operazioni
-								//controllo se devo dichiarare le prese o giocare una carta
-								if(l.isVisible()) {
-									dichiaraPrese();
-								}else {
-									giocaCarta();
-								}
+								Task<Void> taskDelay1 = taskDelay(delay);
+								Thread t1 = new Thread(taskDelay1);//avvio il task per il delay
+								t1.setDaemon(true);
+								t1.start();
+								taskDelay1.setOnSucceeded(event1 -> {//finito il delay procedo con le operazioni
+									//controllo se devo dichiarare le prese o giocare una carta
+									if(l.isVisible()) {
+										dichiaraPrese();
+									}else {
+										giocaCarta();
+									}
 
-								Task<Void> taskDelay2 = taskDelay(delay);
-								Thread t2 = new Thread(taskDelay2);//avvio il task per il delay
-								t2.setDaemon(true);
-								t2.start();								
-								taskDelay2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
-									finisciTurno();
+									Task<Void> taskDelay2 = taskDelay(delay);
+									Thread t2 = new Thread(taskDelay2);//avvio il task per il delay
+									t2.setDaemon(true);
+									t2.start();								
+									taskDelay2.setOnSucceeded(event2 -> {//finito il delay procedo con le operazioni
+										finisciTurno();
+									});
 								});
 							});
-						});
-						return;
+							return;
+						}
 					}
 				}
 			}
-		}
+		
 	}
 
 
@@ -145,6 +146,7 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 				Object o = i.next();
 				if(o instanceof GridPane) {
 					GridPane gp = (GridPane)o;
+					if(gp.getId()!=null) {
 					if(gp.getId().equals(idNodoIntermedio)) {
 						Iterator<Node> y = gp.getChildren().iterator();
 						while(y.hasNext()) {
@@ -179,6 +181,7 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 				}
 			}
 		}
+		}
 	}
 
 	private void giocaCarta() {
@@ -196,6 +199,7 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 				Object o = i.next();
 				if(o instanceof GridPane) {
 					GridPane gp=(GridPane)o;
+					if(gp.getId()!=null) {
 					if(gp.getId().equals(idNodoIntermedio)) {
 						Iterator<Node> y = gp.getChildren().iterator();
 						Random rand = new Random();
@@ -218,6 +222,7 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 					}
 				}
 			}
+		}
 		}
 	}
 
