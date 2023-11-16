@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+
 import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -422,11 +424,22 @@ public class ControllerPartita {
 		try {
 
 			//root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+            
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
+			
 			ControllerHome controller = loader.getController();
-			Scene interfacciaHome = new Scene(root);
+						
+            controller.populateListView();
 			controller.copiaInformazioniPartita(ControllerPartita.prt);
+			
+            StackPane stackPane = new StackPane();
+            stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+            stackPane.getChildren().addAll(videoBackgroundPane, root);
+            
+            stage.setTitle("HOME");
+			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 
 			stage.setScene(interfacciaHome);
 			stage.show();
