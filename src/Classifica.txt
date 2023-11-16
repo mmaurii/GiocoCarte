@@ -7,7 +7,8 @@
 10 , h
 80 , pippo
 60 , baldo
-10 , marco
+20 , marco
+
 20 , luigi
 10 , gigi
 10 , bot1

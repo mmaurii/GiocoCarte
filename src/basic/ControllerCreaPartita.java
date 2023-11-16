@@ -25,16 +25,12 @@ import javafx.scene.control.Alert.AlertType;
 
 public class ControllerCreaPartita {
 	//variabili di controllo
-	int numeroCarteAGiocatore;
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
 	Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	int countTurnoGiocatore=0;
-	boolean dichiaraPrese=true;
-	boolean primoTurno=true;
 	String pathStatus = "src/Status.txt";
 	String pathGiocatoriRegistrati = "src/GiocatoriRegistrati.txt";
 
@@ -170,7 +166,8 @@ public class ControllerCreaPartita {
 					//do le carte a ogni giocatore
 					mazzo.setSpeciale();
 					mazzo.mescola();
-					numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+					int numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+					prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
 					for(Giocatore g : this.prt.getElencoGiocatori()) {
 						g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
 					}
