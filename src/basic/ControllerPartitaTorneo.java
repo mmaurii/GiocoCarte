@@ -10,6 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -60,6 +61,8 @@ public class ControllerPartitaTorneo {
     
     @FXML Button btnCreaPartita;
     @FXML ComboBox<String> comboNVite;
+    @FXML Button btnModificaGiocatori;
+
     
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
@@ -163,4 +166,29 @@ public class ControllerPartitaTorneo {
 		//mostro in output la classifica
 		lstClassifica.getItems().setAll(listaNumerata);
     }
+    
+    @FXML public void modificaGiocatori(ActionEvent actionEvent) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpGiocatori.fxml"));
+            Parent root = loader.load();
+
+			ControllerPopUpGiocatori controller = loader.getController();
+			controller.populateLst();
+
+			Stage stage = new Stage();
+			stage.setTitle("Giocatori");
+			Scene scene = new Scene(root);
+			stage.setMinHeight(400);
+		    stage.setMinWidth(300);
+			stage.setScene(scene);
+			stage.show();			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+    
+    
+    
 }
