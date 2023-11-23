@@ -1,1 +1,2 @@
-[ ]
+[{"elencoGiocatori":[{"tipo":"basic.Giocatore","datiGiocatore":{"nome":"marco","nVite":5,"carte":[{"numero":6,"seme":"DENARI","percorso":"/basic/IMGcarte/6.jpg","valore":35,"speciale":0}],"punteggio":0,"preseDichiarate":0,"preseEffettuate":0}},{"tipo":"basic.Giocatore","datiGiocatore":{"nome":"luigi","nVite":5,"carte":[{"numero":8,"seme":"COPPE","percorso":"/basic/IMGcarte/18.jpg","valore":28,"speciale":0}],"punteggio":0,"preseDichiarate":0,"preseEffettuate":0}}],"cod":"a550a63a","countTurnoGiocatore":0,"lstCarteBanco":[],"dichiaraPrese":true,"primoTurno":true,"numeroCarteAGiocatore":1,"modalitaPrt":true,"presePerQuestaMano":0}
+]

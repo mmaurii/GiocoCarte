@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,6 +30,7 @@ import javafx.stage.WindowEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.application.Platform;
 import javafx.scene.control.ListCell;
 
@@ -101,11 +103,22 @@ public class ControllerHome {
     		//se la partita non viene trovata mando un messaggio di errore
     		lblCodPartitaErrato.setText("errore il codice partita è sbagliato, inseriscine uno corretto");
     	}else {
-    		//inizializzo la partita e la avvio
-    		this.prt=p;
+    		boolean resume = false;
+    		//controllo se la partita è stata caricata da file(resume) o è stat appena aggiunta
+    		if(prt!=null) {
+    			if(this.prt.getCodice().equals(p.getCodice())) {
+    				//no resume partita
+    				resume=false;
+    			}else {//resume partita
+    				resume=true;
+    			}
+    		}
     		
-    		//controllo che la partita non sia già stata comnclusa
+			this.prt=p;
+    		
+    		//controllo che la partita non sia già stata conclusa
     		if(this.prt.getElencoGiocatori().size()>1) {
+//    			prt.resume=resume;
     			avviaPartita();
     		}else {
     			lblCodPartitaErrato.setText("la partita ha un solo giocatore, perchè si è già conclusa");
@@ -201,35 +214,79 @@ public class ControllerHome {
                  controller.SalvaPartita(prt);
                  System.exit(0);
                 }
-              });
-            
-			if(!prt.isModalitaPrt()){//se sono in modalita di gioco carte apporto delle modifiche all'interfaccia
-				GridPane gp = (GridPane) root.getCenter();
-				Iterator<Node> i =gp.getChildren().iterator();
-				while(i.hasNext()) {
-					Object o = i.next();
-					if(o instanceof Label) {
-						Label lbl = (Label) o;
-						if(lbl.getId().equals("lblPrese")) {
-							lbl.setVisible(false);
-						}
-					}
-					
-					if(o instanceof GridPane) {
-						GridPane gridpane= (GridPane) o;
-						if(gridpane.getId().equals("gridPaneNumeroPrese")) {
-							gridpane.setVisible(false);
-						}
-					}
-				}
-			}
-			
-			stage.show();
-			
-			//copio le informazioni relative alla partita in corso
-			controller.copiaInformazioniPartita(prt);
-			//copio le informazioni relative alla label lblTurnoGiocatore
-			controller.copiaInformazioniLabel(lblTurnoGiocatore);
+            });
+
+
+//            if(resume){//se sono in modalita di gioco carte apporto delle modifiche all'interfaccia
+//            	GridPane gp = (GridPane) root.getCenter();
+//            	Iterator<Node> i =gp.getChildren().iterator();
+//            	while(i.hasNext()) {
+//            		Object o = i.next();
+//            		if(o instanceof GridPane) {
+//            			GridPane gridpane= (GridPane) o;
+//            			if(gridpane.getId().equals("gridPaneVite")) {
+//            				Iterator<Node> y = gridpane.getChildren().iterator();
+//            				while(y.hasNext()) {
+//            					Object obj = y.next();
+//            					if(obj instanceof ListView) {
+//            						ListView<String> lst = (ListView<String>) obj;
+//            						if(lst.getId().equals("lstViewVite")) {
+//            							//mostro le vite di ogni giocatore
+//            							for(Giocatore g : prt.getElencoGiocatori()) {
+//            								lst.getItems().add(g.getNome()+" "+g.getVite()+" vite");
+//            							}
+//            							for(String nome : prt.getElencoGiocatoriEliminati()) {
+//            								lst.getItems().add(nome+" è eliminato");
+//            							}
+//            						}
+//            					}
+//            				}
+//            			}else if(gridpane.getId().equals("gridPanePreseDichiarate")) {
+//            				Iterator<Node> y = gridpane.getChildren().iterator();
+//            				while(y.hasNext()) {
+//            					Object obj = y.next();
+//            					if(obj instanceof ListView) {
+//            						ListView<String> lst = (ListView<String>) obj;
+//            						if(lst.getId().equals("lstViewPrese")) {
+//            							//mostro le prese dichiarate da chi lo ha fatto
+//            							for(Giocatore g : prt.getElencoGiocatori()) {
+//            								lst.getItems().add(g.getNome()+" "+g.getPreseDichiarate()+" prese");
+//            							}
+//            						}
+//            					}
+//            				}
+//            			}
+//            		}
+//            	}
+//            }
+
+            //			if(!prt.isModalitaPrt()){//se sono in modalita di gioco carte apporto delle modifiche all'interfaccia
+            //				GridPane gp = (GridPane) root.getCenter();
+            //				Iterator<Node> i =gp.getChildren().iterator();
+            //				while(i.hasNext()) {
+            //					Object o = i.next();
+            //					if(o instanceof Label) {
+            //						Label lbl = (Label) o;
+            //						if(lbl.getId().equals("lblPrese")) {
+            //							lbl.setVisible(false);
+            //						}
+            //					}
+            //					
+            //					if(o instanceof GridPane) {
+            //						GridPane gridpane= (GridPane) o;
+            //						if(gridpane.getId().equals("gridPaneNumeroPrese")) {
+            //							gridpane.setVisible(false);
+            //						}
+            //					}
+            //				}
+            //			}
+
+            stage.show();
+
+            //copio le informazioni relative alla partita in corso
+            controller.copiaInformazioniPartita(prt);
+            //copio le informazioni relative alla label lblTurnoGiocatore
+            controller.copiaInformazioniLabel(lblTurnoGiocatore);
 
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
