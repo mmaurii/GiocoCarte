@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -37,7 +38,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 
 
-public class ControllerPartita{
+public class ControllerPartita implements Initializable{
 	//variabili di controllo
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
@@ -48,7 +49,6 @@ public class ControllerPartita{
 	final String pathStatus = "src/Status.txt";	
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	public Thread t;
-	
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Label lblManoGiocatore;
@@ -67,9 +67,11 @@ public class ControllerPartita{
 		lblManoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(true);
 		if(!prt.isModalitaPrt()) {//!gridPaneNumeroPrese.isVisible()
+			dichiaraPreseSetVisible(false);
 			lblManoGiocatore.setText("Mano di "+prt.getGiocatoreCorrente().getNome());
 			btnInizioTurnoGiocatoreClicked=true;
 		}else {
+			dichiaraPreseSetVisible(true);
 			lblManoGiocatore.setText(prt.getGiocatoreCorrente().getNome()+" dichiara le prese");
 			btnFineTurnoGiocatore.setDisable(false);
 		}
@@ -137,7 +139,6 @@ public class ControllerPartita{
 	@FXML Label lblNumPreseNonValido;
 	@FXML ListView<String> lstViewPrese;
 	@FXML ListView<String> lstViewVite;
-	int presePerQuestaMano=0;
 	//dispongo la fine del turno per il giocatore corrente
 	@FXML public void fineTurnoGiocatore(ActionEvent actionEvent) {
 		lblNumPreseNonValido.setVisible(false);
@@ -148,10 +149,10 @@ public class ControllerPartita{
 			try {
 				numeroPreseGiocatore=Integer.parseInt(txtNumeroPrese.getText());
 				prt.getGiocatoreCorrente().setPreseDichiarate(numeroPreseGiocatore);
-				presePerQuestaMano+=numeroPreseGiocatore;
+				prt.presePerQuestaMano+=numeroPreseGiocatore;
 
 				//System.out.println(presePerQuestaMano+" != "+(Integer)(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1)+" || "+(Integer)(countTurnoGiocatore+1)+" != "+this.prt.getElencoGiocatori().size());
-				if(presePerQuestaMano!=prt.getGiocatoreCorrente().getCarteMano().size()||prt.getCountTurnoGiocatore()!=ControllerPartita.prt.getElencoGiocatori().size()-1) {
+				if(prt.presePerQuestaMano!=prt.getGiocatoreCorrente().getCarteMano().size()||prt.getCountTurnoGiocatore()!=ControllerPartita.prt.getElencoGiocatori().size()-1) {
 					//visualizzo il numero di prese per questo giocatore
 					lstViewPrese.getItems().add(prt.getGiocatoreCorrente().getNome()+" "+numeroPreseGiocatore+" prese");
 					if(prt.isDichiaraPrese()) {
@@ -168,9 +169,8 @@ public class ControllerPartita{
 						if(prt.getCountTurnoGiocatore()>=ControllerPartita.prt.getElencoGiocatori().size()) {
 							prt.setCountTurnoGiocatore(0);
 							//sistemo l'interfaccia per iniziare a giocare le carte
-							gridPaneNumeroPrese.setVisible(false);
+							dichiaraPreseSetVisible(false);
 							prt.setModalitaPrt(false);
-							lblPrese.setVisible(false);
 							lblManoGiocatore.setVisible(false);
 							btnIniziaNuovoRound.setVisible(true);
 							btnFineTurnoGiocatore.setDisable(true);
@@ -186,7 +186,7 @@ public class ControllerPartita{
 						}
 					}
 				}else {
-					presePerQuestaMano-=numeroPreseGiocatore;
+					prt.presePerQuestaMano-=numeroPreseGiocatore;
 					lblNumPreseNonValido.setVisible(true);
 				}
 				txtNumeroPrese.setText("");
@@ -195,7 +195,7 @@ public class ControllerPartita{
 				txtNumeroPrese.setText(null);
 			}    
 		}else {
-			presePerQuestaMano=0;
+			prt.presePerQuestaMano=0;
 
 			//if(lstViewPrese.getItems().size()-1==countTurnoGiocatore||!gridPaneNumeroPrese.isVisible()) {
 			//rimetto le carte coperte
@@ -277,8 +277,10 @@ public class ControllerPartita{
 
 				Iterator<Giocatore> g = ControllerPartita.prt.getElencoGiocatori().iterator();
 				while(g.hasNext()) {
-					if(g.next().getVite()==0) {
+					gio = g.next();
+					if(gio.getVite()==0) {
 						g.remove();
+						prt.addGiocatoreEliminato(gio.getNome());
 					}
 				}
 
@@ -362,9 +364,8 @@ public class ControllerPartita{
 		lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
-		gridPaneNumeroPrese.setVisible(true);
 		prt.setModalitaPrt(true);
-		lblPrese.setVisible(true);
+		dichiaraPreseSetVisible(true);
 		//rimetto le carte coperte;
 		//copriCarteGiocatore();
 
@@ -691,5 +692,29 @@ public class ControllerPartita{
 			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
+	}
+
+	private void dichiaraPreseSetVisible(boolean val) {
+		gridPaneNumeroPrese.setVisible(val);
+		lblPrese.setVisible(val);
+		txtNumeroPrese.setVisible(val);
+	}
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+//		if(true){//se sono in modalita di gioco carte apporto delle modifiche all'interfaccia
+//			//mostro le vite di ogni giocatore
+//			for(Giocatore g : prt.getElencoGiocatori()) {
+//				lstViewVite.getItems().add(g.getNome()+" "+g.getVite()+" vite");
+//			}
+//			for(String nome : prt.getElencoGiocatoriEliminati()) {
+//				lstViewVite.getItems().add(nome+" è eliminato");
+//			}
+//			//mostro le prese dichiarate da chi lo ha fatto
+//			for(Giocatore g : prt.getElencoGiocatori()) {
+//				lstViewPrese.getItems().add(g.getNome()+" "+g.getPreseDichiarate()+" prese");
+//			}		
+//		}
 	}
 }

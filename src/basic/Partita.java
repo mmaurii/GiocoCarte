@@ -9,6 +9,7 @@ public class Partita implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Mazzo m;
 	private ArrayList<Giocatore> elencoGiocatori;
+	private ArrayList<String> elencoGiocatoriEliminati;
 	private String cod;
 	private int countTurnoGiocatore=0;
 	private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
@@ -16,6 +17,7 @@ public class Partita implements Serializable{
 	boolean primoTurno=true;
 	int numeroCarteAGiocatore;
 	boolean modalitaPrt = true; //il valore true indica che sono in fase di dichiarazione prese, il valore false indica che sono in fase di gioco delle carte
+	public int presePerQuestaMano;
 
 	public Partita() {}
 	
@@ -120,5 +122,13 @@ public class Partita implements Serializable{
 
 	public void setModalitaPrt(boolean modalitaPrt) {
 		this.modalitaPrt = modalitaPrt;
+	}
+
+	public ArrayList<String> getElencoGiocatoriEliminati() {
+		return elencoGiocatoriEliminati;
+	}
+
+	public void addGiocatoreEliminato(String nome) {
+		this.elencoGiocatoriEliminati.add(nome);
 	}
 }
