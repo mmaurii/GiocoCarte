@@ -98,27 +98,15 @@ public class ControllerHome {
     @FXML public void avviaPartita(ActionEvent actionEvent) {
     	//ottengo il codice partita inserito dall'utente
     	String codPartita = txtCodPartita.getText();
-    	Partita p = verificaDisponibilitaPartita(codPartita); //se la partita è presente sul file.json la carico se no assegno quella appena creata o null se non si trova 
+    	Partita p = verificaDisponibilitaPartita(codPartita); //assegno la partita appena creata se no la cerco sul file.json e la carico o null se non si trova 
     	if(p==null) {
     		//se la partita non viene trovata mando un messaggio di errore
     		lblCodPartitaErrato.setText("errore il codice partita è sbagliato, inseriscine uno corretto");
     	}else {
-    		boolean resume = false;
-    		//controllo se la partita è stata caricata da file(resume) o è stat appena aggiunta
-    		if(prt!=null) {
-    			if(this.prt.getCodice().equals(p.getCodice())) {
-    				//no resume partita
-    				resume=false;
-    			}else {//resume partita
-    				resume=true;
-    			}
-    		}
-    		
 			this.prt=p;
     		
     		//controllo che la partita non sia già stata conclusa
     		if(this.prt.getElencoGiocatori().size()>1) {
-//    			prt.resume=resume;
     			avviaPartita();
     		}else {
     			lblCodPartitaErrato.setText("la partita ha un solo giocatore, perchè si è già conclusa");
@@ -197,9 +185,22 @@ public class ControllerHome {
 		//apro la finestra di gioco
 		BorderPane root = new BorderPane();
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
-			//Locale locale = new Locale(); "Partita",this.prt
-			//loader.setResources(ResourceBundle.getBundle("Partita",));
+			FXMLLoader loader;
+			loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+			
+			ResourceBundle rb = new ResourceBundle() {
+				@Override
+				protected Object handleGetObject(String key) {
+			         if (key.equals("Partita")) return prt;
+					return null;
+				}
+				@Override
+				public Enumeration<String> getKeys() {
+					return Collections.enumeration(keySet());
+				}
+			};
+			loader.setResources(rb);
+			
 			root = loader.load();
 			ControllerPartita controller = loader.getController();
 			//definisco chi giocherà il primo turno
@@ -216,75 +217,10 @@ public class ControllerHome {
                 }
             });
 
-
-//            if(resume){//se sono in modalita di gioco carte apporto delle modifiche all'interfaccia
-//            	GridPane gp = (GridPane) root.getCenter();
-//            	Iterator<Node> i =gp.getChildren().iterator();
-//            	while(i.hasNext()) {
-//            		Object o = i.next();
-//            		if(o instanceof GridPane) {
-//            			GridPane gridpane= (GridPane) o;
-//            			if(gridpane.getId().equals("gridPaneVite")) {
-//            				Iterator<Node> y = gridpane.getChildren().iterator();
-//            				while(y.hasNext()) {
-//            					Object obj = y.next();
-//            					if(obj instanceof ListView) {
-//            						ListView<String> lst = (ListView<String>) obj;
-//            						if(lst.getId().equals("lstViewVite")) {
-//            							//mostro le vite di ogni giocatore
-//            							for(Giocatore g : prt.getElencoGiocatori()) {
-//            								lst.getItems().add(g.getNome()+" "+g.getVite()+" vite");
-//            							}
-//            							for(String nome : prt.getElencoGiocatoriEliminati()) {
-//            								lst.getItems().add(nome+" è eliminato");
-//            							}
-//            						}
-//            					}
-//            				}
-//            			}else if(gridpane.getId().equals("gridPanePreseDichiarate")) {
-//            				Iterator<Node> y = gridpane.getChildren().iterator();
-//            				while(y.hasNext()) {
-//            					Object obj = y.next();
-//            					if(obj instanceof ListView) {
-//            						ListView<String> lst = (ListView<String>) obj;
-//            						if(lst.getId().equals("lstViewPrese")) {
-//            							//mostro le prese dichiarate da chi lo ha fatto
-//            							for(Giocatore g : prt.getElencoGiocatori()) {
-//            								lst.getItems().add(g.getNome()+" "+g.getPreseDichiarate()+" prese");
-//            							}
-//            						}
-//            					}
-//            				}
-//            			}
-//            		}
-//            	}
-//            }
-
-            //			if(!prt.isModalitaPrt()){//se sono in modalita di gioco carte apporto delle modifiche all'interfaccia
-            //				GridPane gp = (GridPane) root.getCenter();
-            //				Iterator<Node> i =gp.getChildren().iterator();
-            //				while(i.hasNext()) {
-            //					Object o = i.next();
-            //					if(o instanceof Label) {
-            //						Label lbl = (Label) o;
-            //						if(lbl.getId().equals("lblPrese")) {
-            //							lbl.setVisible(false);
-            //						}
-            //					}
-            //					
-            //					if(o instanceof GridPane) {
-            //						GridPane gridpane= (GridPane) o;
-            //						if(gridpane.getId().equals("gridPaneNumeroPrese")) {
-            //							gridpane.setVisible(false);
-            //						}
-            //					}
-            //				}
-            //			}
-
             stage.show();
 
             //copio le informazioni relative alla partita in corso
-            controller.copiaInformazioniPartita(prt);
+            //controller.copiaInformazioniPartita(prt);
             //copio le informazioni relative alla label lblTurnoGiocatore
             controller.copiaInformazioniLabel(lblTurnoGiocatore);
 

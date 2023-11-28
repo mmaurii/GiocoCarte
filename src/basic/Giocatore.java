@@ -15,8 +15,8 @@ public class Giocatore implements Serializable{
 		return punteggio;
 	}
 
-	int preseDichiarate;
-	int preseEffettuate;
+	int preseDichiarate=-1;
+	int preseEffettuate=0;
 	
 	public Giocatore(String nome, int nVite, ArrayList<Carta> carte, long punteggio) {
 		this.nome=nome;

@@ -9,7 +9,7 @@ public class Partita implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Mazzo m;
 	private ArrayList<Giocatore> elencoGiocatori;
-	private ArrayList<String> elencoGiocatoriEliminati;
+	private ArrayList<String> elencoGiocatoriEliminati = new ArrayList<String>();
 	private String cod;
 	private int countTurnoGiocatore=0;
 	private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
@@ -18,7 +18,12 @@ public class Partita implements Serializable{
 	int numeroCarteAGiocatore;
 	boolean modalitaPrt = true; //il valore true indica che sono in fase di dichiarazione prese, il valore false indica che sono in fase di gioco delle carte
 	public int presePerQuestaMano;
-
+	boolean resume=false;
+	boolean	btnInizioTurnoGiocatoreVisible;
+	boolean btnFineTurnoGiocatoreVisible;
+	boolean btnIniziaNuovaManoVisible;
+	boolean btnIniziaNuovoRoundVisible;
+	
 	public Partita() {}
 	
 	public Partita(String cod) {
@@ -51,7 +56,15 @@ public class Partita implements Serializable{
 	public void setPrimoTurno(boolean primoTurno) {
 		this.primoTurno = primoTurno;
 	}
+	
+	public boolean isResume() {
+		return resume;
+	}
 
+	public void setResume(boolean resume) {
+		this.resume = resume;
+	}
+	
 	public int getCountTurnoGiocatore() {
 		return countTurnoGiocatore;
 	}
@@ -130,5 +143,37 @@ public class Partita implements Serializable{
 
 	public void addGiocatoreEliminato(String nome) {
 		this.elencoGiocatoriEliminati.add(nome);
+	}
+
+	public boolean isBtnInizioTurnoGiocatoreVisible() {
+		return btnInizioTurnoGiocatoreVisible;
+	}
+
+	public void setBtnInizioTurnoGiocatoreVisible(boolean btnInizioTurnoGiocatoreVisible) {
+		this.btnInizioTurnoGiocatoreVisible = btnInizioTurnoGiocatoreVisible;
+	}
+
+	public boolean isBtnFineTurnoGiocatoreVisible() {
+		return btnFineTurnoGiocatoreVisible;
+	}
+
+	public void setBtnFineTurnoGiocatoreVisible(boolean btnFineTurnoGiocatoreVisible) {
+		this.btnFineTurnoGiocatoreVisible = btnFineTurnoGiocatoreVisible;
+	}
+
+	public boolean isBtnIniziaNuovaManoVisible() {
+		return btnIniziaNuovaManoVisible;
+	}
+
+	public void setBtnIniziaNuovaManoVisible(boolean btnIniziaNuovaManoVisible) {
+		this.btnIniziaNuovaManoVisible = btnIniziaNuovaManoVisible;
+	}
+
+	public boolean isBtnIniziaNuovoRoundVisible() {
+		return btnIniziaNuovoRoundVisible;
+	}
+
+	public void setBtnIniziaNuovoRoundVisible(boolean btnIniziaNuovoRoundVisible) {
+		this.btnIniziaNuovoRoundVisible = btnIniziaNuovoRoundVisible;
 	}
 }
