@@ -771,7 +771,7 @@ public class ControllerPartita implements Initializable{
 	private void mostraCarteBanco() {
 		//mostro le carte sul banco
 		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-		for(int i=0; i< listaCarteBanco.size();i++) {
+		for(int i=0; i< prt.getLstCarteBanco().size();i++) {
 			Image newImg = new Image(getClass().getResourceAsStream(prt.getLstCarteBanco().get(i).getPercorso()));
 			listaCarteBanco.get(i).setImage(newImg);
 		}
