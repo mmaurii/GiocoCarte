@@ -49,7 +49,6 @@ public class ControllerPartita implements Initializable{
 	final String pathStatus = "src/Status.txt";	
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	public Thread t;
-	boolean btnInizioTurnoGiocatoreClicked=false;
 	
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
@@ -103,7 +102,7 @@ public class ControllerPartita implements Initializable{
 		if(!prt.isModalitaPrt()) {//!gridPaneNumeroPrese.isVisible()
 			dichiaraPreseSetVisible(false);
 			lblManoGiocatore.setText("Mano di "+prt.getGiocatoreCorrente().getNome());
-			btnInizioTurnoGiocatoreClicked=true;
+			prt.setBtnInizioTurnoGiocatoreClicked(true);
 		}else {
 			dichiaraPreseSetVisible(true);
 			lblManoGiocatore.setText(prt.getGiocatoreCorrente().getNome()+" dichiara le prese");
@@ -511,7 +510,7 @@ public class ControllerPartita implements Initializable{
 		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//controllo che il giocatore abbia iniziato il suo turno
-		if(btnInizioTurnoGiocatoreClicked) {
+		if(prt.isBtnInizioTurnoGiocatoreClicked()) {
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
@@ -547,7 +546,7 @@ public class ControllerPartita implements Initializable{
 
 					i.setImage(new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso())));
 					listaCarteMano.get(posCartaCliccata).setImage(null);
-					btnInizioTurnoGiocatoreClicked=false;
+					prt.setBtnFineTurnoGiocatoreDisable(false);
 					btnFineTurnoGiocatore.setDisable(false);
 					break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo
 				}
@@ -673,8 +672,8 @@ public class ControllerPartita implements Initializable{
 		try {
 			boolean presenzaPrt = false;
 			partita.setResume(true);
-			partita.setBtnInizioTurnoGiocatoreVisible(btnInizioTurnoGiocatore.isVisible());
-			partita.setBtnFineTurnoGiocatoreVisible(btnFineTurnoGiocatore.isVisible());
+			partita.setBtnInizioTurnoGiocatoreDisable(btnInizioTurnoGiocatore.isDisable());
+			partita.setBtnFineTurnoGiocatoreDisable(btnFineTurnoGiocatore.isDisable());
 			partita.setBtnIniziaNuovaManoVisible(btnIniziaNuovaMano.isVisible());
 			partita.setBtnIniziaNuovoRoundVisible(btnIniziaNuovoRound.isVisible());
 			
@@ -779,18 +778,25 @@ public class ControllerPartita implements Initializable{
 	private void setInterface() {
 		if(prt.isResume())	{//controllo se la partita era già stata iniziata
 			//ripristino stato dei controlli
-			btnInizioTurnoGiocatore.setVisible(prt.isBtnInizioTurnoGiocatoreVisible());
-			btnFineTurnoGiocatore.setVisible(prt.isBtnFineTurnoGiocatoreVisible());
+			btnInizioTurnoGiocatore.setDisable(prt.isBtnInizioTurnoGiocatoreDisable());
+			btnFineTurnoGiocatore.setDisable(prt.isBtnFineTurnoGiocatoreDisable());
 			btnIniziaNuovaMano.setVisible(prt.isBtnIniziaNuovaManoVisible());
 			btnIniziaNuovoRound.setVisible(prt.isBtnIniziaNuovoRoundVisible());
-			
-			lblPrese.setVisible(prt.isModalitaPrt());
-			gridPaneNumeroPrese.setVisible(prt.isModalitaPrt());
-			
-			//ripristino stato delle carte
-			mostraCarteGiocatore();
-			mostraCarteBanco();		//finisci, i metodi non stampano le carte in output
+			if(!btnIniziaNuovaMano.isVisible()&&!btnIniziaNuovoRound.isVisible()) {
+				//ripristino stato delle carte
+				if(btnInizioTurnoGiocatore.isDisable()) {
+					mostraCarteGiocatore();
+				}else {
+					copriCarteGiocatore();
+				}
+			}
+			mostraCarteBanco();		
 		}
+
+		//imposto lo stato per i controlli di dichiarazione delle prese
+		lblPrese.setVisible(prt.isModalitaPrt());
+		gridPaneNumeroPrese.setVisible(prt.isModalitaPrt());
+		
 		//mostro le vite di ogni giocatore
 		mostraVite();
 		//mostro le prese dichiarate da chi lo ha fatto

@@ -19,11 +19,12 @@ public class Partita implements Serializable{
 	boolean modalitaPrt = true; //il valore true indica che sono in fase di dichiarazione prese, il valore false indica che sono in fase di gioco delle carte
 	public int presePerQuestaMano;
 	boolean resume=false;
-	boolean	btnInizioTurnoGiocatoreVisible;
-	boolean btnFineTurnoGiocatoreVisible;
+	boolean	btnInizioTurnoGiocatoreDisable;
+	boolean btnFineTurnoGiocatoreDisable;
 	boolean btnIniziaNuovaManoVisible;
 	boolean btnIniziaNuovoRoundVisible;
-	
+	boolean btnInizioTurnoGiocatoreClicked=false; //se false non fa giocare le carte al giocatore
+
 	public Partita() {}
 	
 	public Partita(String cod) {
@@ -145,20 +146,20 @@ public class Partita implements Serializable{
 		this.elencoGiocatoriEliminati.add(nome);
 	}
 
-	public boolean isBtnInizioTurnoGiocatoreVisible() {
-		return btnInizioTurnoGiocatoreVisible;
+	public boolean isBtnInizioTurnoGiocatoreDisable() {
+		return btnInizioTurnoGiocatoreDisable;
 	}
 
-	public void setBtnInizioTurnoGiocatoreVisible(boolean btnInizioTurnoGiocatoreVisible) {
-		this.btnInizioTurnoGiocatoreVisible = btnInizioTurnoGiocatoreVisible;
+	public void setBtnInizioTurnoGiocatoreDisable(boolean btnInizioTurnoGiocatoreDisable) {
+		this.btnInizioTurnoGiocatoreDisable=btnInizioTurnoGiocatoreDisable;
 	}
 
-	public boolean isBtnFineTurnoGiocatoreVisible() {
-		return btnFineTurnoGiocatoreVisible;
+	public boolean isBtnFineTurnoGiocatoreDisable() {
+		return btnFineTurnoGiocatoreDisable;
 	}
 
-	public void setBtnFineTurnoGiocatoreVisible(boolean btnFineTurnoGiocatoreVisible) {
-		this.btnFineTurnoGiocatoreVisible = btnFineTurnoGiocatoreVisible;
+	public void setBtnFineTurnoGiocatoreDisable(boolean btnFineTurnoGiocatoreDisable) {
+		this.btnFineTurnoGiocatoreDisable = btnFineTurnoGiocatoreDisable;
 	}
 
 	public boolean isBtnIniziaNuovaManoVisible() {
@@ -175,5 +176,13 @@ public class Partita implements Serializable{
 
 	public void setBtnIniziaNuovoRoundVisible(boolean btnIniziaNuovoRoundVisible) {
 		this.btnIniziaNuovoRoundVisible = btnIniziaNuovoRoundVisible;
+	}
+
+	public boolean isBtnInizioTurnoGiocatoreClicked() {
+		return btnInizioTurnoGiocatoreClicked;
+	}
+
+	public void setBtnInizioTurnoGiocatoreClicked(boolean btnInizioTurnoGiocatoreClicked) {
+		this.btnInizioTurnoGiocatoreClicked = btnInizioTurnoGiocatoreClicked;
 	}
 }
