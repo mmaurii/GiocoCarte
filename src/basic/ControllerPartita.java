@@ -784,6 +784,9 @@ public class ControllerPartita implements Initializable{
 			btnIniziaNuovaMano.setVisible(prt.isBtnIniziaNuovaManoVisible());
 			btnIniziaNuovoRound.setVisible(prt.isBtnIniziaNuovoRoundVisible());
 			
+			lblPrese.setVisible(prt.isModalitaPrt());
+			gridPaneNumeroPrese.setVisible(prt.isModalitaPrt());
+			
 			//ripristino stato delle carte
 			mostraCarteGiocatore();
 			mostraCarteBanco();		//finisci, i metodi non stampano le carte in output
