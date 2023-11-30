@@ -23,7 +23,8 @@ public class Partita implements Serializable{
 	boolean btnFineTurnoGiocatoreDisable;
 	boolean btnIniziaNuovaManoVisible;
 	boolean btnIniziaNuovoRoundVisible;
-	boolean btnInizioTurnoGiocatoreClicked=false; //se false non fa giocare le carte al giocatore
+	boolean btnInizioTurnoGiocatoreClicked; //se false non fa giocare le carte al giocatore
+	String lblVitaPersaText;
 
 	public Partita() {}
 	
@@ -184,5 +185,13 @@ public class Partita implements Serializable{
 
 	public void setBtnInizioTurnoGiocatoreClicked(boolean btnInizioTurnoGiocatoreClicked) {
 		this.btnInizioTurnoGiocatoreClicked = btnInizioTurnoGiocatoreClicked;
+	}
+	
+	public String getLblVitaPersaText() {
+		return lblVitaPersaText;
+	}
+
+	public void setLblVitaPersaText(String lblVitaPersaText) {
+		this.lblVitaPersaText = lblVitaPersaText;
 	}
 }
