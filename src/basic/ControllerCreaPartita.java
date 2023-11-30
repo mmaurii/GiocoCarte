@@ -32,7 +32,7 @@ public class ControllerCreaPartita {
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	String pathStatus = "src/Status.txt";
-	String pathGiocatoriRegistrati = "src/GiocatoriRegistrati.txt";
+	String pathClassifica = "src/Classifica.txt";
 
 	@FXML ListView<String> lstGiocatoriRegistrati;
 
@@ -51,8 +51,8 @@ public class ControllerCreaPartita {
 
 			try{
 
-				FileWriter fw = new FileWriter(pathGiocatoriRegistrati, true);
-				fw.write(nome + '\n');
+				FileWriter fw = new FileWriter(pathClassifica, true);
+				fw.write(0 + " , " + nome + "\n");
 				fw.close();
 
 			} catch (FileNotFoundException FNFe) {
@@ -229,11 +229,12 @@ public class ControllerCreaPartita {
 	public void populateListView() {
 
 		try {
-			File file = new File(pathGiocatoriRegistrati);
+			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
 			while(scan.hasNext()) {
 				String line = scan.nextLine();
-				lstGiocatoriRegistrati.getItems().add(line.trim());	
+				String[] data = line.split(" , ");
+				lstGiocatoriRegistrati.getItems().add(data[1].trim());	
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {

@@ -46,7 +46,7 @@ import javafx.animation.ScaleTransition;
 
 public class ControllerPopUpGiocatori {
 
-    String pathGiocatori = "src/GiocatoriRegistrati.txt";
+    String pathClassifica = "src/Classifica.txt";
     
     
     @FXML ListView<String> lstGiocatori;
@@ -57,7 +57,7 @@ public class ControllerPopUpGiocatori {
     public void populateLst() {
     	
  		try {
- 			File file = new File(pathGiocatori);
+ 			File file = new File(pathClassifica);
  			Scanner scan = new Scanner(file);			
  			while(scan.hasNext()) {
  				String line = scan.nextLine();
@@ -92,7 +92,7 @@ public class ControllerPopUpGiocatori {
     public void salva(ActionEvent actionEvent) {
     	
         List<String> items = lstGiocatori.getItems();
-        try (FileWriter writer = new FileWriter(pathGiocatori)) {
+        try (FileWriter writer = new FileWriter(pathClassifica)) {
             for (String item : items) {
                 writer.write(item + '\n');
             }

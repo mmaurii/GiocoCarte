@@ -105,12 +105,23 @@ public class ControllerPartitaTorneo {
     	stage.close();
     	
     	//apro la finestra per la creazione del torneo
-		Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("CreaTorneo.fxml"));
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaTorneo.fxml"));
+			Parent root = loader.load();
+			
+			StackPane stackPane = new StackPane();
+            stackPane.setStyle("-fx-background-color: #38B6FF;");
+            stackPane.getChildren().addAll(videoBackgroundPane, root);
+
+			ControllerCreaTorneo controller = loader.getController();
+			controller.populateListView();
+			
+			
 			stage.setTitle("Crea un Torneo");
-			Scene interfacciaCreaTorneo = new Scene(root);
-			stage.setScene(interfacciaCreaTorneo);
+			Scene interfacciaCreaPartita = new Scene(stackPane, 600, 400);
+			stage.setScene(interfacciaCreaPartita);
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -118,6 +129,7 @@ public class ControllerPartitaTorneo {
 		}
     }
     
+    /**
     @FXML ListView<String> lstClassifica;
 
     public void populateListView() {
@@ -166,6 +178,7 @@ public class ControllerPartitaTorneo {
 		//mostro in output la classifica
 		lstClassifica.getItems().setAll(listaNumerata);
     }
+    **/
     
     @FXML public void modificaGiocatori(ActionEvent actionEvent) {
 		try {
