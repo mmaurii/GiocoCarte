@@ -246,9 +246,9 @@ public class ControllerPartita implements Initializable{
 			}
 
 			//controllo che non si sia conclusa una mano
-			if(ControllerPartita.prt.getElencoGiocatori().get(ControllerPartita.prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0){
+			if(prt.getElencoGiocatori().get(prt.getElencoGiocatori().size()-1).getCarteMano().size() != 0){
 				//controllo che non si sia chiuso un giro di carte 
-				if(prt.getCountTurnoGiocatore()<ControllerPartita.prt.getElencoGiocatori().size()) {
+				if(prt.getCountTurnoGiocatore()<prt.getElencoGiocatori().size()) {
 					//sistemo la visualizzazione dell'interfaccia
 					lblManoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
@@ -264,19 +264,18 @@ public class ControllerPartita implements Initializable{
 					//Calcolo chi prende in base alle carte sul banco
 					giocatoreChePrende = CalcolaPunti(prt.getLstCarteBanco());
 
-					Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende);
-					ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
+					Giocatore gio = prt.getElencoGiocatori().get(giocatoreChePrende);
+					prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
 					lblVitaPersa.setText(gio.getNome()+" ha PRESO questo turno");
 					lblVitaPersa.setVisible(true);
-					prt.getLstCarteBanco().clear();
 					lblManoGiocatore.setVisible(false);
 					lblTurnoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
 					btnIniziaNuovoRound.setVisible(true);
 
 					//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
-					gio=ControllerPartita.prt.getElencoGiocatori().remove(0);
-					ControllerPartita.prt.getElencoGiocatori().add(gio);
+					gio=prt.getElencoGiocatori().remove(0);
+					prt.getElencoGiocatori().add(gio);
 				}
 			}else {
 				//resetto lo stato per non far giocare le carte
@@ -287,11 +286,11 @@ public class ControllerPartita implements Initializable{
 				//Calcolo chi prende in base alle carte sul banco
 				giocatoreChePrende = CalcolaPunti(prt.getLstCarteBanco());
 
-				Giocatore gio = ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende);
-				ControllerPartita.prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
+				Giocatore gio = prt.getElencoGiocatori().get(giocatoreChePrende);
+				prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
 				lblVitaPersa.setText(gio.getNome()+" ha PRESO questo turno");
 				lblVitaPersa.setVisible(true);
-				prt.getLstCarteBanco().clear();
+				//prt.getLstCarteBanco().clear();
 				lblManoGiocatore.setVisible(false);
 				lblTurnoGiocatore.setVisible(false);
 				btnFineTurnoGiocatore.setDisable(true);
@@ -445,8 +444,8 @@ public class ControllerPartita implements Initializable{
 		}
 
 		//salvo la partita
-		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
-			SalvaPartita(ControllerPartita.prt);
+		if(prt.getElencoGiocatori().size()>1) {
+			SalvaPartita(prt);
 		}
 
 		//riapro la finestra di Home
@@ -459,7 +458,7 @@ public class ControllerPartita implements Initializable{
 			ControllerHome controller = loader.getController();
 
 			controller.populateListView();
-			controller.copiaInformazioniPartita(ControllerPartita.prt);
+			controller.copiaInformazioniPartita(prt);
 
 			StackPane stackPane = new StackPane();
 			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
@@ -633,6 +632,7 @@ public class ControllerPartita implements Initializable{
 		//rimetto le carte coperte
 		for(int i=0; i< listaCarteMano.size();i++) {
 			int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
+			System.out.println(posProssimoGiocatore);
 			if(posProssimoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posProssimoGiocatore).getCarteMano().size()) {
 				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
 			}else {
@@ -684,7 +684,6 @@ public class ControllerPartita implements Initializable{
 
 	public void SalvaPartita(Partita partita) {
 		try {
-			System.out.println(partita.getLstCarteBanco().size());
 			boolean presenzaPrt = false;
 			partita.setResume(true);
 			partita.setBtnInizioTurnoGiocatoreDisable(btnInizioTurnoGiocatore.isDisable());
@@ -717,6 +716,8 @@ public class ControllerPartita implements Initializable{
 					if(p.getCodice().equals(partita.getCodice())) {
 						presenzaPrt=true;
 						p=partita;
+						System.out.println(p.getLstCarteBanco().size());
+						break;
 					}
 				}
 

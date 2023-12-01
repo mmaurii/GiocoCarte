@@ -1,5 +1,5 @@
 10 , mario
-20 , gianni
+30 , gianni
 10 , pino
 40 , balto
 20 , b
