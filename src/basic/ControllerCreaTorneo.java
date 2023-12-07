@@ -27,11 +27,15 @@ public class ControllerCreaTorneo {
 	//variabili di controllo
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
-	Partita prt;
+	Torneo T;
 	Mazzo mazzo = new Mazzo();
-	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
+	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
+	ArrayList<Giocatore> giocatoriSqd = new ArrayList<Giocatore>();
+	ArrayList<Squadra> squadre = new ArrayList<Squadra>();
+
+	
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	String pathStatus = "src/Status.txt";
+	String pathStatus = "src/StatusTornei.txt";
 	String pathClassifica = "src/Classifica.txt";
 
 	int numeroGiocatori;
@@ -82,7 +86,7 @@ public class ControllerCreaTorneo {
 			txtNomeUtente.clear();
 			listUtentiTorneo.getItems().add(nome);
 			lstGiocatoriRegistrati.getItems().add(nome);
-			giocatoriPrt.add(new Giocatore(nome));
+			giocatoriTrn.add(new Giocatore(nome));
 
 			try{
 
@@ -118,7 +122,7 @@ public class ControllerCreaTorneo {
 		if(!listUtentiTorneo.getItems().contains(nome) && nome != null)
 		{
 			listUtentiTorneo.getItems().add(nome);
-			giocatoriPrt.add(new Giocatore(nome));	
+			giocatoriTrn.add(new Giocatore(nome));	
 		}
 	}
 		
@@ -186,7 +190,7 @@ public class ControllerCreaTorneo {
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
-			controller.copiaInformazioniPartita(this.prt);
+			controller.copiaInformazioniTorneo(this.T);
 			controller.populateListView();
 
 			stage.setScene(interfacciaHome);
@@ -206,20 +210,21 @@ public class ControllerCreaTorneo {
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
 		
 		txtCodice.clear();
+		String uniqueCode = "";
 		
 		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {
-				//try {
+				try {
 
 					UUID uniqueID = UUID.randomUUID();
-					String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
-					//File file = new File(pathStatus);
+					uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+					File file = new File(pathStatus);
 
 					txtCodice.setText(uniqueCode);
 
 					btnGeneraCodice.setDisable(true);
 
-					/**
-					//salvo il codice corrente nel file di status
+					
+					//salvo il codice corrente nel file di StausTornei
 					FileWriter fw = new FileWriter(file);
 					fw.write("codiceTorneo , "+uniqueCode);
 					fw.close();
@@ -227,16 +232,78 @@ public class ControllerCreaTorneo {
 					System.out.println(e);
 				}catch(IOException eIO) {
 					System.out.println(eIO);    		
-				}**/
+				}
 			}else {
 				txtCodice.setStyle("-fx-text-fill: red;");
 				txtCodice.setText("Inserisci il numero esatto di Partecipanti");
 			}
+		
+		T = new Torneo(uniqueCode, generaSquadre());
+	}
+	
+	
+	public ArrayList<Squadra> generaSquadre() {
+		
+		Collections.shuffle(giocatoriTrn);
+		
+		int numeroSquadre = giocatoriTrn.size()/4;
+		int numeroGiocatoriPerSquadra = giocatoriTrn.size()/numeroSquadre;
+		
+		
+		
+		for(int i = 1; i <= numeroSquadre; i++) 
+		{
+			
+			if(i == numeroSquadre)
+			{
+				
+                int z = giocatoriTrn.size();
+				
+				for(int c = 0; c < z; c++) 
+				{
+					giocatoriSqd.add(giocatoriTrn.remove(0));
+				}
+				
+				Squadra s = new Squadra(giocatoriSqd);
+				squadre.add(s);
+
+				
+				
+			}else {
+				for(int j = 0; j < numeroGiocatoriPerSquadra; j++) 
+				{
+					giocatoriSqd.add(giocatoriTrn.remove(0));
+				}
+				
+				Squadra s = new Squadra(giocatoriSqd);
+				squadre.add(s);
+				
+			}
+		}
+		
+		return squadre;
+	}
+	
+	public void creaPartite() {
+	
+		
+		for(int i = 0; i <= squadre.size(); i++) 
+		{	
+			UUID uniqueID = UUID.randomUUID();
+			String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+			
+			Partita p = new Partita(uniqueCode, squadre.get(i).getGiocatori());
+			
+			
+		}
+		
 	}
 
-	/**
 	
 
+	
+	
+	/**
 
 	//aggiungo alla partita un utente robot 
 	@FXML Button btnAggiungiUtenteRobot;

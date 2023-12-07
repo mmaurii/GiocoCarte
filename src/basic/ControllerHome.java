@@ -40,6 +40,7 @@ public class ControllerHome {
     final int lungCodicePartita=10;
     final int nViteDefault=5;
     Partita prt;
+    Torneo T;
     Mazzo mazzo = new Mazzo();
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
@@ -120,7 +121,11 @@ public class ControllerHome {
     //metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
     public void copiaInformazioniPartita(Partita tempPrt) {
     	this.prt=tempPrt;
-	}    
+	}
+    
+    public void copiaInformazioniTorneo(Torneo tempT) {
+    	this.T=tempT;
+	} 
     
     @FXML ListView<String> lstClassifica;
     public void populateListView() {
