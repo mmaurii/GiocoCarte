@@ -1,7 +1,7 @@
-10 , mario
-30 , gianni
+40 , mario
+60 , gianni
 10 , pino
-40 , balto
+50 , balto
 20 , b
 10 , mauri
 10 , h
