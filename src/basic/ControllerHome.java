@@ -156,7 +156,7 @@ public class ControllerHome {
 		//metto il contenuto della listview in grassetto
 		lstClassifica.setStyle("-fx-font-weight: bold;");
 		
-		//centro le scritte all'interno della listview
+		//sistemo le scritte all'interno della listview
 		lstClassifica.setCellFactory(param -> new ListCell<String>() {
 		    @Override
 		    protected void updateItem(String item, boolean empty) {
@@ -217,7 +217,9 @@ public class ControllerHome {
                 @Override
                 public void handle(WindowEvent e) {
                  Platform.exit();
-                 controller.SalvaPartita(prt);
+                 if(stage.getScene().equals(interfacciaDiGioco)) {//in questo modo controllo di salvare la partita solo quando esco dall'interfaccia di gioco
+                	 controller.SalvaPartita(controller.prt);
+                 }
                  System.exit(0);
                 }
             });
@@ -282,21 +284,21 @@ public class ControllerHome {
 			}
 
 			//salvo la lista di partite senza quella richiesta se trovata
-			if(prtTrovata!=null) {
-				FileWriter fw = new FileWriter(path);
-				JsonWriter jsnWriter = new JsonWriter(fw);
-				
-				//rimuovo la partita richiesta dall'elenco e lo salvo
-				elencoPartite.remove(prtTrovata);
-				
-				jsnWriter.beginArray();
-				for (Partita p : elencoPartite) {
-					gson.toJson(p, Partita.class, jsnWriter);
-					fw.write('\n');
-				}
-				jsnWriter.endArray();
-				jsnWriter.close();
-			}
+//			if(prtTrovata!=null) {
+//				FileWriter fw = new FileWriter(path);
+//				JsonWriter jsnWriter = new JsonWriter(fw);
+//				
+//				//rimuovo la partita richiesta dall'elenco e lo salvo
+//				elencoPartite.remove(prtTrovata);
+//				
+//				jsnWriter.beginArray();
+//				for (Partita p : elencoPartite) {
+//					gson.toJson(p, Partita.class, jsnWriter);
+//					fw.write('\n');
+//				}
+//				jsnWriter.endArray();
+//				jsnWriter.close();
+//			}
 			return prtTrovata;
 		} catch (FileNotFoundException fnfe) {
 			// TODO Auto-generated catch block

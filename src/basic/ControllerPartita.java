@@ -90,8 +90,6 @@ public class ControllerPartita implements Initializable{
 		}else {
 			System.out.println("errore");
 		}
-
-
 	}
 
 
@@ -182,6 +180,9 @@ public class ControllerPartita implements Initializable{
 					//visualizzo il numero di prese per questo giocatore
 					lstViewPrese.getItems().add(prt.getGiocatoreCorrente().getNome()+" "+numeroPreseGiocatore+" prese");
 
+					//rimetto le carte coperte
+					copriCarteGiocatore(false);
+
 					if(prt.isDichiaraPrese()) {
 						//						//visualizzo il numero di vite di questo giocatore se è il primo turno
 						//						if(prt.isPrimoTurno()) {
@@ -198,7 +199,7 @@ public class ControllerPartita implements Initializable{
 						//incremento il contatore dei giocatori
 						prt.setCountTurnoGiocatore(prt.getCountTurnoGiocatore()+1);;
 						//rimetto le carte coperte
-						copriCarteGiocatore();
+						//copriCarteGiocatore(false);
 
 						if(prt.getCountTurnoGiocatore()>=ControllerPartita.prt.getElencoGiocatori().size()) {
 							prt.setCountTurnoGiocatore(0);
@@ -235,7 +236,7 @@ public class ControllerPartita implements Initializable{
 
 			//if(lstViewPrese.getItems().size()-1==countTurnoGiocatore||!gridPaneNumeroPrese.isVisible()) {
 			//rimetto le carte coperte
-			copriCarteGiocatore();
+			copriCarteGiocatore(false);
 
 			//controllo che non si sfori il numero di giocatori
 			if(prt.getCountTurnoGiocatore()<prt.getElencoGiocatori().size()) {
@@ -299,7 +300,7 @@ public class ControllerPartita implements Initializable{
 
 				//verifico chi ha sbagliato a dichiarare e gli rimuovo la vita
 				lstViewVite.getItems().clear();
-				for(Giocatore g : ControllerPartita.prt.getElencoGiocatori()) {	
+				for(Giocatore g : prt.getElencoGiocatori()) {	
 					if(g.getPreseDichiarate() != g.getPreseEffettuate())
 					{
 						g.perdiVita();
@@ -315,7 +316,7 @@ public class ControllerPartita implements Initializable{
 					g.setPreseDichiarate(-1);
 				}
 
-				Iterator<Giocatore> g = ControllerPartita.prt.getElencoGiocatori().iterator();
+				Iterator<Giocatore> g = prt.getElencoGiocatori().iterator();
 				while(g.hasNext()) {
 					gio = g.next();
 					if(gio.getVite()==0) {
@@ -324,14 +325,14 @@ public class ControllerPartita implements Initializable{
 					}
 				}
 
-				if(ControllerPartita.prt.getElencoGiocatori().size()>1) {//avvio una nuova mano
+				if(prt.getElencoGiocatori().size()>1) {//avvio una nuova mano
 					cominciaNuovaMano();
 
 					//cambio l'ordine dei giocatori spostando il primo in fondo alla lista
-					gio=ControllerPartita.prt.getElencoGiocatori().remove(0);
-					ControllerPartita.prt.getElencoGiocatori().add(gio);
-				}else if (ControllerPartita.prt.getElencoGiocatori().size()==1){//concludo la partita e ne annuncio il vincitore 
-					lblVitaPersa.setText(ControllerPartita.prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
+					gio=prt.getElencoGiocatori().remove(0);
+					prt.getElencoGiocatori().add(gio);
+				}else if (prt.getElencoGiocatori().size()==1){//concludo la partita e ne annuncio il vincitore 
+					lblVitaPersa.setText(prt.getElencoGiocatori().get(0).getNome()+" ha VINTO la partita");
 					lblManoGiocatore.setVisible(false);
 					lblTurnoGiocatore.setVisible(false);
 					btnIniziaNuovaMano.setVisible(false);
@@ -349,7 +350,7 @@ public class ControllerPartita implements Initializable{
 
 
 		//controllo che la partita non sia conclusa
-		if(ControllerPartita.prt.getElencoGiocatori().size()>1) {
+		if(prt.getElencoGiocatori().size()>1) {
 			//se il prossimo giocatore che deve giocare è un bot lo avvio
 			Giocatore gio = prt.getGiocatoreCorrente();
 			if(gio instanceof Bot) {
@@ -377,13 +378,14 @@ public class ControllerPartita implements Initializable{
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 
-//		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-//		for(ImageView i : listaCarteBanco) {
-//			i.setImage(null);
-//		}
+		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+		for(ImageView i : listaCarteBanco) {
+			i.setImage(null);
+		}
+		prt.getLstCarteBanco().clear();
 
 		//mostro le carte coperte del giocatore che deve iniziare il turno
-		copriCarteGiocatore();
+		copriCarteGiocatore(false);
 
 		//se il prossimo giocatore che deve giocare è un bot lo avvio
 		Giocatore gio = prt.getGiocatoreCorrente();
@@ -411,7 +413,7 @@ public class ControllerPartita implements Initializable{
 		prt.setModalitaPrt(true);
 		dichiaraPreseSetVisible(true);
 		//rimetto le carte coperte;
-		//copriCarteGiocatore();
+		copriCarteGiocatore(false);
 
 		//elimino le carte dal banco
 		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
@@ -443,10 +445,9 @@ public class ControllerPartita implements Initializable{
 			t.interrupt();
 		}
 
-		//salvo la partita
-		if(prt.getElencoGiocatori().size()>1) {
-			SalvaPartita(prt);
-		}
+		//il metodo controlla se la partita si è conclusa e nel caso la elimina dal file
+		SalvaPartita(prt);
+
 
 		//riapro la finestra di Home
 		try {
@@ -627,12 +628,13 @@ public class ControllerPartita implements Initializable{
 		prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);
 	}
 
-	private void copriCarteGiocatore() {
+	private void copriCarteGiocatore(boolean resume) {
+		
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+		//int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
+		int posProssimoGiocatore=resume?prt.getCountTurnoGiocatore():prt.getCountTurnoGiocatore()+1;
 		//rimetto le carte coperte
 		for(int i=0; i< listaCarteMano.size();i++) {
-			int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
-			System.out.println(posProssimoGiocatore);
 			if(posProssimoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posProssimoGiocatore).getCarteMano().size()) {
 				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
 			}else {
@@ -684,6 +686,7 @@ public class ControllerPartita implements Initializable{
 
 	public void SalvaPartita(Partita partita) {
 		try {
+			Partita tempPrt=null;
 			boolean presenzaPrt = false;
 			partita.setResume(true);
 			partita.setBtnInizioTurnoGiocatoreDisable(btnInizioTurnoGiocatore.isDisable());
@@ -715,8 +718,7 @@ public class ControllerPartita implements Initializable{
 				for(Partita p : elencoPartite) {
 					if(p.getCodice().equals(partita.getCodice())) {
 						presenzaPrt=true;
-						p=partita;
-						System.out.println(p.getLstCarteBanco().size());
+						tempPrt=p;
 						break;
 					}
 				}
@@ -724,9 +726,14 @@ public class ControllerPartita implements Initializable{
 				//se la partita non era presente nel file la aggiungo in coda e la salvo
 				if(!presenzaPrt) {
 					elencoPartite.add(partita);
+				}else if(tempPrt!=null){
+					elencoPartite.remove(tempPrt);
+					if(partita.getElencoGiocatori().size()>1) {
+						elencoPartite.add(partita);
+					}
 				}
 
-				//salvo la lista di partite caricate dal file
+				//salvo la lista di partite caricate dal file e aggiornate
 				FileWriter fw = new FileWriter(path);
 				JsonWriter jsnWriter = new JsonWriter(fw);
 				jsnWriter.beginArray();
@@ -790,7 +797,6 @@ public class ControllerPartita implements Initializable{
 		for(int i=0; i< prt.getLstCarteBanco().size();i++) {
 			Image newImg = new Image(getClass().getResourceAsStream(prt.getLstCarteBanco().get(i).getPercorso()));
 			listaCarteBanco.get(i).setImage(newImg);
-			System.out.println(newImg.getUrl());
 		}
 	}
 
@@ -806,7 +812,7 @@ public class ControllerPartita implements Initializable{
 				if(btnInizioTurnoGiocatore.isDisable()) {
 					mostraCarteGiocatore();
 				}else {
-					copriCarteGiocatore();
+					copriCarteGiocatore(true);
 				}
 			}else if(btnIniziaNuovaMano.isVisible()){
 				lblVitaPersa.setVisible(true);
@@ -817,6 +823,8 @@ public class ControllerPartita implements Initializable{
 			}
 
 			mostraCarteBanco();		
+		}else {
+			copriCarteGiocatore(true);
 		}
 
 		//imposto lo stato per i controlli di dichiarazione delle prese
