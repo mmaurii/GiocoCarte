@@ -30,8 +30,8 @@ public class ControllerCreaTorneo {
 	Torneo T;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
-	ArrayList<Giocatore> giocatoriSqd = new ArrayList<Giocatore>();
-	ArrayList<Squadra> squadre = new ArrayList<Squadra>();
+	ArrayList<Giocatore> giocatoriPartita = new ArrayList<Giocatore>();
+	ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 
 	
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
@@ -238,11 +238,11 @@ public class ControllerCreaTorneo {
 				txtCodice.setText("Inserisci il numero esatto di Partecipanti");
 			}
 		
-		T = new Torneo(uniqueCode, generaSquadre());
+		T = new Torneo(uniqueCode, generaPartite());
 	}
 	
 	
-	public ArrayList<Squadra> generaSquadre() {
+	public ArrayList<Partita> generaPartite() {
 		
 		Collections.shuffle(giocatoriTrn);
 		
@@ -261,38 +261,35 @@ public class ControllerCreaTorneo {
 				
 				for(int c = 0; c < z; c++) 
 				{
-					giocatoriSqd.add(giocatoriTrn.remove(0));
-				}
-				
-				Squadra s = new Squadra(giocatoriSqd);
-				squadre.add(s);
-
-				
-				
+					giocatoriPartita.add(giocatoriTrn.remove(0));
+				}				
 			}else {
 				for(int j = 0; j < numeroGiocatoriPerSquadra; j++) 
 				{
-					giocatoriSqd.add(giocatoriTrn.remove(0));
+					giocatoriPartita.add(giocatoriTrn.remove(0));
 				}
-				
-				Squadra s = new Squadra(giocatoriSqd);
-				squadre.add(s);
-				
 			}
+			
+			//crea la partita
+			
+			//aggiungi la partita all'elenco delle partite del torneo
+			//Partita prt=...
+//			elencoPartite.add(prt);
 		}
 		
-		return squadre;
+		return elencoPartite;
 	}
 	
+	//modifica metodo fa cose sbagliate
 	public void creaPartite() {
 	
 		
-		for(int i = 0; i <= squadre.size(); i++) 
+		for(int i = 0; i <= elencoPartite.size(); i++) 
 		{	
 			UUID uniqueID = UUID.randomUUID();
 			String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
 			
-			Partita p = new Partita(uniqueCode, squadre.get(i).getGiocatori());
+			Partita p = new Partita(uniqueCode, elencoPartite.get(i).getElencoGiocatori());
 			
 			
 		}
