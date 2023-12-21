@@ -30,29 +30,29 @@ public class ControllerCreaTorneo {
 	Torneo T;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
-	ArrayList<Giocatore> giocatoriPartita = new ArrayList<Giocatore>();
-	ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
+	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
+	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
 
-	
+
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	String pathStatus = "src/StatusTornei.txt";
 	String pathClassifica = "src/Classifica.txt";
 
 	int numeroGiocatori;
-	
-	
+
+
 	@FXML ListView<String> lstGiocatoriRegistrati;
 	@FXML ListView<String> listUtentiTorneo;
 
 
-	
-	
+
+
 	@FXML Button btnAggiungiUtente;
 
 	@FXML Button btnNumeroGiocatori;
 	@FXML TextField txtNumeroGiocatori;
 	public void numeroGiocatori(ActionEvent actionEvent) {
-		
+
 		numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
 		if(numeroGiocatori>=4) 
 		{
@@ -61,22 +61,22 @@ public class ControllerCreaTorneo {
 			lstGiocatoriRegistrati.setDisable(false);
 			listUtentiTorneo.setDisable(false);
 
-			
+
 		}else {
-			
+
 			btnAggiungiUtente.setDisable(true);
 			txtNumeroGiocatori.clear();
 			Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Errore");
-            alert.setHeaderText(null);
-            alert.setContentText("Inserire un numero di giocatori minimo di 4");
-            alert.showAndWait();
+			alert.setTitle("Errore");
+			alert.setHeaderText(null);
+			alert.setContentText("Inserire un numero di giocatori minimo di 4");
+			alert.showAndWait();
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	//aggiungo alla partita un nuovo utente  
 	@FXML TextField txtNomeUtente; 
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
@@ -113,7 +113,7 @@ public class ControllerCreaTorneo {
 		}
 
 	}
-	
+
 	//aggiungo alla partita un utente già registrato
 	@FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
 
@@ -122,16 +122,16 @@ public class ControllerCreaTorneo {
 		if(!listUtentiTorneo.getItems().contains(nome) && nome != null)
 		{
 			listUtentiTorneo.getItems().add(nome);
-			giocatoriTrn.add(new Giocatore(nome));	
+			giocatoriTrn.add(new Giocatore(nome));	//inseisci numero di vite e carte
 		}
 	}
-		
+
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
 
 		listUtentiTorneo.getItems().remove(listUtentiTorneo.getSelectionModel().getSelectedItem()); 
 
 	}
-	
+
 	public void populateListView() {
 
 		try {
@@ -166,7 +166,7 @@ public class ControllerCreaTorneo {
 			}
 		});
 	}
-	
+
 	@FXML Button btnTornaAllaHome;
 	//torno alla Schermata di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
@@ -176,17 +176,17 @@ public class ControllerCreaTorneo {
 
 		//riapro la finestra di login
 		try {
-            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
-			
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
 
 			ControllerHome controller = loader.getController();	
-			
+
 			StackPane stackPane = new StackPane();
-            stackPane.setStyle("-fx-background-color: #38B6FF;");
-            stackPane.getChildren().addAll(videoBackgroundPane, root);
-            
+			stackPane.setStyle("-fx-background-color: #38B6FF;");
+			stackPane.getChildren().addAll(videoBackgroundPane, root);
+
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
@@ -201,105 +201,156 @@ public class ControllerCreaTorneo {
 			e.printStackTrace();
 		}	
 	} 
-	
-	
+
+
 	//Genero il codice per una nuova partita
 	@FXML Button btnGeneraCodice;
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
-		
+
 		txtCodice.clear();
 		String uniqueCode = "";
-		
+
 		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {
-				try {
+			try {
 
-					UUID uniqueID = UUID.randomUUID();
-					uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
-					File file = new File(pathStatus);
+				UUID uniqueID = UUID.randomUUID();
+				uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+				File file = new File(pathStatus);
 
-					txtCodice.setText(uniqueCode);
+				txtCodice.setText(uniqueCode);
 
-					btnGeneraCodice.setDisable(true);
+				btnGeneraCodice.setDisable(true);
 
-					
-					//salvo il codice corrente nel file di StausTornei
-					FileWriter fw = new FileWriter(file);
-					fw.write("codiceTorneo , "+uniqueCode);
-					fw.close();
-				}catch(FileNotFoundException e) {
-					System.out.println(e);
-				}catch(IOException eIO) {
-					System.out.println(eIO);    		
-				}
-			}else {
-				txtCodice.setStyle("-fx-text-fill: red;");
-				txtCodice.setText("Inserisci il numero esatto di Partecipanti");
+
+				//salvo il codice corrente nel file di StausTornei
+				FileWriter fw = new FileWriter(file);
+				fw.write("codiceTorneo , "+uniqueCode);
+				fw.close();
+			}catch(FileNotFoundException e) {
+				System.out.println(e);
+			}catch(IOException eIO) {
+				System.out.println(eIO);    		
 			}
-		
-		T = new Torneo(uniqueCode, generaPartite());
+		}else {
+			txtCodice.setStyle("-fx-text-fill: red;");
+			txtCodice.setText("Inserisci il numero esatto di Partecipanti");
+		}
+
+		ArrayList<Partita> elencoPrt=generaPartite();
+		T = new Torneo(uniqueCode, elencoPrt);
 	}
-	
-	
-	public ArrayList<Partita> generaPartite() {
-		
+
+
+	private ArrayList<Partita> generaPartite() {
+		ArrayList<Partita> elencoPrt=new ArrayList<>();
 		Collections.shuffle(giocatoriTrn);
-		
-		int numeroSquadre = giocatoriTrn.size()/4;
-		int numeroGiocatoriPerSquadra = giocatoriTrn.size()/numeroSquadre;
-		
-		
-		
-		for(int i = 1; i <= numeroSquadre; i++) 
+
+		int numeroPartite = giocatoriTrn.size()/4;
+		int numeroGiocatoriPartita = giocatoriTrn.size()/numeroPartite;
+
+
+
+		for(int i = 1; i <= numeroPartite; i++) 
 		{
-			
-			if(i == numeroSquadre)
+
+			if(i == numeroPartite)
 			{
-				
-                int z = giocatoriTrn.size();
-				
+
+				int z = giocatoriTrn.size();
+
 				for(int c = 0; c < z; c++) 
 				{
-					giocatoriPartita.add(giocatoriTrn.remove(0));
+					giocatoriPrt.add(giocatoriTrn.remove(0));
 				}				
 			}else {
-				for(int j = 0; j < numeroGiocatoriPerSquadra; j++) 
+				for(int j = 0; j < numeroGiocatoriPartita; j++) 
 				{
-					giocatoriPartita.add(giocatoriTrn.remove(0));
+					giocatoriPrt.add(giocatoriTrn.remove(0));
 				}
 			}
-			
-			//crea la partita
-			
+
+			//creo la partita
+			Partita p = creaPartita(giocatoriPrt);
 			//aggiungi la partita all'elenco delle partite del torneo
-			//Partita prt=...
-//			elencoPartite.add(prt);
+			elencoPrt.add(p);
 		}
-		
-		return elencoPartite;
+
+		return elencoPrt;
 	}
-	
+
 	//modifica metodo fa cose sbagliate
-	public void creaPartite() {
-	
-		
-		for(int i = 0; i <= elencoPartite.size(); i++) 
-		{	
-			UUID uniqueID = UUID.randomUUID();
-			String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
-			
-			Partita p = new Partita(uniqueCode, elencoPartite.get(i).getElencoGiocatori());
-			
-			
+	Partita creaPartita(ArrayList<Giocatore> giocatoriPrt) {
+		UUID uniqueID = UUID.randomUUID();
+		String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+//			File file = new File(pathStatus);
+
+
+		/**
+File file = new File(pathStatus);
+Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
+String codPartita = scan.nextLine().split(" , ")[1];
+scan.close();
+
+//controllare univocita
+codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
+
+//aggiungo al codice gli 0 non rilevanti
+int nCifre = codPartita.length();
+for(int i=0; i<lungCodicePartita-nCifre; i++) {
+		codPartita="0"+codPartita;
+}**/
+
+		//lblCodice.setStyle("-fx-control-inner-background: grey;");
+//			txtCodice.setText(uniqueCode);
+
+//			btnGeneraCodice.setDisable(true);
+
+		//salvo il codice corrente nel file di status
+//			FileWriter fw = new FileWriter(file);
+//			fw.write("codicePartita , "+uniqueCode);
+//			fw.close();
+
+		//do le vite e le carte ai giocatori
+		String nVite = comboNVite.getSelectionModel().getSelectedItem();
+		if(nVite!=null) {
+			for(Giocatore i : giocatoriPrt) {
+				i.setVite(Integer.parseInt(nVite));
+			}
+		}else {
+			for(Giocatore i : giocatoriPrt) {
+				i.setVite(nViteDefault);
+			}
 		}
-		
+
+		//imposto i dati di una nuova partita
+		Partita p=new Partita(uniqueCode, giocatoriPrt);
+		mazzo=new Mazzo();
+		//do le carte a ogni giocatore
+		mazzo.setSpeciale();
+		mazzo.mescola();
+		int numeroCarteAGiocatore=quanteCarteAGiocatore(p.getElencoGiocatori().size());
+		p.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
+		for(Giocatore g : p.getElencoGiocatori()) {
+			g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+		}
+
+		return p;
 	}
 
-	
+	private int quanteCarteAGiocatore(int numeroGiocatori) {
+		if(numeroGiocatori>4) {
+			return 5;
+		}else if(numeroGiocatori == 2){
+			return 1;
+		}else {
+			return numeroGiocatori;
+		}
+	}
 
-	
-	
+
+
 	/**
 
 	//aggiungo alla partita un utente robot 
@@ -316,8 +367,8 @@ public class ControllerCreaTorneo {
 			txtNomeUtenteRobot.clear();
 		}
 	}
-	
-	
+
+
 
 
 
@@ -347,12 +398,12 @@ public class ControllerCreaTorneo {
 
 					//salvo la partita su file.json
 					SalvaPartita(this.prt);
-				
 
 
-	  
 
-	
+
+
+
 
 	private int quanteCarteAGiocatore(int numeroGiocatori) {
 		if(numeroGiocatori>4) {
@@ -404,6 +455,6 @@ public class ControllerCreaTorneo {
 			ioe.printStackTrace();
 		}
 	}
-	**/
+	 **/
 
 }
