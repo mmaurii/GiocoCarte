@@ -27,7 +27,7 @@ public class ControllerCreaTorneo {
 	//variabili di controllo
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
-	Torneo T;
+	Torneo trt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
@@ -35,7 +35,7 @@ public class ControllerCreaTorneo {
 
 
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	String pathStatus = "src/StatusTornei.txt";
+	String pathStatus = "src/Status.txt";
 	String pathClassifica = "src/Classifica.txt";
 
 	int numeroGiocatori;
@@ -54,7 +54,7 @@ public class ControllerCreaTorneo {
 	public void numeroGiocatori(ActionEvent actionEvent) {
 
 		numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
-		if(numeroGiocatori>=4) 
+		if(numeroGiocatori>=4&&numeroGiocatori<=40) 
 		{
 			btnAggiungiUtente.setDisable(false);
 			btnNumeroGiocatori.setDisable(true);
@@ -69,7 +69,7 @@ public class ControllerCreaTorneo {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Errore");
 			alert.setHeaderText(null);
-			alert.setContentText("Inserire un numero di giocatori minimo di 4");
+			alert.setContentText("Inserire un numero di giocatori minimo di 4 e massimo di 40"); 
 			alert.showAndWait();
 		}
 	}
@@ -190,7 +190,7 @@ public class ControllerCreaTorneo {
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
-			controller.copiaInformazioniTorneo(this.T);
+			controller.copiaInformazioniTorneo(this.trt);
 			controller.populateListView();
 
 			stage.setScene(interfacciaHome);
@@ -216,7 +216,8 @@ public class ControllerCreaTorneo {
 			try {
 
 				UUID uniqueID = UUID.randomUUID();
-				uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+				//'t' sta per torneo
+				uniqueCode = "t"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 				File file = new File(pathStatus);
 
 				txtCodice.setText(uniqueCode);
@@ -239,7 +240,7 @@ public class ControllerCreaTorneo {
 		}
 
 		ArrayList<Partita> elencoPrt=generaPartite();
-		T = new Torneo(uniqueCode, elencoPrt);
+		this.trt = new Torneo(uniqueCode, elencoPrt);
 	}
 
 
@@ -327,6 +328,7 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 		//imposto i dati di una nuova partita
 		Partita p=new Partita(uniqueCode, giocatoriPrt);
 		mazzo=new Mazzo();
+		System.out.println("numero carte mazzo "+mazzo.getMazzo().size());
 		//do le carte a ogni giocatore
 		mazzo.setSpeciale();
 		mazzo.mescola();

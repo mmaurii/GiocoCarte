@@ -119,7 +119,8 @@ public class ControllerCreaPartita {
 				try {
 
 					UUID uniqueID = UUID.randomUUID();
-					String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
+					//'p' sta per partita
+					String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 					File file = new File(pathStatus);
 
 
