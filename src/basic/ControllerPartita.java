@@ -2,21 +2,17 @@ package basic;
 
 import java.io.*;
 import java.net.URL;
-
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-
 import java.util.*;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,7 +22,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.application.Platform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,6 +59,7 @@ public class ControllerPartita implements Initializable{
 	@FXML GridPane gridPaneNumeroPrese=new GridPane();
 	@FXML Button btnIniziaNuovaMano;
 	@FXML Button btnPartitaTornaAllaHome;
+	@FXML Button btnPartitaTornaAlTorneo;
 	@FXML Button btnClassifica;
 	@FXML Button btnFineTurnoGiocatore;
 	@FXML Label lblVitaPersa;
@@ -87,6 +83,13 @@ public class ControllerPartita implements Initializable{
 		if(prt!=null){
 			//sistemo opportunamente l'interfaccia
 			setInterface();
+			if(prt.getFlagTorneo()) {
+				btnPartitaTornaAllaHome.setVisible(false);
+				btnPartitaTornaAlTorneo.setVisible(true);
+			}else {
+				btnPartitaTornaAllaHome.setVisible(true);
+				btnPartitaTornaAlTorneo.setVisible(false);
+			}
 		}else {
 			System.out.println("errore");
 		}
@@ -477,7 +480,42 @@ public class ControllerPartita implements Initializable{
 		}	
 	}
 
+	//torno all'interfaccia del torneo
+	@FXML public void TornaAlTorneo(ActionEvent actionEvent) {
+		//chiudo la finestra di Gioco della partita e torno alla finestra del torneo
+		Stage stage = (Stage)btnPartitaTornaAlTorneo.getScene().getWindow();
+		stage.close();
 
+		//elimino i possibili bot in esecuzione
+		if(prt.getGiocatoreCorrente() instanceof Bot) {
+			t.interrupt();
+		}
+
+		//riapro la finestra del torneo
+		try {
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Torneo.fxml"));
+			Parent root = loader.load();
+
+			ControllerTorneo controller = loader.getController();
+
+			StackPane stackPane = new StackPane();
+			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+			stackPane.getChildren().addAll(videoBackgroundPane, root);
+
+			stage.setTitle("Torneo");
+			Scene interfacciaTorneo = new Scene(stackPane, 720, 480);
+
+			stage.setScene(interfacciaTorneo);
+			stage.show();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
 	//creo un pop-up che visualizzi la classifica
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
 		BorderPane root = new BorderPane();

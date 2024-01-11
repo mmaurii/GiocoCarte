@@ -186,6 +186,7 @@ public class ControllerCreaTorneo {
 	}
 
 
+	//METODI AUSILIARI
 	private ArrayList<Partita> generaPartite() {
 		ArrayList<Partita> elencoPrt=new ArrayList<>();
 		Collections.shuffle(giocatoriTrn);
@@ -217,6 +218,7 @@ public class ControllerCreaTorneo {
 
 			//creo la partita
 			Partita p = creaPartita(giocatoriPrt);
+			p.setFlagTorneo(true);
 			//aggiungo la partita all'elenco delle partite del torneo
 			elencoPrt.add(p);
 		}
