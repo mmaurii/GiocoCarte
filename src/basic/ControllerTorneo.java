@@ -3,6 +3,7 @@ package basic;
 import java.io.*;
 import java.net.URL;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -54,6 +55,9 @@ public class ControllerTorneo implements Initializable{
 	@FXML ImageView imgPrt8;
 	@FXML ImageView imgPrt9;
 	@FXML ImageView imgPrt10;
+	@FXML ImageView imgSemifinale1;
+	@FXML ImageView imgSemifinale2;
+	@FXML ImageView imgFinale;
 	@FXML GridPane gpPrt1;
 	@FXML GridPane gpPrt2;
 	@FXML GridPane gpPrt3;
@@ -64,6 +68,9 @@ public class ControllerTorneo implements Initializable{
 	@FXML GridPane gpPrt8;
 	@FXML GridPane gpPrt9;
 	@FXML GridPane gpPrt10;
+	@FXML GridPane gpSemifinale1;
+	@FXML GridPane gpSemifinale2;
+	@FXML GridPane gpFinale;
 	@FXML Label lblVincitorePrt1;
 	@FXML Label lblVincitorePrt2;
 	@FXML Label lblVincitorePrt3;
@@ -74,7 +81,19 @@ public class ControllerTorneo implements Initializable{
 	@FXML Label lblVincitorePrt8;
 	@FXML Label lblVincitorePrt9;
 	@FXML Label lblVincitorePrt10;
-
+	@FXML Label lblVincitoreSemifinale1;
+	@FXML Label lblVincitoreSemifinale2;
+	@FXML Label lblVincitoreFinale;
+	@FXML Line ln1;
+	@FXML Line ln2;
+	@FXML Line ln3;
+	@FXML Line ln4;
+	@FXML Line ln5;
+	@FXML Line ln6;
+	@FXML Line ln7;
+	@FXML Line ln8;
+	@FXML Line ln9;
+	@FXML Line ln10;
 	@FXML Button btnTorneoTornaAllaHome;
 	
 	@Override
@@ -88,6 +107,58 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 	
+	@FXML public void avviaPrt1(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt3(MouseEvent mouseEvent) {
+	
+	}
+	
+	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt7(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt8(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt9(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaPrt10(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
+		
+	}
+	
+	@FXML public void avviaFinale(MouseEvent mouseEvent) {
+		
+	}
+
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
@@ -126,18 +197,24 @@ public class ControllerTorneo implements Initializable{
 		ImageView[] imgPrt = new ImageView[] {imgPrt1, imgPrt2, imgPrt3, imgPrt4, imgPrt5, imgPrt6, imgPrt7, imgPrt8, imgPrt9, imgPrt10};
 		GridPane[] gpPrt = new GridPane[] {gpPrt1, gpPrt2, gpPrt3, gpPrt4, gpPrt5, gpPrt6, gpPrt7, gpPrt8, gpPrt9, gpPrt10};
 		Label[] lblVincitoriPrt = new Label[] {lblVincitorePrt1, lblVincitorePrt2, lblVincitorePrt3, lblVincitorePrt4, lblVincitorePrt5, lblVincitorePrt6, lblVincitorePrt7, lblVincitorePrt8, lblVincitorePrt9, lblVincitorePrt10};
-		
+		Line[] lnPrt = new Line[] {ln1, ln2, ln3, ln4, ln5, ln6, ln7, ln8, ln9, ln10};
+
+		Iterator<Partita> iterator = trn.getElencoPartite().iterator();
 		//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
 		shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
 		//visualizzo le partite del torneo
 		for(int i =0; i<gpPrt.length;i++) {
 			if(i<shiftPrtInterface||i>=this.trn.getElencoPartite().size()+shiftPrtInterface) {
 				gpPrt[i].setVisible(false);
-			}
-			
-			if(trn.getElencoPartite().get(i).getElencoGiocatori().size()==1) {
-				lblVincitoriPrt[i].setText(trn.getElencoPartite().get(i).getElencoGiocatori().get(0).getNome());
+				lnPrt[i].setVisible(false);
+			}else{
+				Partita prt = iterator.next();
+				if(prt.getElencoGiocatori().size()==1) {
+					lblVincitoriPrt[i].setText(prt.getElencoGiocatori().get(0).getNome());
+				}
 			}
 		}
 	}
+	
+	
 }

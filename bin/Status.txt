@@ -1,1 +1,1 @@
-codicePartita , p46955aa7
+codiceTorneo , t827cd5e8

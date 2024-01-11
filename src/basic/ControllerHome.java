@@ -113,7 +113,7 @@ public class ControllerHome {
 					this.trn=t;
 
 					//controllo che il torneo non sia già stato concluso
-					if(this.trn.getVincitore()!=null) {
+					if(this.trn.getVincitore()==null) {
 						avviaTorneo();
 					}else {
 						lblCodErrato.setText("il torneo si è già concluso");
