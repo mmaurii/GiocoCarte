@@ -51,6 +51,8 @@ public class ControllerHome {
 	@FXML private TextField txtUsername;
 	@FXML private PasswordField txtPassword;
 	@FXML private Button btnLogin;
+	@FXML ListView<String> lstClassifica;
+
 	//login
 	@FXML public void loginAction(ActionEvent actionEvent) {
 
@@ -147,7 +149,6 @@ public class ControllerHome {
 		this.trt=tempT;
 	} 
 
-	@FXML ListView<String> lstClassifica;
 	public void populateListView() {
 
 		try {

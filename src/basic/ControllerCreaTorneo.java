@@ -34,25 +34,24 @@ public class ControllerCreaTorneo {
 	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
 	int minGiocatoriTorneo = 6;
 	int maxGiocatoriTorneo = 40;
-
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	String pathStatus = "src/Status.txt";
 	String pathClassifica = "src/Classifica.txt";
-
 	int numeroGiocatori;
 
 
 	@FXML ListView<String> lstGiocatoriRegistrati;
 	@FXML ListView<String> listUtentiTorneo;
-
-
-
-
 	@FXML Button btnAggiungiUtente;
-
 	@FXML Button btnNumeroGiocatori;
 	@FXML TextField txtNumeroGiocatori;
-	public void numeroGiocatori(ActionEvent actionEvent) {
+	@FXML TextField txtNomeUtente; 
+	@FXML Button btnTornaAllaHome;
+	@FXML Button btnGeneraCodice;
+	@FXML TextField txtCodice;
+	@FXML ComboBox<String> comboNVite;
+
+	@FXML public void numeroGiocatori(ActionEvent actionEvent) {
 
 		numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
 		if(numeroGiocatori>6&&numeroGiocatori<=40) 
@@ -61,10 +60,7 @@ public class ControllerCreaTorneo {
 			btnNumeroGiocatori.setDisable(true);
 			lstGiocatoriRegistrati.setDisable(false);
 			listUtentiTorneo.setDisable(false);
-
-
 		}else {
-
 			btnAggiungiUtente.setDisable(true);
 			txtNumeroGiocatori.clear();
 			Alert alert = new Alert(AlertType.ERROR);
@@ -75,11 +71,7 @@ public class ControllerCreaTorneo {
 		}
 	}
 
-
-
-
 	//aggiungo alla partita un nuovo utente  
-	@FXML TextField txtNomeUtente; 
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
 		String nome = txtNomeUtente.getText();
 		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
@@ -88,13 +80,10 @@ public class ControllerCreaTorneo {
 			listUtentiTorneo.getItems().add(nome);
 			lstGiocatoriRegistrati.getItems().add(nome);
 			giocatoriTrn.add(new Giocatore(nome));
-
 			try{
-
 				FileWriter fw = new FileWriter(pathClassifica, true);
 				fw.write(0 + " , " + nome + "\n");
 				fw.close();
-
 			} catch (FileNotFoundException FNFe) {
 				// TODO Auto-generated catch block
 				FNFe.printStackTrace();
@@ -109,15 +98,12 @@ public class ControllerCreaTorneo {
 			alert.setTitle("Errore");
 			alert.setHeaderText(null);
 			alert.setContentText("Il Nickname inserito è già stato selezionato da un altro giocatore, riprova con un altro Nickname");
-
 			alert.showAndWait();
 		}
-
 	}
 
 	//aggiungo alla partita un utente già registrato
 	@FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
-
 		String nome = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
 
 		if(!listUtentiTorneo.getItems().contains(nome) && nome != null)
@@ -128,47 +114,9 @@ public class ControllerCreaTorneo {
 	}
 
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
-
 		listUtentiTorneo.getItems().remove(listUtentiTorneo.getSelectionModel().getSelectedItem()); 
-
 	}
 
-	public void populateListView() {
-
-		try {
-			File file = new File(pathClassifica);
-			Scanner scan = new Scanner(file);			
-			while(scan.hasNext()) {
-				String line = scan.nextLine();
-				String[] data = line.split(" , ");
-				lstGiocatoriRegistrati.getItems().add(data[1].trim());	
-			}
-			scan.close();
-		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
-			fnfe.printStackTrace();
-		}
-
-		//metto il contenuto della listview in grassetto
-		lstGiocatoriRegistrati.setStyle("-fx-font-weight: bold;");
-
-		//centro le scritte all'interno della listview
-		lstGiocatoriRegistrati.setCellFactory(param -> new ListCell<String>() {
-			@Override
-			protected void updateItem(String item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty || item == null) {
-					setText(null);
-					setGraphic(null);
-				} else {
-					setText(item);
-					setAlignment(javafx.geometry.Pos.CENTER);
-				}
-			}
-		});
-	}
-
-	@FXML Button btnTornaAllaHome;
 	//torno alla Schermata di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di di creazione della partita e torno alla finestra di login
@@ -205,26 +153,19 @@ public class ControllerCreaTorneo {
 
 
 	//Genero il codice per una nuova partita
-	@FXML Button btnGeneraCodice;
-	@FXML TextField txtCodice;
-	@FXML ComboBox<String> comboNVite;
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
-
 		txtCodice.clear();
 		String uniqueCode = "";
 
 		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {
 			try {
-
 				UUID uniqueID = UUID.randomUUID();
 				//'t' sta per torneo
 				uniqueCode = "t"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 				File file = new File(pathStatus);
 
 				txtCodice.setText(uniqueCode);
-
 				btnGeneraCodice.setDisable(true);
-
 
 				//salvo il codice corrente nel file di StausTornei
 				FileWriter fw = new FileWriter(file);
@@ -259,19 +200,14 @@ public class ControllerCreaTorneo {
 
 		for(int i = 1; i <= numeroPartite; i++) 
 		{
-
-			giocatoriPrt = new ArrayList<Giocatore>();
-			
+			giocatoriPrt = new ArrayList<Giocatore>();	
 			if(i == numeroPartite)
 			{
-
 				int z = giocatoriTrn.size();
-
 				for(int c = 0; c < z; c++) 
 				{
 					giocatoriPrt.add(giocatoriTrn.remove(0));
 				}	
-
 			}else {
 				for(int j = 0; j < numeroGiocatoriPartita; j++) 
 				{
@@ -281,9 +217,8 @@ public class ControllerCreaTorneo {
 
 			//creo la partita
 			Partita p = creaPartita(giocatoriPrt);
+			//aggiungo la partita all'elenco delle partite del torneo
 			elencoPrt.add(p);
-			//aggiungi la partita all'elenco delle partite del torneo
-
 		}
 		
 		for(Partita p : elencoPrt)
@@ -294,7 +229,7 @@ public class ControllerCreaTorneo {
 		return elencoPrt;
 	}
 
-	//modifica metodo fa cose sbagliate
+	//modifica metodo fa cose sbagliate?
 	Partita creaPartita(ArrayList<Giocatore> giocatoriPrt) {
 		UUID uniqueID = UUID.randomUUID();
 		String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
@@ -364,6 +299,39 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 		}
 	}
 
+	public void populateListView() {
+		try {
+			File file = new File(pathClassifica);
+			Scanner scan = new Scanner(file);			
+			while(scan.hasNext()) {
+				String line = scan.nextLine();
+				String[] data = line.split(" , ");
+				lstGiocatoriRegistrati.getItems().add(data[1].trim());	
+			}
+			scan.close();
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		}
+
+		//metto il contenuto della listview in grassetto
+		lstGiocatoriRegistrati.setStyle("-fx-font-weight: bold;");
+
+		//centro le scritte all'interno della listview
+		lstGiocatoriRegistrati.setCellFactory(param -> new ListCell<String>() {
+			@Override
+			protected void updateItem(String item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty || item == null) {
+					setText(null);
+					setGraphic(null);
+				} else {
+					setText(item);
+					setAlignment(javafx.geometry.Pos.CENTER);
+				}
+			}
+		});
+	}
 
 
 	/**
