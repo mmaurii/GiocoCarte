@@ -32,7 +32,8 @@ public class ControllerCreaTorneo {
 	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
-
+	int minGiocatoriTorneo = 6;
+	int maxGiocatoriTorneo = 40;
 
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	String pathStatus = "src/Status.txt";
@@ -54,7 +55,7 @@ public class ControllerCreaTorneo {
 	public void numeroGiocatori(ActionEvent actionEvent) {
 
 		numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
-		if(numeroGiocatori>=4&&numeroGiocatori<=40) 
+		if(numeroGiocatori>6&&numeroGiocatori<=40) 
 		{
 			btnAggiungiUtente.setDisable(false);
 			btnNumeroGiocatori.setDisable(true);
