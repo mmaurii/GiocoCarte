@@ -249,13 +249,18 @@ public class ControllerCreaTorneo {
 		Collections.shuffle(giocatoriTrn);
 
 		int numeroPartite = giocatoriTrn.size()/4;
-		int numeroGiocatoriPartita = giocatoriTrn.size()/numeroPartite;
-
-
+		if(numeroPartite == 1)
+		{
+			numeroPartite = 2;
+		}
+		
+		int numeroGiocatoriPartita = giocatoriTrn.size()/numeroPartite;	
 
 		for(int i = 1; i <= numeroPartite; i++) 
 		{
 
+			giocatoriPrt = new ArrayList<Giocatore>();
+			
 			if(i == numeroPartite)
 			{
 
@@ -264,7 +269,8 @@ public class ControllerCreaTorneo {
 				for(int c = 0; c < z; c++) 
 				{
 					giocatoriPrt.add(giocatoriTrn.remove(0));
-				}				
+				}	
+
 			}else {
 				for(int j = 0; j < numeroGiocatoriPartita; j++) 
 				{
@@ -274,10 +280,16 @@ public class ControllerCreaTorneo {
 
 			//creo la partita
 			Partita p = creaPartita(giocatoriPrt);
-			//aggiungi la partita all'elenco delle partite del torneo
 			elencoPrt.add(p);
-		}
+			//aggiungi la partita all'elenco delle partite del torneo
 
+		}
+		
+		for(Partita p : elencoPrt)
+		{
+			System.out.println(p.getElencoGiocatori().size());
+		}
+		
 		return elencoPrt;
 	}
 
