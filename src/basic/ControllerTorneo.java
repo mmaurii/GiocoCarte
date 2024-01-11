@@ -38,6 +38,7 @@ public class ControllerTorneo implements Initializable{
 	public void initialize(URL arg0, ResourceBundle rbTorneo) {
 		// TODO Auto-generated method stub
 		
+		/**
 		prt=(Partita)rbPartita.getObject("Partita");
 		if(prt!=null){
 			//sistemo opportunamente l'interfaccia
@@ -51,7 +52,7 @@ public class ControllerTorneo implements Initializable{
 			}
 		}else {
 			System.out.println("errore");
-		}
+		}**/
 	}
 
 }
