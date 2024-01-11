@@ -27,7 +27,7 @@ public class ControllerCreaTorneo {
 	//variabili di controllo
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
-	Torneo trt;
+	Torneo trn;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
@@ -139,7 +139,7 @@ public class ControllerCreaTorneo {
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
-			controller.copiaInformazioniTorneo(this.trt);
+			controller.copiaInformazioniTorneo(this.trn);
 			controller.populateListView();
 
 			stage.setScene(interfacciaHome);
@@ -182,7 +182,7 @@ public class ControllerCreaTorneo {
 		}
 
 		ArrayList<Partita> elencoPrt=generaPartite();
-		this.trt = new Torneo(uniqueCode, elencoPrt);
+		this.trn = new Torneo(uniqueCode, elencoPrt);
 	}
 
 

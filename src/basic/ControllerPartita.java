@@ -45,6 +45,7 @@ public class ControllerPartita implements Initializable{
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	public Thread t;
 
+	//variabili FXML
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Label lblManoGiocatore;
@@ -492,6 +493,7 @@ public class ControllerPartita implements Initializable{
 		}
 
 		//riapro la finestra del torneo
+		//controlla perchè non va riaperta ma solo aggiornata e riattivata
 		try {
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 

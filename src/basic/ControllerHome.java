@@ -40,7 +40,7 @@ public class ControllerHome {
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
 	Partita prt;
-	Torneo trt;
+	Torneo trn;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
@@ -107,13 +107,13 @@ public class ControllerHome {
 			if(cod.charAt(0)=='t') {
 				Torneo t = verificaDisponibilitaTorneo(cod); //assegno la partita appena creata se no la cerco sul file.json e la carico o null se non si trova 
 				if(t==null) {
-					//se la partita non viene trovata mando un messaggio di errore
+					//se il torneo non viene trovato mando un messaggio di errore
 					lblCodErrato.setText("errore il codice torneo è sbagliato, inseriscine uno corretto");
 				}else {
-					this.trt=t;
+					this.trn=t;
 
-					//controllo che la partita non sia già stata conclusa
-					if(this.trt.getElencoPartite().size()>0) {
+					//controllo che il torneo non sia già stato concluso
+					if(this.trn.getVincitore()!=null) {
 						avviaTorneo();
 					}else {
 						lblCodErrato.setText("il torneo si è già concluso");
@@ -146,7 +146,7 @@ public class ControllerHome {
 	}
 
 	public void copiaInformazioniTorneo(Torneo tempT) {
-		this.trt=tempT;
+		this.trn=tempT;
 	} 
 
 	public void populateListView() {
@@ -345,7 +345,7 @@ public class ControllerHome {
 			ResourceBundle rb = new ResourceBundle() {
 				@Override
 				protected Object handleGetObject(String key) {
-					if (key.equals("Torneo")) return trt;
+					if (key.equals("Torneo")) return trn;
 					return null;
 				}
 				@Override
@@ -392,8 +392,8 @@ public class ControllerHome {
 
 
 	private Torneo verificaDisponibilitaTorneo(String cod) {
-		if(this.trt.getCod().equals(cod)) {
-			return trt;
+		if(this.trn.getCod().equals(cod)) {
+			return trn;
 		}else {			
 			return null;
 		}

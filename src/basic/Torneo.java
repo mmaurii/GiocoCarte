@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Torneo {
 
 	private String cod;
-
 	private ArrayList<Partita> elencoPartite;
-
+	private Giocatore vincitore = null; 
+	
 	public Torneo(String cod) {
 		this.cod=cod;
 	}
@@ -31,5 +31,13 @@ public class Torneo {
 
 	public void setElencoPartite(ArrayList<Partita> elencoPartite) {
 		this.elencoPartite = elencoPartite;
+	}
+
+	public Giocatore getVincitore() {
+		return vincitore;
+	}
+
+	public void setVincitore(Giocatore vincitore) {
+		this.vincitore = vincitore;
 	}
 }
