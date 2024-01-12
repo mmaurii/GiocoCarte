@@ -352,6 +352,7 @@ public class ControllerPartita implements Initializable{
 					lblManoGiocatore.setVisible(false);
 					lblTurnoGiocatore.setVisible(false);
 					btnIniziaNuovaMano.setVisible(false);
+					btnPartitaTornaAlTorneo.setDisable(false);
 
 					//conteggio punti
 					aggiornaClassifica(pathClassifica);

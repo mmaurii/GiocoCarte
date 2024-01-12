@@ -186,34 +186,46 @@ public class ControllerTorneo implements Initializable{
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
-		Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
-		stage.close();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("ATTENZIONE!");
+		alert.setHeaderText(null);
+		alert.setContentText("Sei sicuro di voler chiudere il torneo, NON potrai più riaprirlo!");
+		ButtonType buttonTypeSi = new ButtonType("Sì");
+		ButtonType buttonTypeNo = new ButtonType("No");
 
-		//riapro la finestra di Home
-		try {
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+		Optional<ButtonType> result = alert.showAndWait();
+		
+		
+		
+		if (result.isPresent() && result.get() == buttonTypeSi) {
+			Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
+			stage.close();
+			try {
+				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-			Parent root = loader.load();
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+				Parent root = loader.load();
 
-			ControllerHome controller = loader.getController();
+				ControllerHome controller = loader.getController();
 
-			controller.populateListView();
+				controller.populateListView();
 
-			StackPane stackPane = new StackPane();
-			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
-			stackPane.getChildren().addAll(videoBackgroundPane, root);
+				StackPane stackPane = new StackPane();
+				stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+				stackPane.getChildren().addAll(videoBackgroundPane, root);
 
-			stage.setTitle("HOME");
-			Scene interfacciaHome = new Scene(stackPane, 600, 400);
+				stage.setTitle("HOME");
+				Scene interfacciaHome = new Scene(stackPane, 600, 400);
 
-			stage.setScene(interfacciaHome);
-			stage.show();
+				stage.setScene(interfacciaHome);
+				stage.show();
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}		
 	}
 
 
