@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import java.util.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.application.Platform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -108,55 +110,69 @@ public class ControllerTorneo implements Initializable{
 	}
 
 	@FXML public void avviaPrt1(MouseEvent mouseEvent) {
-
+		int pos = 0;
+		avviaPartita(pos-shiftPrtInterface);
+		
 	}
 
 	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
-
+		int pos = 1;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt3(MouseEvent mouseEvent) {
-
+		int pos = 2;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
-
+		int pos = 3;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
-
+		int pos = 4;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
-
+		int pos = 5;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt7(MouseEvent mouseEvent) {
-
+		int pos = 6;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt8(MouseEvent mouseEvent) {
-
+		int pos = 7;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt9(MouseEvent mouseEvent) {
-
+		int pos = 8;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt10(MouseEvent mouseEvent) {
-
+		int pos = 9;
+		avviaPartita(pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
-
+		int pos = 0;
+		avviaPartita(pos);
 	}
 
 	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
-
+		int pos = 1;
+		avviaPartita(pos);
 	}
 
 	@FXML public void avviaFinale(MouseEvent mouseEvent) {
-
+		int pos = 0;
+		avviaPartita(pos);
 	}
 
 	//torno all' interfaccia di login
@@ -277,6 +293,43 @@ public class ControllerTorneo implements Initializable{
 			//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
 			imgFinale.setImage(new Image(pathImgPrtSvolta));
 			imgFinale.setDisable(true);
+		}
+	}
+	
+	private void avviaPartita(int p) {
+		
+		Partita prt = trn.getElencoPartite().get(p);
+		
+		//chiudo la finestra di home e apro quella di gioco
+		Stage stage = (Stage)imgPrt1.getScene().getWindow();
+		stage.close();
+
+		//apro la finestra di gioco
+		BorderPane root = new BorderPane();
+		try {
+			FXMLLoader loader;
+			loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+
+			
+			root = loader.load();
+			
+			//definisco chi giocherà il primo turno
+			Giocatore gio = prt.getGiocatoreCorrente();
+			// lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
+			Scene interfacciaDiGioco = new Scene(root);
+			stage.setScene(interfacciaDiGioco);
+			stage.show();
+
+			//copio le informazioni relative alla partita in corso
+			//controller.copiaInformazioniPartita(prt);
+			//copio le informazioni relative alla label lblTurnoGiocatore
+			// controller.copiaInformazioniLabel(lblTurnoGiocatore);
+
+		
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
