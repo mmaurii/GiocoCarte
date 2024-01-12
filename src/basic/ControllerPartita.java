@@ -38,6 +38,8 @@ public class ControllerPartita implements Initializable{
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
 	static Partita prt;
+	Torneo trn;
+	int posPartitaTrn;
 	Mazzo mazzo = new Mazzo();
 	final int valCartaSpecialeAssoDenara=40;
 	final String pathClassifica = "src/Classifica.txt";
@@ -79,8 +81,18 @@ public class ControllerPartita implements Initializable{
 	@FXML ImageView imgCartaBanco8;
 
 	@Override
-	public void initialize(URL location, ResourceBundle rbPartita) {
-		prt=(Partita)rbPartita.getObject("Partita");
+	public void initialize(URL location, ResourceBundle rb) {
+		try {
+			trn=(Torneo)rb.getObject("Torneo");
+			posPartitaTrn = (int)rb.getObject("posPartitaTrn");
+			prt = trn.getElencoPartite().get(posPartitaTrn);
+		}catch(MissingResourceException mre) {
+			prt=(Partita)rb.getObject("Partita");
+		}
+//		if(!rb.keySet().contains("Torneo")) {
+//		}else {System.out.println("a");
+//			trn=(Torneo)rb.getObject("Torneo");
+//		}
 		if(prt!=null){
 			//sistemo opportunamente l'interfaccia
 			setInterface();
@@ -220,7 +232,7 @@ public class ControllerPartita implements Initializable{
 							lblManoGiocatore.setVisible(false);
 							btnFineTurnoGiocatore.setDisable(true);
 							btnInizioTurnoGiocatore.setDisable(false);
-//							System.out.println("a");
+							//							System.out.println("a");
 							//definisco chi giocherà il prossimo turno
 							lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 							lblTurnoGiocatore.setVisible(true);
@@ -258,7 +270,7 @@ public class ControllerPartita implements Initializable{
 					lblManoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
 					btnInizioTurnoGiocatore.setDisable(false);
-//					System.out.println("b");
+					//					System.out.println("b");
 					//definisco chi giocherà il prossimo turno
 					lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 					lblTurnoGiocatore.setVisible(true);
@@ -485,19 +497,36 @@ public class ControllerPartita implements Initializable{
 	@FXML public void TornaAlTorneo(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra del torneo
 		Stage stage = (Stage)btnPartitaTornaAlTorneo.getScene().getWindow();
-		stage.close();
+		//		stage.close();
 
-		//elimino i possibili bot in esecuzione
-		if(prt.getGiocatoreCorrente() instanceof Bot) {
-			t.interrupt();
-		}
+//		//elimino i possibili bot in esecuzione
+//		if(prt.getGiocatoreCorrente() instanceof Bot) {
+//			t.interrupt();
+//		}
 
 		//riapro la finestra del torneo
 		//controlla perchè non va riaperta ma solo aggiornata e riattivata
 		try {
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			//VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Torneo.fxml"));
+
+			ResourceBundle rb = new ResourceBundle() {
+				@Override
+				protected Object handleGetObject(String key) {
+					if (key.equals("Torneo")) { 
+						trn.getElencoPartite().set(posPartitaTrn, prt);
+						return trn;
+					}
+					return null;
+				}
+				@Override
+				public Enumeration<String> getKeys() {
+					return Collections.enumeration(keySet());
+				}
+			};
+			loader.setResources(rb);
+
 			Parent root = loader.load();
 
 			ControllerTorneo controller = loader.getController();
@@ -517,7 +546,7 @@ public class ControllerPartita implements Initializable{
 			e.printStackTrace();
 		}	
 	}
-	
+
 	//creo un pop-up che visualizzi la classifica
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
 		BorderPane root = new BorderPane();
@@ -568,45 +597,45 @@ public class ControllerPartita implements Initializable{
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
 					//if(listaCarteMano.get(posCartaCliccata)!=null) {
-						if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
-						{
-							Alert alert = new Alert(AlertType.ERROR);
-							alert.setTitle("Carta Speciale");
-							alert.setHeaderText(null);
-							alert.setContentText("Selezionare il valore della carta speciale");
-							ButtonType buttonTypeMassimo = new ButtonType("Massimo");
-							ButtonType buttonTypeMinimo = new ButtonType("Minimo");
+					if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
+					{
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Carta Speciale");
+						alert.setHeaderText(null);
+						alert.setContentText("Selezionare il valore della carta speciale");
+						ButtonType buttonTypeMassimo = new ButtonType("Massimo");
+						ButtonType buttonTypeMinimo = new ButtonType("Minimo");
 
-							alert.getButtonTypes().setAll(buttonTypeMassimo, buttonTypeMinimo);
-							Optional<ButtonType> result = alert.showAndWait();
+						alert.getButtonTypes().setAll(buttonTypeMassimo, buttonTypeMinimo);
+						Optional<ButtonType> result = alert.showAndWait();
 
-							if (result.isPresent() && result.get() == buttonTypeMinimo) {
-								CartaSpeciale cs = (CartaSpeciale)(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata));
-								cs.setValore(0);
-							}
-						}else if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() != valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot)){
-							prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;
-							Alert alert = new Alert(AlertType.ERROR);
-							alert.setTitle("Carta Speciale");
-							alert.setHeaderText(null);
-							alert.setContentText("Hai vinto una VITA!!!");
-							alert.showAndWait();
-							lstViewVite.getItems().clear();
-							mostraVite();
+						if (result.isPresent() && result.get() == buttonTypeMinimo) {
+							CartaSpeciale cs = (CartaSpeciale)(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata));
+							cs.setValore(0);
 						}
-
-						i.setImage(new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso())));
-						listaCarteMano.get(posCartaCliccata).setImage(null);
-						prt.setBtnFineTurnoGiocatoreDisable(false);
-						btnFineTurnoGiocatore.setDisable(false);
-						break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo
+					}else if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() != valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot)){
+						prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Carta Speciale");
+						alert.setHeaderText(null);
+						alert.setContentText("Hai vinto una VITA!!!");
+						alert.showAndWait();
+						lstViewVite.getItems().clear();
+						mostraVite();
 					}
+
+					i.setImage(new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso())));
+					listaCarteMano.get(posCartaCliccata).setImage(null);
+					prt.setBtnFineTurnoGiocatoreDisable(false);
+					btnFineTurnoGiocatore.setDisable(false);
+					break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo
 				}
-			
+			}
+
 
 			//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
 			prt.lstCarteBancoAdd(prt.getGiocatoreCorrente().removeCartaMano(posCartaCliccata));
-		//}	
+			//}	
 			prt.setBtnInizioTurnoGiocatoreClicked(false);
 		}
 	}
@@ -669,7 +698,7 @@ public class ControllerPartita implements Initializable{
 	}
 
 	private void copriCarteGiocatore(boolean resume) {
-		
+
 		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
 		int posProssimoGiocatore=resume?prt.getCountTurnoGiocatore():prt.getCountTurnoGiocatore()+1;

@@ -1,16 +1,16 @@
-40 , mario
+60 , mario
 60 , gianni
 10 , pino
 50 , balto
 20 , b
-10 , mauri
-10 , h
+20 , mauri
+20 , h
 80 , pippo
 60 , baldo
 20 , marco
 20 , luigi
 10 , gigi
-10 , bot10 , sam
+10 , bot10
 0 , anna
 0 , pamela
 0 , frank

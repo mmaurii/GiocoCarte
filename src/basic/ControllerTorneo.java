@@ -355,8 +355,8 @@ public class ControllerTorneo implements Initializable{
 
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)imgPrt1.getScene().getWindow();
-		stage.close();
-
+//		stage.close();
+//		Stage stage = null;
 		//apro la finestra di gioco
 		BorderPane root = new BorderPane();
 		try {
@@ -366,11 +366,19 @@ public class ControllerTorneo implements Initializable{
 			ResourceBundle rb = new ResourceBundle() {
 				@Override
 				protected Object handleGetObject(String key) {
-					if (key.equals("Partita")) return prt;
+					if (key.equals("Torneo")) {
+						return trn;
+					}else if(key.equals("posPartitaTrn")) {
+						return p;
+					}
 					return null;
 				}
 				@Override
 				public Enumeration<String> getKeys() {
+//					Iterator<String> i =keySet().iterator();
+//					while(i.hasNext()) {
+//						System.out.println(i.next());
+//					}
 					return Collections.enumeration(keySet());
 				}
 			};
@@ -383,7 +391,7 @@ public class ControllerTorneo implements Initializable{
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
-
+			
 
 			stage.show();
 
