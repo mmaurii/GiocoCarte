@@ -95,7 +95,7 @@ public class ControllerTorneo implements Initializable{
 	@FXML Line ln9;
 	@FXML Line ln10;
 	@FXML Button btnTorneoTornaAllaHome;
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle rbTorneo) {		
 		trn=(Torneo)rbTorneo.getObject("Torneo");
@@ -106,57 +106,57 @@ public class ControllerTorneo implements Initializable{
 			System.out.println("errore");
 		}
 	}
-	
+
 	@FXML public void avviaPrt1(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt3(MouseEvent mouseEvent) {
-	
+
 	}
-	
+
 	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt7(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt8(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt9(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaPrt10(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
-		
+
 	}
-	
+
 	@FXML public void avviaFinale(MouseEvent mouseEvent) {
-		
+
 	}
 
 	//torno all' interfaccia di login
@@ -192,29 +192,92 @@ public class ControllerTorneo implements Initializable{
 		}	
 	}
 
-	
+
 	private void setInterface() {
 		ImageView[] imgPrt = new ImageView[] {imgPrt1, imgPrt2, imgPrt3, imgPrt4, imgPrt5, imgPrt6, imgPrt7, imgPrt8, imgPrt9, imgPrt10};
 		GridPane[] gpPrt = new GridPane[] {gpPrt1, gpPrt2, gpPrt3, gpPrt4, gpPrt5, gpPrt6, gpPrt7, gpPrt8, gpPrt9, gpPrt10};
 		Label[] lblVincitoriPrt = new Label[] {lblVincitorePrt1, lblVincitorePrt2, lblVincitorePrt3, lblVincitorePrt4, lblVincitorePrt5, lblVincitorePrt6, lblVincitorePrt7, lblVincitorePrt8, lblVincitorePrt9, lblVincitorePrt10};
 		Line[] lnPrt = new Line[] {ln1, ln2, ln3, ln4, ln5, ln6, ln7, ln8, ln9, ln10};
 
-		Iterator<Partita> iterator = trn.getElencoPartite().iterator();
-		//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
-		shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
-		//visualizzo le partite del torneo
-		for(int i =0; i<gpPrt.length;i++) {
-			if(i<shiftPrtInterface||i>=this.trn.getElencoPartite().size()+shiftPrtInterface) {
+		//controllo le partite per decidere se fare al primo turno direttamente le semifinali
+		if(trn.getElencoPartite().size()>2) {//partite al turno 1
+			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
+			//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
+			shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
+
+			//visualizzo le partite del torneo
+			for(int i =0; i<gpPrt.length;i++) {
+				//se l'item della partita non è necessario lo nascondo
+				if(i<shiftPrtInterface||i>=this.trn.getElencoPartite().size()+shiftPrtInterface) {
+					gpPrt[i].setVisible(false);
+					lnPrt[i].setVisible(false);
+				}else{
+					Partita prt = iterator.next();
+					if(prt.getElencoGiocatori().size()==1) {
+						//inserisco il nome del vincitore della partita se è già stata giocata
+						lblVincitoriPrt[i].setText(prt.getElencoGiocatori().get(0).getNome());
+						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
+						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
+						imgPrt[i].setDisable(true);
+					}
+				}
+			}
+			
+			Partita[] partite= new Partita[2];
+			trn.getElencoPartite().toArray(partite);
+			
+			trn.setElencoSemifinali(partite);
+
+			//controllo le semifinali
+			controlloInterfaceSemifinale();
+
+			//controllo la finale
+			controlloInterfaceFinale();
+		}else {//semifinali al turno 1
+			for(int i =0; i<gpPrt.length;i++) {
+				//nascondo tutte le partite
 				gpPrt[i].setVisible(false);
 				lnPrt[i].setVisible(false);
-			}else{
-				Partita prt = iterator.next();
-				if(prt.getElencoGiocatori().size()==1) {
-					lblVincitoriPrt[i].setText(prt.getElencoGiocatori().get(0).getNome());
+			}
+			
+			//controllo le semifinali
+			controlloInterfaceSemifinale();
+			
+			//controllo la finale
+			controlloInterfaceFinale();
+		}
+	}
+
+
+
+	private void controlloInterfaceSemifinale() {
+		//controllo le semifinali
+		ImageView[] imgSemifinale = new ImageView[] {imgSemifinale1, imgSemifinale2};
+		Label[] lblVincitoriSemifinale = new Label[] {lblVincitoreSemifinale1, lblVincitoreSemifinale2};
+
+		if(trn.getElencoSemifinali()!=null) {
+			//visualizzo le semifinali del torneo
+			for(int i = 0;i<imgSemifinale.length;i++) {
+				if(trn.getElencoSemifinali()[i].getElencoGiocatori().size()==1) {
+					//inserisco il nome del vincitore della semifinale se è già stata giocata
+					lblVincitoriSemifinale[i].setText(trn.getElencoSemifinali()[i].getElencoGiocatori().get(0).getNome());
+					//cambio l'immagine rappresentativa della semifinale e ne disattivo l'evento
+					imgSemifinale[i].setImage(new Image(pathImgPrtSvolta));
+					imgSemifinale[i].setDisable(true);
 				}
 			}
 		}
 	}
-	
-	
+
+	private void controlloInterfaceFinale() {
+		//controllo la finale
+		if(trn.getFinale()!=null) {
+			//inserisco il nome del vincitore della finale se è già stata giocata
+			lblVincitoreFinale.setText(trn.getFinale().getElencoGiocatori().get(0).getNome());
+			//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
+			imgFinale.setImage(new Image(pathImgPrtSvolta));
+			imgFinale.setDisable(true);
+		}
+	}
 }
+

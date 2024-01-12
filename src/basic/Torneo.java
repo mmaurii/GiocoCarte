@@ -6,6 +6,8 @@ public class Torneo {
 
 	private String cod;
 	private ArrayList<Partita> elencoPartite;
+	private Partita[] elencoSemifinali;
+	private Partita finale;
 	private Giocatore vincitore = null; 
 	
 	public Torneo(String cod) {
@@ -39,5 +41,21 @@ public class Torneo {
 
 	public void setVincitore(Giocatore vincitore) {
 		this.vincitore = vincitore;
+	}
+
+	public Partita getFinale() {
+		return finale;
+	}
+
+	public void setFinale(Partita finale) {
+		this.finale = finale;
+	}
+
+	public Partita[] getElencoSemifinali() {
+		return elencoSemifinali;
+	}
+
+	public void setElencoSemifinali(Partita[] elencoSemifinali) {
+		this.elencoSemifinali = elencoSemifinali;
 	}
 }

@@ -10,4 +10,6 @@
 20 , marco
 20 , luigi
 10 , gigi
-10 , bot1
+10 , bot10 , sam
+0 , anna
+0 , pamela
