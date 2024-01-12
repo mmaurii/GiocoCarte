@@ -296,6 +296,7 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 	
+	@FXML Label lblTurnoGiocatore;
 	private void avviaPartita(int p) {
 		
 		Partita prt = trn.getElencoPartite().get(p);
@@ -310,27 +311,41 @@ public class ControllerTorneo implements Initializable{
 			FXMLLoader loader;
 			loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
 
-			
+			ResourceBundle rb = new ResourceBundle() {
+				@Override
+				protected Object handleGetObject(String key) {
+					if (key.equals("Partita")) return prt;
+					return null;
+				}
+				@Override
+				public Enumeration<String> getKeys() {
+					return Collections.enumeration(keySet());
+				}
+			};
+			loader.setResources(rb);
+
 			root = loader.load();
-			
+			ControllerPartita controller = loader.getController();
 			//definisco chi giocherà il primo turno
 			Giocatore gio = prt.getGiocatoreCorrente();
-			// lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
+			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
+			
+
 			stage.show();
 
 			//copio le informazioni relative alla partita in corso
-			//controller.copiaInformazioniPartita(prt);
+			controller.copiaInformazioniPartita(prt);
 			//copio le informazioni relative alla label lblTurnoGiocatore
-			// controller.copiaInformazioniLabel(lblTurnoGiocatore);
+			controller.copiaInformazioniLabel(lblTurnoGiocatore);
 
-		
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+			
 }
 
