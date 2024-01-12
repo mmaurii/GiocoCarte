@@ -40,11 +40,15 @@ public class ControllerPartita implements Initializable{
 	static Partita prt;
 	Torneo trn;
 	int posPartitaTrn;
+	String selettore;
 	Mazzo mazzo = new Mazzo();
 	final int valCartaSpecialeAssoDenara=40;
 	final String pathClassifica = "src/Classifica.txt";
 	final String pathStatus = "src/Status.txt";	
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
+	final String selettorePrt = "prt";
+	final String selettoreSFnl = "semifinale";
+	final String selettoreFnl = "finale";
 	public Thread t;
 
 	//variabili FXML
@@ -84,8 +88,9 @@ public class ControllerPartita implements Initializable{
 	public void initialize(URL location, ResourceBundle rb) {
 		try {
 			trn=(Torneo)rb.getObject("Torneo");
-			posPartitaTrn = (int)rb.getObject("posPartitaTrn");
-			prt = trn.getElencoPartite().get(posPartitaTrn);
+			prt = (Partita)rb.getObject("PartitaTrn");
+			posPartitaTrn=(int)rb.getObject("posPartitaTrn");
+			selettore=(String) rb.getObject("selettore");
 		}catch(MissingResourceException mre) {
 			prt=(Partita)rb.getObject("Partita");
 		}
@@ -332,12 +337,14 @@ public class ControllerPartita implements Initializable{
 					g.setPreseDichiarate(-1);
 				}
 
+				Giocatore vincitorePareggio = null;
 				Iterator<Giocatore> g = prt.getElencoGiocatori().iterator();
 				while(g.hasNext()) {
 					gio = g.next();
 					if(gio.getVite()==0) {
 						g.remove();
 						prt.addGiocatoreEliminato(gio.getNome());
+						vincitorePareggio=gio;
 					}
 				}
 
@@ -361,6 +368,9 @@ public class ControllerPartita implements Initializable{
 					lblManoGiocatore.setVisible(false);
 					lblTurnoGiocatore.setVisible(false);
 					btnIniziaNuovaMano.setVisible(false);
+					
+					//definisco l'ultimo giocatore eliminato dalla lista come il vincitore in caso di pareggio
+					prt.getElencoGiocatori().add(vincitorePareggio);
 				}
 			}	
 		}
@@ -498,7 +508,7 @@ public class ControllerPartita implements Initializable{
 	@FXML public void TornaAlTorneo(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra del torneo
 		Stage stage = (Stage)btnPartitaTornaAlTorneo.getScene().getWindow();
-		//		stage.close();
+		stage.close();
 
 //		//elimino i possibili bot in esecuzione
 //		if(prt.getGiocatoreCorrente() instanceof Bot) {
@@ -516,7 +526,17 @@ public class ControllerPartita implements Initializable{
 				@Override
 				protected Object handleGetObject(String key) {
 					if (key.equals("Torneo")) { 
-						trn.getElencoPartite().set(posPartitaTrn, prt);
+						switch (selettore) {
+						case selettorePrt: 
+							trn.getElencoPartite().set(posPartitaTrn, prt);
+							break;
+						case selettoreSFnl: 
+							trn.getElencoSemifinali()[posPartitaTrn]=prt;
+							break;
+						case selettoreFnl: 
+							trn.setFinale(prt);
+							break;
+						}
 						return trn;
 					}
 					return null;

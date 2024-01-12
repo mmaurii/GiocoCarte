@@ -41,11 +41,15 @@ public class ControllerTorneo implements Initializable{
 	int shiftPrtInterface;
 	final int maxNumPrt=10;
 	final int finaleATre=3;
+	final String selettorePrt = "prt";
+	final String selettoreSFnl = "semifinale";
+	final String selettoreFnl = "finale";
 	final String pathClassifica = "src/Classifica.txt";
-	final String pathImgPrtSvolta = "src/IMGtorneo/verde.jpg";
-	final String pathImgPrt = "src/IMGtorneo/nero.jpg";
-	final String pathImgSemifinale = "src/IMGtorneo/argento.jpg";
-	final String pathImgfinale = "src/IMGtorneo/oro.jpg";
+	final String pathImgPrtSvolta = "/basic/IMGtorneo/verde.jpg";
+	final String pathImgPrt = "/basic/IMGtorneo/nero.jpg";
+	final String pathImgSemifinale = "/basic/IMGtorneo/argento.jpg";
+	final String pathImgfinale = "/basic/IMGtorneo/oro.jpg";
+	Partita prt;
 
 	//variabili FXML
 	@FXML ImageView imgPrt1;
@@ -119,68 +123,68 @@ public class ControllerTorneo implements Initializable{
 
 	@FXML public void avviaPrt1(MouseEvent mouseEvent) {
 		int pos = 0;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 
 	}
 
 	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
 		int pos = 1;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt3(MouseEvent mouseEvent) {
 		int pos = 2;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
 		int pos = 3;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
 		int pos = 4;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
 		int pos = 5;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt7(MouseEvent mouseEvent) {
 		int pos = 6;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt8(MouseEvent mouseEvent) {
 		int pos = 7;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt9(MouseEvent mouseEvent) {
 		int pos = 8;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt10(MouseEvent mouseEvent) {
 		int pos = 9;
-		avviaPartita(pos-shiftPrtInterface);
+		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
 		int pos = 0;
-		avviaPartita(pos);
+		avviaPartita(selettoreSFnl,pos);
 	}
 
 	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
 		int pos = 1;
-		avviaPartita(pos);
+		avviaPartita(selettoreSFnl,pos);
 	}
 
 	@FXML public void avviaFinale(MouseEvent mouseEvent) {
-		int pos = 0;
-		avviaPartita(pos);
+		int pos = -1;
+		avviaPartita(selettoreFnl,pos);
 	}
 
 	//torno all' interfaccia di login
@@ -313,6 +317,13 @@ public class ControllerTorneo implements Initializable{
 			}
 
 		}else{//semifinali al turno 1
+			//se le partite non sono iniziate le assegno alle semifinali
+			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
+				//inizializzo le semifinali
+				Partita[] partite= new Partita[2];
+				partite = trn.getElencoPartite().toArray(partite);
+				trn.setElencoSemifinali(partite);
+			}
 
 			for(int i =0; i<gpPrt.length;i++) {
 				//nascondo tutte le partite
@@ -332,10 +343,12 @@ public class ControllerTorneo implements Initializable{
 
 	private void controlloInterfaceSemifinale() {
 		//controllo le semifinali
+		Boolean flagFinale=true;
 		ImageView[] imgSemifinale = new ImageView[] {imgSemifinale1, imgSemifinale2};
 		Label[] lblVincitoriSemifinale = new Label[] {lblVincitoreSemifinale1, lblVincitoreSemifinale2};
 
 		if(trn.getElencoSemifinali()!=null) {
+			ArrayList<Giocatore> lstGiocatori=new ArrayList<Giocatore>();
 			//visualizzo le semifinali del torneo
 			for(int i = 0;i<imgSemifinale.length;i++) {
 				if(trn.getElencoSemifinali()[i].getElencoGiocatori().size()==1) {
@@ -344,7 +357,25 @@ public class ControllerTorneo implements Initializable{
 					//cambio l'immagine rappresentativa della semifinale e ne disattivo l'evento
 					imgSemifinale[i].setImage(new Image(pathImgPrtSvolta));
 					imgSemifinale[i].setDisable(true);
+
+					//giocatori finale
+					lstGiocatori.add(trn.getElencoSemifinali()[i].getElencoGiocatori().get(0));
+				}else {
+					flagFinale=false;
 				}
+			}
+
+			if(flagFinale) {
+				//codice finale
+				UUID uniqueID = UUID.randomUUID();
+				//'p' sta per partita
+				String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
+
+				//mazzo finale
+				Mazzo m = new Mazzo();
+				Partita prt = new Partita(uniqueCode, lstGiocatori, m);
+				//inizializzo la finale
+				trn.setFinale(prt);
 			}
 		}
 	}
@@ -352,23 +383,34 @@ public class ControllerTorneo implements Initializable{
 	private void controlloInterfaceFinale() {
 		//controllo la finale
 		if(trn.getFinale()!=null) {
-			//inserisco il nome del vincitore della finale se è già stata giocata
-			lblVincitoreFinale.setText(trn.getFinale().getElencoGiocatori().get(0).getNome());
-			//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
-			imgFinale.setImage(new Image(pathImgPrtSvolta));
-			imgFinale.setDisable(true);
+			if(trn.getFinale().getElencoGiocatori().size()==1) {
+				//inserisco il nome del vincitore della finale se è già stata giocata
+				lblVincitoreFinale.setText(trn.getFinale().getElencoGiocatori().get(0).getNome());
+				//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
+				imgFinale.setImage(new Image(pathImgPrtSvolta));
+				imgFinale.setDisable(true);
+			}
 		}
 	}
 
 	@FXML Label lblTurnoGiocatore;
-	private void avviaPartita(int p) {
+	private void avviaPartita(String selettore,int p) {
+		switch(selettore) {
+		case selettorePrt:
+			prt = trn.getElencoPartite().get(p);
+			break;
+		case selettoreSFnl:
+			prt = trn.getElencoSemifinali()[p];
+			break;
+		case selettoreFnl:
+			prt = trn.getFinale();
+			break;
+		}
 
-		Partita prt = trn.getElencoPartite().get(p);
 
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)imgPrt1.getScene().getWindow();
-//		stage.close();
-//		Stage stage = null;
+		stage.close();
 		//apro la finestra di gioco
 		BorderPane root = new BorderPane();
 		try {
@@ -380,17 +422,18 @@ public class ControllerTorneo implements Initializable{
 				protected Object handleGetObject(String key) {
 					if (key.equals("Torneo")) {
 						return trn;
+					}else if(key.equals("PartitaTrn")) {
+						return prt;
+					}else if(key.equals("selettore")) {
+						return selettore;
 					}else if(key.equals("posPartitaTrn")) {
 						return p;
 					}
+
 					return null;
 				}
 				@Override
 				public Enumeration<String> getKeys() {
-//					Iterator<String> i =keySet().iterator();
-//					while(i.hasNext()) {
-//						System.out.println(i.next());
-//					}
 					return Collections.enumeration(keySet());
 				}
 			};
@@ -403,7 +446,7 @@ public class ControllerTorneo implements Initializable{
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
-			
+
 
 			stage.show();
 
