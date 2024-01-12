@@ -533,7 +533,7 @@ public class ControllerPartita implements Initializable{
 
 			StackPane stackPane = new StackPane();
 			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
-			stackPane.getChildren().addAll(videoBackgroundPane, root);
+			stackPane.getChildren().addAll(root);
 
 			stage.setTitle("Torneo");
 			Scene interfacciaTorneo = new Scene(stackPane, 720, 480);
