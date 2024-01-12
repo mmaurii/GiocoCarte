@@ -40,6 +40,7 @@ public class ControllerTorneo implements Initializable{
 	Torneo trn;
 	int shiftPrtInterface;
 	final int maxNumPrt=10;
+	final int finaleATre=3;
 	final String pathClassifica = "src/Classifica.txt";
 	final String pathImgPrtSvolta = "src/IMGtorneo/verde.jpg";
 	final String pathImgPrt = "src/IMGtorneo/nero.jpg";
@@ -214,9 +215,9 @@ public class ControllerTorneo implements Initializable{
 		GridPane[] gpPrt = new GridPane[] {gpPrt1, gpPrt2, gpPrt3, gpPrt4, gpPrt5, gpPrt6, gpPrt7, gpPrt8, gpPrt9, gpPrt10};
 		Label[] lblVincitoriPrt = new Label[] {lblVincitorePrt1, lblVincitorePrt2, lblVincitorePrt3, lblVincitorePrt4, lblVincitorePrt5, lblVincitorePrt6, lblVincitorePrt7, lblVincitorePrt8, lblVincitorePrt9, lblVincitorePrt10};
 		Line[] lnPrt = new Line[] {ln1, ln2, ln3, ln4, ln5, ln6, ln7, ln8, ln9, ln10};
-
+		Line[] lnFinali=new Line[] {};
 		//controllo le partite per decidere se fare al primo turno direttamente le semifinali
-		if(trn.getElencoPartite().size()>2) {//partite al turno 1
+		if(trn.getElencoPartite().size()>finaleATre) {//partite al turno 1
 			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
 			//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
 			shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
@@ -238,10 +239,10 @@ public class ControllerTorneo implements Initializable{
 					}
 				}
 			}
-			
+
+			//inizializzo le semifinali
 			Partita[] partite= new Partita[2];
-			trn.getElencoPartite().toArray(partite);
-			
+			partite = trn.getElencoPartite().toArray(partite);
 			trn.setElencoSemifinali(partite);
 
 			//controllo le semifinali
@@ -249,16 +250,53 @@ public class ControllerTorneo implements Initializable{
 
 			//controllo la finale
 			controlloInterfaceFinale();
-		}else {//semifinali al turno 1
+		}else if(trn.getElencoPartite().size()==finaleATre){//controllo se devo fare la finale a tre al secondo turno
+			//non visualizzo le semifinali
+			GridPane[] gpSemifinali = new GridPane[] {gpSemifinale1, gpSemifinale2};
+
+			for(int i =0; i<gpSemifinali.length;i++) {
+				//nascondo tutte le partite
+				gpSemifinali[i].setVisible(false);
+			}
+			
+			//visualizzo le partite
+			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
+			//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
+			shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
+
+			//visualizzo le partite del torneo
+			for(int i =0; i<gpPrt.length;i++) {
+				//se l'item della partita non è necessario lo nascondo
+				if(i<shiftPrtInterface||i>=this.trn.getElencoPartite().size()+shiftPrtInterface) {
+					gpPrt[i].setVisible(false);
+					lnPrt[i].setVisible(false);
+				}else{
+					Partita prt = iterator.next();
+					if(prt.getElencoGiocatori().size()==1) {
+						//inserisco il nome del vincitore della partita se è già stata giocata
+						lblVincitoriPrt[i].setText(prt.getElencoGiocatori().get(0).getNome());
+						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
+						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
+						imgPrt[i].setDisable(true);
+						
+						//disabilito le line per le semifinali e attivo quelle per le finali
+						lnPrt[i].setVisible(false);
+						lnFinali[i-shiftPrtInterface].setVisible(false);
+					}
+				}
+			}
+
+		}else{//semifinali al turno 1
+
 			for(int i =0; i<gpPrt.length;i++) {
 				//nascondo tutte le partite
 				gpPrt[i].setVisible(false);
 				lnPrt[i].setVisible(false);
 			}
-			
+
 			//controllo le semifinali
 			controlloInterfaceSemifinale();
-			
+
 			//controllo la finale
 			controlloInterfaceFinale();
 		}
