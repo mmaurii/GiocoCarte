@@ -110,6 +110,8 @@ public class ControllerCreaTorneo {
 		{
 			listUtentiTorneo.getItems().add(nome);
 			giocatoriTrn.add(new Giocatore(nome));	//inseisci numero di vite e carte
+			lstGiocatoriRegistrati.getItems().remove(lstGiocatoriRegistrati.getSelectionModel().getSelectedItem());
+
 		}
 	}
 
