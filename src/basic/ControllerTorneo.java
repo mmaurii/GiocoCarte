@@ -97,6 +97,13 @@ public class ControllerTorneo implements Initializable{
 	@FXML Line ln8;
 	@FXML Line ln9;
 	@FXML Line ln10;
+	@FXML Line ln11;
+	@FXML Line ln12;
+	@FXML Line ln13;
+	@FXML Line ln1semifinale1;
+	@FXML Line ln2semifinale1;
+	@FXML Line ln1semifinale2;
+	@FXML Line ln2semifinale2;
 	@FXML Button btnTorneoTornaAllaHome;
 
 	@Override
@@ -113,7 +120,7 @@ public class ControllerTorneo implements Initializable{
 	@FXML public void avviaPrt1(MouseEvent mouseEvent) {
 		int pos = 0;
 		avviaPartita(pos-shiftPrtInterface);
-		
+
 	}
 
 	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
@@ -215,7 +222,9 @@ public class ControllerTorneo implements Initializable{
 		GridPane[] gpPrt = new GridPane[] {gpPrt1, gpPrt2, gpPrt3, gpPrt4, gpPrt5, gpPrt6, gpPrt7, gpPrt8, gpPrt9, gpPrt10};
 		Label[] lblVincitoriPrt = new Label[] {lblVincitorePrt1, lblVincitorePrt2, lblVincitorePrt3, lblVincitorePrt4, lblVincitorePrt5, lblVincitorePrt6, lblVincitorePrt7, lblVincitorePrt8, lblVincitorePrt9, lblVincitorePrt10};
 		Line[] lnPrt = new Line[] {ln1, ln2, ln3, ln4, ln5, ln6, ln7, ln8, ln9, ln10};
-		Line[] lnFinali=new Line[] {};
+		Line[] lnPrtFinali=new Line[] {ln11, ln12, ln13};
+		Line[] lnSemifinaliFinali= new Line[] {ln1semifinale1, ln2semifinale1, ln1semifinale2, ln2semifinale2};
+
 		//controllo le partite per decidere se fare al primo turno direttamente le semifinali
 		if(trn.getElencoPartite().size()>finaleATre) {//partite al turno 1
 			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
@@ -258,7 +267,12 @@ public class ControllerTorneo implements Initializable{
 				//nascondo tutte le partite
 				gpSemifinali[i].setVisible(false);
 			}
-			
+
+			//nascondo le line semifinali to finali
+			for(Line ln : lnSemifinaliFinali) {
+				ln.setVisible(false);
+			}
+
 			//visualizzo le partite
 			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
 			//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
@@ -269,7 +283,6 @@ public class ControllerTorneo implements Initializable{
 				//se l'item della partita non è necessario lo nascondo
 				if(i<shiftPrtInterface||i>=this.trn.getElencoPartite().size()+shiftPrtInterface) {
 					gpPrt[i].setVisible(false);
-					lnPrt[i].setVisible(false);
 				}else{
 					Partita prt = iterator.next();
 					if(prt.getElencoGiocatori().size()==1) {
@@ -278,12 +291,13 @@ public class ControllerTorneo implements Initializable{
 						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
 						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
 						imgPrt[i].setDisable(true);
-						
-						//disabilito le line per le semifinali e attivo quelle per le finali
-						lnPrt[i].setVisible(false);
-						lnFinali[i-shiftPrtInterface].setVisible(false);
+
 					}
+					// visualizzo le line per le finali (prt to finali)
+					lnPrtFinali[i-shiftPrtInterface].setVisible(true);
 				}
+				//nascondo le line prt to something
+				lnPrt[i].setVisible(false);
 			}
 
 		}else{//semifinali al turno 1
@@ -333,12 +347,12 @@ public class ControllerTorneo implements Initializable{
 			imgFinale.setDisable(true);
 		}
 	}
-	
+
 	@FXML Label lblTurnoGiocatore;
 	private void avviaPartita(int p) {
-		
+
 		Partita prt = trn.getElencoPartite().get(p);
-		
+
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)imgPrt1.getScene().getWindow();
 		stage.close();
@@ -369,7 +383,7 @@ public class ControllerTorneo implements Initializable{
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
-			
+
 
 			stage.show();
 
@@ -384,6 +398,6 @@ public class ControllerTorneo implements Initializable{
 			e.printStackTrace();
 		}
 	}
-			
+
 }
 
