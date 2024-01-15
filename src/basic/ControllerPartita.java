@@ -748,7 +748,7 @@ public class ControllerPartita implements Initializable{
 
 					//incremento il punteggio
 					lineData[0]=""+(puntiVincitore+Integer.parseInt(lineData[0]));
-					line = lineData[0]+" , "+lineData[1]+"\n";
+					line = lineData[0]+" , "+lineData[1];
 					presenzaGiocatore=true;
 				}	
 				//mi salvo la riga appena letta

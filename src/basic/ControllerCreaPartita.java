@@ -35,17 +35,16 @@ public class ControllerCreaPartita {
 	String pathClassifica = "src/Classifica.txt";
 
 	@FXML ListView<String> lstGiocatoriRegistrati;
-
-	//aggiungo alla partita un nuovo utente  
-	@FXML ListView<String> listUtentiPartita;
+	@FXML ListView<String> lstUtentiPartita;
 	@FXML Button btnAggiungiUtente;
 	@FXML TextField txtNomeUtente; 
+	//aggiungo alla partita un nuovo utente  
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
 		String nome = txtNomeUtente.getText();
 		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-		if(!nome.trim().equals("") && !listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
+		if(!nome.trim().equals("") && !lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
 			txtNomeUtente.clear();
-			listUtentiPartita.getItems().add(nome);
+			lstUtentiPartita.getItems().add(nome);
 			lstGiocatoriRegistrati.getItems().add(nome);
 			giocatoriPrt.add(new Giocatore(nome));
 
@@ -78,12 +77,13 @@ public class ControllerCreaPartita {
 	//aggiungo alla partita un utente già registrato
 	@FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
 
-		String nome = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
+		String nomeUtente = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
 
-		if(!listUtentiPartita.getItems().contains(nome) && nome != null)
+		if(!lstUtentiPartita.getItems().contains(nomeUtente) && nomeUtente != null)
 		{
-			listUtentiPartita.getItems().add(nome);
-			giocatoriPrt.add(new Giocatore(nome));	
+			lstUtentiPartita.getItems().add(nomeUtente);
+			giocatoriPrt.add(new Giocatore(nomeUtente));
+			lstGiocatoriRegistrati.getItems().remove(nomeUtente);
 		}
 	}
 
@@ -94,9 +94,9 @@ public class ControllerCreaPartita {
 	@FXML public void AggiungiUtenteRobot(ActionEvent actionEvent) {
 		String nome = txtNomeUtenteRobot.getText();
 		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-		if(!nome.trim().equals("") && !listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
+		if(!nome.trim().equals("") && !lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
 			txtNomeUtenteRobot.clear();
-			listUtentiPartita.getItems().add(nome);
+			lstUtentiPartita.getItems().add(nome);
 			giocatoriPrt.add(new Bot(nome));
 		}else {
 			txtNomeUtenteRobot.clear();
@@ -104,9 +104,10 @@ public class ControllerCreaPartita {
 	}
 	
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
-
-		listUtentiPartita.getItems().remove(listUtentiPartita.getSelectionModel().getSelectedItem()); 
-
+		String nomeUtente=lstUtentiPartita.getSelectionModel().getSelectedItem();
+		int posUtente = lstUtentiPartita.getItems().indexOf(nomeUtente);
+		lstUtentiPartita.getItems().remove(posUtente); 
+		giocatoriPrt.remove(posUtente);
 	}
 
 	//Genero il codice per una nuova partita
@@ -114,8 +115,8 @@ public class ControllerCreaPartita {
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
-		if(listUtentiPartita.getItems().size()<=8) {
-			if(listUtentiPartita.getItems().size()>1) {
+		if(lstUtentiPartita.getItems().size()<=8) {
+			if(lstUtentiPartita.getItems().size()>1) {
 				try {
 
 					UUID uniqueID = UUID.randomUUID();

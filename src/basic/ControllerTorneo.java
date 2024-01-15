@@ -318,7 +318,8 @@ public class ControllerTorneo implements Initializable{
 
 		}else{//semifinali al turno 1
 			//se le partite non sono iniziate le assegno alle semifinali
-			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
+//			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
+			if(trn.getElencoSemifinali()==null) {
 				//inizializzo le semifinali
 				Partita[] partite= new Partita[2];
 				partite = trn.getElencoPartite().toArray(partite);
@@ -371,9 +372,29 @@ public class ControllerTorneo implements Initializable{
 				//'p' sta per partita
 				String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 
+				//do le vite e le carte ai giocatori
+				int nViteFinale = 3;
+				for(Giocatore i : lstGiocatori) {
+					i.setVite(nViteFinale);
+				}
+
+				//imposto i dati della finale
+				Partita prt = new Partita(uniqueCode, lstGiocatori);
+
 				//mazzo finale
 				Mazzo m = new Mazzo();
-				Partita prt = new Partita(uniqueCode, lstGiocatori, m);
+				//do le carte a ogni giocatore
+				m.setSpeciale();
+				m.mescola();
+				int numeroCarteAGiocatore=quanteCarteAGiocatore(lstGiocatori.size());
+				prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
+				for(Giocatore g : prt.getElencoGiocatori()) {
+					g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
+				}
+				
+				//definisco la partita come appartenente a un torneo
+				prt.setFlagTorneo(true);
+
 				//inizializzo la finale
 				trn.setFinale(prt);
 			}
@@ -381,8 +402,10 @@ public class ControllerTorneo implements Initializable{
 	}
 
 	private void controlloInterfaceFinale() {
+		System.out.println("errore");
 		//controllo la finale
 		if(trn.getFinale()!=null) {
+			System.out.println("errore1");
 			if(trn.getFinale().getElencoGiocatori().size()==1) {
 				//inserisco il nome del vincitore della finale se è già stata giocata
 				lblVincitoreFinale.setText(trn.getFinale().getElencoGiocatori().get(0).getNome());
@@ -459,6 +482,16 @@ public class ControllerTorneo implements Initializable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	private int quanteCarteAGiocatore(int numeroGiocatori) {
+		if(numeroGiocatori>4) {
+			return 5;
+		}else if(numeroGiocatori == 2){
+			return 1;
+		}else {
+			return numeroGiocatori;
 		}
 	}
 

@@ -104,19 +104,22 @@ public class ControllerCreaTorneo {
 
 	//aggiungo alla partita un utente già registrato
 	@FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
-		String nome = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
+		String nomeUtente = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
 
-		if(!listUtentiTorneo.getItems().contains(nome) && nome != null)
+		if(!listUtentiTorneo.getItems().contains(nomeUtente) && nomeUtente != null)
 		{
-			listUtentiTorneo.getItems().add(nome);
-			giocatoriTrn.add(new Giocatore(nome));	//inseisci numero di vite e carte
-			lstGiocatoriRegistrati.getItems().remove(lstGiocatoriRegistrati.getSelectionModel().getSelectedItem());
+			listUtentiTorneo.getItems().add(nomeUtente);
+			giocatoriTrn.add(new Giocatore(nomeUtente));	//inseisci numero di vite e carte
+			lstGiocatoriRegistrati.getItems().remove(nomeUtente);
 
 		}
 	}
 
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
-		listUtentiTorneo.getItems().remove(listUtentiTorneo.getSelectionModel().getSelectedItem()); 
+		String nomeUtente=listUtentiTorneo.getSelectionModel().getSelectedItem();
+		int posUtente = listUtentiTorneo.getItems().indexOf(nomeUtente);
+		listUtentiTorneo.getItems().remove(posUtente); 
+		giocatoriTrn.remove(posUtente);
 	}
 
 	//torno alla Schermata di login
@@ -223,11 +226,6 @@ public class ControllerCreaTorneo {
 			p.setFlagTorneo(true);
 			//aggiungo la partita all'elenco delle partite del torneo
 			elencoPrt.add(p);
-		}
-		
-		for(Partita p : elencoPrt)
-		{
-			System.out.println(p.getElencoGiocatori().size());
 		}
 		
 		return elencoPrt;
