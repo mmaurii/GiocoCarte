@@ -53,6 +53,11 @@ public class ControllerHome {
 	@FXML private PasswordField txtPassword;
 	@FXML private Button btnLogin;
 	@FXML ListView<String> lstClassifica;
+	@FXML Label lblTurnoGiocatore;
+	@FXML Button btnGioca;
+	@FXML TextField txtCod;
+	@FXML Label lblCodErrato;
+	@FXML ListView<String> lstViewVite;
 
 	//login
 	@FXML public void loginAction(ActionEvent actionEvent) {
@@ -93,12 +98,6 @@ public class ControllerHome {
 		}
 	}
 
-	//avvio l'interfaccia di gioco
-	@FXML Label lblTurnoGiocatore;
-	@FXML Button btnGioca;
-	@FXML TextField txtCod;
-	@FXML Label lblCodErrato;
-	@FXML ListView<String> lstViewVite;
 	@FXML public void gioca(ActionEvent actionEvent) {
 		//ottengo il codice inserito dall'utente
 		String cod = txtCod.getText();
@@ -139,6 +138,28 @@ public class ControllerHome {
 		}
 	}
 
+	@FXML public void aggiungiAmministratore(MouseEvent mouseEvent) 
+	{
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
+            Parent root = loader.load();
+
+			ControllerPopUpAmministratori controller = loader.getController();
+			controller.populateLst();
+
+			Stage stage = new Stage();
+			stage.setTitle("Amministratori");
+			Scene scene = new Scene(root);
+			stage.setHeight(450);
+		    stage.setWidth(500);
+			stage.setScene(scene);
+			stage.show();			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	//METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
 	//metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
@@ -391,7 +412,6 @@ public class ControllerHome {
 		}		
 	}
 
-
 	private Torneo verificaDisponibilitaTorneo(String cod) {
 		if(this.trn.getCod().equals(cod)) {
 			return trn;
@@ -399,28 +419,4 @@ public class ControllerHome {
 			return null;
 		}
 	}
-	
-	@FXML public void aggiungiAmministratore(MouseEvent mouseEvent) 
-	{
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
-            Parent root = loader.load();
-
-			ControllerPopUpAmministratori controller = loader.getController();
-			controller.populateLst();
-
-			Stage stage = new Stage();
-			stage.setTitle("Amministratori");
-			Scene scene = new Scene(root);
-			stage.setHeight(450);
-		    stage.setWidth(500);
-			stage.setScene(scene);
-			stage.show();			
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 }

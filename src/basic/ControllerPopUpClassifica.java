@@ -104,6 +104,4 @@ public class ControllerPopUpClassifica {
  		//mostro in output la classifica
  		lstClassifica.getItems().setAll(listaNumerata);
      }
-
-    
 }

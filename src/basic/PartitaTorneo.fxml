@@ -57,7 +57,7 @@
                         <Font name="Khmer MN" size="13.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" mnemonicParsing="false" stylesheets="@../style3.css" text="MODIFICA PARTITE" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnModificaPartite" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="400.0" mnemonicParsing="false" onAction="#modificaPartite" stylesheets="@../style3.css" text="MODIFICA PARTITE" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font name="Khmer MN" size="13.0" />
                      </font>

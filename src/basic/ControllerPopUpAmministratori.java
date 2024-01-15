@@ -56,7 +56,38 @@ public class ControllerPopUpAmministratori {
     @FXML TextField txtUsername; 
     @FXML TextField txtPassword; 
 
+    @FXML public void salva(ActionEvent actionEvent) {
+    	
+        List<String> items = lstAmministratori.getItems();
+        try (FileWriter writer = new FileWriter(path)) {
+            for (String item : items) {
+                writer.write(item + '\n');
+            }
+        } catch (IOException e) {
+            System.err.println("Errore: " + e.getMessage());
+        }
 
+    	Stage stage = (Stage)btnSalva.getScene().getWindow();
+    	stage.close();
+    	
+	
+    }
+    
+    @FXML public void eliminaAmministratore(ActionEvent actionEvent) {
+    	
+	 lstAmministratori.getItems().remove(lstAmministratori.getSelectionModel().getSelectedItem()); 
+    	
+    }
+ 
+    @FXML public void aggiungiAmministratore(ActionEvent actionEvent) {
+ 	
+	 String username = txtUsername.getText();
+	 String password = txtPassword.getText();
+	 String line = username + " , " + password;
+	 lstAmministratori.getItems().add(line);
+    }
+    
+    // Metodi ausiliari
     public void populateLst() {
     	
  		try {
@@ -72,7 +103,6 @@ public class ControllerPopUpAmministratori {
  			fnfe.printStackTrace();
  		}
 
- 		
  		//metto il contenuto della listview in grassetto
  		lstAmministratori.setStyle("-fx-font-weight: bold;");
  		
@@ -91,35 +121,4 @@ public class ControllerPopUpAmministratori {
 		    }
 		});
      } 
-    
-    public void salva(ActionEvent actionEvent) {
-    	
-        List<String> items = lstAmministratori.getItems();
-        try (FileWriter writer = new FileWriter(path)) {
-            for (String item : items) {
-                writer.write(item + '\n');
-            }
-        } catch (IOException e) {
-            System.err.println("Errore: " + e.getMessage());
-        }
-
-    	Stage stage = (Stage)btnSalva.getScene().getWindow();
-    	stage.close();
-    	
-	
-    }
-    
- public void eliminaAmministratore(ActionEvent actionEvent) {
-    	
-	 lstAmministratori.getItems().remove(lstAmministratori.getSelectionModel().getSelectedItem()); 
-    	
-    }
- 
- public void aggiungiAmministratore(ActionEvent actionEvent) {
- 	
-	 String username = txtUsername.getText();
-	 String password = txtPassword.getText();
-	 String line = username + " , " + password;
-	 lstAmministratori.getItems().add(line);
-    }
 }

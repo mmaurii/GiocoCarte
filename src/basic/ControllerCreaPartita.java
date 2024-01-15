@@ -38,6 +38,13 @@ public class ControllerCreaPartita {
 	@FXML ListView<String> lstUtentiPartita;
 	@FXML Button btnAggiungiUtente;
 	@FXML TextField txtNomeUtente; 
+	@FXML Button btnAggiungiUtenteRobot;
+	@FXML TextField txtNomeUtenteRobot;
+	@FXML Button btnGeneraCodice;
+	@FXML TextField txtCodice;
+	@FXML ComboBox<String> comboNVite;
+	@FXML Button btnTornaAllaHome;
+	
 	//aggiungo alla partita un nuovo utente  
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
 		String nome = txtNomeUtente.getText();
@@ -87,10 +94,7 @@ public class ControllerCreaPartita {
 		}
 	}
 
-
-	//aggiungo alla partita un utente robot 
-	@FXML Button btnAggiungiUtenteRobot;
-	@FXML TextField txtNomeUtenteRobot; 
+	//aggiungo alla partita un utente robot  
 	@FXML public void AggiungiUtenteRobot(ActionEvent actionEvent) {
 		String nome = txtNomeUtenteRobot.getText();
 		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
@@ -112,9 +116,6 @@ public class ControllerCreaPartita {
 	}
 
 	//Genero il codice per una nuova partita
-	@FXML Button btnGeneraCodice;
-	@FXML TextField txtCodice;
-	@FXML ComboBox<String> comboNVite;
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
 		if(lstUtentiPartita.getItems().size()<=8) {
 			if(lstUtentiPartita.getItems().size()>1) {
@@ -193,8 +194,6 @@ public class ControllerCreaPartita {
 		}
 	}
 
-
-	@FXML Button btnTornaAllaHome;
 	//torno alla Schermata di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di di creazione della partita e torno alla finestra di login
@@ -314,5 +313,4 @@ public class ControllerCreaPartita {
 			ioe.printStackTrace();
 		}
 	}
-
 }

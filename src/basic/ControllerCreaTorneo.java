@@ -157,7 +157,6 @@ public class ControllerCreaTorneo {
 		}	
 	} 
 
-
 	//Genero il codice per una nuova partita
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
 		txtCodice.clear();
@@ -190,7 +189,6 @@ public class ControllerCreaTorneo {
 		ArrayList<Partita> elencoPrt=generaPartite();
 		this.trn = new Torneo(uniqueCode, elencoPrt);
 	}
-
 
 	//METODI AUSILIARI
 	private ArrayList<Partita> generaPartite() {

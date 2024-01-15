@@ -62,8 +62,8 @@ public class ControllerPartitaTorneo {
     @FXML Button btnCreaPartita;
     @FXML ComboBox<String> comboNVite;
     @FXML Button btnModificaGiocatori;
+    @FXML Button btnCreaTorneo;
 
-    
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
     	//chiudo la finestra di scelta per la creazione di partite o tornei
@@ -97,9 +97,7 @@ public class ControllerPartitaTorneo {
 		}
     }
 
-    
     //crea torneo
-    @FXML Button btnCreaTorneo;
     @FXML public void CreaTorneoAction(ActionEvent actionEvent) {
     	Stage stage = (Stage)btnCreaTorneo.getScene().getWindow();
     	stage.close();
@@ -202,6 +200,27 @@ public class ControllerPartitaTorneo {
 		}	
 	}
     
+    @FXML public void modificaPartite(ActionEvent actionEvent) {
     
-    
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpPartite.fxml"));
+            Parent root = loader.load();
+
+			ControllerPopUpPartite controller = loader.getController();
+			controller.populateLst();
+
+			Stage stage = new Stage();
+			stage.setTitle("Partite");
+			Scene scene = new Scene(root);
+			stage.setHeight(450);
+		    stage.setWidth(500);
+			stage.setScene(scene);
+			stage.show();			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    } 
 }

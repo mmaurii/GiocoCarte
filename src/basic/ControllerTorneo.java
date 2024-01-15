@@ -493,6 +493,4 @@ public class ControllerTorneo implements Initializable{
 			return numeroGiocatori;
 		}
 	}
-
 }
-

@@ -42,18 +42,38 @@ import javafx.scene.layout.VBox;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 
-
-
 public class ControllerPopUpGiocatori {
 
     String pathClassifica = "src/Classifica.txt";
-    
-    
+     
     @FXML ListView<String> lstGiocatori;
     @FXML Button btnElimina;
     @FXML Button btnSalva;
 
+    @FXML public void salva(ActionEvent actionEvent) {
+    	
+        List<String> items = lstGiocatori.getItems();
+        try (FileWriter writer = new FileWriter(pathClassifica)) {
+            for (String item : items) {
+                writer.write(item + '\n');
+            }
+        } catch (IOException e) {
+            System.err.println("Errore: " + e.getMessage());
+        }
 
+    	Stage stage = (Stage)btnSalva.getScene().getWindow();
+    	stage.close();
+    	
+	
+    }
+    
+    @FXML public void eliminaGiocatore(ActionEvent actionEvent) {
+    	
+	 lstGiocatori.getItems().remove(lstGiocatori.getSelectionModel().getSelectedItem()); 
+    	
+    }
+    
+    // Metodi ausiliari
     public void populateLst() {
     	
  		try {
@@ -88,27 +108,4 @@ public class ControllerPopUpGiocatori {
 		    }
 		});
      } 
-    
-    public void salva(ActionEvent actionEvent) {
-    	
-        List<String> items = lstGiocatori.getItems();
-        try (FileWriter writer = new FileWriter(pathClassifica)) {
-            for (String item : items) {
-                writer.write(item + '\n');
-            }
-        } catch (IOException e) {
-            System.err.println("Errore: " + e.getMessage());
-        }
-
-    	Stage stage = (Stage)btnSalva.getScene().getWindow();
-    	stage.close();
-    	
-	
-    }
-    
- public void eliminaGiocatore(ActionEvent actionEvent) {
-    	
-	 lstGiocatori.getItems().remove(lstGiocatori.getSelectionModel().getSelectedItem()); 
-    	
-    }
 }
