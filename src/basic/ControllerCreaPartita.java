@@ -108,6 +108,7 @@ public class ControllerCreaPartita {
 		int posUtente = lstUtentiPartita.getItems().indexOf(nomeUtente);
 		lstUtentiPartita.getItems().remove(posUtente); 
 		giocatoriPrt.remove(posUtente);
+		lstGiocatoriRegistrati.getItems().add(nomeUtente);
 	}
 
 	//Genero il codice per una nuova partita

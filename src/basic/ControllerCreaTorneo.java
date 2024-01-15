@@ -120,6 +120,7 @@ public class ControllerCreaTorneo {
 		int posUtente = listUtentiTorneo.getItems().indexOf(nomeUtente);
 		listUtentiTorneo.getItems().remove(posUtente); 
 		giocatoriTrn.remove(posUtente);
+		lstGiocatoriRegistrati.getItems().add(nomeUtente);
 	}
 
 	//torno alla Schermata di login

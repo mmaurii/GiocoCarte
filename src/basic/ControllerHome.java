@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.scene.layout.BorderPane;
@@ -398,4 +399,28 @@ public class ControllerHome {
 			return null;
 		}
 	}
+	
+	@FXML public void aggiungiAmministratore(MouseEvent mouseEvent) 
+	{
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
+            Parent root = loader.load();
+
+			ControllerPopUpAmministratori controller = loader.getController();
+			controller.populateLst();
+
+			Stage stage = new Stage();
+			stage.setTitle("Amministratori");
+			Scene scene = new Scene(root);
+			stage.setHeight(450);
+		    stage.setWidth(500);
+			stage.setScene(scene);
+			stage.show();			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
