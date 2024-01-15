@@ -139,6 +139,7 @@ public class ControllerTorneo implements Initializable{
 
 	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
 		int pos = 3;
+		System.out.println("errore1: "+shiftPrtInterface);
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
@@ -199,9 +200,9 @@ public class ControllerTorneo implements Initializable{
 
 		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
 		Optional<ButtonType> result = alert.showAndWait();
-		
-		
-		
+
+
+
 		if (result.isPresent() && result.get() == buttonTypeSi) {
 			Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
 			stage.close();
@@ -279,8 +280,8 @@ public class ControllerTorneo implements Initializable{
 			//non visualizzo le semifinali
 			GridPane[] gpSemifinali = new GridPane[] {gpSemifinale1, gpSemifinale2};
 
-			for(int i =0; i<gpSemifinali.length;i++) {
-				//nascondo tutte le partite
+			for(int i =0; i<gpSemifinali.length; i++) {
+				//nascondo tutte le semifinali
 				gpSemifinali[i].setVisible(false);
 			}
 
@@ -318,7 +319,7 @@ public class ControllerTorneo implements Initializable{
 
 		}else{//semifinali al turno 1
 			//se le partite non sono iniziate le assegno alle semifinali
-//			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
+			//			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
 			if(trn.getElencoSemifinali()==null) {
 				//inizializzo le semifinali
 				Partita[] partite= new Partita[2];
@@ -344,7 +345,7 @@ public class ControllerTorneo implements Initializable{
 
 	private void controlloInterfaceSemifinale() {
 		//controllo le semifinali
-		Boolean flagFinale=true;
+		Boolean flagFinale=trn.getFinale()!=null?false:true;
 		ImageView[] imgSemifinale = new ImageView[] {imgSemifinale1, imgSemifinale2};
 		Label[] lblVincitoriSemifinale = new Label[] {lblVincitoreSemifinale1, lblVincitoreSemifinale2};
 
@@ -391,7 +392,7 @@ public class ControllerTorneo implements Initializable{
 				for(Giocatore g : prt.getElencoGiocatori()) {
 					g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
 				}
-				
+
 				//definisco la partita come appartenente a un torneo
 				prt.setFlagTorneo(true);
 
@@ -402,10 +403,8 @@ public class ControllerTorneo implements Initializable{
 	}
 
 	private void controlloInterfaceFinale() {
-		System.out.println("errore");
 		//controllo la finale
 		if(trn.getFinale()!=null) {
-			System.out.println("errore1");
 			if(trn.getFinale().getElencoGiocatori().size()==1) {
 				//inserisco il nome del vincitore della finale se è già stata giocata
 				lblVincitoreFinale.setText(trn.getFinale().getElencoGiocatori().get(0).getNome());

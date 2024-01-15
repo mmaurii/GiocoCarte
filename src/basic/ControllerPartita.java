@@ -94,10 +94,10 @@ public class ControllerPartita implements Initializable{
 		}catch(MissingResourceException mre) {
 			prt=(Partita)rb.getObject("Partita");
 		}
-//		if(!rb.keySet().contains("Torneo")) {
-//		}else {System.out.println("a");
-//			trn=(Torneo)rb.getObject("Torneo");
-//		}
+		//		if(!rb.keySet().contains("Torneo")) {
+		//		}else {System.out.println("a");
+		//			trn=(Torneo)rb.getObject("Torneo");
+		//		}
 		if(prt!=null){
 			//sistemo opportunamente l'interfaccia
 			setInterface();
@@ -368,7 +368,7 @@ public class ControllerPartita implements Initializable{
 					lblManoGiocatore.setVisible(false);
 					lblTurnoGiocatore.setVisible(false);
 					btnIniziaNuovaMano.setVisible(false);
-					
+
 					//definisco l'ultimo giocatore eliminato dalla lista come il vincitore in caso di pareggio
 					prt.getElencoGiocatori().add(vincitorePareggio);
 				}
@@ -510,10 +510,19 @@ public class ControllerPartita implements Initializable{
 		Stage stage = (Stage)btnPartitaTornaAlTorneo.getScene().getWindow();
 		stage.close();
 
-//		//elimino i possibili bot in esecuzione
-//		if(prt.getGiocatoreCorrente() instanceof Bot) {
-//			t.interrupt();
-//		}
+		//modifico la partita giocata nel torneo
+		if (selettore.equals(selettorePrt)) {
+			trn.getElencoPartite().set(posPartitaTrn, prt);
+		}else if(selettore.equals(selettoreSFnl)) {
+			trn.getElencoSemifinali()[posPartitaTrn]=prt;
+		}else if(selettore.equals(selettoreFnl)) { 
+			trn.setFinale(prt);
+		}
+
+		//		//elimino i possibili bot in esecuzione
+		//		if(prt.getGiocatoreCorrente() instanceof Bot) {
+		//			t.interrupt();
+		//		}
 
 		//riapro la finestra del torneo
 		//controlla perchè non va riaperta ma solo aggiornata e riattivata
@@ -526,17 +535,6 @@ public class ControllerPartita implements Initializable{
 				@Override
 				protected Object handleGetObject(String key) {
 					if (key.equals("Torneo")) { 
-						switch (selettore) {
-						case selettorePrt: 
-							trn.getElencoPartite().set(posPartitaTrn, prt);
-							break;
-						case selettoreSFnl: 
-							trn.getElencoSemifinali()[posPartitaTrn]=prt;
-							break;
-						case selettoreFnl: 
-							trn.setFinale(prt);
-							break;
-						}
 						return trn;
 					}
 					return null;
