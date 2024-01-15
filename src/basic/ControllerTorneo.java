@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import java.util.*;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -144,11 +145,13 @@ public class ControllerTorneo implements Initializable{
 	}
 
 	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
+		System.out.println("errore1: "+shiftPrtInterface);
 		int pos = 4;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
+		System.out.println("errore1: "+shiftPrtInterface);
 		int pos = 5;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
@@ -308,15 +311,14 @@ public class ControllerTorneo implements Initializable{
 						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
 						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
 						imgPrt[i].setDisable(true);
-
 					}
 					// visualizzo le line per le finali (prt to finali)
 					lnPrtFinali[i-shiftPrtInterface].setVisible(true);
 				}
 				//nascondo le line prt to something
 				lnPrt[i].setVisible(false);
+				System.out.println("stato img: "+i+" "+imgPrt[i].isDisable()+" "+imgPrt[i].isVisible()+" stato gp: "+i+" "+gpPrt[i].isDisable()+" "+gpPrt[i].isVisible());
 			}
-
 		}else{//semifinali al turno 1
 			//se le partite non sono iniziate le assegno alle semifinali
 			//			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
