@@ -140,18 +140,15 @@ public class ControllerTorneo implements Initializable{
 
 	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
 		int pos = 3;
-		System.out.println("errore1: "+shiftPrtInterface);
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
-		System.out.println("errore1: "+shiftPrtInterface);
 		int pos = 4;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
 	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
-		System.out.println("errore1: "+shiftPrtInterface);
 		int pos = 5;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
