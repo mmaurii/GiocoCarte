@@ -175,62 +175,74 @@ public class ControllerTorneo implements Initializable{
 
 	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
 		int pos = 0;
-		avviaPartita(selettoreSFnl,pos);
+		if(trn.getElencoSemifinali()[pos]!=null) {
+			avviaPartita(selettoreSFnl,pos);
+		}
 	}
 
 	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
 		int pos = 1;
-		avviaPartita(selettoreSFnl,pos);
+		if(trn.getElencoSemifinali()[pos]!=null) {
+			avviaPartita(selettoreSFnl,pos);
+		}
 	}
 
 	@FXML public void avviaFinale(MouseEvent mouseEvent) {
-		int pos = -1;
-		avviaPartita(selettoreFnl,pos);
+		if(trn.getFinale()!=null) {
+			int pos = -1;
+			avviaPartita(selettoreFnl,pos);
+		}
 	}
 
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
-		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("ATTENZIONE!");
-		alert.setHeaderText(null);
-		alert.setContentText("Sei sicuro di voler chiudere il torneo, NON potrai più riaprirlo!");
-		ButtonType buttonTypeSi = new ButtonType("Sì");
-		ButtonType buttonTypeNo = new ButtonType("No");
+		//chiudo la finestra di Gioco del torneo e torno alla finestra di login iniziale
+		//		Alert alert = new Alert(AlertType.ERROR);
+		//		alert.setTitle("ATTENZIONE!");
+		//		alert.setHeaderText(null);
+		//		alert.setContentText("Sei sicuro di voler chiudere il torneo, NON potrai più riaprirlo!");
+		//		ButtonType buttonTypeSi = new ButtonType("Sì");
+		//		ButtonType buttonTypeNo = new ButtonType("No");
+		//
+		//		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+		//		Optional<ButtonType> result = alert.showAndWait();
+		//
+		//
+		//
+		//		if (result.isPresent() && result.get() == buttonTypeSi) {
+		Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
+		stage.close();
 
-		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
-		Optional<ButtonType> result = alert.showAndWait();
+
+		//il metodo controlla se la partita si è conclusa e nel caso la elimina dal file
+		SalvaTorneo(trn);
 
 
+		try {
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
-		if (result.isPresent() && result.get() == buttonTypeSi) {
-			Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
-			stage.close();
-			try {
-				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+			Parent root = loader.load();
 
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-				Parent root = loader.load();
+			ControllerHome controller = loader.getController();
 
-				ControllerHome controller = loader.getController();
+			controller.populateListView();
 
-				controller.populateListView();
+			StackPane stackPane = new StackPane();
+			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+			stackPane.getChildren().addAll(videoBackgroundPane, root);
 
-				StackPane stackPane = new StackPane();
-				stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
-				stackPane.getChildren().addAll(videoBackgroundPane, root);
+			stage.setTitle("HOME");
+			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 
-				stage.setTitle("HOME");
-				Scene interfacciaHome = new Scene(stackPane, 600, 400);
+			stage.setScene(interfacciaHome);
+			stage.show();
 
-				stage.setScene(interfacciaHome);
-				stage.show();
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//}		
 	}
 
 
@@ -245,6 +257,8 @@ public class ControllerTorneo implements Initializable{
 		//controllo le partite per decidere se fare al primo turno direttamente le semifinali
 		if(trn.getElencoPartite().size()>finaleATre) {//partite al turno 1
 			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
+			ArrayList<Giocatore> giocatoriSFnl = new ArrayList<>();
+
 			//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
 			shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
 
@@ -262,14 +276,23 @@ public class ControllerTorneo implements Initializable{
 						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
 						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
 						imgPrt[i].setDisable(true);
+
+						//salvo i giocatori per la semifinale
+						giocatoriSFnl.add(prt.getElencoGiocatori().get(0));
 					}
 				}
 			}
 
+			System.out.println("numero giocatori sfnl: "+giocatoriSFnl.size());
+			System.out.println("elenco semifinali: "+trn.getElencoSemifinali());
+			if(trn.getElencoSemifinali()!=null) {
+				System.out.println("semifinale1: "+trn.getElencoSemifinali()[0]);
+				System.out.println("semifinale2: "+trn.getElencoSemifinali()[1]);
+			}
 			//inizializzo le semifinali
-			Partita[] partite= new Partita[2];
-			partite = trn.getElencoPartite().toArray(partite);
-			trn.setElencoSemifinali(partite);
+			if(trn.getElencoSemifinali()==null&&giocatoriSFnl.size()==trn.getElencoPartite().size()) {
+				inizializzaSemiFinale(giocatoriSFnl);
+			}
 
 			//controllo le semifinali
 			controlloInterfaceSemifinale();
@@ -279,6 +302,7 @@ public class ControllerTorneo implements Initializable{
 		}else if(trn.getElencoPartite().size()==finaleATre){//controllo se devo fare la finale a tre al secondo turno
 			//non visualizzo le semifinali
 			GridPane[] gpSemifinali = new GridPane[] {gpSemifinale1, gpSemifinale2};
+			ArrayList<Giocatore> giocatoriFnl = new ArrayList<>();
 
 			for(int i =0; i<gpSemifinali.length; i++) {
 				//nascondo tutte le semifinali
@@ -308,14 +332,23 @@ public class ControllerTorneo implements Initializable{
 						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
 						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
 						imgPrt[i].setDisable(true);
+
+						//salvo il giocatore vincitore della partita per la finale
+						giocatoriFnl.add(prt.getElencoGiocatori().get(0));
 					}
 					// visualizzo le line per le finali (prt to finali)
 					lnPrtFinali[i-shiftPrtInterface].setVisible(true);
 				}
 				//nascondo le line prt to something
 				lnPrt[i].setVisible(false);
-				System.out.println("stato img: "+i+" "+imgPrt[i].isDisable()+" "+imgPrt[i].isVisible()+" stato gp: "+i+" "+gpPrt[i].isDisable()+" "+gpPrt[i].isVisible());
 			}
+
+			if(giocatoriFnl.size()==finaleATre&&trn.getFinale()==null) {
+				inizializzaFinale(giocatoriFnl);
+			}
+
+			//controllo la finale
+			controlloInterfaceFinale();
 		}else{//semifinali al turno 1
 			//se le partite non sono iniziate le assegno alle semifinali
 			//			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
@@ -367,36 +400,7 @@ public class ControllerTorneo implements Initializable{
 			}
 
 			if(flagFinale) {
-				//codice finale
-				UUID uniqueID = UUID.randomUUID();
-				//'p' sta per partita
-				String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
-
-				//do le vite e le carte ai giocatori
-				int nViteFinale = 3;
-				for(Giocatore i : lstGiocatori) {
-					i.setVite(nViteFinale);
-				}
-
-				//imposto i dati della finale
-				Partita prt = new Partita(uniqueCode, lstGiocatori);
-
-				//mazzo finale
-				Mazzo m = new Mazzo();
-				//do le carte a ogni giocatore
-				m.setSpeciale();
-				m.mescola();
-				int numeroCarteAGiocatore=quanteCarteAGiocatore(lstGiocatori.size());
-				prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
-				for(Giocatore g : prt.getElencoGiocatori()) {
-					g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
-				}
-
-				//definisco la partita come appartenente a un torneo
-				prt.setFlagTorneo(true);
-
-				//inizializzo la finale
-				trn.setFinale(prt);
+				inizializzaFinale(lstGiocatori);
 			}
 		}
 	}
@@ -490,6 +494,163 @@ public class ControllerTorneo implements Initializable{
 			return 1;
 		}else {
 			return numeroGiocatori;
+		}
+	}
+
+	private void inizializzaFinale(ArrayList<Giocatore> giocatoriFnl) {
+		//codice finale
+		UUID uniqueID = UUID.randomUUID();
+		//'p' sta per partita
+		String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
+
+		//do le vite e le carte ai giocatori
+		int nViteFinale = 3;
+		for(Giocatore i : giocatoriFnl) {
+			i.setVite(nViteFinale);
+		}
+
+		//imposto i dati della finale
+		Partita prt = new Partita(uniqueCode, giocatoriFnl);
+
+		//mazzo finale
+		Mazzo m = new Mazzo();
+		//do le carte a ogni giocatore
+		m.setSpeciale();
+		m.mescola();
+		int numeroCarteAGiocatore=quanteCarteAGiocatore(giocatoriFnl.size());
+		prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
+		for(Giocatore g : prt.getElencoGiocatori()) {
+			g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
+		}
+
+		//definisco la partita come appartenente a un torneo
+		prt.setFlagTorneo(true);
+
+		//inizializzo la finale
+		trn.setFinale(prt);
+	}
+
+	private void inizializzaSemiFinale(ArrayList<Giocatore> giocatoriSFnl) {
+		Partita[] SFnl= new Partita[2];
+
+		//codice semifinale
+		UUID uniqueID = UUID.randomUUID();
+		//'p' sta per partita
+		String uniqueCode1 = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
+		uniqueID = UUID.randomUUID();
+		String uniqueCode2 = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
+
+		//do le vite e le carte ai giocatori
+		int nViteFinale = 3;
+		for(Giocatore i : giocatoriSFnl) {
+			i.setVite(nViteFinale);
+		}
+
+		//divido i giocatori in due partite
+		int bound = giocatoriSFnl.size()/2;
+		ArrayList<Giocatore> giocatoriSFnl1=new ArrayList<Giocatore>(giocatoriSFnl.subList(0, bound));
+		ArrayList<Giocatore> giocatoriSFnl2=new ArrayList<Giocatore>(giocatoriSFnl.subList(bound, giocatoriSFnl.size()));
+
+
+		//imposto i dati della semifinale
+		SFnl[0] = new Partita(uniqueCode1, giocatoriSFnl1);
+		SFnl[1] = new Partita(uniqueCode2, giocatoriSFnl2);
+
+		//mazzo semifinale1
+		Mazzo m = new Mazzo();
+		//do le carte a ogni giocatore
+		m.setSpeciale();
+		m.mescola();
+		int numeroCarteAGiocatore=quanteCarteAGiocatore(giocatoriSFnl1.size());
+		SFnl[0].setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
+		for(Giocatore g : SFnl[0].getElencoGiocatori()) {
+			g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
+		}
+
+		//mazzo semifinale2
+		m = new Mazzo();
+		//do le carte a ogni giocatore
+		m.setSpeciale();
+		m.mescola();
+		numeroCarteAGiocatore=quanteCarteAGiocatore(giocatoriSFnl1.size());
+		SFnl[1].setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
+		for(Giocatore g : SFnl[1].getElencoGiocatori()) {
+			g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
+		}
+
+
+		//definisco la partita come appartenente a un torneo
+		SFnl[0].setFlagTorneo(true);
+		SFnl[1].setFlagTorneo(true);
+
+		//inizializzo le semifinali
+		trn.setElencoSemifinali(SFnl);
+	}
+
+	public void SalvaTorneo(Torneo torneo) {
+		try {
+			Torneo tempTrn=null;
+			boolean presenzaTrn = false;
+
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			//imposto un TypeAdapter per salvare correttamente l'elenco dei giocatori che contiene sia Bot che Giocatori
+			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
+			Gson gson=gsonBuilder.create();
+			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
+			String path="src/SalvataggioTornei.json";
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+
+			if(jsnReader.peek() != JsonToken.NULL){
+				jsnReader.beginArray();
+				//carico il contenuto del file
+				while(jsnReader.hasNext()) {
+					Torneo t = gson.fromJson(jsnReader, Torneo.class);
+					elencoTornei.add(t);
+				}
+				jsnReader.endArray();
+				jsnReader.close();
+
+				//controllo se il torneo da salvare era già presente nel file
+				for(Torneo t : elencoTornei) {
+					if(t.getCodice().equals(torneo.getCodice())) {
+						presenzaTrn=true;
+						tempTrn=t;
+						break;
+					}
+				}
+
+				//se il torneo non era presente nel file la aggiungo in coda e la salvo
+				if(!presenzaTrn) {
+					elencoTornei.add(torneo);
+				}else if(tempTrn!=null){
+					elencoTornei.remove(tempTrn);
+					if(torneo.getFinale()!=null) {
+						if(torneo.getFinale().getElencoGiocatori().size()>1) {
+							elencoTornei.add(torneo);
+						}
+					}else {
+						elencoTornei.add(torneo);
+					}
+				}
+
+				//salvo la lista di tornei caricati dal file e aggiornati
+				FileWriter fw = new FileWriter(path);
+				JsonWriter jsnWriter = new JsonWriter(fw);
+				jsnWriter.beginArray();
+				for (Torneo t : elencoTornei) {
+					gson.toJson(t, Torneo.class, jsnWriter);
+					fw.write('\n');
+				}
+				jsnWriter.endArray();
+				jsnWriter.close();
+			}
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			// TODO Auto-generated catch block
+			ioe.printStackTrace();
 		}
 	}
 }

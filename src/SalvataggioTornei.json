@@ -1,0 +1,517 @@
+[ {
+  "cod" : "t4904d953",
+  "elencoPartite" : [ {
+    "elencoGiocatori" : [ {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "pino",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 6,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/26.jpg",
+          "valore" : 16,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/3.jpg",
+          "valore" : 32,
+          "speciale" : 0
+        }, {
+          "numero" : 6,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/6.jpg",
+          "valore" : 35,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "b",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 6,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/36.jpg",
+          "valore" : 6,
+          "speciale" : 0
+        }, {
+          "numero" : 10,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/10.jpg",
+          "valore" : 39,
+          "speciale" : 0
+        }, {
+          "numero" : 1,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/11.jpg",
+          "valore" : 21,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "mario",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 4,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/34.jpg",
+          "valore" : 4,
+          "speciale" : 0
+        }, {
+          "numero" : 10,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/20.jpg",
+          "valore" : 30,
+          "speciale" : 0
+        }, {
+          "numero" : 5,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/35.jpg",
+          "valore" : 5,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    } ],
+    "elencoGiocatoriEliminati" : [ ],
+    "cod" : "b3428eb0",
+    "countTurnoGiocatore" : 0,
+    "lstCarteBanco" : [ ],
+    "dichiaraPrese" : true,
+    "primoTurno" : true,
+    "numeroCarteAGiocatore" : 3,
+    "modalitaPrt" : true,
+    "presePerQuestaMano" : 0,
+    "resume" : false,
+    "btnInizioTurnoGiocatoreDisable" : false,
+    "btnFineTurnoGiocatoreDisable" : false,
+    "btnIniziaNuovaManoVisible" : false,
+    "btnIniziaNuovoRoundVisible" : false,
+    "btnInizioTurnoGiocatoreClicked" : false,
+    "flagTorneo" : true
+  }, {
+    "elencoGiocatori" : [ {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "gianni",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 1,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/31.jpg",
+          "valore" : 1,
+          "speciale" : 0
+        }, {
+          "numero" : 8,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/38.jpg",
+          "valore" : 8,
+          "speciale" : 0
+        }, {
+          "numero" : 10,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/10.jpg",
+          "valore" : 39,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/13.jpg",
+          "valore" : 23,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "balto",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 9,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/19.jpg",
+          "valore" : 29,
+          "speciale" : 0
+        }, {
+          "numero" : 9,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/39.jpg",
+          "valore" : 9,
+          "speciale" : 0
+        }, {
+          "numero" : 1,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/1.jpg",
+          "valore" : 40,
+          "speciale" : 1
+        }, {
+          "numero" : 6,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/6.jpg",
+          "valore" : 35,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "mauri",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 10,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/30.jpg",
+          "valore" : 20,
+          "speciale" : 0
+        }, {
+          "numero" : 2,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/22.jpg",
+          "valore" : 12,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/23.jpg",
+          "valore" : 13,
+          "speciale" : 0
+        }, {
+          "numero" : 7,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/17.jpg",
+          "valore" : 27,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "h",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 1,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/11.jpg",
+          "valore" : 21,
+          "speciale" : 0
+        }, {
+          "numero" : 2,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/2.jpg",
+          "valore" : 31,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/33.jpg",
+          "valore" : 3,
+          "speciale" : 0
+        }, {
+          "numero" : 1,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/21.jpg",
+          "valore" : 11,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    } ],
+    "elencoGiocatoriEliminati" : [ ],
+    "cod" : "e4b49eac",
+    "countTurnoGiocatore" : 0,
+    "lstCarteBanco" : [ ],
+    "dichiaraPrese" : true,
+    "primoTurno" : true,
+    "numeroCarteAGiocatore" : 4,
+    "modalitaPrt" : true,
+    "presePerQuestaMano" : 0,
+    "resume" : false,
+    "btnInizioTurnoGiocatoreDisable" : false,
+    "btnFineTurnoGiocatoreDisable" : false,
+    "btnIniziaNuovaManoVisible" : false,
+    "btnIniziaNuovoRoundVisible" : false,
+    "btnInizioTurnoGiocatoreClicked" : false,
+    "flagTorneo" : true
+  } ],
+  "elencoSemifinali" : [ {
+    "elencoGiocatori" : [ {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "pino",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 6,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/26.jpg",
+          "valore" : 16,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/3.jpg",
+          "valore" : 32,
+          "speciale" : 0
+        }, {
+          "numero" : 6,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/6.jpg",
+          "valore" : 35,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "b",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 6,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/36.jpg",
+          "valore" : 6,
+          "speciale" : 0
+        }, {
+          "numero" : 10,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/10.jpg",
+          "valore" : 39,
+          "speciale" : 0
+        }, {
+          "numero" : 1,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/11.jpg",
+          "valore" : 21,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "mario",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 4,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/34.jpg",
+          "valore" : 4,
+          "speciale" : 0
+        }, {
+          "numero" : 10,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/20.jpg",
+          "valore" : 30,
+          "speciale" : 0
+        }, {
+          "numero" : 5,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/35.jpg",
+          "valore" : 5,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    } ],
+    "elencoGiocatoriEliminati" : [ ],
+    "cod" : "b3428eb0",
+    "countTurnoGiocatore" : 0,
+    "lstCarteBanco" : [ ],
+    "dichiaraPrese" : true,
+    "primoTurno" : true,
+    "numeroCarteAGiocatore" : 3,
+    "modalitaPrt" : true,
+    "presePerQuestaMano" : 0,
+    "resume" : false,
+    "btnInizioTurnoGiocatoreDisable" : false,
+    "btnFineTurnoGiocatoreDisable" : false,
+    "btnIniziaNuovaManoVisible" : false,
+    "btnIniziaNuovoRoundVisible" : false,
+    "btnInizioTurnoGiocatoreClicked" : false,
+    "flagTorneo" : true
+  }, {
+    "elencoGiocatori" : [ {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "gianni",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 1,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/31.jpg",
+          "valore" : 1,
+          "speciale" : 0
+        }, {
+          "numero" : 8,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/38.jpg",
+          "valore" : 8,
+          "speciale" : 0
+        }, {
+          "numero" : 10,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/10.jpg",
+          "valore" : 39,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/13.jpg",
+          "valore" : 23,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "balto",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 9,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/19.jpg",
+          "valore" : 29,
+          "speciale" : 0
+        }, {
+          "numero" : 9,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/39.jpg",
+          "valore" : 9,
+          "speciale" : 0
+        }, {
+          "numero" : 1,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/1.jpg",
+          "valore" : 40,
+          "speciale" : 1
+        }, {
+          "numero" : 6,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/6.jpg",
+          "valore" : 35,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "mauri",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 10,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/30.jpg",
+          "valore" : 20,
+          "speciale" : 0
+        }, {
+          "numero" : 2,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/22.jpg",
+          "valore" : 12,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/23.jpg",
+          "valore" : 13,
+          "speciale" : 0
+        }, {
+          "numero" : 7,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/17.jpg",
+          "valore" : 27,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    }, {
+      "tipo" : "basic.Giocatore",
+      "datiGiocatore" : {
+        "nome" : "h",
+        "nVite" : 5,
+        "carte" : [ {
+          "numero" : 1,
+          "seme" : "COPPE",
+          "percorso" : "/basic/IMGcarte/11.jpg",
+          "valore" : 21,
+          "speciale" : 0
+        }, {
+          "numero" : 2,
+          "seme" : "DENARI",
+          "percorso" : "/basic/IMGcarte/2.jpg",
+          "valore" : 31,
+          "speciale" : 0
+        }, {
+          "numero" : 3,
+          "seme" : "BASTONI",
+          "percorso" : "/basic/IMGcarte/33.jpg",
+          "valore" : 3,
+          "speciale" : 0
+        }, {
+          "numero" : 1,
+          "seme" : "SPADE",
+          "percorso" : "/basic/IMGcarte/21.jpg",
+          "valore" : 11,
+          "speciale" : 0
+        } ],
+        "punteggio" : 0,
+        "preseDichiarate" : -1,
+        "preseEffettuate" : 0
+      }
+    } ],
+    "elencoGiocatoriEliminati" : [ ],
+    "cod" : "e4b49eac",
+    "countTurnoGiocatore" : 0,
+    "lstCarteBanco" : [ ],
+    "dichiaraPrese" : true,
+    "primoTurno" : true,
+    "numeroCarteAGiocatore" : 4,
+    "modalitaPrt" : true,
+    "presePerQuestaMano" : 0,
+    "resume" : false,
+    "btnInizioTurnoGiocatoreDisable" : false,
+    "btnFineTurnoGiocatoreDisable" : false,
+    "btnIniziaNuovaManoVisible" : false,
+    "btnIniziaNuovoRoundVisible" : false,
+    "btnInizioTurnoGiocatoreClicked" : false,
+    "flagTorneo" : true
+  } ]
+} ]
