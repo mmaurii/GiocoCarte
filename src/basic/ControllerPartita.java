@@ -139,9 +139,6 @@ public class ControllerPartita implements Initializable{
 				listaCarteMano.get(i).setImage(null);
 			}
 		}
-		
-		System.out.println("prt.getGiocatoreCorrente().getCarteMano "+prt.getGiocatoreCorrente().getCarteMano().size());
-		System.out.println("prt.getCountTurnoGiocatore() "+prt.getCountTurnoGiocatore());
 	}
 
 

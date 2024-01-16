@@ -19,11 +19,11 @@ public class Torneo {
 		this.elencoPartite=elencoPartite;
 	}
 	
-	public String getCod() {
+	public String getCodice() {
 		return cod;
 	}
 
-	public void setCod(String cod) {
+	public void setCodice(String cod) {
 		this.cod = cod;
 	}
 

@@ -188,6 +188,9 @@ public class ControllerCreaTorneo {
 
 		ArrayList<Partita> elencoPrt=generaPartite();
 		this.trn = new Torneo(uniqueCode, elencoPrt);
+		
+		//salvo il torneo su file.json
+		SalvaTorneo(this.trn);
 	}
 
 	//METODI AUSILIARI
@@ -334,99 +337,34 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 		});
 	}
 
-
-	/**
-
-	//aggiungo alla partita un utente robot 
-	@FXML Button btnAggiungiUtenteRobot;
-	@FXML TextField txtNomeUtenteRobot; 
-	@FXML public void AggiungiUtenteRobot(ActionEvent actionEvent) {
-		String nome = txtNomeUtenteRobot.getText();
-		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-		if(!nome.trim().equals("") && !listUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
-			txtNomeUtenteRobot.clear();
-			listUtentiPartita.getItems().add(nome);
-			giocatoriPrt.add(new Bot(nome));
-		}else {
-			txtNomeUtenteRobot.clear();
-		}
-	}
-
-
-
-
-
-					//do le vite e le carte ai giocatori
-					String nVite = comboNVite.getSelectionModel().getSelectedItem();
-					if(nVite!=null) {
-						for(Giocatore i : giocatoriPrt) {
-							i.setVite(Integer.parseInt(nVite));
-						}
-					}else {
-						for(Giocatore i : giocatoriPrt) {
-							i.setVite(nViteDefault);
-						}
-					}
-
-					//imposto i dati di una nuova partita
-					this.prt=new Partita(uniqueCode, giocatoriPrt);
-
-					//do le carte a ogni giocatore
-					mazzo.setSpeciale();
-					mazzo.mescola();
-					int numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-					prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
-					for(Giocatore g : this.prt.getElencoGiocatori()) {
-						g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
-					}
-
-					//salvo la partita su file.json
-					SalvaPartita(this.prt);
-
-
-
-
-
-
-
-	private int quanteCarteAGiocatore(int numeroGiocatori) {
-		if(numeroGiocatori>4) {
-			return 5;
-		}else if(numeroGiocatori == 2){
-			return 1;
-		}else {
-			return numeroGiocatori;
-		}
-	}
-
-	private void SalvaPartita(Partita partita) {
+	private void SalvaTorneo(Torneo torneo) {
 		try {
 			GsonBuilder gsonBuilder = new GsonBuilder();
 			//imposto un TypeAdapter per salvare correttamente l'elenco dei giocatori che contiene sia Bot che Giocatori
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
-			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			String path="src/SalvataggioPartite.json";
+			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
+			String path="src/SalvataggioTornei.json";
 			FileReader fr = new FileReader(path);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			jsnReader.beginArray();
 			//carico il contenuto del file
 			while(jsnReader.hasNext()) {
-				Partita p = gson.fromJson(jsnReader, Partita.class);
-				elencoPartite.add(p);
+				Torneo t = gson.fromJson(jsnReader, Torneo.class);
+				elencoTornei.add(t);
 			}
 			jsnReader.endArray();
 			jsnReader.close();
 
-			elencoPartite.add(partita);
-			//salvo la lista di partite caricate dal file + quella creata
+			elencoTornei.add(torneo);
+			//salvo la lista di tornei caricati dal file + quella creata
 			FileWriter fw = new FileWriter(path);
 			JsonWriter jsnWriter = new JsonWriter(fw);
 			jsnWriter.beginArray();
 
-			for (Partita p : elencoPartite) {
-				gson.toJson(p, Partita.class, jsnWriter);
+			for (Torneo t : elencoTornei) {
+				gson.toJson(t, Torneo.class, jsnWriter);
 				fw.write('\n');
 			}
 			jsnWriter.endArray();
@@ -439,6 +377,4 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 			ioe.printStackTrace();
 		}
 	}
-	 **/
-
 }

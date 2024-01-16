@@ -196,47 +196,53 @@ public class ControllerTorneo implements Initializable{
 
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
-		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("ATTENZIONE!");
-		alert.setHeaderText(null);
-		alert.setContentText("Sei sicuro di voler chiudere il torneo, NON potrai più riaprirlo!");
-		ButtonType buttonTypeSi = new ButtonType("Sì");
-		ButtonType buttonTypeNo = new ButtonType("No");
+		//chiudo la finestra di Gioco del torneo e torno alla finestra di login iniziale
+		//		Alert alert = new Alert(AlertType.ERROR);
+		//		alert.setTitle("ATTENZIONE!");
+		//		alert.setHeaderText(null);
+		//		alert.setContentText("Sei sicuro di voler chiudere il torneo, NON potrai più riaprirlo!");
+		//		ButtonType buttonTypeSi = new ButtonType("Sì");
+		//		ButtonType buttonTypeNo = new ButtonType("No");
+		//
+		//		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
+		//		Optional<ButtonType> result = alert.showAndWait();
+		//
+		//
+		//
+		//		if (result.isPresent() && result.get() == buttonTypeSi) {
+		Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
+		stage.close();
 
-		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
-		Optional<ButtonType> result = alert.showAndWait();
+
+		//il metodo controlla se la partita si è conclusa e nel caso la elimina dal file
+		SalvaTorneo(trn);
 
 
+		try {
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
-		if (result.isPresent() && result.get() == buttonTypeSi) {
-			Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
-			stage.close();
-			try {
-				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+			Parent root = loader.load();
 
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-				Parent root = loader.load();
+			ControllerHome controller = loader.getController();
 
-				ControllerHome controller = loader.getController();
+			controller.populateListView();
 
-				controller.populateListView();
+			StackPane stackPane = new StackPane();
+			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+			stackPane.getChildren().addAll(videoBackgroundPane, root);
 
-				StackPane stackPane = new StackPane();
-				stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
-				stackPane.getChildren().addAll(videoBackgroundPane, root);
+			stage.setTitle("HOME");
+			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 
-				stage.setTitle("HOME");
-				Scene interfacciaHome = new Scene(stackPane, 600, 400);
+			stage.setScene(interfacciaHome);
+			stage.show();
 
-				stage.setScene(interfacciaHome);
-				stage.show();
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//}		
 	}
 
 
@@ -579,5 +585,72 @@ public class ControllerTorneo implements Initializable{
 
 		//inizializzo le semifinali
 		trn.setElencoSemifinali(SFnl);
+	}
+
+	public void SalvaTorneo(Torneo torneo) {
+		try {
+			Torneo tempTrn=null;
+			boolean presenzaTrn = false;
+
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			//imposto un TypeAdapter per salvare correttamente l'elenco dei giocatori che contiene sia Bot che Giocatori
+			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
+			Gson gson=gsonBuilder.create();
+			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
+			String path="src/SalvataggioTornei.json";
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+
+			if(jsnReader.peek() != JsonToken.NULL){
+				jsnReader.beginArray();
+				//carico il contenuto del file
+				while(jsnReader.hasNext()) {
+					Torneo t = gson.fromJson(jsnReader, Torneo.class);
+					elencoTornei.add(t);
+				}
+				jsnReader.endArray();
+				jsnReader.close();
+
+				//controllo se il torneo da salvare era già presente nel file
+				for(Torneo t : elencoTornei) {
+					if(t.getCodice().equals(torneo.getCodice())) {
+						presenzaTrn=true;
+						tempTrn=t;
+						break;
+					}
+				}
+
+				//se il torneo non era presente nel file la aggiungo in coda e la salvo
+				if(!presenzaTrn) {
+					elencoTornei.add(torneo);
+				}else if(tempTrn!=null){
+					elencoTornei.remove(tempTrn);
+					if(torneo.getFinale()!=null) {
+						if(torneo.getFinale().getElencoGiocatori().size()>1) {
+							elencoTornei.add(torneo);
+						}
+					}else {
+						elencoTornei.add(torneo);
+					}
+				}
+
+				//salvo la lista di tornei caricati dal file e aggiornati
+				FileWriter fw = new FileWriter(path);
+				JsonWriter jsnWriter = new JsonWriter(fw);
+				jsnWriter.beginArray();
+				for (Torneo t : elencoTornei) {
+					gson.toJson(t, Torneo.class, jsnWriter);
+					fw.write('\n');
+				}
+				jsnWriter.endArray();
+				jsnWriter.close();
+			}
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			// TODO Auto-generated catch block
+			ioe.printStackTrace();
+		}
 	}
 }

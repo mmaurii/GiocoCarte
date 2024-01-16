@@ -1,10 +1,10 @@
 120 , mario
 120 , gianni
 70 , pino
-180 , balto
+190 , balto
 120 , b
-90 , mauri
-100 , h
+100 , mauri
+110 , h
 90 , pippo
 80 , baldo
 40 , marco

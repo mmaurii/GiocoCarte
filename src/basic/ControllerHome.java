@@ -386,7 +386,7 @@ public class ControllerHome {
 				public void handle(WindowEvent e) {
 					Platform.exit();
 					if(stage.getScene().equals(interfacciaDiGioco)) {//in questo modo controllo di salvare la partita solo quando esco dall'interfaccia di gioco
-						//						controller.SalvaPartita(controller.trt);
+						controller.SalvaTorneo(controller.trn);
 					}
 					System.exit(0);
 				}
@@ -412,11 +412,69 @@ public class ControllerHome {
 		}		
 	}
 
-	private Torneo verificaDisponibilitaTorneo(String cod) {
-		if(this.trn.getCod().equals(cod)) {
-			return trn;
-		}else {			
-			return null;
+	private Torneo verificaDisponibilitaTorneo(String codiceTorneo) {
+		if(this.trn!=null) {//controllo che il torneo sia stato creato
+			if(!this.trn.getCodice().equals(codiceTorneo)) {//se il codice del torneo non è di quello appena creato provo a caricarlo da file
+				return CaricaTorneo(codiceTorneo);
+			}
+			return this.trn;
+		}else {//provo a caricarla da file
+			return CaricaTorneo(codiceTorneo);
 		}
+	}
+	
+	private Torneo CaricaTorneo(String codiceTorneo) {
+		try {
+			GsonBuilder gsonBuilder = new GsonBuilder();
+			//imposto un TypeAdapter per salvare correttamente l'elenco dei giocatori che contiene sia Bot che Giocatori
+			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
+			Gson gson=gsonBuilder.create();
+			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
+			Torneo trnTrovato=null;
+			String path="src/SalvataggioTornei.json";
+			FileReader fr = new FileReader(path);
+			JsonReader jsnReader=new JsonReader(fr);
+
+			if(jsnReader.peek() != JsonToken.NULL){
+				jsnReader.beginArray();
+				//carico il contenuto del file
+				while(jsnReader.hasNext()) {
+					Torneo t = gson.fromJson(jsnReader, Torneo.class);
+					if(t.getCodice().equals(codiceTorneo)) {
+						//mi salvo la partita richiesta
+						trnTrovato=t;
+					}else {
+						elencoTornei.add(t);
+					}
+				}
+				jsnReader.endArray();
+				jsnReader.close();
+			}
+
+			//salvo la lista di partite senza quella richiesta se trovata
+			//			if(prtTrovata!=null) {
+			//				FileWriter fw = new FileWriter(path);
+			//				JsonWriter jsnWriter = new JsonWriter(fw);
+			//				
+			//				//rimuovo la partita richiesta dall'elenco e lo salvo
+			//				elencoPartite.remove(prtTrovata);
+			//				
+			//				jsnWriter.beginArray();
+			//				for (Partita p : elencoPartite) {
+			//					gson.toJson(p, Partita.class, jsnWriter);
+			//					fw.write('\n');
+			//				}
+			//				jsnWriter.endArray();
+			//				jsnWriter.close();
+			//			}
+			return trnTrovato;
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			// TODO Auto-generated catch block
+			ioe.printStackTrace();
+		}
+		return null;
 	}
 }
