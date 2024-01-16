@@ -162,7 +162,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt1" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt1" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <ImageView fx:id="imgPrt1" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt1" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -192,7 +192,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt2" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt2" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt2" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt2" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -222,7 +222,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt3" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt3" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt3" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt3" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -252,7 +252,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt4" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt4" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt4" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -282,7 +282,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt5" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt5" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt5" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt5" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -312,7 +312,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt6" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt6" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt6" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt6" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -342,7 +342,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt7" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt7" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt7" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt7" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -372,7 +372,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt8" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt8" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt8" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt8" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -402,7 +402,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt9" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt9" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt9" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt9" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -432,7 +432,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="imgPrt10" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt10" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgPrt10" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt10" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <image>
                               <Image url="@IMGtorneo/nero.jpg" />
                            </image>
@@ -469,7 +469,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="imgFinale" fitHeight="86.0" fitWidth="91.0" onMouseClicked="#avviaFinale" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                  <ImageView fx:id="imgFinale" fitHeight="86.0" fitWidth="91.0" onMouseClicked="#avviaFinale" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
                         <Image url="@IMGtorneo/oro.jpg" />
                      </image>

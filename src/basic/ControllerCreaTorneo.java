@@ -157,7 +157,7 @@ public class ControllerCreaTorneo {
 		}	
 	} 
 
-	//Genero il codice per una nuova partita
+	//Genero il codice per un nuovo torneo
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
 		txtCodice.clear();
 		String uniqueCode = "";
