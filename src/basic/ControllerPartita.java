@@ -139,6 +139,9 @@ public class ControllerPartita implements Initializable{
 				listaCarteMano.get(i).setImage(null);
 			}
 		}
+		
+		System.out.println("prt.getGiocatoreCorrente().getCarteMano "+prt.getGiocatoreCorrente().getCarteMano().size());
+		System.out.println("prt.getCountTurnoGiocatore() "+prt.getCountTurnoGiocatore());
 	}
 
 
@@ -617,9 +620,6 @@ public class ControllerPartita implements Initializable{
 			for(ImageView i : listaCarteBanco) {	
 				if(i.getImage()==null) {
 					//if(listaCarteMano.get(posCartaCliccata)!=null) {
-					System.out.println("posCartaCliccata "+posCartaCliccata);
-					System.out.println("prt.getGiocatoreCorrente().getCarteMano "+prt.getGiocatoreCorrente().getCarteMano().size());
-					System.out.println("prt.getCountTurnoGiocatore() "+prt.getCountTurnoGiocatore());
 					if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
 					{
 						Alert alert = new Alert(AlertType.ERROR);
@@ -651,14 +651,14 @@ public class ControllerPartita implements Initializable{
 					listaCarteMano.get(posCartaCliccata).setImage(null);
 					prt.setBtnFineTurnoGiocatoreDisable(false);
 					btnFineTurnoGiocatore.setDisable(false);
-					break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo					
+					
+					//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
+					Carta c = prt.getGiocatoreCorrente().removeCartaMano(posCartaCliccata);
+					prt.lstCarteBancoAdd(c);
+					//}	
+					prt.setBtnInizioTurnoGiocatoreClicked(false);
+					break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo		
 				}
-
-
-				//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
-				prt.lstCarteBancoAdd(prt.getGiocatoreCorrente().removeCartaMano(posCartaCliccata));
-				//}	
-				prt.setBtnInizioTurnoGiocatoreClicked(false);
 			}
 		}
 	}
