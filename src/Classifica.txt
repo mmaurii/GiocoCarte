@@ -1,5 +1,5 @@
 120 , mario
-110 , gianni
+120 , gianni
 70 , pino
 180 , balto
 120 , b
@@ -7,13 +7,13 @@
 100 , h
 90 , pippo
 80 , baldo
-30 , marco
+40 , marco
 30 , luigi
-10 , gigi
-10 , bot1
+20 , gigi
+20 , bot1
 10 , anna
 0 , pamela
-0 , frank
+10 , frank
 0 , a
 0 , c
 0 , n

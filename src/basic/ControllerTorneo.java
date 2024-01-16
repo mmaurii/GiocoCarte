@@ -252,7 +252,7 @@ public class ControllerTorneo implements Initializable{
 		if(trn.getElencoPartite().size()>finaleATre) {//partite al turno 1
 			Iterator<Partita> iterator = trn.getElencoPartite().iterator();
 			ArrayList<Giocatore> giocatoriSFnl = new ArrayList<>();
-			
+
 			//calcolo lo shift delle partite in modo da centrarle nell'interfaccia
 			shiftPrtInterface=(maxNumPrt-trn.getElencoPartite().size())/2;
 
@@ -270,13 +270,19 @@ public class ControllerTorneo implements Initializable{
 						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
 						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
 						imgPrt[i].setDisable(true);
-						
+
 						//salvo i giocatori per la semifinale
 						giocatoriSFnl.add(prt.getElencoGiocatori().get(0));
 					}
 				}
 			}
 
+			System.out.println("numero giocatori sfnl: "+giocatoriSFnl.size());
+			System.out.println("elenco semifinali: "+trn.getElencoSemifinali());
+			if(trn.getElencoSemifinali()!=null) {
+				System.out.println("semifinale1: "+trn.getElencoSemifinali()[0]);
+				System.out.println("semifinale2: "+trn.getElencoSemifinali()[1]);
+			}
 			//inizializzo le semifinali
 			if(trn.getElencoSemifinali()==null&&giocatoriSFnl.size()==trn.getElencoPartite().size()) {
 				inizializzaSemiFinale(giocatoriSFnl);
@@ -291,7 +297,7 @@ public class ControllerTorneo implements Initializable{
 			//non visualizzo le semifinali
 			GridPane[] gpSemifinali = new GridPane[] {gpSemifinale1, gpSemifinale2};
 			ArrayList<Giocatore> giocatoriFnl = new ArrayList<>();
-			
+
 			for(int i =0; i<gpSemifinali.length; i++) {
 				//nascondo tutte le semifinali
 				gpSemifinali[i].setVisible(false);
@@ -320,7 +326,7 @@ public class ControllerTorneo implements Initializable{
 						//cambio l'immagine rappresentativa della partita e ne disattivo l'evento
 						imgPrt[i].setImage(new Image(pathImgPrtSvolta));
 						imgPrt[i].setDisable(true);
-						
+
 						//salvo il giocatore vincitore della partita per la finale
 						giocatoriFnl.add(prt.getElencoGiocatori().get(0));
 					}
@@ -330,11 +336,11 @@ public class ControllerTorneo implements Initializable{
 				//nascondo le line prt to something
 				lnPrt[i].setVisible(false);
 			}
-			
+
 			if(giocatoriFnl.size()==finaleATre&&trn.getFinale()==null) {
 				inizializzaFinale(giocatoriFnl);
 			}
-			
+
 			//controllo la finale
 			controlloInterfaceFinale();
 		}else{//semifinali al turno 1
@@ -484,7 +490,7 @@ public class ControllerTorneo implements Initializable{
 			return numeroGiocatori;
 		}
 	}
-	
+
 	private void inizializzaFinale(ArrayList<Giocatore> giocatoriFnl) {
 		//codice finale
 		UUID uniqueID = UUID.randomUUID();
@@ -520,7 +526,7 @@ public class ControllerTorneo implements Initializable{
 
 	private void inizializzaSemiFinale(ArrayList<Giocatore> giocatoriSFnl) {
 		Partita[] SFnl= new Partita[2];
-		
+
 		//codice semifinale
 		UUID uniqueID = UUID.randomUUID();
 		//'p' sta per partita
@@ -533,7 +539,7 @@ public class ControllerTorneo implements Initializable{
 		for(Giocatore i : giocatoriSFnl) {
 			i.setVite(nViteFinale);
 		}
-		
+
 		//divido i giocatori in due partite
 		int bound = giocatoriSFnl.size()/2;
 		ArrayList<Giocatore> giocatoriSFnl1=new ArrayList<Giocatore>(giocatoriSFnl.subList(0, bound));
@@ -554,7 +560,7 @@ public class ControllerTorneo implements Initializable{
 		for(Giocatore g : SFnl[0].getElencoGiocatori()) {
 			g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
 		}
-		
+
 		//mazzo semifinale2
 		m = new Mazzo();
 		//do le carte a ogni giocatore

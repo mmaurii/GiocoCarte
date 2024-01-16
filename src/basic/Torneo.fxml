@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerTorneo">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerTorneo">
    <top>
       <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="42.0" text="TORNEO" textAlignment="CENTER" textFill="#301fcc">
          <font>
@@ -43,6 +43,385 @@
                   <Line fx:id="ln2semifinale1" endX="226.0" endY="116.0" layoutX="80.0" layoutY="-67.0" startX="95.0" startY="116.0" />
                </children>
             </Pane>
+            <GridPane fx:id="gpPrt" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+              <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+              </rowConstraints>
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Line fx:id="ln1" endX="199.0" endY="-50.0" layoutX="-65.0" layoutY="-58.0" startX="99.0" startY="69.0" />
+                        <Line fx:id="ln2" endX="134.0" endY="-76.0" startX="109.0" startY="10.0" />
+                        <Line fx:id="ln3" endX="230.0" endY="-4.0" layoutX="-55.0" layoutY="-48.0" startX="230.0" startY="58.0" />
+                        <Line fx:id="ln4" endX="271.0" endY="-26.0" layoutX="-55.0" layoutY="-48.0" startX="300.0" startY="58.0" />
+                        <Line fx:id="ln5" endX="271.0" endY="-60.0" layoutX="-55.0" layoutY="-48.0" startX="372.0" startY="60.0" />
+                        <Line fx:id="ln8" endX="575.0" endY="-13.0" layoutX="-45.0" layoutY="-38.0" startX="575.0" startY="47.0" />
+                        <Line fx:id="ln6" endX="539.0" endY="-62.0" layoutX="-55.0" layoutY="-48.0" startX="443.0" startY="60.0" />
+                        <Line fx:id="ln7" endX="529.0" endY="-36.0" layoutX="-45.0" layoutY="-38.0" startX="502.0" startY="48.0" />
+                        <Line fx:id="ln9" endX="602.0" endY="-44.0" layoutX="-35.0" layoutY="-28.0" startX="633.0" startY="39.0" />
+                        <Line fx:id="ln10" endX="612.0" endY="-72.0" layoutX="-45.0" layoutY="-38.0" startX="712.0" startY="48.0" />
+                        <Line fx:id="ln11" endX="381.0" endY="-138.0" layoutX="-55.0" layoutY="-48.0" startX="300.70709228515625" startY="58.70709228515625" visible="false" />
+                        <Line fx:id="ln12" endX="395.0" endY="-149.0" layoutX="-45.0" layoutY="-38.0" startX="362.0" startY="51.0" visible="false" />
+                        <Line fx:id="ln13" endX="405.0" endY="-162.0" layoutX="-35.0" layoutY="-28.0" startX="424.0" startY="40.0" visible="false" />
+                     </children>
+                  </Pane>
+                  <GridPane fx:id="gpPrt1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 1" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt1" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt1" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt1" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 2" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt2" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt2" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt2" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 3" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt3" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt3" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt3" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 4" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt4" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt4" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt4" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 5" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt5" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt5" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt5" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="5">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 6" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt6" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt6" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt6" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="6">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 7" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt7" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt7" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt7" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="7">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 8" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt8" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt8" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt8" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 9" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt9" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt9" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt9" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+                  <GridPane fx:id="gpPrt10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="9">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 10" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblVincitorePrt10" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imgPrt10" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt10" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <image>
+                              <Image url="@IMGtorneo/nero.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <GridPane.margin>
+                        <Insets left="2.0" />
+                     </GridPane.margin>
+                  </GridPane>
+               </children>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </GridPane>
+            <GridPane fx:id="gpFinale" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="84.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="483.999983215332" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="84.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="FINALE" textAlignment="CENTER" textFill="#301fcc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblVincitoreFinale" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="imgFinale" fitHeight="86.0" fitWidth="91.0" onMouseClicked="#avviaFinale" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@IMGtorneo/oro.jpg" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnTorneoTornaAllaHome" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#TornaAllaHome" text="Torna alla Home" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                     <GridPane.margin>
+                        <Insets bottom="35.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+            </GridPane>
             <GridPane GridPane.rowIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -107,385 +486,6 @@
                      </children>
                   </GridPane>
                </children>
-            </GridPane>
-            <GridPane fx:id="gpPrt" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-              <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-              </rowConstraints>
-               <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Line fx:id="ln1" endX="199.0" endY="-50.0" layoutX="-65.0" layoutY="-58.0" startX="99.0" startY="69.0" />
-                        <Line fx:id="ln2" endX="134.0" endY="-76.0" startX="109.0" startY="10.0" />
-                        <Line fx:id="ln3" endX="230.0" endY="-4.0" layoutX="-55.0" layoutY="-48.0" startX="230.0" startY="58.0" />
-                        <Line fx:id="ln4" endX="271.0" endY="-26.0" layoutX="-55.0" layoutY="-48.0" startX="300.0" startY="58.0" />
-                        <Line fx:id="ln5" endX="271.0" endY="-60.0" layoutX="-55.0" layoutY="-48.0" startX="372.0" startY="60.0" />
-                        <Line fx:id="ln8" endX="575.0" endY="-13.0" layoutX="-45.0" layoutY="-38.0" startX="575.0" startY="47.0" />
-                        <Line fx:id="ln6" endX="539.0" endY="-62.0" layoutX="-55.0" layoutY="-48.0" startX="443.0" startY="60.0" />
-                        <Line fx:id="ln7" endX="529.0" endY="-36.0" layoutX="-45.0" layoutY="-38.0" startX="502.0" startY="48.0" />
-                        <Line fx:id="ln9" endX="602.0" endY="-44.0" layoutX="-35.0" layoutY="-28.0" startX="633.0" startY="39.0" />
-                        <Line fx:id="ln10" endX="612.0" endY="-72.0" layoutX="-45.0" layoutY="-38.0" startX="712.0" startY="48.0" />
-                        <Line fx:id="ln11" endX="381.0" endY="-138.0" layoutX="-55.0" layoutY="-48.0" startX="300.70709228515625" startY="58.70709228515625" visible="false" />
-                        <Line fx:id="ln12" endX="395.0" endY="-149.0" layoutX="-45.0" layoutY="-38.0" startX="362.0" startY="51.0" visible="false" />
-                        <Line fx:id="ln13" endX="405.0" endY="-162.0" layoutX="-35.0" layoutY="-28.0" startX="424.0" startY="40.0" visible="false" />
-                     </children>
-                  </Pane>
-                  <GridPane fx:id="gpPrt1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 1" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt1" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt1" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt1" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 2" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt2" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt2" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt2" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 3" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt3" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt3" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt3" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 4" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt4" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt4" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt4" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 5" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt5" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt5" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt5" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="5">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 6" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt6" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt6" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt6" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="6">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 7" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt7" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt7" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt7" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="7">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 8" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt8" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt8" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt8" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="8">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 9" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt9" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt9" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt9" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-                  <GridPane fx:id="gpPrt10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="9">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                     </rowConstraints>
-                     <children>
-                        <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="PARTITA 10" textAlignment="CENTER" textFill="#301fcc" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblVincitorePrt10" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgPrt10" fitHeight="84.0" fitWidth="65.0" onMouseClicked="#avviaPrt10" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <image>
-                              <Image url="@IMGtorneo/nero.jpg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                     <GridPane.margin>
-                        <Insets left="2.0" />
-                     </GridPane.margin>
-                  </GridPane>
-               </children>
-               <GridPane.margin>
-                  <Insets top="10.0" />
-               </GridPane.margin>
-            </GridPane>
-            <GridPane fx:id="gpFinale" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="84.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="483.999983215332" />
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="84.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="86.19998397827149" valignment="CENTER" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-               </rowConstraints>
-               <children>
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="FINALE" textAlignment="CENTER" textFill="#301fcc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblVincitoreFinale" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="imgFinale" fitHeight="86.0" fitWidth="91.0" onMouseClicked="#avviaFinale" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <image>
-                        <Image url="@IMGtorneo/oro.jpg" />
-                     </image>
-                  </ImageView>
-                  <Button fx:id="btnTorneoTornaAllaHome" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#TornaAllaHome" text="Torna alla Home" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets bottom="35.0" />
-                     </GridPane.margin>
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="10.0" />
-               </GridPane.margin>
             </GridPane>
          </children>
          <BorderPane.margin>
