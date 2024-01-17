@@ -20,6 +20,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -133,6 +134,11 @@ public class ControllerCreaTorneo {
 
 		//riapro la finestra di login
 		try {
+			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+			if (currentMediaPlayer != null) {
+	            currentMediaPlayer.stop();
+	        }
+			
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));

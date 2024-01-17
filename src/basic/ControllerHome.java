@@ -38,6 +38,7 @@ import javafx.util.Callback;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
@@ -91,6 +92,11 @@ public class ControllerHome {
 			//apro la finestra delle impostazioni e creazine partite e tornei
 
 			try {
+				
+				MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+				if (currentMediaPlayer != null) {
+		            currentMediaPlayer.stop();
+		        }
 				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));

@@ -39,6 +39,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
 
@@ -73,6 +74,11 @@ public class ControllerPartitaTorneo {
     	//apro la finestra per la creazine delle partite
 
 		try {
+			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+			if (currentMediaPlayer != null) {
+	            currentMediaPlayer.stop();
+	        }
+			
             VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaPartita.fxml"));
@@ -104,6 +110,11 @@ public class ControllerPartitaTorneo {
     	
     	//apro la finestra per la creazione del torneo
 		try {
+			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+			if (currentMediaPlayer != null) {
+	            currentMediaPlayer.stop();
+	        }
+			
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaTorneo.fxml"));

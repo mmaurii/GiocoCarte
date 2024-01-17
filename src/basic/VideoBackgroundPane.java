@@ -8,7 +8,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 public class VideoBackgroundPane extends Parent {
-
+	
+	private static MediaPlayer currentMediaPlayer;
+	
     public VideoBackgroundPane(String videoFile) {
         init(videoFile);
     }
@@ -32,5 +34,11 @@ public class VideoBackgroundPane extends Parent {
 
 
         getChildren().add(mediaView);
+        
+        currentMediaPlayer = mediaPlayer;
+    }
+    
+    public static MediaPlayer getCurrentMediaPlayer() {
+        return currentMediaPlayer;
     }
 }
