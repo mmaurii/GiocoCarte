@@ -217,7 +217,7 @@ public class ControllerCreaPartita {
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
 			controller.copiaInformazioniPartita(this.prt);
-			controller.populateListView();
+			controller.caricaClassifica();
 
 			stage.setScene(interfacciaHome);
 			stage.show();
@@ -228,7 +228,7 @@ public class ControllerCreaPartita {
 		}	
 	}   
 
-	public void populateListView() {
+	public void caricaGiocatoriRegistrati() {
 
 		try {
 			File file = new File(pathClassifica);

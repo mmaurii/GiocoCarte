@@ -61,7 +61,7 @@ public class Spacca extends Application {
             // Recuperare il controller del layout principale
             ControllerHome controller = loader.getController();
             // Caricare la classifica
-            controller.populateListView();
+            controller.caricaClassifica();
 
             // Aggiungere il layout principale sopra il VideoBackgroundPane
             StackPane stackPane = new StackPane();

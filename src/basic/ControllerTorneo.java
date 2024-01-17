@@ -110,7 +110,8 @@ public class ControllerTorneo implements Initializable{
 	@FXML Line ln1semifinale2;
 	@FXML Line ln2semifinale2;
 	@FXML Button btnTorneoTornaAllaHome;
-
+	@FXML Button btnClassifica;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle rbTorneo) {		
 		trn=(Torneo)rbTorneo.getObject("Torneo");
@@ -226,7 +227,7 @@ public class ControllerTorneo implements Initializable{
 
 			ControllerHome controller = loader.getController();
 
-			controller.populateListView();
+			controller.caricaClassifica();
 
 			StackPane stackPane = new StackPane();
 			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
@@ -242,8 +243,31 @@ public class ControllerTorneo implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//}		
 	}
+	
+	//creo un pop-up che visualizzi la classifica
+	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
+		BorderPane root = new BorderPane();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
+			root = loader.load();
+
+			loader.getController();
+
+			Stage stage = new Stage();
+			stage.setTitle("Classifica");
+			Scene scene = new Scene(root);
+			stage.setMinHeight(400);
+			stage.setMinWidth(200);
+			stage.setScene(scene);
+			stage.show();			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
 
 
 	private void setInterface() {

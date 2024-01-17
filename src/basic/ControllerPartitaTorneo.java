@@ -83,7 +83,7 @@ public class ControllerPartitaTorneo {
             stackPane.getChildren().addAll(videoBackgroundPane, root);
 
 			ControllerCreaPartita controller = loader.getController();
-			controller.populateListView();
+			controller.caricaGiocatoriRegistrati();
 			
 			
 			stage.setTitle("Crea una Partita");
@@ -114,7 +114,7 @@ public class ControllerPartitaTorneo {
             stackPane.getChildren().addAll(videoBackgroundPane, root);
 
 			ControllerCreaTorneo controller = loader.getController();
-			controller.populateListView();
+			controller.caricaGiocatoriRegistrati();
 			
 			
 			stage.setTitle("Crea un Torneo");

@@ -486,7 +486,7 @@ public class ControllerPartita implements Initializable{
 
 			ControllerHome controller = loader.getController();
 
-			controller.populateListView();
+			controller.caricaClassifica();
 			controller.copiaInformazioniPartita(prt);
 
 			StackPane stackPane = new StackPane();
@@ -574,8 +574,7 @@ public class ControllerPartita implements Initializable{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
 
-			ControllerPopUpClassifica controller = loader.getController();
-			controller.populateListView();
+			loader.getController();
 
 			Stage stage = new Stage();
 			stage.setTitle("Classifica");
