@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import java.util.*;
 import javafx.event.ActionEvent;
@@ -29,6 +30,12 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
 
@@ -57,11 +64,11 @@ public class ControllerPartita implements Initializable{
 	@FXML Label lblManoGiocatore;
 	@FXML Label lblVincitoreMano;
 	@FXML Button btnInizioTurnoGiocatore;
-	@FXML ImageView imgCartaMano1;
-	@FXML ImageView imgCartaMano2;
-	@FXML ImageView imgCartaMano3;
-	@FXML ImageView imgCartaMano4;
-	@FXML ImageView imgCartaMano5;
+	@FXML Pane imgCartaMano1;
+	@FXML Pane imgCartaMano2;
+	@FXML Pane imgCartaMano3;
+	@FXML Pane imgCartaMano4;
+	@FXML Pane imgCartaMano5;
 	@FXML TextField txtNumeroPrese;
 	@FXML GridPane gridPaneNumeroPrese=new GridPane();
 	@FXML Button btnIniziaNuovaMano;
@@ -75,14 +82,14 @@ public class ControllerPartita implements Initializable{
 	@FXML Label lblNumPreseNonValido;
 	@FXML ListView<String> lstViewPrese;
 	@FXML ListView<String> lstViewVite;
-	@FXML ImageView imgCartaBanco1;
-	@FXML ImageView imgCartaBanco2;
-	@FXML ImageView imgCartaBanco3;
-	@FXML ImageView imgCartaBanco4;
-	@FXML ImageView imgCartaBanco5;
-	@FXML ImageView imgCartaBanco6;
-	@FXML ImageView imgCartaBanco7;
-	@FXML ImageView imgCartaBanco8;
+	@FXML Pane imgCartaBanco1;
+	@FXML Pane imgCartaBanco2;
+	@FXML Pane imgCartaBanco3;
+	@FXML Pane imgCartaBanco4;
+	@FXML Pane imgCartaBanco5;
+	@FXML Pane imgCartaBanco6;
+	@FXML Pane imgCartaBanco7;
+	@FXML Pane imgCartaBanco8;
 
 	@Override
 	public void initialize(URL location, ResourceBundle rb) {
@@ -130,15 +137,27 @@ public class ControllerPartita implements Initializable{
 		}
 
 		//mostro le carte in output relative al giocatore del turno corrente
-		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+		
+		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		for(int i = 0; i<listaCarteMano.size();i++) {	
 			if(i<prt.getGiocatoreCorrente().getCarteMano().size()) {
-				Image newImg = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
-				listaCarteMano.get(i).setImage(newImg);
+				
+				Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
+				
+				BackgroundImage background = new BackgroundImage(
+		                backgroundImage,
+		                BackgroundRepeat.NO_REPEAT,
+		                BackgroundRepeat.NO_REPEAT,
+		                BackgroundPosition.CENTER,
+		                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+		        );
+				listaCarteMano.get(i).setBackground(new Background(background));
+				
 			}else {
-				listaCarteMano.get(i).setImage(null);
+				listaCarteMano.get(i).setBackground(null);
 			}
 		}
+		
 	}
 
 
@@ -406,9 +425,12 @@ public class ControllerPartita implements Initializable{
 		lblTurnoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(false);
 
-		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-		for(ImageView i : listaCarteBanco) {
-			i.setImage(null);
+		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+		
+		
+		
+		for(Pane i : listaCarteBanco) {
+			i.setBackground(null);
 		}
 		prt.getLstCarteBanco().clear();
 
@@ -444,9 +466,9 @@ public class ControllerPartita implements Initializable{
 		copriCarteGiocatore(false);
 
 		//elimino le carte dal banco
-		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-		for(ImageView i : listaCarteBanco) {	
-			i.setImage(null);
+		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+		for(Pane i : listaCarteBanco) {	
+			i.setBackground(null);
 		}
 		prt.getLstCarteBanco().clear();
 
@@ -609,13 +631,13 @@ public class ControllerPartita implements Initializable{
 	} 
 
 	private void giocaCartaMano(int posCartaCliccata) {
-		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//controllo che il giocatore abbia iniziato il suo turno
 		if(prt.isBtnInizioTurnoGiocatoreClicked()) {
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
-			for(ImageView i : listaCarteBanco) {	
-				if(i.getImage()==null) {
+			for(Pane i : listaCarteBanco) {	
+				if(i.getBackground()==null) {
 					//if(listaCarteMano.get(posCartaCliccata)!=null) {
 					if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
 					{
@@ -643,9 +665,19 @@ public class ControllerPartita implements Initializable{
 						lstViewVite.getItems().clear();
 						mostraVite();
 					}
-
-					i.setImage(new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso())));
-					listaCarteMano.get(posCartaCliccata).setImage(null);
+					
+					Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso()));
+					
+					BackgroundImage background = new BackgroundImage(
+			                backgroundImage,
+			                BackgroundRepeat.NO_REPEAT,
+			                BackgroundRepeat.NO_REPEAT,
+			                BackgroundPosition.CENTER,
+			                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+			        );
+							
+					i.setBackground(new Background(background));
+					listaCarteMano.get(posCartaCliccata).setBackground(null);
 					prt.setBtnFineTurnoGiocatoreDisable(false);
 					btnFineTurnoGiocatore.setDisable(false);
 					
@@ -719,15 +751,27 @@ public class ControllerPartita implements Initializable{
 
 	private void copriCarteGiocatore(boolean resume) {
 
-		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
 		int posProssimoGiocatore=resume?prt.getCountTurnoGiocatore():prt.getCountTurnoGiocatore()+1;
 		//rimetto le carte coperte
 		for(int i=0; i< listaCarteMano.size();i++) {
 			if(posProssimoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posProssimoGiocatore).getCarteMano().size()) {
-				listaCarteMano.get(i).setImage(new Image(getClass().getResourceAsStream(pathRetroCarta)));
+				
+				Image backgroundImage = new Image(getClass().getResourceAsStream(pathRetroCarta));
+				
+				BackgroundImage background = new BackgroundImage(
+		                backgroundImage,
+		                BackgroundRepeat.NO_REPEAT,
+		                BackgroundRepeat.NO_REPEAT,
+		                BackgroundPosition.CENTER,
+		                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+		        );
+				
+				
+				listaCarteMano.get(i).setBackground(new Background(background));
 			}else {
-				listaCarteMano.get(i).setImage(null);
+				listaCarteMano.get(i).setBackground(null);
 			}
 		}
 	}
@@ -867,25 +911,46 @@ public class ControllerPartita implements Initializable{
 	}
 
 	private void mostraCarteGiocatore() {
-		ArrayList<ImageView> listaCarteMano = new ArrayList<ImageView>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
+		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//mostro le carte del giocatore corrente
 		for(int i=0; i< listaCarteMano.size();i++) {
 			int posGiocatore=prt.getCountTurnoGiocatore();
 			if(posGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posGiocatore).getCarteMano().size()) {
-				Image newImg = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
-				listaCarteMano.get(i).setImage(newImg);
+				
+				Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
+				
+				BackgroundImage background = new BackgroundImage(
+		                backgroundImage,
+		                BackgroundRepeat.NO_REPEAT,
+		                BackgroundRepeat.NO_REPEAT,
+		                BackgroundPosition.CENTER,
+		                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+		        );
+				
+				listaCarteMano.get(i).setBackground(new Background(background));
+				
 			}else {
-				listaCarteMano.get(i).setImage(null);
+				listaCarteMano.get(i).setBackground(null);
 			}
 		}
 	}
 
 	private void mostraCarteBanco() {
 		//mostro le carte sul banco
-		ArrayList<ImageView> listaCarteBanco = new ArrayList<ImageView>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
+		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
 		for(int i=0; i< prt.getLstCarteBanco().size();i++) {
-			Image newImg = new Image(getClass().getResourceAsStream(prt.getLstCarteBanco().get(i).getPercorso()));
-			listaCarteBanco.get(i).setImage(newImg);
+			
+			Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getLstCarteBanco().get(i).getPercorso()));
+			
+			BackgroundImage background = new BackgroundImage(
+	                backgroundImage,
+	                BackgroundRepeat.NO_REPEAT,
+	                BackgroundRepeat.NO_REPEAT,
+	                BackgroundPosition.CENTER,
+	                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+	        );
+			
+			listaCarteBanco.get(i).setBackground(new Background(background));
 		}
 	}
 
