@@ -1,26 +1,16 @@
 package basic;
 
 import java.io.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
 import java.util.*;
-
-import org.w3c.dom.ls.LSInput;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,26 +21,29 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
 
 
+/**
+ * @author frizi
+ *
+ */
+/**
+ * @author frizi
+ *
+ */
+/**
+ * @author frizi
+ *
+ */
 public class ControllerHome {
 	//variabili di controllo
 	final int lungCodicePartita=10;
@@ -76,10 +69,12 @@ public class ControllerHome {
 	@FXML TextField txtCod;
 	@FXML Label lblCodErrato;
 	@FXML ListView<String> lstViewVite;
+	@FXML Button btnCreaAccount;
+	@FXML Label lblAccessoErrato;
 
 	//login
 	@FXML public void loginAction(ActionEvent actionEvent) {
-
+		lblAccessoErrato.setVisible(false);
 		String username_text = txtUsername.getText();
 		String password_text = txtPassword.getText();
 		Amministratore a = new Amministratore(username_text, password_text);
@@ -90,7 +85,6 @@ public class ControllerHome {
 			Stage stage = (Stage)btnLogin.getScene().getWindow();
 			stage.close();
 			//apro la finestra delle impostazioni e creazine partite e tornei
-
 			try {
 				
 				MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
@@ -105,19 +99,17 @@ public class ControllerHome {
 				StackPane stackPane = new StackPane();
 				stackPane.setStyle("-fx-background-color: #38B6FF;");
 				stackPane.getChildren().addAll(videoBackgroundPane, root);
-
-				stage.setTitle("Menu");
+				stage.setTitle("Gestione Funzionalità");
 				Scene interfacciaPartitaTorneo = new Scene(stackPane, 600, 400);
-
-
+				//avvio la nuova interfaccia
 				stage.setScene(interfacciaPartitaTorneo);
 				stage.show();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else {
-			//avvisa dell' errore
+		}else {//avviso che le credenziali di accesso sono errate
+			lblAccessoErrato.setVisible(true);
+			lblAccessoErrato.setText("nome e/o password errati");
 		}
 	}
 
@@ -126,7 +118,7 @@ public class ControllerHome {
 		String cod = txtCod.getText();
 
 		//controllo se il codice è un codice partita o torneo
-		if(cod!=null) {
+		if(cod!="") {
 			if(cod.charAt(0)=='t') {
 				Torneo t = verificaDisponibilitaTorneo(cod); //assegno la partita appena creata se no la cerco sul file.json e la carico o null se non si trova 
 				if(t==null) {
@@ -158,17 +150,20 @@ public class ControllerHome {
 					}
 				}
 			}
+		}else {
+			lblCodErrato.setText("inserisci un codice");
 		}
 	}
 
-	@FXML public void aggiungiAmministratore(MouseEvent mouseEvent) 
+	//apre un interfaccia per poter creare un nuovo account amministratore
+	@FXML public void creaAccount(ActionEvent actionEvent) 
 	{
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
             Parent root = loader.load();
 
 			ControllerPopUpAmministratori controller = loader.getController();
-			controller.populateLst();
+			controller.caricaAmministratori();
 
 			Stage stage = new Stage();
 			stage.setTitle("Amministratori");
@@ -179,21 +174,15 @@ public class ControllerHome {
 			stage.show();			
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	//METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
-	//metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
-	public void copiaInformazioniPartita(Partita tempPrt) {
-		this.prt=tempPrt;
-	}
-
-	public void copiaInformazioniTorneo(Torneo tempT) {
-		this.trn=tempT;
-	} 
-
+	/**
+	 * carica i dati dal file di testo della classifica 'classifica.txt'
+	 * e li visualizza in una TableView ordinati per miglior punteggio
+	 */
 	public void caricaClassifica() {
 		ArrayList<Line> row = new ArrayList<>();
 		try {
@@ -202,11 +191,11 @@ public class ControllerHome {
 			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();
 				String[] lineItems = line.split(" , ");
+				//salvo i dati caricati 
 				row.add(new Line(Integer.parseInt(lineItems[0]), lineItems[1]));
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		}
 
@@ -237,6 +226,7 @@ public class ControllerHome {
 		// Aggiunta dei dati alla TableView
 		int counter=1;
 		for(Line i : row) {
+			//numero gli utenti in ordine di punteggio
 			i.setRanking(counter);
 			tblClassifica.getItems().add(i);
 			counter++;
@@ -246,6 +236,7 @@ public class ControllerHome {
 		tblClassifica.setStyle("-fx-font-weight: bold;");
 	}
 
+	
 	private void avviaPartita() {
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)btnGioca.getScene().getWindow();
@@ -259,7 +250,7 @@ public class ControllerHome {
 
 			ResourceBundle rb = new ResourceBundle() {
 				@Override
-				protected Object handleGetObject(String key) {
+				protected Object handleGetObject(String key) {//risorse utilizzate per inizializzare il nuovo controller
 					if (key.equals("Partita")) return prt;
 					return null;
 				}
@@ -277,7 +268,7 @@ public class ControllerHome {
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
-			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {//controllo l'evento di chiusura dello stage
 				@Override
 				public void handle(WindowEvent e) {
 					Platform.exit();
@@ -290,24 +281,28 @@ public class ControllerHome {
 
 			stage.show();
 
-			//copio le informazioni relative alla partita in corso
-			//controller.copiaInformazioniPartita(prt);
 			//copio le informazioni relative alla label lblTurnoGiocatore
 			controller.copiaInformazioniLabel(lblTurnoGiocatore);
 
+			//controllo sei il giocatore è un bot
 			if(gio instanceof Bot) {
 				Bot b = (Bot)gio;
 				controller.t = new Thread(b);			
 				controller.t.setDaemon(true);
 				Platform.runLater(controller.t);
 			}
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * dato il codice di una partita il metodo controlla se è presente nel salvataggio.
+	 * Se è presente la partita ritorno la partita se no ritorno null
+	 * @param codicePartita
+	 * @return partita
+	 * 
+	 */
 	private Partita verificaDisponibilitaPartita(String codicePartita) {
 		if(this.prt!=null) {//controllo che la partita sia stata creata
 			if(!this.prt.getCodice().equals(codicePartita)) {//se il codice della partita non è di quella appena inserita la carico da file
@@ -319,6 +314,12 @@ public class ControllerHome {
 		}
 	}
 
+	
+	/**
+	 * se trovo una partita associata al codice nel salvataggio la carico se no ritorno null
+	 * @param codicePartita
+	 * @return partita
+	 */
 	private Partita CaricaPartita(String codicePartita) {
 		try {
 			GsonBuilder gsonBuilder = new GsonBuilder();
@@ -346,29 +347,10 @@ public class ControllerHome {
 				jsnReader.endArray();
 				jsnReader.close();
 			}
-
-			//salvo la lista di partite senza quella richiesta se trovata
-			//			if(prtTrovata!=null) {
-			//				FileWriter fw = new FileWriter(path);
-			//				JsonWriter jsnWriter = new JsonWriter(fw);
-			//				
-			//				//rimuovo la partita richiesta dall'elenco e lo salvo
-			//				elencoPartite.remove(prtTrovata);
-			//				
-			//				jsnWriter.beginArray();
-			//				for (Partita p : elencoPartite) {
-			//					gson.toJson(p, Partita.class, jsnWriter);
-			//					fw.write('\n');
-			//				}
-			//				jsnWriter.endArray();
-			//				jsnWriter.close();
-			//			}
 			return prtTrovata;
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 		return null;
@@ -387,7 +369,7 @@ public class ControllerHome {
 
 			ResourceBundle rb = new ResourceBundle() {
 				@Override
-				protected Object handleGetObject(String key) {
+				protected Object handleGetObject(String key) {//risorse utilizzate per inizializzare il nuovo controller
 					if (key.equals("Torneo")) return trn;
 					return null;
 				}
@@ -414,25 +396,18 @@ public class ControllerHome {
 			});
 
 			stage.show();
-
-			//copio le informazioni relative alla partita in corso
-			//controller.copiaInformazioniPartita(prt);
-			//copio le informazioni relative alla label lblTurnoGiocatore
-			//			controller.copiaInformazioniLabel(lblTurnoGiocatore);
-
-			//			if(gio instanceof Bot) {
-			//				Bot b = (Bot)gio;
-			//				controller.t = new Thread(b);			
-			//				controller.t.setDaemon(true);
-			//				Platform.runLater(controller.t);
-			//			}
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
 
+	/**
+	 * dato il codice di un torneo il metodo controlla se è presente nel salvataggio.
+	 * Se è presente il torneo ritorno il torneo se no ritorno null
+	 * @param codiceTorneo
+	 * @return torneo
+	 * 
+	 */
 	private Torneo verificaDisponibilitaTorneo(String codiceTorneo) {
 		if(this.trn!=null) {//controllo che il torneo sia stato creato
 			if(!this.trn.getCodice().equals(codiceTorneo)) {//se il codice del torneo non è di quello appena creato provo a caricarlo da file
@@ -444,6 +419,11 @@ public class ControllerHome {
 		}
 	}
 	
+	/**
+	 * se trovo un torneo associato al codice nel salvataggio lo carico se no ritorno null
+	 * @param codiceTorneo
+	 * @return Torneo
+	 */
 	private Torneo CaricaTorneo(String codiceTorneo) {
 		try {
 			GsonBuilder gsonBuilder = new GsonBuilder();
@@ -472,28 +452,10 @@ public class ControllerHome {
 				jsnReader.close();
 			}
 
-			//salvo la lista di partite senza quella richiesta se trovata
-			//			if(prtTrovata!=null) {
-			//				FileWriter fw = new FileWriter(path);
-			//				JsonWriter jsnWriter = new JsonWriter(fw);
-			//				
-			//				//rimuovo la partita richiesta dall'elenco e lo salvo
-			//				elencoPartite.remove(prtTrovata);
-			//				
-			//				jsnWriter.beginArray();
-			//				for (Partita p : elencoPartite) {
-			//					gson.toJson(p, Partita.class, jsnWriter);
-			//					fw.write('\n');
-			//				}
-			//				jsnWriter.endArray();
-			//				jsnWriter.close();
-			//			}
 			return trnTrovato;
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 		return null;

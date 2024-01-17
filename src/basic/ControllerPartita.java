@@ -509,7 +509,6 @@ public class ControllerPartita implements Initializable{
 			ControllerHome controller = loader.getController();
 
 			controller.caricaClassifica();
-			controller.copiaInformazioniPartita(prt);
 
 			StackPane stackPane = new StackPane();
 			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco

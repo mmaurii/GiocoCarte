@@ -64,6 +64,7 @@ public class ControllerPartitaTorneo {
     @FXML ComboBox<String> comboNVite;
     @FXML Button btnModificaGiocatori;
     @FXML Button btnCreaTorneo;
+	@FXML Button btnTornaAllaHome;
 
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
@@ -138,57 +139,6 @@ public class ControllerPartitaTorneo {
 		}
     }
     
-    /**
-    @FXML ListView<String> lstClassifica;
-
-    public void populateListView() {
-    	
-		try {
-			File file = new File(pathClassifica);
-			Scanner scan = new Scanner(file);			
-			while(scan.hasNext()) {
-				String line = scan.nextLine();
-				lstClassifica.getItems().add(line);	
-			}
-			scan.close();
-		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
-			fnfe.printStackTrace();
-		}
-	
-		//ordino in base al punteggio la listview
-		lstClassifica.getItems().sort(Comparator.reverseOrder());			
-		int counter=1;
-		ArrayList<String> listaNumerata = new ArrayList<String>();
-		for(String i : lstClassifica.getItems()) {
-			i=(counter+"\t"+i);
-			listaNumerata.add(i);
-			counter++;
-		}
-		
-		//metto il contenuto della listview in grassetto
-		lstClassifica.setStyle("-fx-font-weight: bold;");
-		
-		//centro le scritte all'interno della listview
-		lstClassifica.setCellFactory(param -> new ListCell<String>() {
-		    @Override
-		    protected void updateItem(String item, boolean empty) {
-		        super.updateItem(item, empty);
-		        if (empty || item == null) {
-		            setText(null);
-		            setGraphic(null);
-		        } else {
-		            setText(item);
-		            setAlignment(javafx.geometry.Pos.CENTER);
-		        }
-		    }
-		});
-		
-		//mostro in output la classifica
-		lstClassifica.getItems().setAll(listaNumerata);
-    }
-    **/
-    
     @FXML public void modificaGiocatori(ActionEvent actionEvent) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpGiocatori.fxml"));
@@ -234,4 +184,37 @@ public class ControllerPartitaTorneo {
 		}
     	
     } 
+    
+	//torno alla Schermata di login
+	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
+		//chiudo la finestra di di creazione della partita e torno alla finestra di login
+		Stage stage = (Stage)btnTornaAllaHome.getScene().getWindow();
+		stage.close();
+
+		//riapro la finestra di login
+		try {
+            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+			Parent root = loader.load();
+
+			ControllerHome controller = loader.getController();	
+			
+			StackPane stackPane = new StackPane();
+            stackPane.setStyle("-fx-background-color: #38B6FF;");
+            stackPane.getChildren().addAll(videoBackgroundPane, root);
+            
+			stage.setTitle("HOME");
+			Scene interfacciaHome = new Scene(stackPane, 600, 400);
+			//carico le informazioni della classifica
+			controller.caricaClassifica();
+
+			stage.setScene(interfacciaHome);
+			stage.show();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}   
 }

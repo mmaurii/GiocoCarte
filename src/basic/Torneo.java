@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Torneo {
 
-	private String cod;
-	private ArrayList<Partita> elencoPartite;
-	private Partita[] elencoSemifinali;
-	private Partita finale;
-	private Giocatore vincitore = null; 
+	private String cod;//codice identificativo
+	private ArrayList<Partita> elencoPartite; //elenco partite dei 'gironi'
+	private Partita[] elencoSemifinali;	
+	private Partita finale;	
+	private Giocatore vincitore = null; 	//giocatore vincitore, il pareggio è contemplato ma cmq verrà definito un vincitore
 	
 	public Torneo(String cod) {
 		this.cod=cod;

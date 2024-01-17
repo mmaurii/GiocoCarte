@@ -200,7 +200,7 @@ public class ControllerCreaPartita {
 		}
 	}
 
-	//torno alla Schermata di login
+	//torno alla Schermata di gestione funzionalità torneo partita e giocatori
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di di creazione della partita e torno alla finestra di login
 		Stage stage = (Stage)btnTornaAllaHome.getScene().getWindow();
@@ -215,20 +215,20 @@ public class ControllerCreaPartita {
 			
             VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();
 
-			ControllerHome controller = loader.getController();	
+			ControllerPartitaTorneo controller = loader.getController();	
 			
 			StackPane stackPane = new StackPane();
             stackPane.setStyle("-fx-background-color: #38B6FF;");
             stackPane.getChildren().addAll(videoBackgroundPane, root);
             
-			stage.setTitle("HOME");
+			stage.setTitle("Gestione Funzionalità");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
-			controller.copiaInformazioniPartita(this.prt);
-			controller.caricaClassifica();
+			//controller.copiaInformazioniPartita(this.prt);
+			//controller.caricaClassifica();
 
 			stage.setScene(interfacciaHome);
 			stage.show();

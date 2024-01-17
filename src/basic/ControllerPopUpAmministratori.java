@@ -88,7 +88,7 @@ public class ControllerPopUpAmministratori {
     }
     
     // Metodi ausiliari
-    public void populateLst() {
+    public void caricaAmministratori() {
     	
  		try {
  			File file = new File(path);
