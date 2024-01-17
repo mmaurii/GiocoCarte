@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -50,6 +51,7 @@ public class ControllerCreaTorneo {
 	@FXML Button btnGeneraCodice;
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
+	@FXML Label lblErrore;
 
 	@FXML public void numeroGiocatori(ActionEvent actionEvent) {
 
@@ -161,6 +163,7 @@ public class ControllerCreaTorneo {
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
 		txtCodice.clear();
 		String uniqueCode = "";
+		lblErrore.setVisible(false);
 
 		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {
 			try {
@@ -181,16 +184,17 @@ public class ControllerCreaTorneo {
 			}catch(IOException eIO) {
 				System.out.println(eIO);    		
 			}
+			
+			ArrayList<Partita> elencoPrt=generaPartite();
+			this.trn = new Torneo(uniqueCode, elencoPrt);
+			
+			//salvo il torneo su file.json
+			SalvaTorneo(this.trn);
 		}else {
-			txtCodice.setStyle("-fx-text-fill: red;");
-			txtCodice.setText("Inserisci il numero esatto di Partecipanti");
+			lblErrore.setVisible(true);
+			//txtCodice.setStyle("-fx-text-fill: red;");
+			lblErrore.setText("Inserisci il numero esatto di Partecipanti");
 		}
-
-		ArrayList<Partita> elencoPrt=generaPartite();
-		this.trn = new Torneo(uniqueCode, elencoPrt);
-		
-		//salvo il torneo su file.json
-		SalvaTorneo(this.trn);
 	}
 
 	//METODI AUSILIARI

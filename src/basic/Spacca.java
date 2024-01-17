@@ -80,6 +80,4 @@ public class Spacca extends Application {
             e.printStackTrace();
         }
     }
-
-
 }

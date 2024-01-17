@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -44,7 +45,8 @@ public class ControllerCreaPartita {
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
 	@FXML Button btnTornaAllaHome;
-	
+	@FXML Label lblErrore;
+
 	//aggiungo alla partita un nuovo utente  
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
 		String nome = txtNomeUtente.getText();
@@ -117,6 +119,7 @@ public class ControllerCreaPartita {
 
 	//Genero il codice per una nuova partita
 	@FXML public void GeneraCodice(ActionEvent actionEvent) {
+		lblErrore.setVisible(false);
 		if(lstUtentiPartita.getItems().size()<=8) {
 			if(lstUtentiPartita.getItems().size()>1) {
 				try {
@@ -184,12 +187,14 @@ public class ControllerCreaPartita {
 					System.out.println(eIO);    		
 				}
 			}else {
-				txtCodice.setStyle("-fx-text-fill: red;");
-				txtCodice.setText("Aggiungi almeno 2 giocatori");
+				lblErrore.setVisible(true);
+				//txtCodice.setStyle("-fx-text-fill: red;");
+				lblErrore.setText("Aggiungi almeno 2 giocatori");
 			}
 		}else {
-			txtCodice.setStyle("-fx-text-fill: red;");
-			txtCodice.setText("Puoi aggiungere al massimo 8 giocatori");
+			lblErrore.setVisible(true);
+			//txtCodice.setStyle("-fx-text-fill: red;");
+			lblErrore.setText("Puoi aggiungere al massimo 8 giocatori");
 
 		}
 	}
