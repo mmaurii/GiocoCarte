@@ -113,9 +113,9 @@
                   </Label>
                   <TableView fx:id="tblClassifica" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <columns>
-                      <TableColumn fx:id="rankingTblClassifica" prefWidth="34.39999467134476" />
-                        <TableColumn fx:id="nomiTblClassifica" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="110.39998016357421" text="NOME" />
-                      <TableColumn fx:id="ptTblClassifica" prefWidth="63.999996185302734" text="PUNTI" />
+                      <TableColumn fx:id="rankingTblClassifica" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="35.0" />
+                        <TableColumn fx:id="nomiTblClassifica" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="110.0" text="NOME" />
+                      <TableColumn fx:id="ptTblClassifica" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="48.0" text="PUNTI" />
                     </columns>
                      <GridPane.margin>
                         <Insets bottom="15.0" left="10.0" right="10.0" />

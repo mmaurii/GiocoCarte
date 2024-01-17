@@ -580,7 +580,7 @@ public class ControllerPartita implements Initializable{
 			stage.setTitle("Classifica");
 			Scene scene = new Scene(root);
 			stage.setMinHeight(400);
-			stage.setMinWidth(200);
+			stage.setMinWidth(270);
 			stage.setScene(scene);
 			stage.show();			
 
