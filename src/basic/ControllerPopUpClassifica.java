@@ -1,6 +1,8 @@
 package basic;
 
 import java.io.*;
+import java.net.URL;
+
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -22,6 +24,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,16 +34,21 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
+import javafx.beans.value.ObservableValue;
 
-public class ControllerPopUpClassifica {
+public class ControllerPopUpClassifica implements Initializable{
 	//variabili di controllo
 	int numeroCarteAGiocatore;
     final int lungCodicePartita=10;
@@ -50,58 +58,73 @@ public class ControllerPopUpClassifica {
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
     String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
     int countTurnoGiocatore=0;
-    private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
     boolean dichiaraPrese=true;
     boolean primoTurno=true;
     String pathClassifica = "src/Classifica.txt";
     String pathStatus = "src/Status.txt";
     
-    
-    @FXML ListView<String> lstClassifica;
+	@FXML TableView<Line> tblClassifica;
+	@FXML TableColumn<Line, Integer> rankingTblClassifica;
+	@FXML TableColumn<Line, Integer> ptTblClassifica;
+	@FXML TableColumn<Line, String> nomiTblClassifica;
 
-    public void populateListView() {
-    	
- 		try {
- 			File file = new File(pathClassifica);
- 			Scanner scan = new Scanner(file);			
- 			while(scan.hasNext()) {
- 				String line = scan.nextLine();
- 				lstClassifica.getItems().add(line);	
- 			}
- 			scan.close();
- 		} catch (FileNotFoundException fnfe) {
- 			// TODO Auto-generated catch block
- 			fnfe.printStackTrace();
- 		}
- 		
- 		lstClassifica.getItems().sort(Comparator.reverseOrder());
- 		int counter=1;
- 		ArrayList<String> listaNumerata = new ArrayList<String>();
- 		for(String i : lstClassifica.getItems()) {
- 			i=(counter+"\t"+i);
- 			listaNumerata.add(i);
- 			counter++;
- 		}
- 		
- 		//metto il contenuto della listview in grassetto
- 		lstClassifica.setStyle("-fx-font-weight: bold;");
- 		
-		//centro le scritte all'interno della listview
-		lstClassifica.setCellFactory(param -> new ListCell<String>() {
-		    @Override
-		    protected void updateItem(String item, boolean empty) {
-		        super.updateItem(item, empty);
-		        if (empty || item == null) {
-		            setText(null);
-		            setGraphic(null);
-		        } else {
-		            setText(item);
-		            setAlignment(javafx.geometry.Pos.CENTER);
-		        }
-		    }
+
+	public void caricaClassifica() {
+		ArrayList<Line> row = new ArrayList<>();
+		try {
+			File file = new File(pathClassifica);
+			Scanner scan = new Scanner(file);	
+			while(scan.hasNext()) {//carico i dati dal file di testo
+				String line = scan.nextLine();
+				String[] lineItems = line.split(" , ");
+				row.add(new Line(Integer.parseInt(lineItems[0]), lineItems[1]));
+			}
+			scan.close();
+		} catch (FileNotFoundException fnfe) {
+			// TODO Auto-generated catch block
+			fnfe.printStackTrace();
+		}
+
+		//ordino in base al punteggio la lista
+		row.sort(null);	
+        // Associazione delle ObservableList alle TableColumn
+		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<Line, String> cell) {
+				// p.getValue() returns the Person instance for a particular TableView row
+				return cell.getValue().nomeProperty();
+			}
+		});
+
+		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+				// p.getValue() returns the Person instance for a particular TableView row
+				return cell.getValue().rankingProperty().asObject();
+			}
 		});
 		
- 		//mostro in output la classifica
- 		lstClassifica.getItems().setAll(listaNumerata);
-     }
+		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+				// p.getValue() returns the Person instance for a particular TableView row
+				return cell.getValue().puntiProperty().asObject();
+			}
+		});
+
+		// Aggiunta dei dati alla TableView
+		int counter=1;
+		for(Line i : row) {
+			i.setRanking(counter);
+			tblClassifica.getItems().add(i);
+			counter++;
+		}
+
+		//metto il contenuto della tableview in grassetto
+		tblClassifica.setStyle("-fx-font-weight: bold;");
+	}
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		caricaClassifica();
+	}
 }

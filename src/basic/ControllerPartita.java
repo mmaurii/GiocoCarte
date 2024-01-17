@@ -508,7 +508,7 @@ public class ControllerPartita implements Initializable{
 
 			ControllerHome controller = loader.getController();
 
-			controller.populateListView();
+			controller.caricaClassifica();
 			controller.copiaInformazioniPartita(prt);
 
 			StackPane stackPane = new StackPane();
@@ -596,14 +596,13 @@ public class ControllerPartita implements Initializable{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
 
-			ControllerPopUpClassifica controller = loader.getController();
-			controller.populateListView();
+			loader.getController();
 
 			Stage stage = new Stage();
 			stage.setTitle("Classifica");
 			Scene scene = new Scene(root);
 			stage.setMinHeight(400);
-			stage.setMinWidth(200);
+			stage.setMinWidth(270);
 			stage.setScene(scene);
 			stage.show();			
 

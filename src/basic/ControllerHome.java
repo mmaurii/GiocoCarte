@@ -1,17 +1,20 @@
 package basic;
 
 import java.io.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.util.*;
+
+import org.w3c.dom.ls.LSInput;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,15 +27,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 
 
@@ -52,7 +66,10 @@ public class ControllerHome {
 	@FXML private TextField txtUsername;
 	@FXML private PasswordField txtPassword;
 	@FXML private Button btnLogin;
-	@FXML ListView<String> lstClassifica;
+	@FXML TableView<Line> tblClassifica;
+	@FXML TableColumn<Line, Integer> rankingTblClassifica;
+	@FXML TableColumn<Line, Integer> ptTblClassifica;
+	@FXML TableColumn<Line, String> nomiTblClassifica;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Button btnGioca;
 	@FXML TextField txtCod;
@@ -171,14 +188,15 @@ public class ControllerHome {
 		this.trn=tempT;
 	} 
 
-	public void populateListView() {
-
+	public void caricaClassifica() {
+		ArrayList<Line> row = new ArrayList<>();
 		try {
 			File file = new File(pathClassifica);
-			Scanner scan = new Scanner(file);			
-			while(scan.hasNext()) {
+			Scanner scan = new Scanner(file);	
+			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();
-				lstClassifica.getItems().add(line);	
+				String[] lineItems = line.split(" , ");
+				row.add(new Line(Integer.parseInt(lineItems[0]), lineItems[1]));
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
@@ -186,43 +204,40 @@ public class ControllerHome {
 			fnfe.printStackTrace();
 		}
 
-		//ordino in base al punteggio la listview
-		lstClassifica.getItems().sort(Comparator.reverseOrder());			
+		//ordino in base al punteggio la lista
+		row.sort(null);	
+        // Associazione delle ObservableList alle TableColumn
+		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<Line, String> cell) {
+				// p.getValue() returns the Person instance for a particular TableView row
+				return cell.getValue().nomeProperty();
+			}
+		});
+
+		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+				// p.getValue() returns the Person instance for a particular TableView row
+				return cell.getValue().rankingProperty().asObject();
+			}
+		});
+		
+		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+				// p.getValue() returns the Person instance for a particular TableView row
+				return cell.getValue().puntiProperty().asObject();
+			}
+		});
+
+		// Aggiunta dei dati alla TableView
 		int counter=1;
-		ArrayList<String> listaNumerata = new ArrayList<String>();
-		for(String i : lstClassifica.getItems()) {
-			i=(counter+"\t"+i);
-			listaNumerata.add(i);
+		for(Line i : row) {
+			i.setRanking(counter);
+			tblClassifica.getItems().add(i);
 			counter++;
 		}
 
-		//metto il contenuto della listview in grassetto
-		lstClassifica.setStyle("-fx-font-weight: bold;");
-
-		//sistemo le scritte all'interno della listview
-		lstClassifica.setCellFactory(param -> new ListCell<String>() {
-			@Override
-			protected void updateItem(String item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty || item == null) {
-					setText(null);
-					setGraphic(null);
-				} else {
-					TextFlow textFlow = new TextFlow();
-					Text text = new Text(item);
-					text.setStyle("-fx-fill: black; -fx-font-size: 14px;"); // Imposta lo stile del testo
-					textFlow.getChildren().add(text);
-
-					// Imposta l'allineamento del testo a giustificato
-					textFlow.setTextAlignment(TextAlignment.JUSTIFY);
-					textFlow.setLineSpacing(5); // Regola lo spaziamento tra le righe se necessario
-
-					setGraphic(textFlow);
-				}
-			}
-		});
-		//mostro in output la classifica
-		lstClassifica.getItems().setAll(listaNumerata);
+		//metto il contenuto della tableview in grassetto
+		tblClassifica.setStyle("-fx-font-weight: bold;");
 	}
 
 	private void avviaPartita() {

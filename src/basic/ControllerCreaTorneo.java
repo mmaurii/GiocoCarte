@@ -146,7 +146,7 @@ public class ControllerCreaTorneo {
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
 			controller.copiaInformazioniTorneo(this.trn);
-			controller.populateListView();
+			controller.caricaClassifica();
 
 			stage.setScene(interfacciaHome);
 			stage.show();
@@ -303,7 +303,7 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 		}
 	}
 
-	public void populateListView() {
+	public void caricaGiocatoriRegistrati() {
 		try {
 			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
