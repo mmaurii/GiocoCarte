@@ -53,24 +53,30 @@ public class ControllerCreaTorneo {
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
 	@FXML Label lblErrore;
+	@FXML Label lblErroreNumGiocatori;
 
 	@FXML public void numeroGiocatori(ActionEvent actionEvent) {
-
-		numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
-		if(numeroGiocatori>6&&numeroGiocatori<=40) 
-		{
-			btnAggiungiUtente.setDisable(false);
-			btnNumeroGiocatori.setDisable(true);
-			lstGiocatoriRegistrati.setDisable(false);
-			listUtentiTorneo.setDisable(false);
-		}else {
-			btnAggiungiUtente.setDisable(true);
-			txtNumeroGiocatori.clear();
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Errore");
-			alert.setHeaderText(null);
-			alert.setContentText("Inserire un numero di giocatori minimo di 4 e massimo di 40"); 
-			alert.showAndWait();
+		lblErroreNumGiocatori.setVisible(false);
+		try {
+			numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
+			if(numeroGiocatori>6&&numeroGiocatori<=40) 
+			{
+				btnAggiungiUtente.setDisable(false);
+				btnNumeroGiocatori.setDisable(true);
+				lstGiocatoriRegistrati.setDisable(false);
+				listUtentiTorneo.setDisable(false);
+			}else {
+				btnAggiungiUtente.setDisable(true);
+				txtNumeroGiocatori.clear();
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Errore");
+				alert.setHeaderText(null);
+				alert.setContentText("Inserire un numero di giocatori minimo di 4 e massimo di 40"); 
+				alert.showAndWait();
+			}
+		}catch(NumberFormatException nfe) {
+			lblErroreNumGiocatori.setVisible(true);
+			lblErroreNumGiocatori.setText("inserisci un numero di giocatori compreso tra: "+(minGiocatoriTorneo+1)+" e "+maxGiocatoriTorneo);
 		}
 	}
 
@@ -88,10 +94,8 @@ public class ControllerCreaTorneo {
 				fw.write(0 + " , " + nome + "\n");
 				fw.close();
 			} catch (FileNotFoundException FNFe) {
-				// TODO Auto-generated catch block
 				FNFe.printStackTrace();
 			} catch (IOException IOe) {
-				// TODO Auto-generated catch block
 				IOe.printStackTrace();
 			}
 		}else {
@@ -136,9 +140,9 @@ public class ControllerCreaTorneo {
 		try {
 			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 			if (currentMediaPlayer != null) {
-	            currentMediaPlayer.stop();
-	        }
-			
+				currentMediaPlayer.stop();
+			}
+
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
@@ -190,10 +194,10 @@ public class ControllerCreaTorneo {
 			}catch(IOException eIO) {
 				System.out.println(eIO);    		
 			}
-			
+
 			ArrayList<Partita> elencoPrt=generaPartite();
 			this.trn = new Torneo(uniqueCode, elencoPrt);
-			
+
 			//salvo il torneo su file.json
 			SalvaTorneo(this.trn);
 		}else {
@@ -213,7 +217,7 @@ public class ControllerCreaTorneo {
 		{
 			numeroPartite = 2;
 		}
-		
+
 		int numeroGiocatoriPartita = giocatoriTrn.size()/numeroPartite;	
 
 		for(int i = 1; i <= numeroPartite; i++) 
@@ -239,7 +243,7 @@ public class ControllerCreaTorneo {
 			//aggiungo la partita all'elenco delle partite del torneo
 			elencoPrt.add(p);
 		}
-		
+
 		return elencoPrt;
 	}
 
@@ -247,7 +251,7 @@ public class ControllerCreaTorneo {
 	Partita creaPartita(ArrayList<Giocatore> giocatoriPrt) {
 		UUID uniqueID = UUID.randomUUID();
 		String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
-//			File file = new File(pathStatus);
+		//			File file = new File(pathStatus);
 
 
 		/**
@@ -266,14 +270,14 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 }**/
 
 		//lblCodice.setStyle("-fx-control-inner-background: grey;");
-//			txtCodice.setText(uniqueCode);
+		//			txtCodice.setText(uniqueCode);
 
-//			btnGeneraCodice.setDisable(true);
+		//			btnGeneraCodice.setDisable(true);
 
 		//salvo il codice corrente nel file di status
-//			FileWriter fw = new FileWriter(file);
-//			fw.write("codicePartita , "+uniqueCode);
-//			fw.close();
+		//			FileWriter fw = new FileWriter(file);
+		//			fw.write("codicePartita , "+uniqueCode);
+		//			fw.close();
 
 		//do le vite e le carte ai giocatori
 		String nVite = comboNVite.getSelectionModel().getSelectedItem();

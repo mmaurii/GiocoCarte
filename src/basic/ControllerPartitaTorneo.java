@@ -65,7 +65,8 @@ public class ControllerPartitaTorneo {
     @FXML Button btnModificaGiocatori;
     @FXML Button btnCreaTorneo;
 	@FXML Button btnTornaAllaHome;
-
+	@FXML Button btnModificaTornei;
+	
     //crea partita
     @FXML public void CreaPartitaAction(ActionEvent actionEvent) {
     	//chiudo la finestra di scelta per la creazione di partite o tornei
@@ -185,7 +186,30 @@ public class ControllerPartitaTorneo {
     	
     } 
     
-	//torno alla Schermata di login
+    @FXML public void modificaTornei(ActionEvent actionEvent) {
+        
+    	try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpTornei.fxml"));
+            Parent root = loader.load();
+
+			ControllerPopUpTornei controller = loader.getController();
+			controller.caricaTornei();
+
+			Stage stage = new Stage();
+			stage.setTitle("Tornei");
+			Scene scene = new Scene(root);
+			stage.setHeight(450);
+		    stage.setWidth(500);
+			stage.setScene(scene);
+			stage.show();			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    } 
+    
+    //torno alla Schermata di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di di creazione della partita e torno alla finestra di login
 		Stage stage = (Stage)btnTornaAllaHome.getScene().getWindow();
