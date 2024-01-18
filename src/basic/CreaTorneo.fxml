@@ -155,7 +155,7 @@
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
                         </ListView>
-                        <Button fx:id="btnGeneraCodice" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#GeneraCodice" stylesheets="@../style3.css" text="Crea Torneo" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+                        <Button fx:id="btnGeneraCodice" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#GeneraCodice" stylesheets="@../style3.css" text="Crea Torneo" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

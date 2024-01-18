@@ -63,21 +63,21 @@ public class ControllerPopUpClassifica implements Initializable{
     String pathClassifica = "src/Classifica.txt";
     String pathStatus = "src/Status.txt";
     
-	@FXML TableView<Line> tblClassifica;
-	@FXML TableColumn<Line, Integer> rankingTblClassifica;
-	@FXML TableColumn<Line, Integer> ptTblClassifica;
-	@FXML TableColumn<Line, String> nomiTblClassifica;
+	@FXML TableView<LineClassifica> tblClassifica;
+	@FXML TableColumn<LineClassifica, Integer> rankingTblClassifica;
+	@FXML TableColumn<LineClassifica, Integer> ptTblClassifica;
+	@FXML TableColumn<LineClassifica, String> nomiTblClassifica;
 
 
 	public void caricaClassifica() {
-		ArrayList<Line> row = new ArrayList<>();
+		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
 			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);	
 			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();
 				String[] lineItems = line.split(" , ");
-				row.add(new Line(Integer.parseInt(lineItems[0]), lineItems[1]));
+				row.add(new LineClassifica(Integer.parseInt(lineItems[0]), lineItems[1]));
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
@@ -88,22 +88,22 @@ public class ControllerPopUpClassifica implements Initializable{
 		//ordino in base al punteggio la lista
 		row.sort(null);	
         // Associazione delle ObservableList alle TableColumn
-		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, String>, ObservableValue<String>>() {
-			public ObservableValue<String> call(CellDataFeatures<Line, String> cell) {
+		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<LineClassifica, String> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row
 				return cell.getValue().nomeProperty();
 			}
 		});
 
-		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
-			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row
 				return cell.getValue().rankingProperty().asObject();
 			}
 		});
 		
-		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
-			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row
 				return cell.getValue().puntiProperty().asObject();
 			}
@@ -111,7 +111,7 @@ public class ControllerPopUpClassifica implements Initializable{
 
 		// Aggiunta dei dati alla TableView
 		int counter=1;
-		for(Line i : row) {
+		for(LineClassifica i : row) {
 			i.setRanking(counter);
 			tblClassifica.getItems().add(i);
 			counter++;

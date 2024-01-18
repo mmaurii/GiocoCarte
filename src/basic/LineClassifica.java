@@ -5,18 +5,18 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Line implements Comparable<Line>{
+public class LineClassifica implements Comparable<LineClassifica>{
 	IntegerProperty ranking = new SimpleIntegerProperty();
 	IntegerProperty punti = new SimpleIntegerProperty();
 	StringProperty nome = new SimpleStringProperty();
 	
-	public Line(int ranking, int punti, String nome){
+	public LineClassifica(int ranking, int punti, String nome){
 		setRanking(ranking);
 		setPunti(punti);
 		setNome(nome);
 	}
 	
-    public Line(int punti, String nome) {
+    public LineClassifica(int punti, String nome) {
 		setPunti(punti);
 		setNome(nome);
 	}
@@ -58,7 +58,7 @@ public class Line implements Comparable<Line>{
 	}
 
 	@Override
-	public int compareTo(Line ln) {//ordina in ordine decrescente in base ai punti
+	public int compareTo(LineClassifica ln) {//ordina in ordine decrescente in base ai punti
         return Integer.compare(ln.getPunti(), getPunti());
 	}
 }

@@ -60,10 +60,10 @@ public class ControllerHome {
 	@FXML private TextField txtUsername;
 	@FXML private PasswordField txtPassword;
 	@FXML private Button btnLogin;
-	@FXML TableView<Line> tblClassifica;
-	@FXML TableColumn<Line, Integer> rankingTblClassifica;
-	@FXML TableColumn<Line, Integer> ptTblClassifica;
-	@FXML TableColumn<Line, String> nomiTblClassifica;
+	@FXML TableView<LineClassifica> tblClassifica;
+	@FXML TableColumn<LineClassifica, Integer> rankingTblClassifica;
+	@FXML TableColumn<LineClassifica, Integer> ptTblClassifica;
+	@FXML TableColumn<LineClassifica, String> nomiTblClassifica;
 	@FXML Label lblTurnoGiocatore;
 	@FXML Button btnGioca;
 	@FXML TextField txtCod;
@@ -86,11 +86,11 @@ public class ControllerHome {
 			stage.close();
 			//apro la finestra delle impostazioni e creazine partite e tornei
 			try {
-				
+
 				MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 				if (currentMediaPlayer != null) {
-		            currentMediaPlayer.stop();
-		        }
+					currentMediaPlayer.stop();
+				}
 				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
@@ -158,23 +158,37 @@ public class ControllerHome {
 	//apre un interfaccia per poter creare un nuovo account amministratore
 	@FXML public void creaAccount(ActionEvent actionEvent) 
 	{
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
-            Parent root = loader.load();
+		lblAccessoErrato.setVisible(false);
+		String username_text = txtUsername.getText();
+		String password_text = txtPassword.getText();
+		Amministratore a = new Amministratore(username_text, password_text);
+		//controllo nome utente e password
+		if(a.verificaAdmin()){
+			txtUsername.clear();
+			txtPassword.clear();
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
+				Parent root = loader.load();
 
-			ControllerPopUpAmministratori controller = loader.getController();
-			controller.caricaAmministratori();
+				ControllerPopUpAmministratori controller = loader.getController();
+				//controller.caricaAmministratori();
 
-			Stage stage = new Stage();
-			stage.setTitle("Amministratori");
-			Scene scene = new Scene(root);
-			stage.setHeight(450);
-		    stage.setWidth(500);
-			stage.setScene(scene);
-			stage.show();			
+				Stage stage = new Stage();
+				stage.setTitle("Amministratori");
+				Scene scene = new Scene(root);
+				stage.setHeight(450);
+				stage.setWidth(335);
+				stage.setScene(scene);
+				stage.show();			
 
-		} catch (IOException e) {
-			e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {//avviso che le credenziali di accesso sono errate
+			txtUsername.clear();
+			txtPassword.clear();
+			lblAccessoErrato.setVisible(true);
+			lblAccessoErrato.setText("nome e/o password errati");
 		}
 	}
 
@@ -184,7 +198,7 @@ public class ControllerHome {
 	 * e li visualizza in una TableView ordinati per miglior punteggio
 	 */
 	public void caricaClassifica() {
-		ArrayList<Line> row = new ArrayList<>();
+		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
 			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);	
@@ -192,7 +206,7 @@ public class ControllerHome {
 				String line = scan.nextLine();
 				String[] lineItems = line.split(" , ");
 				//salvo i dati caricati 
-				row.add(new Line(Integer.parseInt(lineItems[0]), lineItems[1]));
+				row.add(new LineClassifica(Integer.parseInt(lineItems[0]), lineItems[1]));
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
@@ -201,23 +215,23 @@ public class ControllerHome {
 
 		//ordino in base al punteggio la lista
 		row.sort(null);	
-        // Associazione delle ObservableList alle TableColumn
-		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, String>, ObservableValue<String>>() {
-			public ObservableValue<String> call(CellDataFeatures<Line, String> cell) {
+		// Associazione delle ObservableList alle TableColumn
+		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<LineClassifica, String> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row
 				return cell.getValue().nomeProperty();
 			}
 		});
 
-		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
-			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row
 				return cell.getValue().rankingProperty().asObject();
 			}
 		});
-		
-		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<Line, Integer>, ObservableValue<Integer>>() {
-			public ObservableValue<Integer> call(CellDataFeatures<Line, Integer> cell) {
+
+		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row
 				return cell.getValue().puntiProperty().asObject();
 			}
@@ -225,7 +239,7 @@ public class ControllerHome {
 
 		// Aggiunta dei dati alla TableView
 		int counter=1;
-		for(Line i : row) {
+		for(LineClassifica i : row) {
 			//numero gli utenti in ordine di punteggio
 			i.setRanking(counter);
 			tblClassifica.getItems().add(i);
@@ -236,7 +250,7 @@ public class ControllerHome {
 		tblClassifica.setStyle("-fx-font-weight: bold;");
 	}
 
-	
+
 	private void avviaPartita() {
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)btnGioca.getScene().getWindow();
@@ -314,7 +328,7 @@ public class ControllerHome {
 		}
 	}
 
-	
+
 	/**
 	 * se trovo una partita associata al codice nel salvataggio la carico se no ritorno null
 	 * @param codicePartita
@@ -418,7 +432,7 @@ public class ControllerHome {
 			return CaricaTorneo(codiceTorneo);
 		}
 	}
-	
+
 	/**
 	 * se trovo un torneo associato al codice nel salvataggio lo carico se no ritorno null
 	 * @param codiceTorneo

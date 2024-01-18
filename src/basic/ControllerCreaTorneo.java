@@ -65,16 +65,14 @@ public class ControllerCreaTorneo {
 				btnNumeroGiocatori.setDisable(true);
 				lstGiocatoriRegistrati.setDisable(false);
 				listUtentiTorneo.setDisable(false);
+				btnGeneraCodice.setDisable(false);
 			}else {
-				btnAggiungiUtente.setDisable(true);
 				txtNumeroGiocatori.clear();
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Errore");
-				alert.setHeaderText(null);
-				alert.setContentText("Inserire un numero di giocatori minimo di 4 e massimo di 40"); 
-				alert.showAndWait();
+				lblErroreNumGiocatori.setVisible(true);
+				lblErroreNumGiocatori.setText("inserisci un numero di giocatori compreso tra: "+(minGiocatoriTorneo+1)+" e "+maxGiocatoriTorneo);
 			}
 		}catch(NumberFormatException nfe) {
+			txtNumeroGiocatori.clear();
 			lblErroreNumGiocatori.setVisible(true);
 			lblErroreNumGiocatori.setText("inserisci un numero di giocatori compreso tra: "+(minGiocatoriTorneo+1)+" e "+maxGiocatoriTorneo);
 		}
@@ -82,30 +80,33 @@ public class ControllerCreaTorneo {
 
 	//aggiungo alla partita un nuovo utente  
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
+		lblErroreNumGiocatori.setVisible(true);
 		String nome = txtNomeUtente.getText();
-		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-		if(!nome.trim().equals("") && !listUtentiTorneo.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
-			txtNomeUtente.clear();
-			listUtentiTorneo.getItems().add(nome);
-			lstGiocatoriRegistrati.getItems().add(nome);
-			giocatoriTrn.add(new Giocatore(nome));
-			try{
-				FileWriter fw = new FileWriter(pathClassifica, true);
-				fw.write(0 + " , " + nome + "\n");
-				fw.close();
-			} catch (FileNotFoundException FNFe) {
-				FNFe.printStackTrace();
-			} catch (IOException IOe) {
-				IOe.printStackTrace();
+		if(!containsSpecialCharacters(nome)) {
+			//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
+			if(!nome.trim().equals("") && !listUtentiTorneo.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
+				txtNomeUtente.clear();
+				listUtentiTorneo.getItems().add(nome);
+				lstGiocatoriRegistrati.getItems().add(nome);
+				giocatoriTrn.add(new Giocatore(nome));
+				try{
+					FileWriter fw = new FileWriter(pathClassifica, true);
+					fw.write(0 + " , " + nome + "\n");
+					fw.close();
+				} catch (FileNotFoundException FNFe) {
+					FNFe.printStackTrace();
+				} catch (IOException IOe) {
+					IOe.printStackTrace();
+				}
+			}else {
+				txtNomeUtente.clear();
+				lblErroreNumGiocatori.setVisible(true);
+				lblErroreNumGiocatori.setText("Il Nickname inserito esiste già, riprova con un altro Nickname");
 			}
 		}else {
 			txtNomeUtente.clear();
-
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Errore");
-			alert.setHeaderText(null);
-			alert.setContentText("Il Nickname inserito è già stato selezionato da un altro giocatore, riprova con un altro Nickname");
-			alert.showAndWait();
+			lblErroreNumGiocatori.setVisible(true);
+			lblErroreNumGiocatori.setText("il nome non può contenere: \"!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/\"");
 		}
 	}
 
@@ -390,5 +391,17 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
+	}
+	
+	private boolean containsSpecialCharacters(String text) {
+		// Definisci qui l'insieme di caratteri speciali che vuoi controllare
+		String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
+
+		for (char c : text.toCharArray()) {
+			if (specialCharacters.contains(String.valueOf(c))) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

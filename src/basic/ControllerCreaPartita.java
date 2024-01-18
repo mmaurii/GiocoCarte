@@ -47,46 +47,43 @@ public class ControllerCreaPartita {
 	@FXML ComboBox<String> comboNVite;
 	@FXML Button btnTornaAllaHome;
 	@FXML Label lblErrore;
+	@FXML Label lblErroreNomeUtente;
 
 	//aggiungo alla partita un nuovo utente  
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
+		lblErroreNomeUtente.setVisible(false);
 		String nome = txtNomeUtente.getText();
-		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-		if(!nome.trim().equals("") && !lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
-			txtNomeUtente.clear();
-			lstUtentiPartita.getItems().add(nome);
-			lstGiocatoriRegistrati.getItems().add(nome);
-			giocatoriPrt.add(new Giocatore(nome));
+		if(!containsSpecialCharacters(nome)) {
+			//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
+			if(!nome.trim().equals("") && !lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
+				txtNomeUtente.clear();
+				lstUtentiPartita.getItems().add(nome);
+				lstGiocatoriRegistrati.getItems().add(nome);
+				giocatoriPrt.add(new Giocatore(nome));
 
-			try{
-
-				FileWriter fw = new FileWriter(pathClassifica, true);
-				fw.write(0 + " , " + nome + "\n");
-				fw.close();
-
-			} catch (FileNotFoundException FNFe) {
-				// TODO Auto-generated catch block
-				FNFe.printStackTrace();
-			} catch (IOException IOe) {
-				// TODO Auto-generated catch block
-				IOe.printStackTrace();
+				try{
+					FileWriter fw = new FileWriter(pathClassifica, true);
+					fw.write(0 + " , " + nome + "\n");
+					fw.close();
+				} catch (FileNotFoundException FNFe) {
+					FNFe.printStackTrace();
+				} catch (IOException IOe) {
+					IOe.printStackTrace();
+				}
+			}else {
+				txtNomeUtente.clear();
+				lblErroreNomeUtente.setVisible(true);
+				lblErroreNomeUtente.setText("Il Nickname inserito esiste già, riprova con un altro Nickname");
 			}
 		}else {
 			txtNomeUtente.clear();
-
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Errore");
-			alert.setHeaderText(null);
-			alert.setContentText("Il Nickname inserito è già stato selezionato da un altro giocatore, riprova con un altro Nickname");
-
-			alert.showAndWait();
+			lblErroreNomeUtente.setVisible(true);
+			lblErroreNomeUtente.setText("il nome non può contenere: \"!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/\"");
 		}
-
 	}
 
 	//aggiungo alla partita un utente già registrato
 	@FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
-
 		String nomeUtente = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
 
 		if(!lstUtentiPartita.getItems().contains(nomeUtente) && nomeUtente != null)
@@ -109,7 +106,7 @@ public class ControllerCreaPartita {
 			txtNomeUtenteRobot.clear();
 		}
 	}
-	
+
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
 		String nomeUtente=lstUtentiPartita.getSelectionModel().getSelectedItem();
 		int posUtente = lstUtentiPartita.getItems().indexOf(nomeUtente);
@@ -129,22 +126,6 @@ public class ControllerCreaPartita {
 					//'p' sta per partita
 					String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 					File file = new File(pathStatus);
-
-
-					/**
-    			File file = new File(pathStatus);
-    			Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
-    			String codPartita = scan.nextLine().split(" , ")[1];
-    			scan.close();
-
-    			//controllare univocita
-    			codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
-
-    			//aggiungo al codice gli 0 non rilevanti
-    			int nCifre = codPartita.length();
-    			for(int i=0; i<lungCodicePartita-nCifre; i++) {
-    				codPartita="0"+codPartita;
-    			}**/
 
 					//lblCodice.setStyle("-fx-control-inner-background: grey;");
 					txtCodice.setText(uniqueCode);
@@ -196,7 +177,6 @@ public class ControllerCreaPartita {
 			lblErrore.setVisible(true);
 			//txtCodice.setStyle("-fx-text-fill: red;");
 			lblErrore.setText("Puoi aggiungere al massimo 8 giocatori");
-
 		}
 	}
 
@@ -210,20 +190,19 @@ public class ControllerCreaPartita {
 		try {
 			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 			if (currentMediaPlayer != null) {
-	            currentMediaPlayer.stop();
-	        }
-			
-            VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
-			
+				currentMediaPlayer.stop();
+			}
+
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();
+			loader.getController();	
 
-			ControllerPartitaTorneo controller = loader.getController();	
-			
 			StackPane stackPane = new StackPane();
-            stackPane.setStyle("-fx-background-color: #38B6FF;");
-            stackPane.getChildren().addAll(videoBackgroundPane, root);
-            
+			stackPane.setStyle("-fx-background-color: #38B6FF;");
+			stackPane.getChildren().addAll(videoBackgroundPane, root);
+
 			stage.setTitle("Gestione Funzionalità");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
@@ -234,13 +213,11 @@ public class ControllerCreaPartita {
 			stage.show();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}   
 
 	public void caricaGiocatoriRegistrati() {
-
 		try {
 			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
@@ -323,5 +300,17 @@ public class ControllerCreaPartita {
 			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
+	}
+
+	private boolean containsSpecialCharacters(String text) {
+		// Definisci qui l'insieme di caratteri speciali che vuoi controllare
+		String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";
+
+		for (char c : text.toCharArray()) {
+			if (specialCharacters.contains(String.valueOf(c))) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

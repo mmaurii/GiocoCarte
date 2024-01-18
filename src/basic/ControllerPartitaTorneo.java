@@ -163,7 +163,6 @@ public class ControllerPartitaTorneo {
 	}
     
     @FXML public void modificaPartite(ActionEvent actionEvent) {
-    
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpPartite.fxml"));
             Parent root = loader.load();
@@ -175,19 +174,15 @@ public class ControllerPartitaTorneo {
 			stage.setTitle("Partite");
 			Scene scene = new Scene(root);
 			stage.setHeight(450);
-		    stage.setWidth(500);
+		    stage.setWidth(350);
 			stage.setScene(scene);
 			stage.show();			
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
     } 
     
     @FXML public void modificaTornei(ActionEvent actionEvent) {
-        
     	try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpTornei.fxml"));
             Parent root = loader.load();
@@ -199,14 +194,12 @@ public class ControllerPartitaTorneo {
 			stage.setTitle("Tornei");
 			Scene scene = new Scene(root);
 			stage.setHeight(450);
-		    stage.setWidth(500);
+		    stage.setWidth(350);
 			stage.setScene(scene);
 			stage.show();			
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	
     } 
     
     //torno alla Schermata di login

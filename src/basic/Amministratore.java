@@ -20,7 +20,6 @@ public class Amministratore extends Giocatore{
 	}
 
 	public boolean verificaAdmin() {
-
 		String u;
 		String p;
 		try {
