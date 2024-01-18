@@ -31,13 +31,15 @@ public class ControllerPopUpAmministratori implements Initializable {
 	@FXML TextField txtUsername; 
 	@FXML TextField txtPassword; 
 	@FXML Label lblErroreAmministratore;
-	
+
 	@FXML public void salva(ActionEvent actionEvent) {
 		List<LineAmministratori> items = tblAmministratori.getItems();
-		try (FileWriter writer = new FileWriter(path)) {
+		try {
+			FileWriter writer = new FileWriter(path);
 			for (LineAmministratori item : items) {
 				writer.write(item.toString() + '\n');
 			}
+			writer.close();
 		} catch (IOException e) {
 			System.err.println("Errore: " + e.getMessage());
 		}
@@ -98,7 +100,7 @@ public class ControllerPopUpAmministratori implements Initializable {
 				return cell.getValue().nomeProperty();
 			}
 		});
-		
+
 		tblPasswordAmministratori.setCellValueFactory(new Callback<CellDataFeatures<LineAmministratori, String>, ObservableValue<String>>() {
 			public ObservableValue<String> call(CellDataFeatures<LineAmministratori, String> cell) {
 				// p.getValue() returns the Person instance for a particular TableView row

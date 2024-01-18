@@ -73,7 +73,7 @@
                   <Insets bottom="10.0" top="60.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="btnFineTurnoGiocatore" alignment="CENTER" disable="true" maxHeight="50.0" maxWidth="200.0" mnemonicParsing="false" onAction="#fineTurnoGiocatore" onMouseReleased="#fineTurnoGiocatoreControlloBot" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+            <Button fx:id="btnFineTurnoGiocatore" alignment="CENTER" disable="true" maxHeight="50.0" maxWidth="200.0" mnemonicParsing="false" onAction="#fineTurnoGiocatore" prefHeight="25.0" prefWidth="94.0" text="finisci il turno" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

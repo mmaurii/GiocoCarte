@@ -6,21 +6,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
-import javax.swing.plaf.RootPaneUI;
-
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import javafx.stage.Window;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.concurrent.Task;
-import javafx.fxml.FXML;
 
 public class Bot extends Giocatore implements Runnable,Serializable{
 	/**
@@ -206,15 +200,15 @@ public class Bot extends Giocatore implements Runnable,Serializable{
 						int n = rand.nextInt(this.carte.size())+1;
 						while(y.hasNext()) {
 							o = y.next();
-							if(o instanceof ImageView) {
-								ImageView iv = (ImageView)o;
-								if(iv.getId().equals(idNodo+n)) {
+							if(o instanceof Pane) {
+								Pane pn = (Pane)o;
+								if(pn.getId().equals(idNodo+n)) {
 									MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
-											iv.getScaleX(), iv.getScaleY(),  // Le coordinate x e y dell'evento
+											pn.getScaleX(), pn.getScaleY(),  // Le coordinate x e y dell'evento
 											0, 0, 
 											null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
 											);	
-									iv.fireEvent(mouseEvent);
+									pn.fireEvent(mouseEvent);
 									return;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
 								}
 							}

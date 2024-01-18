@@ -198,26 +198,11 @@ public class ControllerTorneo implements Initializable{
 	//torno all' interfaccia di login
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco del torneo e torno alla finestra di login iniziale
-		//		Alert alert = new Alert(AlertType.ERROR);
-		//		alert.setTitle("ATTENZIONE!");
-		//		alert.setHeaderText(null);
-		//		alert.setContentText("Sei sicuro di voler chiudere il torneo, NON potrai più riaprirlo!");
-		//		ButtonType buttonTypeSi = new ButtonType("Sì");
-		//		ButtonType buttonTypeNo = new ButtonType("No");
-		//
-		//		alert.getButtonTypes().setAll(buttonTypeSi, buttonTypeNo);
-		//		Optional<ButtonType> result = alert.showAndWait();
-		//
-		//
-		//
-		//		if (result.isPresent() && result.get() == buttonTypeSi) {
 		Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
 		stage.close();
 
-
 		//il metodo controlla se la partita si è conclusa e nel caso la elimina dal file
 		SalvaTorneo(trn);
-
 
 		try {
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
@@ -305,13 +290,6 @@ public class ControllerTorneo implements Initializable{
 						giocatoriSFnl.add(prt.getElencoGiocatori().get(0));
 					}
 				}
-			}
-
-			System.out.println("numero giocatori sfnl: "+giocatoriSFnl.size());
-			System.out.println("elenco semifinali: "+trn.getElencoSemifinali());
-			if(trn.getElencoSemifinali()!=null) {
-				System.out.println("semifinale1: "+trn.getElencoSemifinali()[0]);
-				System.out.println("semifinale2: "+trn.getElencoSemifinali()[1]);
 			}
 			//inizializzo le semifinali
 			if(trn.getElencoSemifinali()==null&&giocatoriSFnl.size()==trn.getElencoPartite().size()) {
@@ -432,12 +410,20 @@ public class ControllerTorneo implements Initializable{
 	private void controlloInterfaceFinale() {
 		//controllo la finale
 		if(trn.getFinale()!=null) {
-			if(trn.getFinale().getElencoGiocatori().size()==1) {
-				//inserisco il nome del vincitore della finale se è già stata giocata
-				lblVincitoreFinale.setText(trn.getFinale().getElencoGiocatori().get(0).getNome());
-				//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
-				imgFinale.setImage(new Image(pathImgPrtSvolta));
-				imgFinale.setDisable(true);
+			if (trn.getFinale().getElencoGiocatori().size()==1) {//controllo che la finale sia già stata giocata
+				if (trn.getVincitore() != null) {
+					//inserisco il nome del vincitore della finale se è già stata giocata
+					lblVincitoreFinale.setText(trn.getVincitore().getNome());
+					//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
+					imgFinale.setImage(new Image(pathImgPrtSvolta));
+					imgFinale.setDisable(true);
+				} else {
+					//dichiaro il pareggio
+					lblVincitoreFinale.setText("finita in pareggio");
+					//cambio l'immagine rappresentativa della finale e ne disattivo l'evento
+					imgFinale.setImage(new Image(pathImgPrtSvolta));
+					imgFinale.setDisable(true);
+				} 
 			}
 		}
 	}

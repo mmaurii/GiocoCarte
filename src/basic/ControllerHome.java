@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -69,7 +70,6 @@ public class ControllerHome {
 	@FXML TextField txtCod;
 	@FXML Label lblCodErrato;
 	@FXML ListView<String> lstViewVite;
-	@FXML Button btnCreaAccount;
 	@FXML Label lblAccessoErrato;
 
 	//login
@@ -152,43 +152,6 @@ public class ControllerHome {
 			}
 		}else {
 			lblCodErrato.setText("inserisci un codice");
-		}
-	}
-
-	//apre un interfaccia per poter creare un nuovo account amministratore
-	@FXML public void creaAccount(ActionEvent actionEvent) 
-	{
-		lblAccessoErrato.setVisible(false);
-		String username_text = txtUsername.getText();
-		String password_text = txtPassword.getText();
-		Amministratore a = new Amministratore(username_text, password_text);
-		//controllo nome utente e password
-		if(a.verificaAdmin()){
-			txtUsername.clear();
-			txtPassword.clear();
-			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
-				Parent root = loader.load();
-
-				ControllerPopUpAmministratori controller = loader.getController();
-				//controller.caricaAmministratori();
-
-				Stage stage = new Stage();
-				stage.setTitle("Amministratori");
-				Scene scene = new Scene(root);
-				stage.setHeight(450);
-				stage.setWidth(335);
-				stage.setScene(scene);
-				stage.show();			
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else {//avviso che le credenziali di accesso sono errate
-			txtUsername.clear();
-			txtPassword.clear();
-			lblAccessoErrato.setVisible(true);
-			lblAccessoErrato.setText("nome e/o password errati");
 		}
 	}
 

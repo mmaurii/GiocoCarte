@@ -22,8 +22,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class ControllerCreaTorneo {
 	//variabili di controllo
@@ -34,8 +32,8 @@ public class ControllerCreaTorneo {
 	ArrayList<Giocatore> giocatoriTrn = new ArrayList<Giocatore>();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
-	int minGiocatoriTorneo = 6;
-	int maxGiocatoriTorneo = 40;
+	final int minGiocatoriTorneo = 6;
+	final int maxGiocatoriTorneo = 40;
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	String pathStatus = "src/Status.txt";
 	String pathClassifica = "src/Classifica.txt";
@@ -55,6 +53,10 @@ public class ControllerCreaTorneo {
 	@FXML Label lblErrore;
 	@FXML Label lblErroreNumGiocatori;
 
+	/**
+	 * ottiene il numero di giocatori da cui sara composto il torneo
+	 * @param actionEvent
+	 */
 	@FXML public void numeroGiocatori(ActionEvent actionEvent) {
 		lblErroreNumGiocatori.setVisible(false);
 		try {
@@ -125,10 +127,12 @@ public class ControllerCreaTorneo {
 
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
 		String nomeUtente=listUtentiTorneo.getSelectionModel().getSelectedItem();
-		int posUtente = listUtentiTorneo.getItems().indexOf(nomeUtente);
-		listUtentiTorneo.getItems().remove(posUtente); 
-		giocatoriTrn.remove(posUtente);
-		lstGiocatoriRegistrati.getItems().add(nomeUtente);
+		if(nomeUtente!=null) {
+			int posUtente = listUtentiTorneo.getItems().indexOf(nomeUtente);
+			listUtentiTorneo.getItems().remove(posUtente); 
+			giocatoriTrn.remove(posUtente);
+			lstGiocatoriRegistrati.getItems().add(nomeUtente);
+		}
 	}
 
 	//torno alla Schermata di login
@@ -157,9 +161,6 @@ public class ControllerCreaTorneo {
 
 			stage.setTitle("Gestione Funzionalità");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
-			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
-			//controller.copiaInformazioniTorneo(this.trn);
-			//controller.caricaClassifica();
 
 			stage.setScene(interfacciaHome);
 			stage.show();
@@ -248,37 +249,10 @@ public class ControllerCreaTorneo {
 		return elencoPrt;
 	}
 
-	//modifica metodo fa cose sbagliate?
-	Partita creaPartita(ArrayList<Giocatore> giocatoriPrt) {
+	private Partita creaPartita(ArrayList<Giocatore> giocatoriPrt) {
 		UUID uniqueID = UUID.randomUUID();
-		String uniqueCode = uniqueID.toString().replaceAll("-", "").substring(0, 8);
-		//			File file = new File(pathStatus);
-
-
-		/**
-File file = new File(pathStatus);
-Scanner scan = new Scanner(file);//controlla errori legati alla lettura e scrittura del file
-String codPartita = scan.nextLine().split(" , ")[1];
-scan.close();
-
-//controllare univocita
-codPartita = Integer.toString(Integer.parseInt(codPartita)+1);
-
-//aggiungo al codice gli 0 non rilevanti
-int nCifre = codPartita.length();
-for(int i=0; i<lungCodicePartita-nCifre; i++) {
-		codPartita="0"+codPartita;
-}**/
-
-		//lblCodice.setStyle("-fx-control-inner-background: grey;");
-		//			txtCodice.setText(uniqueCode);
-
-		//			btnGeneraCodice.setDisable(true);
-
-		//salvo il codice corrente nel file di status
-		//			FileWriter fw = new FileWriter(file);
-		//			fw.write("codicePartita , "+uniqueCode);
-		//			fw.close();
+		//la 'p' iniziale distingue i codici partita da quelli dei tornei
+		String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 
 		//do le vite e le carte ai giocatori
 		String nVite = comboNVite.getSelectionModel().getSelectedItem();
@@ -392,7 +366,7 @@ for(int i=0; i<lungCodicePartita-nCifre; i++) {
 			ioe.printStackTrace();
 		}
 	}
-	
+
 	private boolean containsSpecialCharacters(String text) {
 		// Definisci qui l'insieme di caratteri speciali che vuoi controllare
 		String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";

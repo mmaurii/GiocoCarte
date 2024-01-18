@@ -22,13 +22,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class ControllerCreaPartita {
 	//variabili di controllo
 	final int lungCodicePartita=10;
 	final int nViteDefault=5;
+	final int maxUtentiPrt=8;
+	final int minUtentiPrt=1;//il limite inferiore è escluso e quello superiore incluso
 	Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
@@ -45,35 +45,41 @@ public class ControllerCreaPartita {
 	@FXML Button btnGeneraCodice;
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
-	@FXML Button btnTornaAllaHome;
+	@FXML Button tornaIndietro;
 	@FXML Label lblErrore;
 	@FXML Label lblErroreNomeUtente;
 
 	//aggiungo alla partita un nuovo utente  
-	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
+	@FXML public void aggiungiUtente(ActionEvent actionEvent) {
 		lblErroreNomeUtente.setVisible(false);
 		String nome = txtNomeUtente.getText();
 		if(!containsSpecialCharacters(nome)) {
-			//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-			if(!nome.trim().equals("") && !lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
-				txtNomeUtente.clear();
-				lstUtentiPartita.getItems().add(nome);
-				lstGiocatoriRegistrati.getItems().add(nome);
-				giocatoriPrt.add(new Giocatore(nome));
+			if (!nome.trim().equals("")) {
+				//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
+				if (!lstUtentiPartita.getItems().contains(nome)&& !lstGiocatoriRegistrati.getItems().contains(nome)) {
+					txtNomeUtente.clear();
+					lstUtentiPartita.getItems().add(nome);
+					lstGiocatoriRegistrati.getItems().add(nome);
+					giocatoriPrt.add(new Giocatore(nome));
 
-				try{
-					FileWriter fw = new FileWriter(pathClassifica, true);
-					fw.write(0 + " , " + nome + "\n");
-					fw.close();
-				} catch (FileNotFoundException FNFe) {
-					FNFe.printStackTrace();
-				} catch (IOException IOe) {
-					IOe.printStackTrace();
-				}
+					try {
+						FileWriter fw = new FileWriter(pathClassifica, true);
+						fw.write(0 + " , " + nome + "\n");
+						fw.close();
+					} catch (FileNotFoundException FNFe) {
+						FNFe.printStackTrace();
+					} catch (IOException IOe) {
+						IOe.printStackTrace();
+					}
+				} else {
+					txtNomeUtente.clear();
+					lblErroreNomeUtente.setVisible(true);
+					lblErroreNomeUtente.setText("Il Nickname inserito esiste già, riprova con un altro Nickname");
+				} 
 			}else {
 				txtNomeUtente.clear();
 				lblErroreNomeUtente.setVisible(true);
-				lblErroreNomeUtente.setText("Il Nickname inserito esiste già, riprova con un altro Nickname");
+				lblErroreNomeUtente.setText("inserisci un nome per il giocatore");
 			}
 		}else {
 			txtNomeUtente.clear();
@@ -95,98 +101,117 @@ public class ControllerCreaPartita {
 	}
 
 	//aggiungo alla partita un utente robot  
-	@FXML public void AggiungiUtenteRobot(ActionEvent actionEvent) {
+	@FXML public void aggiungiBot(ActionEvent actionEvent) {
+		lblErroreNomeUtente.setVisible(false);
 		String nome = txtNomeUtenteRobot.getText();
-		//controllo che non vengano inseriti giocatori con lo stesso nome all'interno della listview listUtentiPartita
-		if(!nome.trim().equals("") && !lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
-			txtNomeUtenteRobot.clear();
-			lstUtentiPartita.getItems().add(nome);
-			giocatoriPrt.add(new Bot(nome));
+		if(!containsSpecialCharacters(nome)) {
+			if (!nome.trim().equals("")) {
+				//controllo che non vengano inseriti bot con lo stesso nome
+				if(!lstUtentiPartita.getItems().contains(nome) && !lstGiocatoriRegistrati.getItems().contains(nome)) {
+					txtNomeUtenteRobot.clear();
+					lstUtentiPartita.getItems().add(nome);
+					giocatoriPrt.add(new Bot(nome));
+				} else {
+					txtNomeUtenteRobot.clear();
+					lblErroreNomeUtente.setVisible(true);
+					lblErroreNomeUtente.setText("Il Nickname inserito esiste già, riprova con un altro Nickname");
+				} 
+			}else {
+				txtNomeUtenteRobot.clear();
+				lblErroreNomeUtente.setVisible(true);
+				lblErroreNomeUtente.setText("inserisci un nome per il Bot");
+			}
 		}else {
 			txtNomeUtenteRobot.clear();
+			lblErroreNomeUtente.setVisible(true);
+			lblErroreNomeUtente.setText("il nome non può contenere: \"!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/\"");
 		}
 	}
 
+	/**
+	 * rimuovo un giocatore aggiunto in precedenza alla partita in corso
+	 * @param mouseEvent
+	 */
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
+		boolean flagRimozione=true;
 		String nomeUtente=lstUtentiPartita.getSelectionModel().getSelectedItem();
-		int posUtente = lstUtentiPartita.getItems().indexOf(nomeUtente);
-		lstUtentiPartita.getItems().remove(posUtente); 
-		giocatoriPrt.remove(posUtente);
-		lstGiocatoriRegistrati.getItems().add(nomeUtente);
+		if(nomeUtente!=null) {
+			for (Giocatore gio : giocatoriPrt) {
+				if(gio instanceof Bot && gio.getNome().equals(nomeUtente)) {
+					flagRimozione=false;
+				}
+			}
+			if(flagRimozione) {//rimuovo il nome e lo aggiuno nella lista utenti registrati
+				int posUtente = lstUtentiPartita.getItems().indexOf(nomeUtente);
+				lstUtentiPartita.getItems().remove(posUtente); 
+				giocatoriPrt.remove(posUtente);
+				lstGiocatoriRegistrati.getItems().add(nomeUtente);
+			}else{//rimuovo il nome
+				int posUtente = lstUtentiPartita.getItems().indexOf(nomeUtente);
+				lstUtentiPartita.getItems().remove(posUtente); 
+				giocatoriPrt.remove(posUtente);
+			}
+		}
 	}
 
-	//Genero il codice per una nuova partita
-	@FXML public void GeneraCodice(ActionEvent actionEvent) {
+	/**
+	 * 	Genero il codice per una nuova partita
+	 */
+	@FXML public void generaCodice(ActionEvent actionEvent) {
 		lblErrore.setVisible(false);
-		if(lstUtentiPartita.getItems().size()<=8) {
-			if(lstUtentiPartita.getItems().size()>1) {
-				try {
+		if(lstUtentiPartita.getItems().size()<=maxUtentiPrt) {		//controllo il numerop di giocatori
+			if(lstUtentiPartita.getItems().size()>minUtentiPrt) {
+				UUID uniqueID = UUID.randomUUID();
+				//'p' sta per partita
+				String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
+				txtCodice.setText(uniqueCode);
+				btnGeneraCodice.setDisable(true);
 
-					UUID uniqueID = UUID.randomUUID();
-					//'p' sta per partita
-					String uniqueCode = "p"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
-					File file = new File(pathStatus);
-
-					//lblCodice.setStyle("-fx-control-inner-background: grey;");
-					txtCodice.setText(uniqueCode);
-
-					btnGeneraCodice.setDisable(true);
-
-					//salvo il codice corrente nel file di status
-					FileWriter fw = new FileWriter(file);
-					fw.write("codicePartita , "+uniqueCode);
-					fw.close();
-
-					//do le vite e le carte ai giocatori
-					String nVite = comboNVite.getSelectionModel().getSelectedItem();
-					if(nVite!=null) {
-						for(Giocatore i : giocatoriPrt) {
-							i.setVite(Integer.parseInt(nVite));
-						}
-					}else {
-						for(Giocatore i : giocatoriPrt) {
-							i.setVite(nViteDefault);
-						}
+				//do le vite e le carte ai giocatori
+				String nVite = comboNVite.getSelectionModel().getSelectedItem();
+				if(nVite!=null) {
+					for(Giocatore i : giocatoriPrt) {
+						i.setVite(Integer.parseInt(nVite));
 					}
-
-					//imposto i dati di una nuova partita
-					this.prt=new Partita(uniqueCode, giocatoriPrt);
-
-					//do le carte a ogni giocatore
-					mazzo.setSpeciale();
-					mazzo.mescola();
-					int numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
-					prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
-					for(Giocatore g : this.prt.getElencoGiocatori()) {
-						g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+				}else {//imposto un valore di default
+					for(Giocatore i : giocatoriPrt) {
+						i.setVite(nViteDefault);
 					}
-
-					//salvo la partita su file.json
-					SalvaPartita(this.prt);
-				}catch(FileNotFoundException e) {
-					System.out.println(e);
-				}catch(IOException eIO) {
-					System.out.println(eIO);    		
 				}
+
+				//imposto i dati di una nuova partita
+				this.prt=new Partita(uniqueCode, giocatoriPrt);
+
+				//do le carte a ogni giocatore
+				mazzo.setSpeciale();
+				mazzo.mescola();
+				int numeroCarteAGiocatore=quanteCarteAGiocatore(prt.getElencoGiocatori().size());
+				prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
+				for(Giocatore g : this.prt.getElencoGiocatori()) {
+					g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
+				}
+
+				//salvo la partita su file.json
+				SalvaPartita(this.prt);
 			}else {
 				lblErrore.setVisible(true);
-				//txtCodice.setStyle("-fx-text-fill: red;");
-				lblErrore.setText("Aggiungi almeno 2 giocatori");
+				lblErrore.setText("Aggiungi almeno 2 giocatori per giocare");
 			}
 		}else {
 			lblErrore.setVisible(true);
-			//txtCodice.setStyle("-fx-text-fill: red;");
-			lblErrore.setText("Puoi aggiungere al massimo 8 giocatori");
+			lblErrore.setText("Puoi aggiungere al massimo 8 giocatori a partita");
 		}
 	}
 
-	//torno alla Schermata di gestione funzionalità torneo partita e giocatori
-	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
-		//chiudo la finestra di di creazione della partita e torno alla finestra di login
-		Stage stage = (Stage)btnTornaAllaHome.getScene().getWindow();
+	/**
+	*torno alla Schermata di gestione funzionalità torneo partita e giocatori
+	*/
+	@FXML public void tornaIndietro(ActionEvent actionEvent) {
+		//chiudo la finestra di di creazione della partita e torno al menu
+		Stage stage = (Stage)tornaIndietro.getScene().getWindow();
 		stage.close();
 
-		//riapro la finestra di login
+		//riapro la finestra di menu
 		try {
 			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 			if (currentMediaPlayer != null) {
@@ -205,10 +230,6 @@ public class ControllerCreaPartita {
 
 			stage.setTitle("Gestione Funzionalità");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
-			//copio le informazioni relative alla partita in corso e carico le informazioni della classifica
-			//controller.copiaInformazioniPartita(this.prt);
-			//controller.caricaClassifica();
-
 			stage.setScene(interfacciaHome);
 			stage.show();
 
@@ -216,7 +237,10 @@ public class ControllerCreaPartita {
 			e.printStackTrace();
 		}	
 	}   
-
+	
+	/**
+	 * carico i giocatori registrati dal file della classifica all'apposita listview
+	 */
 	public void caricaGiocatoriRegistrati() {
 		try {
 			File file = new File(pathClassifica);
@@ -228,7 +252,6 @@ public class ControllerCreaPartita {
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		}
 
@@ -250,7 +273,12 @@ public class ControllerCreaPartita {
 			}
 		});
 	}
-
+	
+	/**
+	 * determina il numero di carte da dare a ogni giocatore in base al numero di giocatori della partita
+	 * @param numeroGiocatori
+	 * @return numero di carte da distribuire a ogni giocatore
+	 */
 	private int quanteCarteAGiocatore(int numeroGiocatori) {
 		if(numeroGiocatori>4) {
 			return 5;
@@ -261,6 +289,10 @@ public class ControllerCreaPartita {
 		}
 	}
 
+	/**
+	 * salva la partita in un file '.json'
+	 * @param partita
+	 */
 	private void SalvaPartita(Partita partita) {
 		try {
 			GsonBuilder gsonBuilder = new GsonBuilder();
@@ -294,14 +326,17 @@ public class ControllerCreaPartita {
 			jsnWriter.endArray();
 			jsnWriter.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 	}
 
+	/**
+	 * controlla la presenza dei seguenti caratteri speciali: <pre>!@#$%^&*()-_=+[]{}|;:'\",.<>?/</pre> 
+	 * @param text
+	 * @return true se i caratteri speciali sono presenti in <code>text</code>, false altrimenti
+	 */
 	private boolean containsSpecialCharacters(String text) {
 		// Definisci qui l'insieme di caratteri speciali che vuoi controllare
 		String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";

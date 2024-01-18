@@ -8,7 +8,7 @@ public class Torneo {
 	private ArrayList<Partita> elencoPartite; //elenco partite dei 'gironi'
 	private Partita[] elencoSemifinali;	
 	private Partita finale;	
-	private Giocatore vincitore = null; 	//giocatore vincitore, il pareggio è contemplato ma cmq verrà definito un vincitore
+	private Giocatore vincitore = null; 	//giocatore vincitore, il pareggio è contemplato ma cmq verrà definito un vincitore forchè per la finale
 	
 	public Torneo(String cod) {
 		this.cod=cod;

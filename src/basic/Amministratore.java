@@ -19,6 +19,10 @@ public class Amministratore extends Giocatore{
 		this.password=password;
 	}
 
+	/**
+	 * verifica se l'amministratore è presente nel salvataggio
+	 * @return true se è presente, false se non lo è
+	 */
 	public boolean verificaAdmin() {
 		String u;
 		String p;

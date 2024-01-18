@@ -57,7 +57,8 @@ public class ControllerPartita implements Initializable{
 	final String selettoreSFnl = "semifinale";
 	final String selettoreFnl = "finale";
 	public Thread t;
-
+	final String pareggio = "la partita è finita in PAREGGIO";
+	
 	//variabili FXML
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
@@ -137,27 +138,26 @@ public class ControllerPartita implements Initializable{
 		}
 
 		//mostro le carte in output relative al giocatore del turno corrente
-		
+
 		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		for(int i = 0; i<listaCarteMano.size();i++) {	
 			if(i<prt.getGiocatoreCorrente().getCarteMano().size()) {
-				
+
 				Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
-				
+
 				BackgroundImage background = new BackgroundImage(
-		                backgroundImage,
-		                BackgroundRepeat.NO_REPEAT,
-		                BackgroundRepeat.NO_REPEAT,
-		                BackgroundPosition.CENTER,
-		                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-		        );
+						backgroundImage,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.CENTER,
+						new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+						);
 				listaCarteMano.get(i).setBackground(new Background(background));
-				
+
 			}else {
 				listaCarteMano.get(i).setBackground(null);
 			}
 		}
-		
 	}
 
 
@@ -383,7 +383,7 @@ public class ControllerPartita implements Initializable{
 					//conteggio punti
 					aggiornaClassifica(pathClassifica);
 				}else{//concludo la partita e ne annuncio il pareggio
-					lblVitaPersa.setText("la partita è finita in PAREGGIO");
+					lblVitaPersa.setText(pareggio);
 					lblManoGiocatore.setVisible(false);
 					lblTurnoGiocatore.setVisible(false);
 					btnIniziaNuovaMano.setVisible(false);
@@ -426,9 +426,9 @@ public class ControllerPartita implements Initializable{
 		btnInizioTurnoGiocatore.setDisable(false);
 
 		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-		
-		
-		
+
+
+
 		for(Pane i : listaCarteBanco) {
 			i.setBackground(null);
 		}
@@ -538,7 +538,12 @@ public class ControllerPartita implements Initializable{
 		}else if(selettore.equals(selettoreSFnl)) {
 			trn.getElencoSemifinali()[posPartitaTrn]=prt;
 		}else if(selettore.equals(selettoreFnl)) { 
-			trn.setFinale(prt);
+			if(lblVitaPersa.getText().equals(pareggio)) {
+				trn.setFinale(prt);
+			}else {
+				trn.setFinale(prt);
+				trn.setVincitore(prt.getElencoGiocatori().get(0));
+			}
 		}
 
 		//		//elimino i possibili bot in esecuzione
@@ -617,12 +622,6 @@ public class ControllerPartita implements Initializable{
 		ControllerPartita.prt=tempPrt;
 	}    
 
-	//	//metodo che passa il numero di carte in fase di run-time da un istanza della classe controller all'altra
-	//	public void copiaInformazioniNumCarte(int numeroCarteAGiocatore)
-	//	{
-	//		this.numeroCarteAGiocatore=numeroCarteAGiocatore;
-	//	}
-
 	//metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
 	public void copiaInformazioniLabel(Label lblTurnoGiocatore) {
 		this.lblTurnoGiocatore.setText(lblTurnoGiocatore.getText());
@@ -636,55 +635,56 @@ public class ControllerPartita implements Initializable{
 			//"sposto" la carta giocata dalla mano al banco nel primo posto disponibile
 			for(Pane i : listaCarteBanco) {	
 				if(i.getBackground()==null) {
-					//if(listaCarteMano.get(posCartaCliccata)!=null) {
-					if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
-					{
-						Alert alert = new Alert(AlertType.ERROR);
-						alert.setTitle("Carta Speciale");
-						alert.setHeaderText(null);
-						alert.setContentText("Selezionare il valore della carta speciale");
-						ButtonType buttonTypeMassimo = new ButtonType("Massimo");
-						ButtonType buttonTypeMinimo = new ButtonType("Minimo");
+					if(listaCarteMano.get(posCartaCliccata).getBackground()!=null) {
+						if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
+						{
+							Alert alert = new Alert(AlertType.ERROR);
+							alert.setTitle("Carta Speciale");
+							alert.setHeaderText(null);
+							alert.setContentText("Selezionare il valore della carta speciale");
+							ButtonType buttonTypeMassimo = new ButtonType("Massimo");
+							ButtonType buttonTypeMinimo = new ButtonType("Minimo");
 
-						alert.getButtonTypes().setAll(buttonTypeMassimo, buttonTypeMinimo);
-						Optional<ButtonType> result = alert.showAndWait();
+							alert.getButtonTypes().setAll(buttonTypeMassimo, buttonTypeMinimo);
+							Optional<ButtonType> result = alert.showAndWait();
 
-						if (result.isPresent() && result.get() == buttonTypeMinimo) {
-							CartaSpeciale cs = (CartaSpeciale)(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata));
-							cs.setValore(0);
+							if (result.isPresent() && result.get() == buttonTypeMinimo) {
+								CartaSpeciale cs = (CartaSpeciale)(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata));
+								cs.setValore(0);
+							}
+						}else if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() != valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot)){
+							prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;
+							Alert alert = new Alert(AlertType.ERROR);
+							alert.setTitle("Carta Speciale");
+							alert.setHeaderText(null);
+							alert.setContentText("Hai vinto una VITA!!!");
+							alert.showAndWait();
+							lstViewVite.getItems().clear();
+							mostraVite();
 						}
-					}else if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() != valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot)){
-						prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;
-						Alert alert = new Alert(AlertType.ERROR);
-						alert.setTitle("Carta Speciale");
-						alert.setHeaderText(null);
-						alert.setContentText("Hai vinto una VITA!!!");
-						alert.showAndWait();
-						lstViewVite.getItems().clear();
-						mostraVite();
+
+						Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso()));
+
+						BackgroundImage background = new BackgroundImage(
+								backgroundImage,
+								BackgroundRepeat.NO_REPEAT,
+								BackgroundRepeat.NO_REPEAT,
+								BackgroundPosition.CENTER,
+								new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+								);
+
+						i.setBackground(new Background(background));
+						listaCarteMano.get(posCartaCliccata).setBackground(null);
+						prt.setBtnFineTurnoGiocatoreDisable(false);
+						btnFineTurnoGiocatore.setDisable(false);
+
+						//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
+						Carta c = prt.getGiocatoreCorrente().removeCartaMano(posCartaCliccata);
+						prt.lstCarteBancoAdd(c);
+						//}	
+						prt.setBtnInizioTurnoGiocatoreClicked(false);
+						break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo	
 					}
-					
-					Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso()));
-					
-					BackgroundImage background = new BackgroundImage(
-			                backgroundImage,
-			                BackgroundRepeat.NO_REPEAT,
-			                BackgroundRepeat.NO_REPEAT,
-			                BackgroundPosition.CENTER,
-			                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-			        );
-							
-					i.setBackground(new Background(background));
-					listaCarteMano.get(posCartaCliccata).setBackground(null);
-					prt.setBtnFineTurnoGiocatoreDisable(false);
-					btnFineTurnoGiocatore.setDisable(false);
-					
-					//rimuovo la carta dalla mano del gioccatore e la metto nella lista di carte del banco
-					Carta c = prt.getGiocatoreCorrente().removeCartaMano(posCartaCliccata);
-					prt.lstCarteBancoAdd(c);
-					//}	
-					prt.setBtnInizioTurnoGiocatoreClicked(false);
-					break;//ho inserito l'immagine nel tabellone quindi esco dal ciclo		
 				}
 			}
 		}
@@ -755,18 +755,18 @@ public class ControllerPartita implements Initializable{
 		//rimetto le carte coperte
 		for(int i=0; i< listaCarteMano.size();i++) {
 			if(posProssimoGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posProssimoGiocatore).getCarteMano().size()) {
-				
+
 				Image backgroundImage = new Image(getClass().getResourceAsStream(pathRetroCarta));
-				
+
 				BackgroundImage background = new BackgroundImage(
-		                backgroundImage,
-		                BackgroundRepeat.NO_REPEAT,
-		                BackgroundRepeat.NO_REPEAT,
-		                BackgroundPosition.CENTER,
-		                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-		        );
-				
-				
+						backgroundImage,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.CENTER,
+						new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+						);
+
+
 				listaCarteMano.get(i).setBackground(new Background(background));
 			}else {
 				listaCarteMano.get(i).setBackground(null);
@@ -914,19 +914,19 @@ public class ControllerPartita implements Initializable{
 		for(int i=0; i< listaCarteMano.size();i++) {
 			int posGiocatore=prt.getCountTurnoGiocatore();
 			if(posGiocatore<ControllerPartita.prt.getElencoGiocatori().size()&&i<prt.getGiocatore(posGiocatore).getCarteMano().size()) {
-				
+
 				Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
-				
+
 				BackgroundImage background = new BackgroundImage(
-		                backgroundImage,
-		                BackgroundRepeat.NO_REPEAT,
-		                BackgroundRepeat.NO_REPEAT,
-		                BackgroundPosition.CENTER,
-		                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-		        );
-				
+						backgroundImage,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundRepeat.NO_REPEAT,
+						BackgroundPosition.CENTER,
+						new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+						);
+
 				listaCarteMano.get(i).setBackground(new Background(background));
-				
+
 			}else {
 				listaCarteMano.get(i).setBackground(null);
 			}
@@ -937,17 +937,17 @@ public class ControllerPartita implements Initializable{
 		//mostro le carte sul banco
 		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
 		for(int i=0; i< prt.getLstCarteBanco().size();i++) {
-			
+
 			Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getLstCarteBanco().get(i).getPercorso()));
-			
+
 			BackgroundImage background = new BackgroundImage(
-	                backgroundImage,
-	                BackgroundRepeat.NO_REPEAT,
-	                BackgroundRepeat.NO_REPEAT,
-	                BackgroundPosition.CENTER,
-	                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-	        );
-			
+					backgroundImage,
+					BackgroundRepeat.NO_REPEAT,
+					BackgroundRepeat.NO_REPEAT,
+					BackgroundPosition.CENTER,
+					new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+					);
+
 			listaCarteBanco.get(i).setBackground(new Background(background));
 		}
 	}
