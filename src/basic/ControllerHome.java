@@ -21,30 +21,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 
-
-/**
- * @author frizi
- *
- */
-/**
- * @author frizi
- *
- */
-/**
- * @author frizi
- *
- */
 public class ControllerHome {
 	//variabili di controllo
 	final int lungCodicePartita=10;
@@ -72,7 +57,10 @@ public class ControllerHome {
 	@FXML ListView<String> lstViewVite;
 	@FXML Label lblAccessoErrato;
 
-	//login
+	/**
+	 * login per il menu
+	 * @param actionEvent
+	 */
 	@FXML public void loginAction(ActionEvent actionEvent) {
 		lblAccessoErrato.setVisible(false);
 		String username_text = txtUsername.getText();
@@ -113,6 +101,10 @@ public class ControllerHome {
 		}
 	}
 
+	/**
+	 * controlla il codice della partita o del torneo e la/o avvia
+	 * @param actionEvent
+	 */
 	@FXML public void gioca(ActionEvent actionEvent) {
 		//ottengo il codice inserito dall'utente
 		String cod = txtCod.getText();
@@ -214,6 +206,9 @@ public class ControllerHome {
 	}
 
 
+	/**
+	 * avvio la partita
+	 */
 	private void avviaPartita() {
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)btnGioca.getScene().getWindow();
@@ -333,6 +328,9 @@ public class ControllerHome {
 		return null;
 	}
 
+	/**
+	 * avvio il torneo
+	 */
 	private void avviaTorneo() {
 		//chiudo la finestra di home e apro quella di gioco
 		Stage stage = (Stage)btnGioca.getScene().getWindow();

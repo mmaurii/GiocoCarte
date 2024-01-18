@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.URL;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -30,7 +29,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -38,7 +36,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ButtonType;
-
 
 public class ControllerPartita implements Initializable{
 	//variabili di controllo
@@ -58,7 +55,7 @@ public class ControllerPartita implements Initializable{
 	final String selettoreFnl = "finale";
 	public Thread t;
 	final String pareggio = "la partita è finita in PAREGGIO";
-	
+
 	//variabili FXML
 	@FXML BorderPane borderPanePartita;
 	@FXML Label lblTurnoGiocatore;
@@ -94,7 +91,7 @@ public class ControllerPartita implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle rb) {
-		try {
+		try {//ottengo i dati per la partita
 			trn=(Torneo)rb.getObject("Torneo");
 			prt = (Partita)rb.getObject("PartitaTrn");
 			posPartitaTrn=(int)rb.getObject("posPartitaTrn");
@@ -102,47 +99,41 @@ public class ControllerPartita implements Initializable{
 		}catch(MissingResourceException mre) {
 			prt=(Partita)rb.getObject("Partita");
 		}
-		//		if(!rb.keySet().contains("Torneo")) {
-		//		}else {System.out.println("a");
-		//			trn=(Torneo)rb.getObject("Torneo");
-		//		}
-		if(prt!=null){
-			//sistemo opportunamente l'interfaccia
-			setInterface();
-			if(prt.getFlagTorneo()) {
-				btnPartitaTornaAllaHome.setVisible(false);
-				btnPartitaTornaAlTorneo.setVisible(true);
-			}else {
-				btnPartitaTornaAllaHome.setVisible(true);
-				btnPartitaTornaAlTorneo.setVisible(false);
-			}
+		
+		//sistemo opportunamente l'interfaccia
+		setInterface();
+		if(prt.getFlagTorneo()) {
+			btnPartitaTornaAllaHome.setVisible(false);
+			btnPartitaTornaAlTorneo.setVisible(true);
 		}else {
-			System.out.println("errore");
+			btnPartitaTornaAllaHome.setVisible(true);
+			btnPartitaTornaAlTorneo.setVisible(false);
 		}
 	}
 
 
-	//inizia il turno dell'n giocatore
+	/**
+	 * inizia il turno dell'n giocatore
+	 * @param actionEvent
+	 */
 	@FXML public void inizioTurnoGiocatore(ActionEvent actionEvent) {
 		lblTurnoGiocatore.setVisible(false);
 		lblManoGiocatore.setVisible(true);
 		btnInizioTurnoGiocatore.setDisable(true);
-		if(!prt.isModalitaPrt()) {//!gridPaneNumeroPrese.isVisible()
-			dichiaraPreseSetVisible(false);
+		if(!prt.isModalitaPrt()) {//controllo se mi trovo in una fase di dichiazione delle pre o di gioco delle carte
+			dichiaraPreseSetVisible(false);//gioca carte
 			lblManoGiocatore.setText("Mano di "+prt.getGiocatoreCorrente().getNome());
 			prt.setBtnInizioTurnoGiocatoreClicked(true);
 		}else {
-			dichiaraPreseSetVisible(true);
+			dichiaraPreseSetVisible(true);//dichiara prese
 			lblManoGiocatore.setText(prt.getGiocatoreCorrente().getNome()+" dichiara le prese");
 			btnFineTurnoGiocatore.setDisable(false);
 		}
 
 		//mostro le carte in output relative al giocatore del turno corrente
-
 		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
-		for(int i = 0; i<listaCarteMano.size();i++) {	
+		for(int i = 0; i<listaCarteMano.size();i++) {//in base al numero di carte setto gli sfondi dei pane e quelli avanzati li setto a null
 			if(i<prt.getGiocatoreCorrente().getCarteMano().size()) {
-
 				Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(i).getPercorso()));
 
 				BackgroundImage background = new BackgroundImage(
@@ -153,7 +144,6 @@ public class ControllerPartita implements Initializable{
 						new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
 						);
 				listaCarteMano.get(i).setBackground(new Background(background));
-
 			}else {
 				listaCarteMano.get(i).setBackground(null);
 			}
@@ -161,53 +151,71 @@ public class ControllerPartita implements Initializable{
 	}
 
 
-	//l'n giocatore gioca la carta1
+	/**
+	 * l'n giocatore gioca la carta1
+	 * @param mouseEvent
+	 */
 	@FXML public void GiocaCartaMano1(MouseEvent mouseEvent) {
 		final int posCartaCliccata=0;
 		giocaCartaMano(posCartaCliccata);	
 	}    
 
 
-	//l'n giocatore gioca la carta2
+	/**
+	 * l'n giocatore gioca la carta2
+	 * @param mouseEvent
+	 */
 	@FXML public void GiocaCartaMano2(MouseEvent mouseEvent) {
 		final int posCartaCliccata=1;
 		giocaCartaMano(posCartaCliccata);
 	}    
 
 
-	//l'n giocatore gioca la carta3
+	/**
+	 * l'n giocatore gioca la carta3
+	 * @param mouseEvent
+	 */
 	@FXML public void GiocaCartaMano3(MouseEvent mouseEvent) {
 		final int posCartaCliccata=2;
 		giocaCartaMano(posCartaCliccata);	
 	}    
 
 
-	//l'n giocatore gioca la carta4
+	/**
+	 * l'n giocatore gioca la carta4
+	 * @param mouseEvent
+	 */
 	@FXML public void GiocaCartaMano4(MouseEvent mouseEvent) {
 		final int posCartaCliccata=3;
 		giocaCartaMano(posCartaCliccata);
 	}    
 
 
-	//l'n giocatore gioca la carta5
+	/**
+	 * l'n giocatore gioca la carta5
+	 * @param mouseEvent
+	 */
 	@FXML public void GiocaCartaMano5(MouseEvent mouseEvent) {
 		final int posCartaCliccata=4;
 		giocaCartaMano(posCartaCliccata);
 	}
 
 
-	//dispongo la fine del turno per il giocatore corrente
+	/**
+	 * dispongo la fine del turno per il giocatore corrente
+	 * @param actionEvent
+	 */
 	@FXML public void fineTurnoGiocatore(ActionEvent actionEvent) {
 		lblNumPreseNonValido.setVisible(false);
 		int numeroPreseGiocatore=0;
 		int giocatoreChePrende;
 
-		if(prt.isModalitaPrt()) {//gridPaneNumeroPrese.isVisible()
+		if(prt.isModalitaPrt()) {//controllo se devo giocare le carte o dichiarare le prese
 			try {
 				numeroPreseGiocatore=Integer.parseInt(txtNumeroPrese.getText());
 				prt.getGiocatoreCorrente().setPreseDichiarate(numeroPreseGiocatore);
 				prt.presePerQuestaMano+=numeroPreseGiocatore;
-				//System.out.println(presePerQuestaMano+" != "+(Integer)(this.prt.getElencoGiocatori().get(countTurnoGiocatore).getCarteMano().size()+1)+" || "+(Integer)(countTurnoGiocatore+1)+" != "+this.prt.getElencoGiocatori().size());
+				//controllo le prese per questa mano
 				if(prt.presePerQuestaMano!=prt.getGiocatoreCorrente().getCarteMano().size()||prt.getCountTurnoGiocatore()!=prt.getElencoGiocatori().size()-1) {
 					Iterator<String> iterator = lstViewPrese.getItems().iterator();
 					while(iterator.hasNext()) {
@@ -224,24 +232,11 @@ public class ControllerPartita implements Initializable{
 					copriCarteGiocatore(false);
 
 					if(prt.isDichiaraPrese()) {
-						//						//visualizzo il numero di vite di questo giocatore se è il primo turno
-						//						if(prt.isPrimoTurno()) {
-						//							iterator = lstViewVite.getItems().iterator();
-						//							while(iterator.hasNext()) {
-						//								String s = iterator.next();
-						//								if(s.contains(prt.getGiocatoreCorrente().getNome())) {
-						//									lstViewVite.getItems().remove(s);
-						//								}
-						//							}
-						//							lstViewVite.getItems().add(prt.getGiocatoreCorrente().getNome()+" "+prt.getGiocatoreCorrente().getVite()+" vite");
-						//						}
-
 						//incremento il contatore dei giocatori
-						prt.setCountTurnoGiocatore(prt.getCountTurnoGiocatore()+1);;
-						//rimetto le carte coperte
-						//copriCarteGiocatore(false);
-
-						if(prt.getCountTurnoGiocatore()>=ControllerPartita.prt.getElencoGiocatori().size()) {
+						prt.setCountTurnoGiocatore(prt.getCountTurnoGiocatore()+1);
+						
+						//controllo se qualcuno deve ancora giocare
+						if(prt.getCountTurnoGiocatore()>=prt.getElencoGiocatori().size()) {
 							prt.setCountTurnoGiocatore(0);
 							//sistemo l'interfaccia per iniziare a giocare le carte
 							dichiaraPreseSetVisible(false);
@@ -256,7 +251,6 @@ public class ControllerPartita implements Initializable{
 							lblManoGiocatore.setVisible(false);
 							btnFineTurnoGiocatore.setDisable(true);
 							btnInizioTurnoGiocatore.setDisable(false);
-							//							System.out.println("a");
 							//definisco chi giocherà il prossimo turno
 							lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 							lblTurnoGiocatore.setVisible(true);
@@ -273,8 +267,6 @@ public class ControllerPartita implements Initializable{
 			}    
 		}else {
 			prt.presePerQuestaMano=0;
-
-			//if(lstViewPrese.getItems().size()-1==countTurnoGiocatore||!gridPaneNumeroPrese.isVisible()) {
 			//rimetto le carte coperte
 			copriCarteGiocatore(false);
 
@@ -294,7 +286,6 @@ public class ControllerPartita implements Initializable{
 					lblManoGiocatore.setVisible(false);
 					btnFineTurnoGiocatore.setDisable(true);
 					btnInizioTurnoGiocatore.setDisable(false);
-					//					System.out.println("b");
 					//definisco chi giocherà il prossimo turno
 					lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
 					lblTurnoGiocatore.setVisible(true);
@@ -305,6 +296,7 @@ public class ControllerPartita implements Initializable{
 					//Calcolo chi prende in base alle carte sul banco
 					giocatoreChePrende = CalcolaPunti(prt.getLstCarteBanco());
 
+					//dichiaro chi ha preso questo turno
 					Giocatore gio = prt.getElencoGiocatori().get(giocatoreChePrende);
 					prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
 					lblVitaPersa.setText(gio.getNome()+" ha PRESO questo turno");
@@ -327,11 +319,11 @@ public class ControllerPartita implements Initializable{
 				//Calcolo chi prende in base alle carte sul banco
 				giocatoreChePrende = CalcolaPunti(prt.getLstCarteBanco());
 
+				//dichiaro chi ha preso questo turno
 				Giocatore gio = prt.getElencoGiocatori().get(giocatoreChePrende);
 				prt.getElencoGiocatori().get(giocatoreChePrende).incrementaPreseEffettuate();
 				lblVitaPersa.setText(gio.getNome()+" ha PRESO questo turno");
 				lblVitaPersa.setVisible(true);
-				//prt.getLstCarteBanco().clear();
 				lblManoGiocatore.setVisible(false);
 				lblTurnoGiocatore.setVisible(false);
 				btnFineTurnoGiocatore.setDisable(true);
@@ -356,7 +348,7 @@ public class ControllerPartita implements Initializable{
 					g.setPreseDichiarate(-1);
 				}
 
-				Giocatore vincitorePareggio = null;
+				Giocatore vincitorePareggio = null;//mantengo l'ultimmo giocatore in elenco (passerà il turno nel caso di un torneo)
 				Iterator<Giocatore> g = prt.getElencoGiocatori().iterator();
 				while(g.hasNext()) {
 					gio = g.next();
@@ -405,17 +397,14 @@ public class ControllerPartita implements Initializable{
 				t = new Thread(b);
 				t.setDaemon(true);
 				Platform.runLater(t);
-				System.out.println("bot");
 			}
 		}
 	}
 
-
-	@FXML public void fineTurnoGiocatoreControlloBot() {
-
-	}
-
-
+	/**
+	 * inizio un nuovo round dando la possibilità a un nuovo giocatore di dare le carte
+	 * @param actionEvent
+	 */
 	@FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
 		//sistemo l'interfaccia perchè possa essere giocato un nuovo round
 		prt.setPrimoTurno(false);
@@ -426,8 +415,6 @@ public class ControllerPartita implements Initializable{
 		btnInizioTurnoGiocatore.setDisable(false);
 
 		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
-
-
 
 		for(Pane i : listaCarteBanco) {
 			i.setBackground(null);
@@ -444,11 +431,13 @@ public class ControllerPartita implements Initializable{
 			t = new Thread(b);
 			t.setDaemon(true);
 			Platform.runLater(t);
-			System.out.println("bot");
 		}
 	}
 
-
+	/**
+	 * inizio una nuova mano facendo dichiarare le prese ai giocatori
+	 * @param actionEvent
+	 */
 	@FXML public void IniziaNuovaMano(ActionEvent actionEvent) {
 		//sistemo l'interfaccia per poter iniziare la nuova mano
 		prt.setDichiaraPrese(true);

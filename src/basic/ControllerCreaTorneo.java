@@ -19,7 +19,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
@@ -34,6 +34,7 @@ public class ControllerCreaTorneo {
 	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
 	final int minGiocatoriTorneo = 6;
 	final int maxGiocatoriTorneo = 40;
+	final String pathSalvataggioTrn="src/SalvataggioTornei.json";
 	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	String pathStatus = "src/Status.txt";
 	String pathClassifica = "src/Classifica.txt";
@@ -46,7 +47,7 @@ public class ControllerCreaTorneo {
 	@FXML Button btnNumeroGiocatori;
 	@FXML TextField txtNumeroGiocatori;
 	@FXML TextField txtNomeUtente; 
-	@FXML Button btnTornaAllaHome;
+	@FXML Button btnTornaIndietro;
 	@FXML Button btnGeneraCodice;
 	@FXML TextField txtCodice;
 	@FXML ComboBox<String> comboNVite;
@@ -61,7 +62,7 @@ public class ControllerCreaTorneo {
 		lblErroreNumGiocatori.setVisible(false);
 		try {
 			numeroGiocatori = Integer.parseInt(txtNumeroGiocatori.getText());
-			if(numeroGiocatori>6&&numeroGiocatori<=40) 
+			if(numeroGiocatori>minGiocatoriTorneo&&numeroGiocatori<=maxGiocatoriTorneo)//controllo il numero di giocatori inseriti 
 			{
 				btnAggiungiUtente.setDisable(false);
 				btnNumeroGiocatori.setDisable(true);
@@ -80,7 +81,10 @@ public class ControllerCreaTorneo {
 		}
 	}
 
-	//aggiungo alla partita un nuovo utente  
+	/**
+	 * aggiungo alla partita un utente tramite prendendo il nome dalla textfield di input
+	 * @param actionEvent
+	 */
 	@FXML public void AggiungiUtente(ActionEvent actionEvent) {
 		lblErroreNumGiocatori.setVisible(true);
 		String nome = txtNomeUtente.getText();
@@ -112,19 +116,25 @@ public class ControllerCreaTorneo {
 		}
 	}
 
-	//aggiungo alla partita un utente già registrato
+	/**
+	 * aggiungo alla partita un utente già registrato tramite la selezione da listview
+	 * @param mouseEvent
+	 */
 	@FXML public void selezionaGiocatore(MouseEvent mouseEvent) {
 		String nomeUtente = lstGiocatoriRegistrati.getSelectionModel().getSelectedItem();   
 
 		if(!listUtentiTorneo.getItems().contains(nomeUtente) && nomeUtente != null)
 		{
 			listUtentiTorneo.getItems().add(nomeUtente);
-			giocatoriTrn.add(new Giocatore(nomeUtente));	//inseisci numero di vite e carte
+			giocatoriTrn.add(new Giocatore(nomeUtente));	
 			lstGiocatoriRegistrati.getItems().remove(nomeUtente);
-
 		}
 	}
 
+	/**
+	 * rimuovo il giocatore/bot dalla lista degli utenti della partita
+	 * @param mouseEvent
+	 */
 	@FXML public void rimuoviGiocatore(MouseEvent mouseEvent) {
 		String nomeUtente=listUtentiTorneo.getSelectionModel().getSelectedItem();
 		if(nomeUtente!=null) {
@@ -135,13 +145,16 @@ public class ControllerCreaTorneo {
 		}
 	}
 
-	//torno alla Schermata di login
-	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
-		//chiudo la finestra di di creazione della partita e torno alla finestra di login
-		Stage stage = (Stage)btnTornaAllaHome.getScene().getWindow();
+	/**
+	 * torno al menu precedente
+	 * @param actionEvent
+	 */
+	@FXML public void tornaIndietro(ActionEvent actionEvent) {
+		//chiudo la finestra di di creazione della partita e torno al menu
+		Stage stage = (Stage)btnTornaIndietro.getScene().getWindow();
 		stage.close();
 
-		//riapro la finestra di login
+		//riapro la finestra del menu
 		try {
 			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 			if (currentMediaPlayer != null) {
@@ -152,32 +165,30 @@ public class ControllerCreaTorneo {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();
+			loader.getController();	
 
-			ControllerPartitaTorneo controller = loader.getController();	
-
-			StackPane stackPane = new StackPane();
-			stackPane.setStyle("-fx-background-color: #38B6FF;");
-			stackPane.getChildren().addAll(videoBackgroundPane, root);
-
+			BorderPane bp = new BorderPane();
+			bp.setStyle("-fx-background-color: #38B6FF;");
+			bp.getChildren().addAll(videoBackgroundPane, root);
 			stage.setTitle("Gestione Funzionalità");
-			Scene interfacciaHome = new Scene(stackPane, 600, 400);
-
+			Scene interfacciaHome = new Scene(bp, 600, 400);
 			stage.setScene(interfacciaHome);
 			stage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	} 
 
-	//Genero il codice per un nuovo torneo
-	@FXML public void GeneraCodice(ActionEvent actionEvent) {
+	/**
+	 * Genero il codice per un nuovo torneo
+	 * @param actionEvent
+	 */
+	@FXML public void generaCodice(ActionEvent actionEvent) {
 		txtCodice.clear();
 		String uniqueCode = "";
 		lblErrore.setVisible(false);
 
-		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {
+		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {//controllo che il numero di giocatori inserito coincida con quello dichiarato
 			try {
 				UUID uniqueID = UUID.randomUUID();
 				//'t' sta per torneo
@@ -204,22 +215,27 @@ public class ControllerCreaTorneo {
 			SalvaTorneo(this.trn);
 		}else {
 			lblErrore.setVisible(true);
-			//txtCodice.setStyle("-fx-text-fill: red;");
 			lblErrore.setText("Inserisci il numero esatto di Partecipanti");
 		}
 	}
 
 	//METODI AUSILIARI
+	/**
+	 * genera le partite per il torneo
+	 * @return ArrayList<<a>Partita>
+	 * <pre>(sono le partite della fase a 'gironi')</pre>
+	 */
 	private ArrayList<Partita> generaPartite() {
 		ArrayList<Partita> elencoPrt=new ArrayList<>();
-		Collections.shuffle(giocatoriTrn);
-
+		Collections.shuffle(giocatoriTrn);//mischio i giocatori
+		//definisco il  numero di squadre
 		int numeroPartite = giocatoriTrn.size()/4;
 		if(numeroPartite == 1)
 		{
 			numeroPartite = 2;
 		}
 
+		//definisco il numero di giocatori
 		int numeroGiocatoriPartita = giocatoriTrn.size()/numeroPartite;	
 
 		for(int i = 1; i <= numeroPartite; i++) 
@@ -245,10 +261,14 @@ public class ControllerCreaTorneo {
 			//aggiungo la partita all'elenco delle partite del torneo
 			elencoPrt.add(p);
 		}
-
 		return elencoPrt;
 	}
 
+	/**
+	 * creo una partita per il torneo dato un elenco di giocatori
+	 * @param giocatoriPrt
+	 * @return partita
+	 */
 	private Partita creaPartita(ArrayList<Giocatore> giocatoriPrt) {
 		UUID uniqueID = UUID.randomUUID();
 		//la 'p' iniziale distingue i codici partita da quelli dei tornei
@@ -275,13 +295,17 @@ public class ControllerCreaTorneo {
 		mazzo.mescola();
 		int numeroCarteAGiocatore=quanteCarteAGiocatore(p.getElencoGiocatori().size());
 		p.setNumeroCarteAGiocatore(numeroCarteAGiocatore);//mi salvo il numero di carte che ho dato per i turni futuri
-		for(Giocatore g : p.getElencoGiocatori()) {
+		for(Giocatore g : p.getElencoGiocatori()) {//do le carte
 			g.setCarteMano(mazzo.pescaCarte(numeroCarteAGiocatore));
 		}
-
 		return p;
 	}
 
+	/**
+	 * determina il numero di carte da dare a ogni giocatore in base al numero di giocatori della partita
+	 * @param numeroGiocatori
+	 * @return numero di carte da distribuire a ogni giocatore
+	 */
 	private int quanteCarteAGiocatore(int numeroGiocatori) {
 		if(numeroGiocatori>4) {
 			return 5;
@@ -292,6 +316,9 @@ public class ControllerCreaTorneo {
 		}
 	}
 
+	/**
+	 * carico i giocatori registrati dal file della classifica all'apposita listview
+	 */
 	public void caricaGiocatoriRegistrati() {
 		try {
 			File file = new File(pathClassifica);
@@ -303,7 +330,6 @@ public class ControllerCreaTorneo {
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		}
 
@@ -326,6 +352,10 @@ public class ControllerCreaTorneo {
 		});
 	}
 
+	/**
+	 * salva il torneo in un file '.json'
+	 * @param torneo
+	 */
 	private void SalvaTorneo(Torneo torneo) {
 		try {
 			GsonBuilder gsonBuilder = new GsonBuilder();
@@ -333,8 +363,7 @@ public class ControllerCreaTorneo {
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
-			String path="src/SalvataggioTornei.json";
-			FileReader fr = new FileReader(path);
+			FileReader fr = new FileReader(pathSalvataggioTrn);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			jsnReader.beginArray();
@@ -348,7 +377,7 @@ public class ControllerCreaTorneo {
 
 			elencoTornei.add(torneo);
 			//salvo la lista di tornei caricati dal file + quella creata
-			FileWriter fw = new FileWriter(path);
+			FileWriter fw = new FileWriter(pathSalvataggioTrn);
 			JsonWriter jsnWriter = new JsonWriter(fw);
 			jsnWriter.beginArray();
 
@@ -359,14 +388,17 @@ public class ControllerCreaTorneo {
 			jsnWriter.endArray();
 			jsnWriter.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 	}
 
+	/**
+	 * controlla la presenza dei seguenti caratteri speciali: <pre>!@#$%^&*()-_=+[]{}|;:'\",.<>?/</pre> 
+	 * @param text
+	 * @return true se i caratteri speciali sono presenti in <code>text</code>, false altrimenti
+	 */
 	private boolean containsSpecialCharacters(String text) {
 		// Definisci qui l'insieme di caratteri speciali che vuoi controllare
 		String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";

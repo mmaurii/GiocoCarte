@@ -29,6 +29,7 @@ public class ControllerCreaPartita {
 	final int nViteDefault=5;
 	final int maxUtentiPrt=8;
 	final int minUtentiPrt=1;//il limite inferiore è escluso e quello superiore incluso
+	final String pathSalvataggioPrt="src/SalvataggioPartite.json";
 	Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
@@ -300,8 +301,7 @@ public class ControllerCreaPartita {
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			String path="src/SalvataggioPartite.json";
-			FileReader fr = new FileReader(path);
+			FileReader fr = new FileReader(pathSalvataggioPrt);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			jsnReader.beginArray();
@@ -315,7 +315,7 @@ public class ControllerCreaPartita {
 
 			elencoPartite.add(partita);
 			//salvo la lista di partite caricate dal file + quella creata
-			FileWriter fw = new FileWriter(path);
+			FileWriter fw = new FileWriter(pathSalvataggioPrt);
 			JsonWriter jsnWriter = new JsonWriter(fw);
 			jsnWriter.beginArray();
 
