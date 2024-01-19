@@ -72,7 +72,7 @@ public class ControllerHome {
 			//se la password è corretta chiudo la finestra di home
 			Stage stage = (Stage)btnLogin.getScene().getWindow();
 			stage.close();
-			//apro la finestra delle impostazioni e creazine partite e tornei
+			//apro la finestra delle impostazioni e creazine partite e tornei(menu)
 			try {
 
 				MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
@@ -83,9 +83,10 @@ public class ControllerHome {
 
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 				Parent root = loader.load();
-
+				loader.getController();
+				
 				StackPane stackPane = new StackPane();
-				stackPane.setStyle("-fx-background-color: #38B6FF;");
+				stackPane.setStyle("-fx-background-color: #38B6FF;");//imposto un colore di background
 				stackPane.getChildren().addAll(videoBackgroundPane, root);
 				stage.setTitle("Gestione Funzionalità");
 				Scene interfacciaPartitaTorneo = new Scene(stackPane, 600, 400);

@@ -481,15 +481,10 @@ public class ControllerTorneo implements Initializable{
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
-
-
 			stage.show();
 
-			//copio le informazioni relative alla partita in corso
-			controller.copiaInformazioniPartita(prt);
 			//copio le informazioni relative alla label lblTurnoGiocatore
 			controller.copiaInformazioniLabel(lblTurnoGiocatore);
-
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

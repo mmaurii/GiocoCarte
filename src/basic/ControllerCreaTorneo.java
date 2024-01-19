@@ -19,7 +19,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
@@ -167,11 +167,11 @@ public class ControllerCreaTorneo {
 			Parent root = loader.load();
 			loader.getController();	
 
-			BorderPane bp = new BorderPane();
-			bp.setStyle("-fx-background-color: #38B6FF;");
-			bp.getChildren().addAll(videoBackgroundPane, root);
+			StackPane stackPane = new StackPane();
+			stackPane.setStyle("-fx-background-color: #38B6FF;");
+			stackPane.getChildren().addAll(videoBackgroundPane, root);
 			stage.setTitle("Gestione Funzionalità");
-			Scene interfacciaHome = new Scene(bp, 600, 400);
+			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			stage.setScene(interfacciaHome);
 			stage.show();
 		} catch (IOException e) {

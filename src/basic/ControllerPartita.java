@@ -468,12 +468,14 @@ public class ControllerPartita implements Initializable{
 			t = new Thread(b);
 			t.setDaemon(true);
 			Platform.runLater(t);
-			System.out.println("bot");
 		}
 	}
 
 
-	//torno all' interfaccia di login
+	/**
+	 * chiude la partita e torna all' interfaccia di login
+	 * @param actionEvent
+	 */
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra di login iniziale
 		Stage stage = (Stage)btnPartitaTornaAllaHome.getScene().getWindow();
@@ -487,7 +489,6 @@ public class ControllerPartita implements Initializable{
 		//il metodo controlla se la partita si è conclusa e nel caso la elimina dal file
 		SalvaPartita(prt);
 
-
 		//riapro la finestra di Home
 		try {
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
@@ -496,26 +497,25 @@ public class ControllerPartita implements Initializable{
 			Parent root = loader.load();
 
 			ControllerHome controller = loader.getController();
-
 			controller.caricaClassifica();
 
 			StackPane stackPane = new StackPane();
-			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback
 			stackPane.getChildren().addAll(videoBackgroundPane, root);
-
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
-
 			stage.setScene(interfacciaHome);
 			stage.show();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
 
-	//torno all'interfaccia del torneo
+	/**
+	 * chiudo la partita e torno all'interfaccia del torneo
+	 * @param actionEvent
+	 */
 	@FXML public void TornaAlTorneo(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco della partita e torno alla finestra del torneo
 		Stage stage = (Stage)btnPartitaTornaAlTorneo.getScene().getWindow();
@@ -527,7 +527,7 @@ public class ControllerPartita implements Initializable{
 		}else if(selettore.equals(selettoreSFnl)) {
 			trn.getElencoSemifinali()[posPartitaTrn]=prt;
 		}else if(selettore.equals(selettoreFnl)) { 
-			if(lblVitaPersa.getText().equals(pareggio)) {
+			if(lblVitaPersa.getText().equals(pareggio)) {//controllo se il torneo è finito in pareggio
 				trn.setFinale(prt);
 			}else {
 				trn.setFinale(prt);
@@ -535,19 +535,12 @@ public class ControllerPartita implements Initializable{
 			}
 		}
 
-		//		//elimino i possibili bot in esecuzione
-		//		if(prt.getGiocatoreCorrente() instanceof Bot) {
-		//			t.interrupt();
-		//		}
-
 		//riapro la finestra del torneo
-		//controlla perchè non va riaperta ma solo aggiornata e riattivata
 		try {
 			//VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
-
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Torneo.fxml"));
 
-			ResourceBundle rb = new ResourceBundle() {
+			ResourceBundle rb = new ResourceBundle() {//dati per inizializzare l'interfaccia del torneo
 				@Override
 				protected Object handleGetObject(String key) {
 					if (key.equals("Torneo")) { 
@@ -563,32 +556,29 @@ public class ControllerPartita implements Initializable{
 			loader.setResources(rb);
 
 			Parent root = loader.load();
-
 			loader.getController();
 
 			StackPane stackPane = new StackPane();
-			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback
 			stackPane.getChildren().addAll(root);
-
 			stage.setTitle("Torneo");
 			Scene interfacciaTorneo = new Scene(stackPane, 720, 480);
-
 			stage.setScene(interfacciaTorneo);
 			stage.show();
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
 
-	//creo un pop-up che visualizzi la classifica
+	/**
+	 * creo un pop-up che visualizzi la classifica
+	 * @param actionEvent
+	 */
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
 		BorderPane root = new BorderPane();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
-
 			loader.getController();
 
 			Stage stage = new Stage();
@@ -598,24 +588,21 @@ public class ControllerPartita implements Initializable{
 			stage.setMinWidth(270);
 			stage.setScene(scene);
 			stage.show();			
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
 
-	//METODI AUSILIARI PER IL PASSAGGIO DEI DATI IN FASE DI RUN-TIME
-	//metodo che passa i dati della partita in fase di run-time da un istanza della classe controller all'altra
-	public void copiaInformazioniPartita(Partita tempPrt) {
-		ControllerPartita.prt=tempPrt;
-	}    
-
-	//metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da un istanza della classe controller all'altra
+	//METODI AUSILIARI
+	//metodo che passa i dati della label lblTurnoGiocatore in fase di run-time da una classe controller all'altra
 	public void copiaInformazioniLabel(Label lblTurnoGiocatore) {
 		this.lblTurnoGiocatore.setText(lblTurnoGiocatore.getText());
 	} 
 
+	/**
+	 * gioca la carta cliccata dall'utente posizionandola sul banco nel primo posto disponibile
+	 * @param posCartaCliccata
+	 */
 	private void giocaCartaMano(int posCartaCliccata) {
 		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
 		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
@@ -627,6 +614,7 @@ public class ControllerPartita implements Initializable{
 					if(listaCarteMano.get(posCartaCliccata).getBackground()!=null) {
 						if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() == valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot))
 						{
+							//assegno un valore alla carta speciale (asso di denara)
 							Alert alert = new Alert(AlertType.ERROR);
 							alert.setTitle("Carta Speciale");
 							alert.setHeaderText(null);
@@ -640,9 +628,9 @@ public class ControllerPartita implements Initializable{
 							if (result.isPresent() && result.get() == buttonTypeMinimo) {
 								CartaSpeciale cs = (CartaSpeciale)(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata));
 								cs.setValore(0);
-							}
+							}//la carta ha di default il valore massimo
 						}else if(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getValore() != valCartaSpecialeAssoDenara && prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getSpeciale() == 1 && !(prt.getGiocatoreCorrente() instanceof Bot)){
-							prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;
+							prt.getGiocatoreCorrente().nVite = prt.getGiocatoreCorrente().nVite + 1;	//do una vita in più a chi ha pescato la carta speciale estratta a sorte
 							Alert alert = new Alert(AlertType.ERROR);
 							alert.setTitle("Carta Speciale");
 							alert.setHeaderText(null);
@@ -652,8 +640,8 @@ public class ControllerPartita implements Initializable{
 							mostraVite();
 						}
 
+						//inizializzo la carta da visualizzare sul banco
 						Image backgroundImage = new Image(getClass().getResourceAsStream(prt.getGiocatoreCorrente().getCarteMano().get(posCartaCliccata).getPercorso()));
-
 						BackgroundImage background = new BackgroundImage(
 								backgroundImage,
 								BackgroundRepeat.NO_REPEAT,
@@ -679,7 +667,11 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
-	//metodo che calcola quale giocatore ha perso il round appena concluso
+	/**
+	 * metodo che calcola quale giocatore ha perso nel round appena concluso
+	 * @param listaCarteBanco
+	 * @return pos giocatore
+	 */
 	private int CalcolaPunti(ArrayList<Carta> listaCarteBanco) {
 		int posGiocatore=-1;
 		Carta cartaTemp = null;
@@ -693,10 +685,10 @@ public class ControllerPartita implements Initializable{
 				posGiocatore=listaCarteBanco.indexOf(i);
 			}
 		}
-
 		return posGiocatore;
 	}
 
+	
 	private int quanteCarteAGiocatore(int numeroGiocatori) {
 		if(numeroGiocatori>4) {
 			return 5;
