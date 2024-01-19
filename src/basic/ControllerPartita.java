@@ -47,12 +47,8 @@ public class ControllerPartita implements Initializable{
 	String selettore;
 	Mazzo mazzo = new Mazzo();
 	final int valCartaSpecialeAssoDenara=40;
-	
-	String pathClassifica = "Documenti/Passwords.txt";
-	File file = new File(pathClassifica);
-
+	final String pathClassifica = "Documenti/Passwords.txt";
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-
 	final String selettorePrt = "prt";
 	final String selettoreSFnl = "semifinale";
 	final String selettoreFnl = "finale";
@@ -765,6 +761,7 @@ public class ControllerPartita implements Initializable{
 		try{
 			final int puntiVincitore=10;
 			ArrayList<String> data = new ArrayList<String>();
+			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
 			boolean presenzaGiocatore=false;
 			while(scan.hasNext()) {

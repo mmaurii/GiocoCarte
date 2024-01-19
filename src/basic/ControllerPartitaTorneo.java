@@ -3,7 +3,6 @@ package basic;
 import java.io.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,19 +16,7 @@ import javafx.scene.media.MediaPlayer;
 
 public class ControllerPartitaTorneo {
 	//variabili di controllo
-	int numeroCarteAGiocatore;
-	final int lungCodicePartita=10;
-	final int nViteDefault=5;
-	Partita prt;
-	Mazzo mazzo = new Mazzo();
-	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	int countTurnoGiocatore=0;
-	boolean dichiaraPrese=true;
-	boolean primoTurno=true;
-	String pathClassifica = "src/Classifica.txt";
-	String pathStatus = "src/Status.txt";
-
+	
 	@FXML Button btnCreaPartita;
 	@FXML ComboBox<String> comboNVite;
 	@FXML Button btnModificaGiocatori;

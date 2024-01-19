@@ -38,9 +38,7 @@ public class ControllerHome {
 	Torneo trn;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-
-	String path = "Documenti/Classifica.txt";
-	File file = new File(path);
+	final String pathClassifica = "Documenti/Classifica.txt";
 
 	//eventi FXML
 	@FXML private TextField txtUsername;
@@ -159,7 +157,7 @@ public class ControllerHome {
 	public void caricaClassifica() {
 		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
-			
+			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);	
 			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();

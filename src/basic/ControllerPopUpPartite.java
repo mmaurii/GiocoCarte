@@ -1,61 +1,22 @@
 package basic;
 
 import java.io.*;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-
 import java.util.*;
-
-import javax.security.auth.login.AccountNotFoundException;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.animation.Interpolator;
-import javafx.animation.ScaleTransition;
-
-
 
 public class ControllerPopUpPartite {
-
-	String path = "Documenti/SalvataggioPartite.json";
-	File file = new File(path);
-
+	final String pathSalvataggioPartite = "Documenti/SalvataggioPartite.json";
     ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
     Gson gson;
     
@@ -67,6 +28,7 @@ public class ControllerPopUpPartite {
     	
     	
 				try {
+					File file = new File(pathSalvataggioPartite);
 					FileWriter fw = new FileWriter(file);
 					JsonWriter jsnWriter = new JsonWriter(fw);
 					
@@ -109,10 +71,9 @@ public class ControllerPopUpPartite {
 
  			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
  			gson = gsonBuilder.create();
- 		
+ 			File file = new File(pathSalvataggioPartite);
  			FileReader fr = new FileReader(file);
  			JsonReader jsnReader=new JsonReader(fr);
-
  			
  			if(jsnReader.peek() != JsonToken.NULL){
 				jsnReader.beginArray();

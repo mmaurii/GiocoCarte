@@ -29,16 +29,11 @@ public class ControllerCreaPartita {
 	final int nViteDefault=5;
 	final int maxUtentiPrt=8;
 	final int minUtentiPrt=1;//il limite inferiore è escluso e quello superiore incluso
-	
 	final String pathSalvataggioPrt="Documenti/SalvataggioPartite.json";
-	File file1 = new File(pathSalvataggioPrt);
-	
 	Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-
-	String path = "Documenti/Classifica.txt";
-	File file = new File(path);
+	final String pathClassifica = "Documenti/Classifica.txt";
 
 	@FXML ListView<String> lstGiocatoriRegistrati;
 	@FXML ListView<String> lstUtentiPartita;
@@ -67,6 +62,7 @@ public class ControllerCreaPartita {
 					giocatoriPrt.add(new Giocatore(nome));
 
 					try {
+						File file = new File(pathClassifica);
 						FileWriter fw = new FileWriter(file, true);
 						fw.write(0 + " , " + nome + "\n");
 						fw.close();
@@ -247,6 +243,7 @@ public class ControllerCreaPartita {
 	 */
 	public void caricaGiocatoriRegistrati() {
 		try {
+			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
 			while(scan.hasNext()) {
 				String line = scan.nextLine();
@@ -303,6 +300,7 @@ public class ControllerCreaPartita {
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
+			File file1 = new File(pathSalvataggioPrt);
 			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
 

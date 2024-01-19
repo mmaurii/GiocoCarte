@@ -34,15 +34,9 @@ public class ControllerCreaTorneo {
 	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
 	final int minGiocatoriTorneo = 6;
 	final int maxGiocatoriTorneo = 40;
-	
 	String pathSalvataggioTrn = "Documenti/SalvataggioTornei.json";
-	File file1 = new File(pathSalvataggioTrn);
-	
-	String path = "Documenti/Classifica.txt";
-	File file = new File(path);
-
+	String pathClassifica = "Documenti/Classifica.txt";
 	int numeroGiocatori;
-
 
 	@FXML ListView<String> lstGiocatoriRegistrati;
 	@FXML ListView<String> listUtentiTorneo;
@@ -99,6 +93,7 @@ public class ControllerCreaTorneo {
 				lstGiocatoriRegistrati.getItems().add(nome);
 				giocatoriTrn.add(new Giocatore(nome));
 				try{
+					File file = new File(pathClassifica);
 					FileWriter fw = new FileWriter(file, true);
 					fw.write(0 + " , " + nome + "\n");
 					fw.close();
@@ -315,6 +310,7 @@ public class ControllerCreaTorneo {
 	 */
 	public void caricaGiocatoriRegistrati() {
 		try {
+			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
 			while(scan.hasNext()) {
 				String line = scan.nextLine();
@@ -356,6 +352,7 @@ public class ControllerCreaTorneo {
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
+			File file1 = new File(pathSalvataggioTrn);
 			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
 
