@@ -490,7 +490,7 @@ public class ControllerPartita implements Initializable{
 
 		//riapro la finestra di Home
 		try {
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();

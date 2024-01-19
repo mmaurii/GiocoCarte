@@ -161,7 +161,7 @@ public class ControllerCreaTorneo {
 				currentMediaPlayer.stop();
 			}
 
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();

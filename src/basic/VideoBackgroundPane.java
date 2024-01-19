@@ -1,24 +1,21 @@
 package basic;
 
-import java.io.File;
-
 import javafx.scene.Parent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 public class VideoBackgroundPane extends Parent {
-	
-	private static MediaPlayer currentMediaPlayer;
-	
+
+    private static MediaPlayer currentMediaPlayer;
+
     public VideoBackgroundPane(String videoFile) {
         init(videoFile);
     }
 
     private void init(String videoFile) {
         // Carica il file video
-    	File f = new File(videoFile);
-        Media media = new Media(new File(f.getAbsolutePath()).toURI().toString());
+        Media media = new Media(getClass().getResource(videoFile).toExternalForm());
 
         // Imposta il video come sfondo
         MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -32,12 +29,11 @@ public class VideoBackgroundPane extends Parent {
         mediaView.setFitWidth(1920);
         mediaView.setFitHeight(1080);
 
-
         getChildren().add(mediaView);
-        
+
         currentMediaPlayer = mediaPlayer;
     }
-    
+
     public static MediaPlayer getCurrentMediaPlayer() {
         return currentMediaPlayer;
     }

@@ -26,10 +26,14 @@ public class Amministratore extends Giocatore{
 	public boolean verificaAdmin() {
 		String u;
 		String p;
-		try {
-			File f = new File("src/Passwords.txt");
+			
+			String path = "Documenti/Passwords.txt";
+			File file = new File(path);
 
-			Scanner scan = new Scanner(f);
+			Scanner scan;
+			try {
+				scan = new Scanner(file);
+			
 			while(scan.hasNextLine()) {
 				String data[] = scan.nextLine().split(" , ");
 				u = data[0];
@@ -42,9 +46,11 @@ public class Amministratore extends Giocatore{
 				}
 			}
 			scan.close();
-		}catch(FileNotFoundException e) {
-			System.out.println(e);
-		}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		return false;
 	}
 }

@@ -205,7 +205,7 @@ public class ControllerTorneo implements Initializable{
 		SalvaTorneo(trn);
 
 		try {
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
