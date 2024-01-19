@@ -165,7 +165,7 @@ public class ControllerCreaTorneo {
 			}
 
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
-
+			Thread.sleep(200);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();
 			loader.getController();	
@@ -178,6 +178,9 @@ public class ControllerCreaTorneo {
 			stage.setScene(interfacciaHome);
 			stage.show();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	} 

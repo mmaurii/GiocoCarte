@@ -223,7 +223,7 @@ public class ControllerCreaPartita {
 			}
 
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
-
+			Thread.sleep(200);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();
 			loader.getController();	
@@ -237,7 +237,7 @@ public class ControllerCreaPartita {
 			stage.setScene(interfacciaHome);
 			stage.show();
 
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}	
 	}   
