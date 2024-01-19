@@ -5,15 +5,15 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.base.jar" sourcepath=""/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.controls.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.fxml.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.graphics.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.media.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.swing.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.web.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx-swt.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/frizi/eclipse-workspace/gson/gson-2.8.2.jar" sourcepath="C:/Users/frizi/eclipse-workspace/gson/gson-2.8.2.jar"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx.web.jar"/>
+	<classpathentry kind="lib" path="E:/Users/magri/Desktop/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/lib/javafx-swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
