@@ -13,9 +13,13 @@ public class VideoBackgroundPane extends Parent {
         init(videoFile);
     }
 
-    private void init(String videoFile) {
+    /**
+     * imposta un video nel MediaPlayer
+     * @param pathVideoFile percorso del video da metterre come sfondo
+     */
+    private void init(String pathVideoFile) {
         // Carica il file video
-        Media media = new Media(getClass().getResource(videoFile).toExternalForm());
+        Media media = new Media(getClass().getResource(pathVideoFile).toExternalForm());
 
         // Imposta il video come sfondo
         MediaPlayer mediaPlayer = new MediaPlayer(media);

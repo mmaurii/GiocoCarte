@@ -1,8 +1,6 @@
 package basic;
 
 import javafx.scene.control.TextField;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -16,11 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.concurrent.Task;
 
-public class Bot extends Giocatore implements Runnable,Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Bot extends Giocatore implements Runnable{
 	final int delay = 3;//in secondi 
 
 	public Bot(String nome, String password, int nVite, ArrayList<Carta> carte, long punteggio) {

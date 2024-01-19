@@ -2,19 +2,12 @@ package basic;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -29,7 +22,7 @@ public class Spacca extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Carica il video
+        // Carica il video dell'animazione iniziale
         Media videoMedia = new Media(getClass().getResource(pathVideoAnimazione).toExternalForm());
         MediaPlayer videoPlayer = new MediaPlayer(videoMedia);
         MediaView mediaView = new MediaView(videoPlayer);
@@ -37,7 +30,7 @@ public class Spacca extends Application {
         //quondo finisce la riproduzione del video avvio l'interfaccia
         videoPlayer.setOnEndOfMedia(() -> {
             videoPlayer.stop();
-            showHomeScreen(stage);
+            caricaHomeScreen(stage);
         });
         
         // Mostra il video nella finestra
@@ -50,7 +43,11 @@ public class Spacca extends Application {
         videoPlayer.play();
     }
     
-    private void showHomeScreen(Stage stage) {
+    /**
+     * carica i dati della schermata di home nello stage preso come parametro
+     * @param stage
+     */
+    private void caricaHomeScreen(Stage stage) {
         try {
             // Creare un'istanza di VideoBackgroundPane con il percorso del video
             VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
@@ -75,12 +72,10 @@ public class Spacca extends Application {
 
             stage.setTitle("HOME");
             Scene homeScene = new Scene(bp, 600, 400);
-
             stage.setScene(homeScene);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

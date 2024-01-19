@@ -1,12 +1,8 @@
 package basic;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 
-public class Partita implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Partita {
 	private Mazzo m;
 	private ArrayList<Giocatore> elencoGiocatori;
 	private ArrayList<String> elencoGiocatoriEliminati = new ArrayList<String>();
@@ -216,6 +212,10 @@ public class Partita implements Serializable{
 		this.lblVitaPersaText = lblVitaPersaText;
 	}
 	
+	/**
+	 * imposta un flag del torneo, se a true la partita appartiene a un torneo se è a false no
+	 * @param boolean flag
+	 */
 	void setFlagTorneo(boolean flag) {
 		flagTorneo=flag;
 	}
