@@ -410,7 +410,7 @@ public class ControllerPartita implements Initializable{
 	 */
 	@FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
 		//sistemo l'interfaccia perchè possa essere giocato un nuovo round
-		prt.setPrimoTurno(false);
+	//	prt.setPrimoTurno(false);
 		btnIniziaNuovoRound.setVisible(false);
 		lblVitaPersa.setVisible(false);
 		lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());

@@ -3,15 +3,12 @@ package basic;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
-
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -33,6 +30,10 @@ public class ControllerPopUpAmministratori implements Initializable {
 	@FXML TextField txtPassword; 
 	@FXML Label lblErroreAmministratore;
 
+	/**
+	 * salvo le modifiche agli amministratori apportate e chiudo l'interfaccia tornando al menu
+	 * @param actionEvent
+	 */
 	@FXML public void salva(ActionEvent actionEvent) {
 		List<LineAmministratori> items = tblAmministratori.getItems();
 		try {
@@ -49,10 +50,22 @@ public class ControllerPopUpAmministratori implements Initializable {
 		stage.close();
 	}
 
+	/**
+	 * elimino se non è l'ultimo l'admin selezionato dalla visualizzazione, le modifiche non sono salvate
+	 * @param actionEvent
+	 */
 	@FXML public void eliminaAmministratore(ActionEvent actionEvent) {
-		tblAmministratori.getItems().remove(tblAmministratori.getSelectionModel().getSelectedItem()); 
+		if(tblAmministratori.getItems().size()>1) {//elimino l'admin a meno che non sia l'ultimo rimasto
+			tblAmministratori.getItems().remove(tblAmministratori.getSelectionModel().getSelectedItem()); 
+		}
 	}
 
+	/**
+	 * aggiungo un nuovo admin alla tableview degli admin dopo aver fatto un controllo sui caratteri 
+	 * speciali per il nome e un controllo che non contenga la stringa ' , ' per la password, le 
+	 * modifiche non sono salvate
+	 * @param actionEvent
+	 */
 	@FXML public void aggiungiAmministratore(ActionEvent actionEvent) {
 		lblErroreAmministratore.setVisible(false);
 		String username = txtUsername.getText();
@@ -93,6 +106,9 @@ public class ControllerPopUpAmministratori implements Initializable {
 	}
 
 	// Metodi ausiliari
+	/**
+	 * carico gli admin visualizzandoli nella tabelview
+	 */
 	public void caricaAmministratori() {
 		// Associazione delle ObservableList alle TableColumn
 		tblNomeAmministratori.setCellValueFactory(new Callback<CellDataFeatures<LineAmministratori, String>, ObservableValue<String>>() {
@@ -127,6 +143,11 @@ public class ControllerPopUpAmministratori implements Initializable {
 		tblAmministratori.setStyle("-fx-font-weight: bold;");
 	} 
 
+	/**
+	 * controlla la presenza dei seguenti caratteri speciali: <pre>!@#$%^&*()-_=+[]{}|;:'\",.<>?/</pre> 
+	 * @param text
+	 * @return true se i caratteri speciali sono presenti in <code>text</code>, false altrimenti
+	 */
 	private boolean containsSpecialCharacters(String text) {
 		// Definisci qui l'insieme di caratteri speciali che vuoi controllare
 		String specialCharacters = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/";

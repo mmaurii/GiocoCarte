@@ -44,6 +44,10 @@ public class Partita implements Serializable{
 		this.elencoGiocatori=elencoGiocatori;
 	}
 	
+	/**
+	 * controlla se la partita è in modalità di dichiarazione delle prese
+	 * @return true se è in modalità dichiara prese, false altrimenti
+	 */
 	public boolean isDichiaraPrese() {
 		return dichiaraPrese;
 	}
@@ -52,14 +56,22 @@ public class Partita implements Serializable{
 		this.dichiaraPrese = dichiaraPrese;
 	}
 
-	public boolean isPrimoTurno() {
-		return primoTurno;
-	}
-
-	public void setPrimoTurno(boolean primoTurno) {
-		this.primoTurno = primoTurno;
-	}
+	/**
+	 * controlla se è il primo il turno
+	 * @return
+	 */
+//	public boolean isPrimoTurno() {
+//		return primoTurno;
+//	}
+//
+//	public void setPrimoTurno(boolean primoTurno) {
+//		this.primoTurno = primoTurno;
+//	}
 	
+	/**
+	 * controlla se la partita era già stata lanciata
+	 * @return true se era già stata lancianta, false altrimenti
+	 */
 	public boolean isResume() {
 		return resume;
 	}
@@ -68,6 +80,10 @@ public class Partita implements Serializable{
 		this.resume = resume;
 	}
 	
+	/**
+	 * restituisce la posizione del giocatore che deve giocare il turno corrente
+	 * @return posizione del giocatore che deve giocare
+	 */
 	public int getCountTurnoGiocatore() {
 		return countTurnoGiocatore;
 	}
@@ -100,6 +116,10 @@ public class Partita implements Serializable{
 		this.m=m;
 	}
 	
+	/**
+	 * restituisce il giocatore che deve giocare il turno corrente
+	 * @return Giocatore 
+	 */
 	public Giocatore getGiocatoreCorrente() {
 		return elencoGiocatori.get(countTurnoGiocatore);
 	}

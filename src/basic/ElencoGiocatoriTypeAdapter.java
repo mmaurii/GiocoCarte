@@ -52,10 +52,8 @@ public class ElencoGiocatoriTypeAdapter extends TypeAdapter<ArrayList<Giocatore>
 
 			in.endArray();
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return elencoGiocatori;

@@ -11,10 +11,6 @@ public class Giocatore implements Serializable{
 	int nVite;
 	ArrayList<Carta> carte = new ArrayList<Carta>();
 	long punteggio;
-	public long getPunteggio() {
-		return punteggio;
-	}
-
 	int preseDichiarate=-1;
 	int preseEffettuate=0;
 	
@@ -79,7 +75,14 @@ public class Giocatore implements Serializable{
 		return carte;
 	}
 	
+	/**
+	 * toglie una vita al giocatore
+	 */
 	public void perdiVita() {
 		this.nVite--;
+	}
+	
+	public long getPunteggio() {
+		return punteggio;
 	}
 }

@@ -76,7 +76,7 @@ public class ControllerPopUpGiocatori {
     }
     
     // Metodi ausiliari
-    public void populateLst() {
+    public void caricaGiocatori() {
     	
  		try {
  			Scanner scan = new Scanner(file);			

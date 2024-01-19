@@ -102,7 +102,7 @@ public class ControllerPopUpPartite {
     }
     
     // Metodi ausiliari
-    public void populateLst() {
+    public void caricaPartite() {
     	
  		try {
  			 GsonBuilder gsonBuilder = new GsonBuilder();

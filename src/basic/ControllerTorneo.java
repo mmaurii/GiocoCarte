@@ -2,7 +2,6 @@ package basic;
 
 import java.io.*;
 import java.net.URL;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,22 +10,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import java.util.*;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.application.Platform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -34,7 +25,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.control.ButtonType;
 
 public class ControllerTorneo implements Initializable{
 	//variabili di controllo
@@ -110,7 +100,8 @@ public class ControllerTorneo implements Initializable{
 	@FXML Line ln2semifinale2;
 	@FXML Button btnTorneoTornaAllaHome;
 	@FXML Button btnClassifica;
-	
+	@FXML Label lblTurnoGiocatore;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle rbTorneo) {		
 		trn=(Torneo)rbTorneo.getObject("Torneo");
@@ -122,57 +113,101 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt1(MouseEvent mouseEvent) {
 		int pos = 0;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
-
 	}
+
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 
 	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
 		int pos = 1;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt3(MouseEvent mouseEvent) {
 		int pos = 2;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt4(MouseEvent mouseEvent) {
 		int pos = 3;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt5(MouseEvent mouseEvent) {
 		int pos = 4;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt6(MouseEvent mouseEvent) {
 		int pos = 5;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt7(MouseEvent mouseEvent) {
 		int pos = 6;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt8(MouseEvent mouseEvent) {
 		int pos = 7;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt9(MouseEvent mouseEvent) {
 		int pos = 8;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la partita associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaPrt10(MouseEvent mouseEvent) {
 		int pos = 9;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
 	}
 
+	/**
+	 * avvia la semifinale associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
 		int pos = 0;
 		if(trn.getElencoSemifinali()[pos]!=null) {
@@ -180,6 +215,10 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
+	/**
+	 * avvia la semiginale associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
 		int pos = 1;
 		if(trn.getElencoSemifinali()[pos]!=null) {
@@ -187,6 +226,10 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
+	/**
+	 * avvia la finale associata a questo controllo
+	 * @param mouseEvent
+	 */
 	@FXML public void avviaFinale(MouseEvent mouseEvent) {
 		if(trn.getFinale()!=null) {
 			int pos = -1;
@@ -194,7 +237,10 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
-	//torno all' interfaccia di login
+	/**
+	 * chiudo l'interfaccia corrente e apro l'interfaccia della home con il login
+	 * @param actionEvent
+	 */
 	@FXML public void TornaAllaHome(ActionEvent actionEvent) {
 		//chiudo la finestra di Gioco del torneo e torno alla finestra di login iniziale
 		Stage stage = (Stage)btnTorneoTornaAllaHome.getScene().getWindow();
@@ -210,26 +256,24 @@ public class ControllerTorneo implements Initializable{
 			Parent root = loader.load();
 
 			ControllerHome controller = loader.getController();
-
 			controller.caricaClassifica();
-
 			StackPane stackPane = new StackPane();
-			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback 
 			stackPane.getChildren().addAll(videoBackgroundPane, root);
-
 			stage.setTitle("HOME");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
-
 			stage.setScene(interfacciaHome);
 			stage.show();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	//creo un pop-up che visualizzi la classifica
+
+	/**
+	 * apre una finestra per visualizzare la classifica
+	 * @param actionEvent
+	 */
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
 		BorderPane root = new BorderPane();
 		try {
@@ -245,15 +289,15 @@ public class ControllerTorneo implements Initializable{
 			stage.setMinWidth(270);
 			stage.setScene(scene);
 			stage.show();			
-
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
 
 
-
+	/**
+	 * dispone l'interfaccia in maniera appropriata in modo tale da rispettare la configurazione e lo stato del torneo in atto
+	 */
 	private void setInterface() {
 		ImageView[] imgPrt = new ImageView[] {imgPrt1, imgPrt2, imgPrt3, imgPrt4, imgPrt5, imgPrt6, imgPrt7, imgPrt8, imgPrt9, imgPrt10};
 		GridPane[] gpPrt = new GridPane[] {gpPrt1, gpPrt2, gpPrt3, gpPrt4, gpPrt5, gpPrt6, gpPrt7, gpPrt8, gpPrt9, gpPrt10};
@@ -352,7 +396,6 @@ public class ControllerTorneo implements Initializable{
 			controlloInterfaceFinale();
 		}else{//semifinali al turno 1
 			//se le partite non sono iniziate le assegno alle semifinali
-			//			if(trn.getElencoPartite().get(0).getElencoGiocatori().size()!=1&&trn.getElencoPartite().get(1).getElencoGiocatori().size()!=1) {
 			if(trn.getElencoSemifinali()==null) {
 				//inizializzo le semifinali
 				Partita[] partite= new Partita[2];
@@ -374,8 +417,9 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
-
-
+	/**
+	 * controllo lo stato delle semifinali del torneo visualizzandole in maniera corretta
+	 */
 	private void controlloInterfaceSemifinale() {
 		//controllo le semifinali
 		Boolean flagFinale=trn.getFinale()!=null?false:true;
@@ -406,6 +450,9 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
+	/**
+	 * controllo lo stato delle finali del torneo visualizzandole in maniera corretta
+	 */
 	private void controlloInterfaceFinale() {
 		//controllo la finale
 		if(trn.getFinale()!=null) {
@@ -427,7 +474,11 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
-	@FXML Label lblTurnoGiocatore;
+	/**
+	 * avvia una partita del torneo in base al selettore e all'indice presi come parametro
+	 * @param selettore determina se la partita è: una finale, una semifinale o una partita semplice
+	 * @param p posizione della partita all'interno delle liste di partite del torneo
+	 */
 	private void avviaPartita(String selettore,int p) {
 		switch(selettore) {
 		case selettorePrt:
@@ -453,7 +504,7 @@ public class ControllerTorneo implements Initializable{
 
 			ResourceBundle rb = new ResourceBundle() {
 				@Override
-				protected Object handleGetObject(String key) {
+				protected Object handleGetObject(String key) {//risorse per inizializzare il controller della partita avviata
 					if (key.equals("Torneo")) {
 						return trn;
 					}else if(key.equals("PartitaTrn")) {
@@ -479,6 +530,7 @@ public class ControllerTorneo implements Initializable{
 			Giocatore gio = prt.getGiocatoreCorrente();
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
+			stage.setTitle("Partita");
 			stage.setScene(interfacciaDiGioco);
 			stage.show();
 
@@ -486,11 +538,15 @@ public class ControllerTorneo implements Initializable{
 			controller.copiaInformazioniLabel(lblTurnoGiocatore);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * determina il numero di carte da dare a ogni giocatore in base al numero di giocatori della partita
+	 * @param numeroGiocatori
+	 * @return numero di carte da distribuire a ogni giocatore
+	 */
 	private int quanteCarteAGiocatore(int numeroGiocatori) {
 		if(numeroGiocatori>4) {
 			return 5;
@@ -501,6 +557,10 @@ public class ControllerTorneo implements Initializable{
 		}
 	}
 
+	/**
+	 * inizializza la finale del torneo in base alla lista di giocatori presi come parametro
+	 * @param giocatoriFnl
+	 */
 	private void inizializzaFinale(ArrayList<Giocatore> giocatoriFnl) {
 		//codice finale
 		UUID uniqueID = UUID.randomUUID();
@@ -534,6 +594,10 @@ public class ControllerTorneo implements Initializable{
 		trn.setFinale(prt);
 	}
 
+	/**
+	 * inizializzo le due semifinali in base alla lista di giocatori presa come parametro
+	 * @param giocatoriSFnl
+	 */
 	private void inizializzaSemiFinale(ArrayList<Giocatore> giocatoriSFnl) {
 		Partita[] SFnl= new Partita[2];
 
@@ -582,7 +646,6 @@ public class ControllerTorneo implements Initializable{
 			g.setCarteMano(m.pescaCarte(numeroCarteAGiocatore));
 		}
 
-
 		//definisco la partita come appartenente a un torneo
 		SFnl[0].setFlagTorneo(true);
 		SFnl[1].setFlagTorneo(true);
@@ -591,6 +654,10 @@ public class ControllerTorneo implements Initializable{
 		trn.setElencoSemifinali(SFnl);
 	}
 
+	/**
+	 * salvo il torneo preso come parametro in un file json
+	 * @param torneo
+	 */
 	public void SalvaTorneo(Torneo torneo) {
 		try {
 			Torneo tempTrn=null;
@@ -653,10 +720,8 @@ public class ControllerTorneo implements Initializable{
 				jsnWriter.close();
 			}
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 	}

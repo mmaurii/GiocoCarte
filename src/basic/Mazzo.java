@@ -15,14 +15,13 @@ public class Mazzo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	ArrayList<Carta> mazzo = new ArrayList<Carta>();
 	
-	/*public Mazzo(ArrayList<Carta> mazzo) {
-		this.mazzo = mazzo;
-	}*/
-	
 	public Mazzo() {
 		popolaMazzo();
 	}
 	
+	/**
+	 * carica le carte dal file di testo e inizializza le carte del mazzo
+	 */
 	public void popolaMazzo() {
 		int numero;
 		Seme seme;
@@ -42,17 +41,13 @@ public class Mazzo implements Serializable{
 				percorso = data[2];
 				valore=Integer.parseInt(data[3]);
 				speciale=Integer.parseInt(data[4]);
-				if(valore == 40)
-				{
+				if(valore == 40){
 					CartaSpeciale cs = new CartaSpeciale(numero, seme, percorso, valore, speciale);
 					mazzo.add(cs);
-				}else
-				{
+				}else{
 					Carta c = new Carta(numero, seme, percorso, valore, speciale);
-					//System.out.println(numero + ", " + seme + ", " + percorso + ", " + valore);
 					mazzo.add(c);
 				}
-				
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
@@ -60,30 +55,36 @@ public class Mazzo implements Serializable{
 		}
 	}
 	
+	/**
+	 * mescola il mazzo tramite il metodo <code>shuffle</code> della classe <code>collections</code>
+	 */
 	public void mescola() {
 		Collections.shuffle(mazzo);
 	}
 	
-	
+	/**
+	 * setta una carta speciale in maniera randomica (se pescata al primo turno farà acquisire una vita)
+	 */
 	public void setSpeciale() {
 		Random random = new Random();
         int r = random.nextInt(39) + 1;
-        System.out.println("Numero casuale: " + r);
 		mazzo.get(r).speciale = 1;
-        System.out.println(mazzo.get(r).percorso + "\n" +  mazzo.get(r).valore + "\n" + mazzo.get(r).speciale);
-
 	}
 	
 	public ArrayList<Carta> getMazzo(){
 		return mazzo;
 	}
 	
+	/**
+	 * pesca un numero pari a 'numeroCarte' dal mazzo e lo restituisce
+	 * @param numeroCarte
+	 * @return ArrayList<<a>Carta> cartePescate
+	 */
 	public ArrayList<Carta> pescaCarte(int numeroCarte) {
 		ArrayList<Carta> cartePerGiocatore = new ArrayList<Carta>();
 		for(int i =0;i<numeroCarte;i++) {
 			cartePerGiocatore.add(mazzo.remove(0));
 		}
-
 		return cartePerGiocatore;
 	}
 }
