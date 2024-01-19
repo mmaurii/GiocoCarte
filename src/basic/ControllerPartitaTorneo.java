@@ -87,7 +87,7 @@ public class ControllerPartitaTorneo {
 				currentMediaPlayer.stop();
 			}
 
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaPartita.fxml"));
 			Parent root = loader.load();
@@ -123,7 +123,7 @@ public class ControllerPartitaTorneo {
 				currentMediaPlayer.stop();
 			}
 
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaTorneo.fxml"));
 			Parent root = loader.load();
@@ -224,7 +224,11 @@ public class ControllerPartitaTorneo {
 
 		//riapro la finestra di login
 		try {
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+			if (currentMediaPlayer != null) {
+				currentMediaPlayer.stop();
+			}
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();

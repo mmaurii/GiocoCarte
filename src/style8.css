@@ -1,5 +1,5 @@
 .body {
-    -fx-background-image: url("../src/basic/IMGcarte/retro.png");
+    -fx-background-image: url("retro.png");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;

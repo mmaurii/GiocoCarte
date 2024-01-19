@@ -34,10 +34,13 @@ public class ControllerCreaTorneo {
 	ArrayList<Partita> elencoPrt = new ArrayList<Partita>();
 	final int minGiocatoriTorneo = 6;
 	final int maxGiocatoriTorneo = 40;
-	final String pathSalvataggioTrn="src/SalvataggioTornei.json";
-	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	String pathStatus = "src/Status.txt";
-	String pathClassifica = "src/Classifica.txt";
+	
+	String pathSalvataggioTrn = "Documenti/SalvataggioTornei.json";
+	File file1 = new File(pathSalvataggioTrn);
+	
+	String path = "Documenti/Classifica.txt";
+	File file = new File(path);
+
 	int numeroGiocatori;
 
 
@@ -96,7 +99,7 @@ public class ControllerCreaTorneo {
 				lstGiocatoriRegistrati.getItems().add(nome);
 				giocatoriTrn.add(new Giocatore(nome));
 				try{
-					FileWriter fw = new FileWriter(pathClassifica, true);
+					FileWriter fw = new FileWriter(file, true);
 					fw.write(0 + " , " + nome + "\n");
 					fw.close();
 				} catch (FileNotFoundException FNFe) {
@@ -189,24 +192,12 @@ public class ControllerCreaTorneo {
 		lblErrore.setVisible(false);
 
 		if(listUtentiTorneo.getItems().size() == numeroGiocatori) {//controllo che il numero di giocatori inserito coincida con quello dichiarato
-			try {
-				UUID uniqueID = UUID.randomUUID();
-				//'t' sta per torneo
-				uniqueCode = "t"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
-				File file = new File(pathStatus);
+			UUID uniqueID = UUID.randomUUID();
+			//'t' sta per torneo
+			uniqueCode = "t"+uniqueID.toString().replaceAll("-", "").substring(0, 8);
 
-				txtCodice.setText(uniqueCode);
-				btnGeneraCodice.setDisable(true);
-
-				//salvo il codice corrente nel file di StausTornei
-				FileWriter fw = new FileWriter(file);
-				fw.write("codiceTorneo , "+uniqueCode);
-				fw.close();
-			}catch(FileNotFoundException e) {
-				System.out.println(e);
-			}catch(IOException eIO) {
-				System.out.println(eIO);    		
-			}
+			txtCodice.setText(uniqueCode);
+			btnGeneraCodice.setDisable(true);
 
 			ArrayList<Partita> elencoPrt=generaPartite();
 			this.trn = new Torneo(uniqueCode, elencoPrt);
@@ -321,7 +312,6 @@ public class ControllerCreaTorneo {
 	 */
 	public void caricaGiocatoriRegistrati() {
 		try {
-			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
 			while(scan.hasNext()) {
 				String line = scan.nextLine();
@@ -363,7 +353,7 @@ public class ControllerCreaTorneo {
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
-			FileReader fr = new FileReader(pathSalvataggioTrn);
+			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			jsnReader.beginArray();
@@ -377,7 +367,7 @@ public class ControllerCreaTorneo {
 
 			elencoTornei.add(torneo);
 			//salvo la lista di tornei caricati dal file + quella creata
-			FileWriter fw = new FileWriter(pathSalvataggioTrn);
+			FileWriter fw = new FileWriter(file1);
 			JsonWriter jsnWriter = new JsonWriter(fw);
 			jsnWriter.beginArray();
 

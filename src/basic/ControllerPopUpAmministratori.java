@@ -20,7 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class ControllerPopUpAmministratori implements Initializable {
-	String path = "src/Passwords.txt";
+	String path = "Documenti/Passwords.txt";
+	File file = new File(path);
 
 	@FXML TableView<LineAmministratori> tblAmministratori;
 	@FXML TableColumn<LineAmministratori, String> tblNomeAmministratori;
@@ -35,7 +36,7 @@ public class ControllerPopUpAmministratori implements Initializable {
 	@FXML public void salva(ActionEvent actionEvent) {
 		List<LineAmministratori> items = tblAmministratori.getItems();
 		try {
-			FileWriter writer = new FileWriter(path);
+			FileWriter writer = new FileWriter(file);
 			for (LineAmministratori item : items) {
 				writer.write(item.toString() + '\n');
 			}
@@ -110,7 +111,6 @@ public class ControllerPopUpAmministratori implements Initializable {
 
 		// Aggiunta dei dati alla TableView
 		try {
-			File file = new File(path);
 			Scanner scan = new Scanner(file);			
 			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();

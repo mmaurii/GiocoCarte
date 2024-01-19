@@ -30,9 +30,11 @@ public class Mazzo implements Serializable{
 		int valore;
 		int speciale;
 		try {
-			File f = new File("src/Carte.txt");
+			
+			String path = "Documenti/Carte.txt";
+			File file = new File(path);
 
-			Scanner scan = new Scanner(f);
+			Scanner scan = new Scanner(file);
 			while(scan.hasNextLine()) {
 				String data[] = scan.nextLine().split(", ");
 				numero = Integer.parseInt(data[0]);

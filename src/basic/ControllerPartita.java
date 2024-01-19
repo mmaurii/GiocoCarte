@@ -47,9 +47,12 @@ public class ControllerPartita implements Initializable{
 	String selettore;
 	Mazzo mazzo = new Mazzo();
 	final int valCartaSpecialeAssoDenara=40;
-	final String pathClassifica = "src/Classifica.txt";
-	final String pathStatus = "src/Status.txt";	
+	
+	String pathClassifica = "Documenti/Passwords.txt";
+	File file = new File(pathClassifica);
+
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
+
 	final String selettorePrt = "prt";
 	final String selettoreSFnl = "semifinale";
 	final String selettoreFnl = "finale";
@@ -373,7 +376,7 @@ public class ControllerPartita implements Initializable{
 					btnPartitaTornaAlTorneo.setDisable(false);
 
 					//conteggio punti
-					aggiornaClassifica(pathClassifica);
+					aggiornaClassifica();
 				}else{//concludo la partita e ne annuncio il pareggio
 					lblVitaPersa.setText(pareggio);
 					lblManoGiocatore.setVisible(false);
@@ -755,11 +758,10 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
-	private void aggiornaClassifica(String path) {
+	private void aggiornaClassifica() {
 		try{
 			final int puntiVincitore=10;
 			ArrayList<String> data = new ArrayList<String>();
-			File file = new File(path);
 			Scanner scan = new Scanner(file);			
 			boolean presenzaGiocatore=false;
 			while(scan.hasNext()) {
@@ -812,8 +814,11 @@ public class ControllerPartita implements Initializable{
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			String path="src/SalvataggioPartite.json";
-			FileReader fr = new FileReader(path);
+			
+			String path = "Documenti/SalvataggioPartite.json";
+			File file1 = new File(path);
+			
+			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			if(jsnReader.peek() != JsonToken.NULL){
@@ -846,7 +851,7 @@ public class ControllerPartita implements Initializable{
 				}
 
 				//salvo la lista di partite caricate dal file e aggiornate
-				FileWriter fw = new FileWriter(path);
+				FileWriter fw = new FileWriter(file1);
 				JsonWriter jsnWriter = new JsonWriter(fw);
 				jsnWriter.beginArray();
 				for (Partita p : elencoPartite) {

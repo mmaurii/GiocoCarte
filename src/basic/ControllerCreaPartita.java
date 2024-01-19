@@ -29,13 +29,16 @@ public class ControllerCreaPartita {
 	final int nViteDefault=5;
 	final int maxUtentiPrt=8;
 	final int minUtentiPrt=1;//il limite inferiore è escluso e quello superiore incluso
-	final String pathSalvataggioPrt="src/SalvataggioPartite.json";
+	
+	final String pathSalvataggioPrt="Documenti/SalvataggioPartite.json";
+	File file1 = new File(pathSalvataggioPrt);
+	
 	Partita prt;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	String pathStatus = "src/Status.txt";
-	String pathClassifica = "src/Classifica.txt";
+
+	String path = "Documenti/Classifica.txt";
+	File file = new File(path);
 
 	@FXML ListView<String> lstGiocatoriRegistrati;
 	@FXML ListView<String> lstUtentiPartita;
@@ -64,7 +67,7 @@ public class ControllerCreaPartita {
 					giocatoriPrt.add(new Giocatore(nome));
 
 					try {
-						FileWriter fw = new FileWriter(pathClassifica, true);
+						FileWriter fw = new FileWriter(file, true);
 						fw.write(0 + " , " + nome + "\n");
 						fw.close();
 					} catch (FileNotFoundException FNFe) {
@@ -219,7 +222,7 @@ public class ControllerCreaPartita {
 				currentMediaPlayer.stop();
 			}
 
-			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 			Parent root = loader.load();
@@ -244,7 +247,6 @@ public class ControllerCreaPartita {
 	 */
 	public void caricaGiocatoriRegistrati() {
 		try {
-			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
 			while(scan.hasNext()) {
 				String line = scan.nextLine();
@@ -301,7 +303,7 @@ public class ControllerCreaPartita {
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			FileReader fr = new FileReader(pathSalvataggioPrt);
+			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			jsnReader.beginArray();
@@ -315,7 +317,7 @@ public class ControllerCreaPartita {
 
 			elencoPartite.add(partita);
 			//salvo la lista di partite caricate dal file + quella creata
-			FileWriter fw = new FileWriter(pathSalvataggioPrt);
+			FileWriter fw = new FileWriter(file1);
 			JsonWriter jsnWriter = new JsonWriter(fw);
 			jsnWriter.beginArray();
 

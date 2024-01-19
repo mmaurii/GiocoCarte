@@ -16,7 +16,9 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 public class ControllerPopUpTornei {
-    String path = "src/SalvataggioTornei.json";
+
+    String path = "Documenti/SalvataggioTornei.json";
+	File file = new File(path);
     ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
     Gson gson;
     
@@ -26,7 +28,7 @@ public class ControllerPopUpTornei {
 
     @FXML public void salvaTorneo(ActionEvent actionEvent) {
 				try {
-					FileWriter fw = new FileWriter(path);
+					FileWriter fw = new FileWriter(file);
 					JsonWriter jsnWriter = new JsonWriter(fw);
 					
 					jsnWriter.beginArray();
@@ -62,7 +64,7 @@ public class ControllerPopUpTornei {
  			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
  			gson = gsonBuilder.create();
  		
- 			FileReader fr = new FileReader(path);
+ 			FileReader fr = new FileReader(file);
  			JsonReader jsnReader=new JsonReader(fr);
  			
  			if(jsnReader.peek() != JsonToken.NULL){

@@ -56,12 +56,12 @@ public class ControllerPopUpClassifica implements Initializable{
     Partita prt;
     Mazzo mazzo = new Mazzo();
     ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-    String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
     int countTurnoGiocatore=0;
     boolean dichiaraPrese=true;
     boolean primoTurno=true;
-    String pathClassifica = "src/Classifica.txt";
-    String pathStatus = "src/Status.txt";
+    
+    String path = "Documenti/Classifica.txt";
+	File file = new File(path);
     
 	@FXML TableView<LineClassifica> tblClassifica;
 	@FXML TableColumn<LineClassifica, Integer> rankingTblClassifica;
@@ -72,7 +72,6 @@ public class ControllerPopUpClassifica implements Initializable{
 	public void caricaClassifica() {
 		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
-			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);	
 			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();

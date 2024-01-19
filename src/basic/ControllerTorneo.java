@@ -45,7 +45,6 @@ public class ControllerTorneo implements Initializable{
 	final String selettorePrt = "prt";
 	final String selettoreSFnl = "semifinale";
 	final String selettoreFnl = "finale";
-	final String pathClassifica = "src/Classifica.txt";
 	final String pathImgPrtSvolta = "/basic/IMGtorneo/verde.jpg";
 	final String pathImgPrt = "/basic/IMGtorneo/nero.jpg";
 	final String pathImgSemifinale = "/basic/IMGtorneo/argento.jpg";
@@ -602,8 +601,11 @@ public class ControllerTorneo implements Initializable{
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
-			String path="src/SalvataggioTornei.json";
-			FileReader fr = new FileReader(path);
+			
+			String path = "Documenti/SalvataggioTornei.json";
+			File file = new File(path);
+			
+			FileReader fr = new FileReader(file);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			if(jsnReader.peek() != JsonToken.NULL){
@@ -640,7 +642,7 @@ public class ControllerTorneo implements Initializable{
 				}
 
 				//salvo la lista di tornei caricati dal file e aggiornati
-				FileWriter fw = new FileWriter(path);
+				FileWriter fw = new FileWriter(file);
 				JsonWriter jsnWriter = new JsonWriter(fw);
 				jsnWriter.beginArray();
 				for (Torneo t : elencoTornei) {

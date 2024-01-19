@@ -53,7 +53,9 @@ import javafx.animation.ScaleTransition;
 
 public class ControllerPopUpPartite {
 
-    String path = "src/SalvataggioPartite.json";
+	String path = "Documenti/SalvataggioPartite.json";
+	File file = new File(path);
+
     ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
     Gson gson;
     
@@ -65,7 +67,7 @@ public class ControllerPopUpPartite {
     	
     	
 				try {
-					FileWriter fw = new FileWriter(path);
+					FileWriter fw = new FileWriter(file);
 					JsonWriter jsnWriter = new JsonWriter(fw);
 					
 					jsnWriter.beginArray();
@@ -108,7 +110,7 @@ public class ControllerPopUpPartite {
  			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
  			gson = gsonBuilder.create();
  		
- 			FileReader fr = new FileReader(path);
+ 			FileReader fr = new FileReader(file);
  			JsonReader jsnReader=new JsonReader(fr);
 
  			

@@ -1,6 +1,6 @@
 .body{
 
-	-fx-background-image:  url("../src/sfondo.png");
+	-fx-background-image:  url("sfondo.png");
 	-fx-background-size: contain;
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: center;

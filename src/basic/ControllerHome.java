@@ -38,9 +38,9 @@ public class ControllerHome {
 	Torneo trn;
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
-	String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
-	String pathClassifica = "src/Classifica.txt";
-	String pathStatus = "src/Status.txt";
+
+	String path = "Documenti/Classifica.txt";
+	File file = new File(path);
 
 	//eventi FXML
 	@FXML private TextField txtUsername;
@@ -79,7 +79,7 @@ public class ControllerHome {
 				if (currentMediaPlayer != null) {
 					currentMediaPlayer.stop();
 				}
-				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
+				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
 				Parent root = loader.load();
@@ -156,7 +156,7 @@ public class ControllerHome {
 	public void caricaClassifica() {
 		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
-			File file = new File(pathClassifica);
+			
 			Scanner scan = new Scanner(file);	
 			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();
@@ -218,6 +218,11 @@ public class ControllerHome {
 		//apro la finestra di gioco
 		BorderPane root = new BorderPane();
 		try {
+			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+			if (currentMediaPlayer != null) {
+				currentMediaPlayer.stop();
+			}
+			
 			FXMLLoader loader;
 			loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
 
@@ -301,8 +306,11 @@ public class ControllerHome {
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;
-			String path="src/SalvataggioPartite.json";
-			FileReader fr = new FileReader(path);
+			
+			String path = "Documenti/SalvataggioPartite.json";
+			File file = new File(path);
+			
+			FileReader fr = new FileReader(file);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			if(jsnReader.peek() != JsonToken.NULL){
@@ -340,6 +348,11 @@ public class ControllerHome {
 		//apro la finestra di gioco
 		BorderPane root = new BorderPane();
 		try {
+			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
+			if (currentMediaPlayer != null) {
+				currentMediaPlayer.stop();
+			}
+			
 			FXMLLoader loader;
 			loader = new FXMLLoader(getClass().getResource("Torneo.fxml"));
 
@@ -408,8 +421,11 @@ public class ControllerHome {
 			Gson gson=gsonBuilder.create();
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
 			Torneo trnTrovato=null;
-			String path="src/SalvataggioTornei.json";
-			FileReader fr = new FileReader(path);
+			
+			String path = "Documenti/SalvataggioTornei.json";
+			File file = new File(path);
+			
+			FileReader fr = new FileReader(file);
 			JsonReader jsnReader=new JsonReader(fr);
 
 			if(jsnReader.peek() != JsonToken.NULL){
