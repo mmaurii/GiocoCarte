@@ -24,9 +24,11 @@ public class ControllerPopUpPartite {
     @FXML Button btnElimina;
     @FXML Button btnSalva;
 
+	/**
+	 * salva le modifiche appartate in unn file
+	 * @param actionEvent
+	 */
     @FXML public void salva(ActionEvent actionEvent) {
-    	
-    	
 				try {
 					File file = new File(pathSalvataggioPartite);
 					FileWriter fw = new FileWriter(file);
@@ -41,22 +43,20 @@ public class ControllerPopUpPartite {
 					jsnWriter.close();
 					
 				} catch (FileNotFoundException fnfe) {
-					// TODO Auto-generated catch block
 					fnfe.printStackTrace();
 				} catch (IOException ioe) {
-					// TODO Auto-generated catch block
 					ioe.printStackTrace();
 				}
-				
 						
 				Stage stage = (Stage)btnSalva.getScene().getWindow();
 		    	stage.close();	
-    	
-	
     }
     
+	/**
+	 * elimina la partita selezionata dalla visualizzazione, le modifiche non sono definitive
+	 * @param actionEvent
+	 */
     @FXML public void eliminaPartita(ActionEvent actionEvent) {
-    	
 	 String cod = lstPartite.getSelectionModel().getSelectedItem();
 	 int pos = lstPartite.getItems().indexOf(cod);
 	 lstPartite.getItems().remove(pos); 
@@ -64,8 +64,10 @@ public class ControllerPopUpPartite {
     }
     
     // Metodi ausiliari
+    /**
+     * carica le partite dall'apposito file di testo e le visualizza
+     */
     public void caricaPartite() {
-    	
  		try {
  			 GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -92,15 +94,11 @@ public class ControllerPopUpPartite {
  	 		}
  			
  		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 
- 		
- 		
  		//metto il contenuto della listview in grassetto
  		lstPartite.setStyle("-fx-font-weight: bold;");
  		

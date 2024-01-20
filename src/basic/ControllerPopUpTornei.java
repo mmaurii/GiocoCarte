@@ -26,6 +26,10 @@ public class ControllerPopUpTornei {
     @FXML Button btnElimina;
     @FXML Button btnSalva;
 
+	/**
+	 * salva le modifiche appartate in un file
+	 * @param actionEvent
+	 */
     @FXML public void salvaTorneo(ActionEvent actionEvent) {
 				try {
 					FileWriter fw = new FileWriter(file);
@@ -49,8 +53,11 @@ public class ControllerPopUpTornei {
 		    	stage.close();
     }
     
+	/**
+	 * elimina il torneo selezionato dalla visualizzazione, le modifiche non sono definitive
+	 * @param actionEvent
+	 */
     @FXML public void eliminaTorneo(ActionEvent actionEvent) {
-    	
 	 String cod = lstTornei.getSelectionModel().getSelectedItem();
 	 int pos = lstTornei.getItems().indexOf(cod);
 	 lstTornei.getItems().remove(pos); 
@@ -58,6 +65,9 @@ public class ControllerPopUpTornei {
     }
     
     // Metodi ausiliari
+    /**
+     * carica i tornei dall'apposito file di testo e li visualizza
+     */
     public void caricaTornei() {
  		try {
  			GsonBuilder gsonBuilder = new GsonBuilder();

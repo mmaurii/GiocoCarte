@@ -30,6 +30,9 @@ public class ControllerPopUpClassifica implements Initializable{
 	@FXML TableColumn<LineClassifica, String> nomiTblClassifica;
 
 
+	/**
+	 * carica la classifica e la visualizzo nell'apposita tableview
+	 */
 	public void caricaClassifica() {
 		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
@@ -42,7 +45,6 @@ public class ControllerPopUpClassifica implements Initializable{
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		}
 
@@ -51,21 +53,21 @@ public class ControllerPopUpClassifica implements Initializable{
         // Associazione delle ObservableList alle TableColumn
 		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, String>, ObservableValue<String>>() {
 			public ObservableValue<String> call(CellDataFeatures<LineClassifica, String> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
 				return cell.getValue().nomeProperty();
 			}
 		});
 
 		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
 			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineClassificav instance for a particular TableView row
 				return cell.getValue().rankingProperty().asObject();
 			}
 		});
 		
 		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
 			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
 				return cell.getValue().puntiProperty().asObject();
 			}
 		});

@@ -39,6 +39,8 @@ public class ControllerHome {
 	Mazzo mazzo = new Mazzo();
 	ArrayList<Giocatore> giocatoriPrt = new ArrayList<Giocatore>();
 	final String pathClassifica = "Documenti/Classifica.txt";
+	final String pathSalvataggioPartite = "Documenti/SalvataggioPartite.json";
+	final String pathSalvataggioTornei = "Documenti/SalvataggioTornei.json";
 
 	//eventi FXML
 	@FXML private TextField txtUsername;
@@ -94,7 +96,6 @@ public class ControllerHome {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else {//avviso che le credenziali di accesso sono errate
@@ -175,21 +176,21 @@ public class ControllerHome {
 		// Associazione delle ObservableList alle TableColumn
 		nomiTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, String>, ObservableValue<String>>() {
 			public ObservableValue<String> call(CellDataFeatures<LineClassifica, String> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
 				return cell.getValue().nomeProperty();
 			}
 		});
 
 		rankingTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
 			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
 				return cell.getValue().rankingProperty().asObject();
 			}
 		});
 
 		ptTblClassifica.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
 			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
 				return cell.getValue().puntiProperty().asObject();
 			}
 		});
@@ -308,8 +309,7 @@ public class ControllerHome {
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			Partita prtTrovata=null;
 			
-			String path = "Documenti/SalvataggioPartite.json";
-			File file = new File(path);
+			File file = new File(pathSalvataggioPartite);
 			
 			FileReader fr = new FileReader(file);
 			JsonReader jsnReader=new JsonReader(fr);
@@ -423,8 +423,7 @@ public class ControllerHome {
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
 			Torneo trnTrovato=null;
 			
-			String path = "Documenti/SalvataggioTornei.json";
-			File file = new File(path);
+			File file = new File(pathSalvataggioTornei);
 			
 			FileReader fr = new FileReader(file);
 			JsonReader jsnReader=new JsonReader(fr);

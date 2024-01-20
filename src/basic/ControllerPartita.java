@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.application.Platform;
 import com.google.gson.Gson;
@@ -579,17 +580,20 @@ public class ControllerPartita implements Initializable{
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
 		BorderPane root = new BorderPane();
 		try {
+			Stage parentStage = (Stage) btnClassifica.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
 			loader.getController();
 
 			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.initModality(Modality.APPLICATION_MODAL); 
 			stage.setTitle("Classifica");
 			Scene scene = new Scene(root);
 			stage.setMinHeight(400);
 			stage.setMinWidth(270);
 			stage.setScene(scene);
-			stage.show();			
+			stage.showAndWait();			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
@@ -705,8 +709,10 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
+	/**
+	 * inizia una nuova mano se non c'è un vincitore, distribuisce le carte ai giocatori
+	 */
 	private void cominciaNuovaMano() {
-		//si è conclusa una mano quindi ne inizio un'altra se non c'è un vincitore
 		//decremento se necessario il numero di carte
 		int numeroCarteAGiocatore = prt.getNumeroCarteAGiocatore();
 
@@ -734,8 +740,11 @@ public class ControllerPartita implements Initializable{
 		prt.setNumeroCarteAGiocatore(numeroCarteAGiocatore);
 	}
 
+	/**
+	 * mette le carte coperte al giocatore corrente dopo aver controllato se la partita era stata già avviata
+	 * @param resume
+	 */
 	private void copriCarteGiocatore(boolean resume) {
-
 		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//int posProssimoGiocatore=prt.getCountTurnoGiocatore()+1;
 		int posProssimoGiocatore=resume?prt.getCountTurnoGiocatore():prt.getCountTurnoGiocatore()+1;
@@ -761,6 +770,9 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
+	/**
+	 * aggiorna i punteggi della classifica e li salva nel file di testo dedicato
+	 */
 	private void aggiornaClassifica() {
 		try{
 			final int puntiVincitore=10;
@@ -872,12 +884,19 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
+	/**
+	 * mostra o nasconde l'interfaccia di dichiarazione delle prese in base al parametr booleano val
+	 * @param val
+	 */
 	private void dichiaraPreseSetVisible(boolean val) {
 		gridPaneNumeroPrese.setVisible(val);
 		lblPrese.setVisible(val);
 		txtNumeroPrese.setVisible(val);
 	}
 
+	/**
+	 * mostra le prese dichiarate da chi lo ha già fatto se no visualizza '*'
+	 */
 	private void mostraPrese() {
 		//mostro le prese dichiarate da chi lo ha fatto
 		for(Giocatore g : prt.getElencoGiocatori()) {
@@ -886,6 +905,9 @@ public class ControllerPartita implements Initializable{
 		}		
 	}
 
+	/**
+	 * mostra le vite di ogni giocatore o se qualche d'uno è stato eliminato
+	 */
 	private void mostraVite() {
 		//mostro le vite di ogni giocatore
 		for(Giocatore g : prt.getElencoGiocatori()) {
@@ -896,6 +918,9 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
+	/**
+	 * mostra le carte della mano del giocatore corrente
+	 */
 	private void mostraCarteGiocatore() {
 		ArrayList<Pane> listaCarteMano = new ArrayList<Pane>(Arrays.asList(imgCartaMano1, imgCartaMano2, imgCartaMano3, imgCartaMano4, imgCartaMano5));
 		//mostro le carte del giocatore corrente
@@ -914,13 +939,15 @@ public class ControllerPartita implements Initializable{
 						);
 
 				listaCarteMano.get(i).setBackground(new Background(background));
-
 			}else {
 				listaCarteMano.get(i).setBackground(null);
 			}
 		}
 	}
 
+	/**
+	 * mostra le carte presenti sul banco
+	 */
 	private void mostraCarteBanco() {
 		//mostro le carte sul banco
 		ArrayList<Pane> listaCarteBanco = new ArrayList<Pane>(Arrays.asList(imgCartaBanco1, imgCartaBanco2, imgCartaBanco3, imgCartaBanco4, imgCartaBanco5, imgCartaBanco6, imgCartaBanco7, imgCartaBanco8));
@@ -940,6 +967,10 @@ public class ControllerPartita implements Initializable{
 		}
 	}
 
+	/**
+	 * imposta l'interfaccia della partita corrente adattandola in base allo stato e al momento in cui 
+	 * si trova la partita stessa
+	 */
 	private void setInterface() {
 		if(prt.isResume())	{//controllo se la partita era già stata iniziata
 			//ripristino stato dei controlli

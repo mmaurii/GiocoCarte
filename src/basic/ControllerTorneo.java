@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -279,18 +280,20 @@ public class ControllerTorneo implements Initializable{
 	@FXML public void VisualizzaClassifica(ActionEvent actionEvent) {
 		BorderPane root = new BorderPane();
 		try {
+			Stage parentStage = (Stage) btnClassifica.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpClassifica.fxml"));
 			root = loader.load();
-
 			loader.getController();
 
 			Stage stage = new Stage();
+			stage.initOwner(parentStage);
+			stage.initModality(Modality.APPLICATION_MODAL); 
 			stage.setTitle("Classifica");
 			Scene scene = new Scene(root);
 			stage.setMinHeight(400);
 			stage.setMinWidth(270);
 			stage.setScene(scene);
-			stage.show();			
+			stage.showAndWait();			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	

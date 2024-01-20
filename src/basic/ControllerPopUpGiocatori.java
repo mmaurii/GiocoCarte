@@ -16,6 +16,10 @@ public class ControllerPopUpGiocatori {
 	@FXML Button btnElimina;
 	@FXML Button btnSalva;
 
+	/**
+	 * salva le modifiche appartate in unn file
+	 * @param actionEvent
+	 */
 	@FXML public void salva(ActionEvent actionEvent) {
 
 		List<String> items = lstGiocatori.getItems();
@@ -32,10 +36,12 @@ public class ControllerPopUpGiocatori {
 
 		Stage stage = (Stage)btnSalva.getScene().getWindow();
 		stage.close();
-
-
 	}
 
+	/**
+	 * elimina il giocatore selezionato dalla visualizzazione, le modifiche non sono definitive
+	 * @param actionEvent
+	 */
 	@FXML public void eliminaGiocatore(ActionEvent actionEvent) {
 
 		lstGiocatori.getItems().remove(lstGiocatori.getSelectionModel().getSelectedItem()); 
@@ -43,8 +49,10 @@ public class ControllerPopUpGiocatori {
 	}
 
 	// Metodi ausiliari
+	/**
+	 * carica i giocatori presenti nel file della classifica
+	 */
 	public void caricaGiocatori() {
-
 		try {
 			File file = new File(pathClassifica);
 			Scanner scan = new Scanner(file);			
@@ -54,10 +62,8 @@ public class ControllerPopUpGiocatori {
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		}
-
 
 		//metto il contenuto della listview in grassetto
 		lstGiocatori.setStyle("-fx-font-weight: bold;");

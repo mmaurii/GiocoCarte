@@ -23,7 +23,7 @@ public class Amministratore extends Giocatore{
 		String u;
 		String p;
 
-		String path = "Documenti/Passwords.txt";
+		final String path = "Documenti/Passwords.txt";
 		File file = new File(path);
 
 		Scanner scan;

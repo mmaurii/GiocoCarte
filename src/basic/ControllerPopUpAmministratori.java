@@ -113,14 +113,14 @@ public class ControllerPopUpAmministratori implements Initializable {
 		// Associazione delle ObservableList alle TableColumn
 		tblNomeAmministratori.setCellValueFactory(new Callback<CellDataFeatures<LineAmministratori, String>, ObservableValue<String>>() {
 			public ObservableValue<String> call(CellDataFeatures<LineAmministratori, String> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineAmministratori instance for a particular TableView row
 				return cell.getValue().nomeProperty();
 			}
 		});
 
 		tblPasswordAmministratori.setCellValueFactory(new Callback<CellDataFeatures<LineAmministratori, String>, ObservableValue<String>>() {
 			public ObservableValue<String> call(CellDataFeatures<LineAmministratori, String> cell) {
-				// p.getValue() returns the Person instance for a particular TableView row
+				// cell.getValue() returns the LineAmministratori instance for a particular TableView row
 				return cell.getValue().passwordProperty();
 			}
 		});
