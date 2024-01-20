@@ -175,7 +175,6 @@ public class ControllerCreaTorneo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	} 
@@ -278,7 +277,6 @@ public class ControllerCreaTorneo {
 		//imposto i dati di una nuova partita
 		Partita p=new Partita(uniqueCode, giocatoriPrt);
 		mazzo=new Mazzo();
-		System.out.println("numero carte mazzo "+mazzo.getMazzo().size());
 		//do le carte a ogni giocatore
 		mazzo.setSpeciale();
 		mazzo.mescola();

@@ -47,7 +47,8 @@ public class ControllerPartita implements Initializable{
 	String selettore;
 	Mazzo mazzo = new Mazzo();
 	final int valCartaSpecialeAssoDenara=40;
-	final String pathClassifica = "Documenti/Passwords.txt";
+	final String pathClassifica = "Documenti/Classifica.txt";
+	final String pathSalvataggioPartite = "Documenti/SalvataggioPartite.json";
 	final String pathRetroCarta = "/basic/IMGcarte/retro.jpg";
 	final String selettorePrt = "prt";
 	final String selettoreSFnl = "semifinale";
@@ -82,7 +83,7 @@ public class ControllerPartita implements Initializable{
 	@FXML Pane imgCartaBanco1;
 	@FXML Pane imgCartaBanco2;
 	@FXML Pane imgCartaBanco3;
-	@FXML Pane imgCartaBanco4;
+	@FXML Pane imgCartaBanco4; 
 	@FXML Pane imgCartaBanco5;
 	@FXML Pane imgCartaBanco6;
 	@FXML Pane imgCartaBanco7;
@@ -509,7 +510,6 @@ public class ControllerPartita implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
@@ -690,7 +690,11 @@ public class ControllerPartita implements Initializable{
 		return posGiocatore;
 	}
 
-	
+	/**
+	 * determina il numero di carte da dare a ogni giocatore in base al numero di giocatori della partita
+	 * @param numeroGiocatori
+	 * @return numero di carte da distribuire a ogni giocatore
+	 */
 	private int quanteCarteAGiocatore(int numeroGiocatori) {
 		if(numeroGiocatori>4) {
 			return 5;
@@ -768,8 +772,7 @@ public class ControllerPartita implements Initializable{
 				String line = scan.nextLine();
 				String[] lineData = line.split(" , ");
 				//controllo il nome salvato su file e lo confronto col vincitore
-				if(lineData[1].equals(ControllerPartita.prt.getElencoGiocatori().get(0).getNome())) {
-
+				if(lineData[1].equals(prt.getElencoGiocatori().get(0).getNome())) {
 					//incremento il punteggio
 					lineData[0]=""+(puntiVincitore+Integer.parseInt(lineData[0]));
 					line = lineData[0]+" , "+lineData[1];
@@ -790,14 +793,16 @@ public class ControllerPartita implements Initializable{
 			}
 			fw.close();
 		} catch (FileNotFoundException FNFe) {
-			// TODO Auto-generated catch block
 			FNFe.printStackTrace();
 		} catch (IOException IOe) {
-			// TODO Auto-generated catch block
 			IOe.printStackTrace();
 		}
 	}
 
+	/**
+	 * salva la partita in un file '.json'
+	 * @param partita
+	 */
 	public void SalvaPartita(Partita partita) {
 		try {
 			Partita tempPrt=null;
@@ -815,8 +820,7 @@ public class ControllerPartita implements Initializable{
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
 			
-			String path = "Documenti/SalvataggioPartite.json";
-			File file1 = new File(path);
+			File file1 = new File(pathSalvataggioPartite);
 			
 			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
@@ -862,10 +866,8 @@ public class ControllerPartita implements Initializable{
 				jsnWriter.close();
 			}
 		} catch (FileNotFoundException fnfe) {
-			// TODO Auto-generated catch block
 			fnfe.printStackTrace();
 		} catch (IOException ioe) {
-			// TODO Auto-generated catch block
 			ioe.printStackTrace();
 		}
 	}
