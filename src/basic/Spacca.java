@@ -40,6 +40,7 @@ public class Spacca extends Application {
         
         // Avvia la riproduzione del video
         videoPlayer.play();
+        
     }
     
     /**
