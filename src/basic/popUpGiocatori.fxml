@@ -3,22 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="800.0" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPopUpGiocatori">
-   <center>
-      <ListView fx:id="lstGiocatori" maxHeight="800.0" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="277.0" prefWidth="62.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </ListView>
-   </center>
+<BorderPane maxHeight="800.0" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="324.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerPopUpGiocatori">
    <top>
       <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LISTA GIOCATORI" textFill="#301fcc" BorderPane.alignment="CENTER_LEFT">
          <font>
@@ -56,6 +49,20 @@
                </font>
             </Button>
          </children>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
       </GridPane>
    </right>
+   <center>
+      <TableView fx:id="tblGiocatori" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="tblNomi" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="NOMI" />
+          <TableColumn fx:id="tblPunti" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="PUNTI" />
+        </columns>
+         <padding>
+            <Insets bottom="5.0" left="5.0" />
+         </padding>
+      </TableView>
+   </center>
 </BorderPane>

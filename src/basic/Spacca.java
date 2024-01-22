@@ -5,7 +5,6 @@ import javafx.scene.*;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
@@ -62,16 +61,16 @@ public class Spacca extends Application {
             controller.caricaClassifica();
 
             // Aggiungere il layout principale sopra il VideoBackgroundPane
-            BorderPane bp = new BorderPane();
+            StackPane sp = new StackPane();
 
             // Aggiungere un colore di fallback o un'immagine di fallback
             // Puoi personalizzare questa parte in base alle tue esigenze
-            bp.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
+            sp.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback bianco
 
-            bp.getChildren().addAll(videoBackgroundPane, root);
+            sp.getChildren().addAll(videoBackgroundPane, root);
 
             stage.setTitle("HOME");
-            Scene homeScene = new Scene(bp, 600, 400);
+            Scene homeScene = new Scene(sp, 600, 400);
             stage.setScene(homeScene);
         } catch (IOException e) {
             e.printStackTrace();

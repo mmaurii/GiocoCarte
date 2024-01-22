@@ -540,7 +540,6 @@ public class ControllerPartita implements Initializable{
 
 		//riapro la finestra del torneo
 		try {
-			//VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("src/v1.mp4");
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Torneo.fxml"));
 
 			ResourceBundle rb = new ResourceBundle() {//dati per inizializzare l'interfaccia del torneo

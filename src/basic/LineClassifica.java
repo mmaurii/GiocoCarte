@@ -61,4 +61,8 @@ public class LineClassifica implements Comparable<LineClassifica>{
 	public int compareTo(LineClassifica ln) {//ordina in ordine decrescente in base ai punti
         return Integer.compare(ln.getPunti(), getPunti());
 	}
+	
+	public String toString() {
+		return getPunti()+" , "+getNome();
+	}
 }

@@ -2,12 +2,16 @@ package basic;
 
 import java.io.*;
 import java.util.*;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class ControllerPopUpGiocatori {
 	final String pathClassifica = "Documenti/Classifica.txt";
@@ -15,19 +19,21 @@ public class ControllerPopUpGiocatori {
 	@FXML ListView<String> lstGiocatori;
 	@FXML Button btnElimina;
 	@FXML Button btnSalva;
+	@FXML TableView<LineClassifica> tblGiocatori;
+	@FXML TableColumn<LineClassifica, String> tblNomi;
+	@FXML TableColumn<LineClassifica, Integer> tblPunti;
 
 	/**
 	 * salva le modifiche appartate in unn file
 	 * @param actionEvent
 	 */
 	@FXML public void salva(ActionEvent actionEvent) {
-
-		List<String> items = lstGiocatori.getItems();
+		List<LineClassifica> items = tblGiocatori.getItems();
 		try {
 			File file = new File(pathClassifica);
 			try (FileWriter writer = new FileWriter(file)) {
-				for (String item : items) {
-					writer.write(item + '\n');
+				for (LineClassifica item : items) {
+					writer.write(item.toString() + '\n');
 				}
 			}
 		} catch (IOException e) {
@@ -43,9 +49,7 @@ public class ControllerPopUpGiocatori {
 	 * @param actionEvent
 	 */
 	@FXML public void eliminaGiocatore(ActionEvent actionEvent) {
-
-		lstGiocatori.getItems().remove(lstGiocatori.getSelectionModel().getSelectedItem()); 
-
+		tblGiocatori.getItems().remove(tblGiocatori.getSelectionModel().getSelectedItem()); 
 	}
 
 	// Metodi ausiliari
@@ -53,34 +57,46 @@ public class ControllerPopUpGiocatori {
 	 * carica i giocatori presenti nel file della classifica
 	 */
 	public void caricaGiocatori() {
+		ArrayList<LineClassifica> row = new ArrayList<>();
 		try {
 			File file = new File(pathClassifica);
-			Scanner scan = new Scanner(file);			
-			while(scan.hasNext()) {
+			Scanner scan = new Scanner(file);	
+			while(scan.hasNext()) {//carico i dati dal file di testo
 				String line = scan.nextLine();
-				lstGiocatori.getItems().add(line);	
+				String[] lineItems = line.split(" , ");
+				row.add(new LineClassifica(Integer.parseInt(lineItems[0]), lineItems[1]));
 			}
 			scan.close();
 		} catch (FileNotFoundException fnfe) {
 			fnfe.printStackTrace();
 		}
 
-		//metto il contenuto della listview in grassetto
-		lstGiocatori.setStyle("-fx-font-weight: bold;");
-
-		//centro le scritte all'interno della listview
-		lstGiocatori.setCellFactory(param -> new ListCell<String>() {
-			@Override
-			protected void updateItem(String item, boolean empty) {
-				super.updateItem(item, empty);
-				if (empty || item == null) {
-					setText(null);
-					setGraphic(null);
-				} else {
-					setText(item);
-					setAlignment(javafx.geometry.Pos.CENTER);
-				}
+		//ordino in base al punteggio la lista
+		row.sort(null);	
+        // Associazione delle ObservableList alle TableColumn
+		tblNomi.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<LineClassifica, String> cell) {
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
+				return cell.getValue().nomeProperty();
 			}
 		});
+		
+		tblPunti.setCellValueFactory(new Callback<CellDataFeatures<LineClassifica, Integer>, ObservableValue<Integer>>() {
+			public ObservableValue<Integer> call(CellDataFeatures<LineClassifica, Integer> cell) {
+				// cell.getValue() returns the LineClassifica instance for a particular TableView row
+				return cell.getValue().puntiProperty().asObject();
+			}
+		});
+
+		// Aggiunta dei dati alla TableView
+		int counter=1;
+		for(LineClassifica i : row) {
+			i.setRanking(counter);
+			tblGiocatori.getItems().add(i);
+			counter++;
+		}
+
+		//metto il contenuto della tableview in grassetto
+		tblGiocatori.setStyle("-fx-font-weight: bold;");
 	} 
 }
