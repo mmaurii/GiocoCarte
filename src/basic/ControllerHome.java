@@ -248,6 +248,7 @@ public class ControllerHome {
 			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
+			stage.setTitle("Partita");
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {//controllo l'evento di chiusura dello stage
 				@Override
 				public void handle(WindowEvent e) {
@@ -374,6 +375,7 @@ public class ControllerHome {
 			ControllerTorneo controller = loader.getController();
 			Scene interfacciaDiGioco = new Scene(root);
 			stage.setScene(interfacciaDiGioco);
+			stage.setTitle("Torneo");
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				@Override
 				public void handle(WindowEvent e) {

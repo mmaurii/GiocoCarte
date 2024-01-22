@@ -13,12 +13,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +33,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Dialog;
+import javafx.scene.layout.VBox;
 
 public class ControllerTorneo implements Initializable{
 	//variabili di controllo
@@ -485,6 +494,7 @@ public class ControllerTorneo implements Initializable{
 	 * @param p posizione della partita all'interno delle liste di partite del torneo
 	 */
 	private void avviaPartita(String selettore,int p) {
+		String elencoGiocatori="giocatori partita:\n\n";
 		switch(selettore) {
 		case selettorePrt:
 			prt = trn.getElencoPartite().get(p);
@@ -497,53 +507,88 @@ public class ControllerTorneo implements Initializable{
 			break;
 		}
 
+		//mostro i giocatori della partita e chiedo una risposta definitiva per iniziarla
+		Dialog<String> dialog = new Dialog<>();
+		dialog.setTitle("Informazioni Partita");
+		dialog.setHeaderText(null);
 
-		//chiudo la finestra di home e apro quella di gioco
-		Stage stage = (Stage)imgPrt1.getScene().getWindow();
-		stage.close();
-		//apro la finestra di gioco
-		BorderPane root = new BorderPane();
-		try {
-			FXMLLoader loader;
-			loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+		//compongo la stringa da stampare
+		for(Giocatore g : prt.getElencoGiocatori()) {
+			elencoGiocatori+=("- "+g.getNome()+"\n");
+		}
+		dialog.setContentText(elencoGiocatori);
+		Label lblOut = new Label(elencoGiocatori);
+		lblOut.setStyle("-fx-font-weight: bold;");
 
-			ResourceBundle rb = new ResourceBundle() {
-				@Override
-				protected Object handleGetObject(String key) {//risorse per inizializzare il controller della partita avviata
-					if (key.equals("Torneo")) {
-						return trn;
-					}else if(key.equals("PartitaTrn")) {
-						return prt;
-					}else if(key.equals("selettore")) {
-						return selettore;
-					}else if(key.equals("posPartitaTrn")) {
-						return p;
+		VBox content = new VBox(lblOut);
+		content.setSpacing(10);
+		content.setPadding(new Insets(10));
+
+		ButtonType buttonTypeChiudi = new ButtonType("Chiudi");
+		ButtonType buttonTypeGioca = new ButtonType("Gioca");
+
+		dialog.getDialogPane().setContent(content);
+		dialog.getDialogPane().getButtonTypes().setAll(buttonTypeChiudi, buttonTypeGioca);
+
+		//se preme gioca avvio la partita se preme chiudi torno al torneo
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == buttonTypeGioca) {
+				return "gioca";
+			}else if(dialogButton == buttonTypeChiudi) {
+				return "chiudi";
+			}
+			return null;
+		});
+		
+		 Optional<String> result = dialog.showAndWait();
+
+		if (result.isPresent() && result.get() == "gioca") {
+			//chiudo la finestra di home e apro quella di gioco
+			Stage stage = (Stage)imgPrt1.getScene().getWindow();
+			stage.close();
+			//apro la finestra di gioco
+			BorderPane root = new BorderPane();
+			try {
+				FXMLLoader loader;
+				loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
+
+				ResourceBundle rb = new ResourceBundle() {
+					@Override
+					protected Object handleGetObject(String key) {//risorse per inizializzare il controller della partita avviata
+						if (key.equals("Torneo")) {
+							return trn;
+						}else if(key.equals("PartitaTrn")) {
+							return prt;
+						}else if(key.equals("selettore")) {
+							return selettore;
+						}else if(key.equals("posPartitaTrn")) {
+							return p;
+						}
+
+						return null;
 					}
+					@Override
+					public Enumeration<String> getKeys() {
+						return Collections.enumeration(keySet());
+					}
+				};
+				loader.setResources(rb);
 
-					return null;
-				}
-				@Override
-				public Enumeration<String> getKeys() {
-					return Collections.enumeration(keySet());
-				}
-			};
-			loader.setResources(rb);
+				root = loader.load();
+				ControllerPartita controller = loader.getController();
+				//definisco chi giocherà il primo turno
+				Giocatore gio = prt.getGiocatoreCorrente();
+				lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
+				Scene interfacciaDiGioco = new Scene(root);
+				stage.setTitle("Partita");
+				stage.setScene(interfacciaDiGioco);
+				stage.show();
 
-			root = loader.load();
-			ControllerPartita controller = loader.getController();
-			//definisco chi giocherà il primo turno
-			Giocatore gio = prt.getGiocatoreCorrente();
-			lblTurnoGiocatore = new Label("è il turno di: "+gio.getNome());
-			Scene interfacciaDiGioco = new Scene(root);
-			stage.setTitle("Partita");
-			stage.setScene(interfacciaDiGioco);
-			stage.show();
-
-			//copio le informazioni relative alla label lblTurnoGiocatore
-			controller.copiaInformazioniLabel(lblTurnoGiocatore);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+				//copio le informazioni relative alla label lblTurnoGiocatore
+				controller.copiaInformazioniLabel(lblTurnoGiocatore);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -673,10 +718,10 @@ public class ControllerTorneo implements Initializable{
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Torneo> elencoTornei = new ArrayList<Torneo>();
-			
+
 			String path = "Documenti/SalvataggioTornei.json";
 			File file = new File(path);
-			
+
 			FileReader fr = new FileReader(file);
 			JsonReader jsnReader=new JsonReader(fr);
 

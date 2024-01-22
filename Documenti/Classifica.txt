@@ -2,7 +2,7 @@
 130 , gianni
 70 , pino
 190 , balto
-120 , b
+130 , b
 100 , mauri
 130 , h
 90 , pippo

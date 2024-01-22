@@ -19,10 +19,10 @@ public class ControllerPartitaTorneo {
 	
 	@FXML Button btnCreaPartita;
 	@FXML ComboBox<String> comboNVite;
-	@FXML Button btnModificaGiocatori;
+	@FXML Button btnEliminaGiocatori;
 	@FXML Button btnCreaTorneo;
 	@FXML Button btnTornaAllaHome;
-	@FXML Button btnModificaTornei;
+	@FXML Button btnEliminaTornei;
 	@FXML BorderPane bpInterfaccia;
 	@FXML Button btnCreaAccount;
 
@@ -105,7 +105,7 @@ public class ControllerPartitaTorneo {
 	 *apre l'interfaccia per modificare i giocatori
 	 * @param actionEvent
 	 */
-	@FXML public void modificaGiocatori(ActionEvent actionEvent) {
+	@FXML public void eliminaGiocatori(ActionEvent actionEvent) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpGiocatori.fxml"));
 			Parent root = loader.load();
@@ -132,7 +132,7 @@ public class ControllerPartitaTorneo {
 	 * apre l'interfaccia per modificare le partite
 	 * @param actionEvent
 	 */
-	@FXML public void modificaPartite(ActionEvent actionEvent) {
+	@FXML public void eliminaPartite(ActionEvent actionEvent) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpPartite.fxml"));
 			Parent root = loader.load();
@@ -159,7 +159,7 @@ public class ControllerPartitaTorneo {
 	 * apre l'interfaccia per modificare i tornei
 	 * @param actionEvent
 	 */
-	@FXML public void modificaTornei(ActionEvent actionEvent) {
+	@FXML public void eliminaTornei(ActionEvent actionEvent) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpTornei.fxml"));
 			Parent root = loader.load();

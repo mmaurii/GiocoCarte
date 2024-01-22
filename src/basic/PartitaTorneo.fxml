@@ -58,7 +58,7 @@
                         <Font name="Khmer MN" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnModificaPartite" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modificaPartite" stylesheets="@../style3.css" text="MODIFICA PARTITE" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnEliminaPartite" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#eliminaPartite" stylesheets="@../style3.css" text="ELIMINA PARTITE" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font name="Khmer MN" size="13.0" />
                      </font>
@@ -66,7 +66,7 @@
                         <Insets bottom="20.0" left="60.0" right="60.0" top="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnModificaTornei" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modificaTornei" stylesheets="@../style3.css" text="MODIFICA TORNEI" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="btnEliminaTornei" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#eliminaTornei" stylesheets="@../style3.css" text="ELIMINA TORNEI" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <font>
                         <Font name="Khmer MN" size="13.0" />
                      </font>
@@ -100,7 +100,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnModificaGiocatori" alignment="CENTER" contentDisplay="CENTER" maxHeight="450.0" maxWidth="900.0" mnemonicParsing="false" onAction="#modificaGiocatori" stylesheets="@../style3.css" text="MODIFICA GIOCATORI">
+                  <Button fx:id="btnEliminaGiocatori" alignment="CENTER" contentDisplay="CENTER" maxHeight="450.0" maxWidth="900.0" mnemonicParsing="false" onAction="#eliminaGiocatori" stylesheets="@../style3.css" text="ELIMINA GIOCATORI">
                      <GridPane.margin>
                         <Insets bottom="18.0" left="80.0" right="80.0" top="18.0" />
                      </GridPane.margin>
