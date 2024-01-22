@@ -374,6 +374,7 @@ public class ControllerHome {
 			root = loader.load();
 			ControllerTorneo controller = loader.getController();
 			Scene interfacciaDiGioco = new Scene(root);
+			stage.setResizable(false);
 			stage.setScene(interfacciaDiGioco);
 			stage.setTitle("Torneo");
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

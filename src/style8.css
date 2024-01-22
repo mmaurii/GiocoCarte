@@ -1,7 +1,9 @@
-.body {
-    -fx-background-image: url("retro.png");
-    -fx-background-size: cover;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-background-size: 80% 100%;
+.body{
+
+	-fx-background-image:  url("torneo.png");
+	-fx-background-size: contain;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-size: 100% 100%;
+
 }
