@@ -1,6 +1,17 @@
 package basic;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -9,6 +20,11 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +113,19 @@ public class JavaSpaccaBot extends TelegramLongPollingBot {
         }
     }
 
+    private void inviaFilePDF(long chatId, String filePath, String fileName) {
+        SendDocument sendDocument = new SendDocument();
+        sendDocument.setChatId(chatId);
+        InputFile document = new InputFile(new File(filePath), fileName);
+        sendDocument.setDocument(document);
+
+        try {
+            execute(sendDocument);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void rispondiAComando1(long chatId) {
         SendMessage responseMessage = new SendMessage();
         responseMessage.setChatId(chatId);
@@ -111,11 +140,17 @@ public class JavaSpaccaBot extends TelegramLongPollingBot {
     private void rispondiAComando2(long chatId) {
         SendMessage responseMessage = new SendMessage();
         responseMessage.setChatId(chatId);
-        responseMessage.setText("Ciao");
+        responseMessage.setText("Ecco il regolamento");
         try {
             execute(responseMessage);
+
+            // Richiama il metodo inviaFilePDF
+            String filePath = "Documentazione/Regolamento.pdf";  // Sostituisci con il percorso reale del tuo file PDF
+            String fileName = "Regolamento.pdf";
+            inviaFilePDF(chatId, filePath, fileName);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
+
 }
