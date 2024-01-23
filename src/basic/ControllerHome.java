@@ -23,6 +23,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -65,7 +67,7 @@ public class ControllerHome {
 	@FXML Label lblCodErrato;
 	@FXML ListView<String> lstViewVite;
 	@FXML Label lblAccessoErrato;
-	@FXML Button btnTelegramBot;
+	@FXML ImageView ImgTelegramBot;
 	
 	/**
 	 * login per il menu
@@ -160,7 +162,7 @@ public class ControllerHome {
 		}
 	}
 	
-	@FXML public void apriTelegram(ActionEvent actionEvent) {
+	@FXML public void apriTelegram(MouseEvent mouseEvent) {
 		//apro una tab del browser predefinito che rimanda al bot
 		try {
 			Desktop.getDesktop().browse(new URI(telegramWebSite));

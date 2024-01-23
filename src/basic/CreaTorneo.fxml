@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerCreaTorneo">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerCreaTorneo">
    <center>
       <GridPane BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -24,11 +24,11 @@
             <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="47.0" valignment="CENTER" vgrow="ALWAYS" />
-            <RowConstraints maxHeight="365.5" minHeight="10.0" prefHeight="333.5" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="59.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="365.5" minHeight="10.0" prefHeight="321.0" valignment="CENTER" vgrow="ALWAYS" />
          </rowConstraints>
          <children>
-            <GridPane maxHeight="125.0" maxWidth="1.7976931348623157E308">
+            <GridPane maxHeight="125.0" maxWidth="1.7976931348623157E308" prefHeight="59.0" prefWidth="580.0" styleClass="body" stylesheets="@../style9.css">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>

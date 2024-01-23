@@ -7,21 +7,23 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="380.0" minWidth="580.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="380.0" minWidth="580.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerHome">
    <center>
       <GridPane maxHeight="532.0" maxWidth="800.0" BorderPane.alignment="CENTER">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
-            <RowConstraints maxHeight="337.0" minHeight="10.0" prefHeight="335.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="85.0" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="337.0" minHeight="10.0" prefHeight="315.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <GridPane maxHeight="480.0" maxWidth="820.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
@@ -137,7 +139,7 @@
                   </TableView>
                </children>
             </GridPane>
-            <GridPane GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <GridPane prefHeight="56.0" prefWidth="560.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                </GridPane.margin>
@@ -158,14 +160,14 @@
                         <RowConstraints maxHeight="125.0" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
                      </rowConstraints>
                   </GridPane>
-                  <Button fx:id="btnTelegramBot" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#apriTelegram" prefHeight="32.0" stylesheets="@../style3.css" text="Telegram Bot" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <ImageView fx:id="ImgTelegramBot" fitHeight="69.0" fitWidth="137.0" onMouseClicked="#apriTelegram" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../tel.png" />
+                     </image>
                      <GridPane.margin>
-                        <Insets left="30.0" />
+                        <Insets left="20.0" top="5.0" />
                      </GridPane.margin>
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Button>
+                  </ImageView>
                </children>
             </GridPane>
          </children>
