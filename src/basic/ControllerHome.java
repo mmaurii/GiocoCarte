@@ -1,6 +1,9 @@
 package basic;
 
+import java.awt.Desktop;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,6 +32,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.application.Application;
+import javafx.application.HostServices;
+import java.awt.Desktop;
+import java.awt.event.ActionListener;
+import java.net.URI;
 
 public class ControllerHome {
 	//variabili di controllo
@@ -41,7 +49,8 @@ public class ControllerHome {
 	final String pathClassifica = "Documenti/Classifica.txt";
 	final String pathSalvataggioPartite = "Documenti/SalvataggioPartite.json";
 	final String pathSalvataggioTornei = "Documenti/SalvataggioTornei.json";
-
+	final String telegramWebSite = "https://t.me/GiocoSpaccaBot";
+	
 	//eventi FXML
 	@FXML private TextField txtUsername;
 	@FXML private PasswordField txtPassword;
@@ -56,7 +65,8 @@ public class ControllerHome {
 	@FXML Label lblCodErrato;
 	@FXML ListView<String> lstViewVite;
 	@FXML Label lblAccessoErrato;
-
+	@FXML Button btnTelegramBot;
+	
 	/**
 	 * login per il menu
 	 * @param actionEvent
@@ -147,6 +157,15 @@ public class ControllerHome {
 			}
 		}else {
 			lblCodErrato.setText("inserisci un codice");
+		}
+	}
+	
+	@FXML public void apriTelegram(ActionEvent actionEvent) {
+		//apro una tab del browser predefinito che rimanda al bot
+		try {
+			Desktop.getDesktop().browse(new URI(telegramWebSite));
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
 		}
 	}
 
