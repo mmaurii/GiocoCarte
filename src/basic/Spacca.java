@@ -3,10 +3,17 @@ package basic;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import java.io.IOException;
+
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -16,7 +23,14 @@ public class Spacca extends Application {
 	final String pathVideoSfondo = "/v1.mp4";
 
     public static void main(String[] args) {
-        launch(args);
+        try {
+        	TelegramBotsApi botsApi = new TelegramBotsApi( DefaultBotSession.class );
+            botsApi.registerBot(new JavaSpaccaBot());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    	
+    	launch(args);
     }
 
     @Override
@@ -72,6 +86,14 @@ public class Spacca extends Application {
             stage.setTitle("HOME");
             Scene homeScene = new Scene(sp, 600, 400);
             stage.setScene(homeScene);
+            
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {//controllo l'evento di chiusura dello stage
+				@Override
+				public void handle(WindowEvent e) {//killo tutti i processi
+					Platform.exit();
+					System.exit(0);
+				}
+			});
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
