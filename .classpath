@@ -15,46 +15,5 @@
 	<classpathentry kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx.web.jar"/>
 	<classpathentry kind="lib" path="C:/Users/frizi/eclipse-workspace/javafx/openjfx-20_windows-x64_bin-sdk/javafx-sdk-20/lib/javafx-swt.jar"/>
 	<classpathentry kind="lib" path="C:/Users/frizi/eclipse-workspace/gson/gson-2.8.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (3)/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (3)/slf4j-nop-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/telegrambots-6.9.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/commons-codec-1.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/commons-lang3-3.12.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/grizzly-framework-2.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/grizzly-http-2.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/hk2-utils-2.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/httpclient-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-annotations-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-core-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-databind-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-datatype-jsr310-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-jaxrs-json-provider-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-module-jaxb-annotations-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jakarta.annotation-api-1.3.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jakarta.ws.rs-api-2.1.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/javassist-3.25.0-GA.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-container-grizzly2-http-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/osgi-resource-locator-1.0.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/slf4j-api-2.0.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/telegrambots-6.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/aopalliance-repackaged-2.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/commons-io-2.11.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/grizzly-http-server-2.4.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/hk2-api-2.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/hk2-locator-2.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/httpcore-4.4.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/httpmime-4.5.13.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jackson-jaxrs-base-2.14.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jakarta.inject-2.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jakarta.validation-api-2.0.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jakarta.xml.bind-api-2.3.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-client-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-common-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-entity-filtering-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-hk2-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-media-json-jackson-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/jersey-server-2.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/frizi/Downloads/jar_files (6)/telegrambots-meta-6.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
