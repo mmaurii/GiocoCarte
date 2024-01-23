@@ -43,7 +43,7 @@ public class ControllerPartitaTorneo {
 			}
 
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
-			Thread.sleep(200);
+			Thread.sleep(300);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaPartita.fxml"));
 			Parent root = loader.load();
 
@@ -80,7 +80,7 @@ public class ControllerPartitaTorneo {
 			}
 
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
-			Thread.sleep(200);
+			Thread.sleep(300);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreaTorneo.fxml"));
 			Parent root = loader.load();
 
