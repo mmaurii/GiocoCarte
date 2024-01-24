@@ -14,7 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
 
-public class ControllerPartitaTorneo {
+public class ControllerMenu {
 	//variabili di controllo
 	
 	@FXML Button btnCreaPartita;

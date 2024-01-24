@@ -88,7 +88,7 @@ public class ControllerHome {
 				}
 				VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
 				Thread.sleep(300);
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("PartitaTorneo.fxml"));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("Menu.fxml"));
 				Parent root = loader.load();
 				loader.getController();
 				

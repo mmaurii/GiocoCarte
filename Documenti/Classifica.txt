@@ -1,5 +1,5 @@
 190 , balto
-130 , gianni
+140 , gianni
 140 , mario
 100 , mauri
 90 , pippo
