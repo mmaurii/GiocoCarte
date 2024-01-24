@@ -53,7 +53,7 @@ public class ControllerPartitaTorneo {
 
 			ControllerCreaPartita controller = loader.getController();
 			controller.caricaGiocatoriRegistrati();
-			stage.setTitle("Crea una Partita");
+			stage.setTitle("Crea Partita");
 			Scene interfacciaCreaPartita = new Scene(stackPane, 600, 400);
 			stage.setScene(interfacciaCreaPartita);
 			stage.show();
@@ -90,7 +90,7 @@ public class ControllerPartitaTorneo {
 
 			ControllerCreaTorneo controller = loader.getController();
 			controller.caricaGiocatoriRegistrati();
-			stage.setTitle("Crea un Torneo");
+			stage.setTitle("Crea Torneo");
 			Scene interfacciaCreaPartita = new Scene(stackPane, 600, 400);
 			stage.setScene(interfacciaCreaPartita);
 			stage.show();
