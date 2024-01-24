@@ -16,9 +16,11 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
@@ -217,6 +219,8 @@ public class ControllerTorneo implements Initializable{
 		int pos = 0;
 		if(trn.getElencoSemifinali()[pos]!=null) {
 			avviaPartita(selettoreSFnl,pos);
+		}else {//notifico che la partita non può ancora essere avviata
+			notificaGiocabilitaPartita();
 		}
 	}
 
@@ -228,6 +232,8 @@ public class ControllerTorneo implements Initializable{
 		int pos = 1;
 		if(trn.getElencoSemifinali()[pos]!=null) {
 			avviaPartita(selettoreSFnl,pos);
+		}else {//notifico che la partita non può ancora essere avviata
+			notificaGiocabilitaPartita();
 		}
 	}
 
@@ -239,6 +245,8 @@ public class ControllerTorneo implements Initializable{
 		if(trn.getFinale()!=null) {
 			int pos = -1;
 			avviaPartita(selettoreFnl,pos);
+		}else {//notifico che la partita non può ancora essere avviata
+			notificaGiocabilitaPartita();
 		}
 	}
 
@@ -769,5 +777,39 @@ public class ControllerTorneo implements Initializable{
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+	
+	/**
+	 * notifica che la partita non può ancora essere giocata, perchè ne esistono altre preliminari ad essa
+	 */
+	private void notificaGiocabilitaPartita() {
+		//notifico che la partita non può ancora essere giocata
+		Dialog<String> dialog = new Dialog<>();
+		dialog.setTitle("Informazioni Partita");
+		dialog.setHeaderText(null);
+
+		String out = "non puoi avviare questa partita, gioca prima quelle preliminari";
+		dialog.setContentText(out);
+		Label lblOut = new Label(out);
+		lblOut.setStyle("-fx-font-weight: bold;");
+
+		VBox content = new VBox(lblOut);
+		content.setSpacing(10);
+		content.setPadding(new Insets(10));
+
+		ButtonType buttonTypeOkay = new ButtonType("Okay");
+
+		dialog.getDialogPane().setContent(content);
+		dialog.getDialogPane().getButtonTypes().setAll(buttonTypeOkay);
+
+		//se preme okay torno al torneo
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == buttonTypeOkay) {
+				return "okay";
+			}
+			return null;
+		});
+		
+		 Optional<String> result = dialog.showAndWait();
 	}
 }

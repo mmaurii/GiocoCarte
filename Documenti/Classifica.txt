@@ -11,3 +11,5 @@
 10 , anna
 10 , frank
 0 , pamela
+0 , samuele
+0 , ignazio
