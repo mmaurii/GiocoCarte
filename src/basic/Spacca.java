@@ -3,11 +3,9 @@ package basic;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -29,7 +27,7 @@ public class Spacca extends Application {
 	public static void main(String[] args) {
 		final String telegramWebSite = "https://t.me/GiocoSpaccaBot";
 		try {
-			if(netIsAvailable(telegramWebSite)) {
+			if(netIsAvailable(telegramWebSite)) {//controllo se è possibile collegarsi al sito di telegram
 				try {
 					TelegramBotsApi botsApi = new TelegramBotsApi( DefaultBotSession.class );
 					botsApi.registerBot(new JavaSpaccaBot());
@@ -38,7 +36,6 @@ public class Spacca extends Application {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -121,14 +118,14 @@ public class Spacca extends Application {
 	private static boolean netIsAvailable(String path) {
 		try {
 			final URL url = new URL(path);
-			final URLConnection conn = url.openConnection();
-			conn.connect();
-			conn.getInputStream().close();
+			final URLConnection conn = url.openConnection();//prepara la connessione
+			conn.connect(); //prova a connettersi
+			conn.getInputStream().close();//chiude la connessione
 			return true;
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
-			return false;
+			return false;//connessione non riuscita
 		}
 	}
 

@@ -16,13 +16,15 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -514,7 +516,7 @@ public class ControllerTorneo implements Initializable{
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setTitle("Informazioni Partita");
 		dialog.setHeaderText(null);
-
+		
 		//compongo la stringa da stampare
 		for(Giocatore g : prt.getElencoGiocatori()) {
 			elencoGiocatori+=("- "+g.getNome()+"\n");
@@ -527,7 +529,7 @@ public class ControllerTorneo implements Initializable{
 		content.setSpacing(10);
 		content.setPadding(new Insets(10));
 
-		ButtonType buttonTypeChiudi = new ButtonType("Chiudi");
+		ButtonType buttonTypeChiudi = new ButtonType("Chiudi",ButtonData.CANCEL_CLOSE);
 		ButtonType buttonTypeGioca = new ButtonType("Gioca");
 
 		dialog.getDialogPane().setContent(content);
@@ -801,15 +803,6 @@ public class ControllerTorneo implements Initializable{
 
 		dialog.getDialogPane().setContent(content);
 		dialog.getDialogPane().getButtonTypes().setAll(buttonTypeOkay);
-
-		//se preme okay torno al torneo
-		dialog.setResultConverter(dialogButton -> {
-			if (dialogButton == buttonTypeOkay) {
-				return "okay";
-			}
-			return null;
-		});
-		
-		 Optional<String> result = dialog.showAndWait();
+		dialog.showAndWait();
 	}
 }

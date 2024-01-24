@@ -1,8 +1,8 @@
 190 , balto
-140 , gianni
+150 , gianni
 140 , mario
 100 , mauri
-90 , pippo
+100 , pippo
 90 , baldo
 70 , pino
 40 , marco
