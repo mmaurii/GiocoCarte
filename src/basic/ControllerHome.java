@@ -34,11 +34,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.application.Application;
-import javafx.application.HostServices;
-import java.awt.Desktop;
-import java.awt.event.ActionListener;
-import java.net.URI;
 
 public class ControllerHome {
 	//variabili di controllo
@@ -68,7 +63,7 @@ public class ControllerHome {
 	@FXML ListView<String> lstViewVite;
 	@FXML Label lblAccessoErrato;
 	@FXML ImageView ImgTelegramBot;
-	
+
 	/**
 	 * login per il menu
 	 * @param actionEvent
@@ -239,7 +234,7 @@ public class ControllerHome {
 		stage.close();
 
 		//apro la finestra di gioco
-		BorderPane root = new BorderPane();
+		StackPane root = new StackPane();
 		try {
 			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 			if (currentMediaPlayer != null) {
@@ -369,7 +364,7 @@ public class ControllerHome {
 		stage.close();
 
 		//apro la finestra di gioco
-		BorderPane root = new BorderPane();
+		StackPane root = new StackPane();
 		try {
 			MediaPlayer currentMediaPlayer = VideoBackgroundPane.getCurrentMediaPlayer();
 			if (currentMediaPlayer != null) {

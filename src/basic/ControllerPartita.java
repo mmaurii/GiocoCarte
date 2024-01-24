@@ -100,7 +100,7 @@ public class ControllerPartita implements Initializable{
 		}catch(MissingResourceException mre) {
 			prt=(Partita)rb.getObject("Partita");
 		}
-		
+
 		//sistemo opportunamente l'interfaccia
 		setInterface();
 		if(prt.getFlagTorneo()) {
@@ -235,7 +235,7 @@ public class ControllerPartita implements Initializable{
 					if(prt.isDichiaraPrese()) {
 						//incremento il contatore dei giocatori
 						prt.setCountTurnoGiocatore(prt.getCountTurnoGiocatore()+1);
-						
+
 						//controllo se qualcuno deve ancora giocare
 						if(prt.getCountTurnoGiocatore()>=prt.getElencoGiocatori().size()) {
 							prt.setCountTurnoGiocatore(0);
@@ -373,8 +373,10 @@ public class ControllerPartita implements Initializable{
 					btnIniziaNuovaMano.setVisible(false);
 					btnPartitaTornaAlTorneo.setDisable(false);
 
-					//conteggio punti
-					aggiornaClassifica();
+					//conteggio punti se il giocatore non è un bot
+					if(!(prt.getElencoGiocatori().get(0) instanceof Bot)) {
+						aggiornaClassifica();
+					}
 				}else{//concludo la partita e ne annuncio il pareggio
 					lblVitaPersa.setText(pareggio);
 					lblManoGiocatore.setVisible(false);
@@ -408,7 +410,7 @@ public class ControllerPartita implements Initializable{
 	 */
 	@FXML public void IniziaNuovoRound(ActionEvent actionEvent) {
 		//sistemo l'interfaccia perchè possa essere giocato un nuovo round
-	//	prt.setPrimoTurno(false);
+		//	prt.setPrimoTurno(false);
 		btnIniziaNuovoRound.setVisible(false);
 		lblVitaPersa.setVisible(false);
 		lblTurnoGiocatore.setText("è il turno di: "+prt.getGiocatoreCorrente().getNome());
@@ -830,9 +832,9 @@ public class ControllerPartita implements Initializable{
 			gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<Giocatore>>() {}.getType(), new ElencoGiocatoriTypeAdapter());
 			Gson gson=gsonBuilder.create();
 			ArrayList<Partita> elencoPartite = new ArrayList<Partita>();
-			
+
 			File file1 = new File(pathSalvataggioPartite);
-			
+
 			FileReader fr = new FileReader(file1);
 			JsonReader jsnReader=new JsonReader(fr);
 

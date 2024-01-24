@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Random;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Window;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -197,19 +198,21 @@ public class Bot extends Giocatore implements Runnable{
 						if(gp.getId().equals(idNodoIntermedio)) {
 							Iterator<Node> y = gp.getChildren().iterator();
 							Random rand = new Random();
-							int n = rand.nextInt(this.carte.size())+1;
-							while(y.hasNext()) {
-								o = y.next();
-								if(o instanceof Pane) {
-									Pane pn = (Pane)o;
-									if(pn.getId().equals(idNodo+n)) {
-										MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
-												pn.getScaleX(), pn.getScaleY(),  // Le coordinate x e y dell'evento
-												0, 0, 
-												null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
-												);	
-										pn.fireEvent(mouseEvent);
-										return;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
+							if(this.carte.size()>0) {
+								int n = rand.nextInt(this.carte.size())+1;
+								while(y.hasNext()) {
+									o = y.next();
+									if(o instanceof Pane) {
+										Pane pn = (Pane)o;
+										if(pn.getId().equals(idNodo+n)) {
+											MouseEvent mouseEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED,
+													pn.getScaleX(), pn.getScaleY(),  // Le coordinate x e y dell'evento
+													0, 0, 
+													null, 0, false, false, false, false, true, false, false, false, false, false, false, false, null
+													);	
+											pn.fireEvent(mouseEvent);
+											return;//evito che il ciclo vada a richiamare un nuovo random generando un errore dovuto a this.carte.size()=0
+										}
 									}
 								}
 							}
@@ -310,8 +313,19 @@ public class Bot extends Giocatore implements Runnable{
 		Iterator<Window> k = Window.getWindows().iterator();
 		GridPane interfaccia = null;
 		while(k.hasNext()){
-			BorderPane bp = (BorderPane)k.next().getScene().getRoot();
-			interfaccia = (GridPane) bp.getCenter();
+			StackPane sp = (StackPane)k.next().getScene().getRoot();
+			if(sp.getChildren().size()==1) {
+				Iterator<Node> h = sp.getChildren().iterator();
+				while(h.hasNext()) {
+					Object o = h.next();
+					if (o instanceof BorderPane) {
+						BorderPane bp = (BorderPane)o;
+						interfaccia = (GridPane) bp.getCenter();
+					}
+				}
+			}else {
+				return null;
+			}
 		}
 		return interfaccia;
 	}

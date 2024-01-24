@@ -542,7 +542,7 @@ public class ControllerTorneo implements Initializable{
 			Stage stage = (Stage)imgPrt1.getScene().getWindow();
 			stage.close();
 			//apro la finestra di gioco
-			BorderPane root = new BorderPane();
+			StackPane root = new StackPane();
 			try {
 				FXMLLoader loader;
 				loader = new FXMLLoader(getClass().getResource("Partita.fxml"));
