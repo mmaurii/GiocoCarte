@@ -95,7 +95,7 @@ public class ControllerHome {
 				StackPane stackPane = new StackPane();
 				stackPane.setStyle("-fx-background-color: #38B6FF;");//imposto un colore di background
 				stackPane.getChildren().addAll(videoBackgroundPane, root);
-				stage.setTitle("Gestione Funzionalità");
+				stage.setTitle("Menu");
 				Scene interfacciaPartitaTorneo = new Scene(stackPane, 600, 400);
 				//avvio la nuova interfaccia
 				stage.setScene(interfacciaPartitaTorneo);

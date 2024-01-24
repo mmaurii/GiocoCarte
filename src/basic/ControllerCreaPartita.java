@@ -228,7 +228,7 @@ public class ControllerCreaPartita {
 			stackPane.setStyle("-fx-background-color: #38B6FF;");
 			stackPane.getChildren().addAll(videoBackgroundPane, root);
 
-			stage.setTitle("Gestione Funzionalità");
+			stage.setTitle("Menu");
 			Scene interfacciaHome = new Scene(stackPane, 600, 400);
 			stage.setScene(interfacciaHome);
 			stage.show();
