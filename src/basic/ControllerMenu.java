@@ -24,7 +24,7 @@ public class ControllerMenu {
 	@FXML Button btnTornaAllaHome;
 	@FXML Button btnEliminaTornei;
 	@FXML BorderPane bpInterfaccia;
-	@FXML Button btnCreaAccount;
+	@FXML Button btnGestisciAccount;
 
 	/**
 	 * apre l'interfaccia per creare una nuova partita
@@ -224,7 +224,7 @@ public class ControllerMenu {
 	 * apre un interfaccia per poter gestire gli account amministratore
 	 * @param actionEvent
 	 */
-	@FXML public void creaAccount(ActionEvent actionEvent) {
+	@FXML public void gestisciAccount(ActionEvent actionEvent) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("popUpAmministratori.fxml"));
 			Parent root = loader.load();

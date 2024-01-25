@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import java.util.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.application.Platform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -560,7 +562,7 @@ public class ControllerPartita implements Initializable{
 			loader.setResources(rb);
 
 			Parent root = loader.load();
-			loader.getController();
+			ControllerTorneo controller = loader.getController();
 
 			StackPane stackPane = new StackPane();
 			stackPane.setStyle("-fx-background-color: #38B6FF;"); // Imposta un colore di fallback
@@ -568,6 +570,17 @@ public class ControllerPartita implements Initializable{
 			stage.setTitle("Torneo");
 			Scene interfacciaTorneo = new Scene(stackPane, 720, 480);
 			stage.setScene(interfacciaTorneo);
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent e) {
+					Platform.exit();
+					if(stage.getScene().equals(interfacciaTorneo)) {//in questo modo controllo di salvare il torneo solo quando esco dall'interfaccia di gioco
+						controller.SalvaTorneo(controller.trn);
+					}
+					System.exit(0);
+				}
+			});
+
 			stage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

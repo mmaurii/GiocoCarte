@@ -9,7 +9,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import java.util.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,14 +19,12 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-
+import javafx.stage.WindowEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -135,7 +135,6 @@ public class ControllerTorneo implements Initializable{
 	 * avvia la partita associata a questo controllo
 	 * @param mouseEvent
 	 */
-
 	@FXML public void avviaPrt2(MouseEvent mouseEvent) {
 		int pos = 1;
 		avviaPartita(selettorePrt,pos-shiftPrtInterface);
@@ -219,7 +218,8 @@ public class ControllerTorneo implements Initializable{
 	 */
 	@FXML public void avviaSemifinale1(MouseEvent mouseEvent) {
 		int pos = 0;
-		if(trn.getElencoSemifinali()[pos]!=null) {
+		//if()
+		if(trn.getElencoSemifinali()!=null) {
 			avviaPartita(selettoreSFnl,pos);
 		}else {//notifico che la partita non può ancora essere avviata
 			notificaGiocabilitaPartita();
@@ -232,7 +232,7 @@ public class ControllerTorneo implements Initializable{
 	 */
 	@FXML public void avviaSemifinale2(MouseEvent mouseEvent) {
 		int pos = 1;
-		if(trn.getElencoSemifinali()[pos]!=null) {
+		if(trn.getElencoSemifinali()!=null) {
 			avviaPartita(selettoreSFnl,pos);
 		}else {//notifico che la partita non può ancora essere avviata
 			notificaGiocabilitaPartita();
@@ -516,7 +516,7 @@ public class ControllerTorneo implements Initializable{
 		Dialog<String> dialog = new Dialog<>();
 		dialog.setTitle("Informazioni Partita");
 		dialog.setHeaderText(null);
-		
+
 		//compongo la stringa da stampare
 		for(Giocatore g : prt.getElencoGiocatori()) {
 			elencoGiocatori+=("- "+g.getNome()+"\n");
@@ -544,8 +544,8 @@ public class ControllerTorneo implements Initializable{
 			}
 			return null;
 		});
-		
-		 Optional<String> result = dialog.showAndWait();
+
+		Optional<String> result = dialog.showAndWait();
 
 		if (result.isPresent() && result.get() == "gioca") {
 			//chiudo la finestra di home e apro quella di gioco
@@ -587,6 +587,17 @@ public class ControllerTorneo implements Initializable{
 				Scene interfacciaDiGioco = new Scene(root);
 				stage.setTitle("Partita");
 				stage.setScene(interfacciaDiGioco);
+				stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+					@Override
+					public void handle(WindowEvent e) {
+						Platform.exit();
+						if(stage.getScene().equals(interfacciaDiGioco)) {//in questo modo controllo di salvare il torneo solo quando esco dall'interfaccia di gioco
+							SalvaTorneo(trn);
+						}
+						System.exit(0);
+					}
+				});
+
 				stage.show();
 
 				//copio le informazioni relative alla label lblTurnoGiocatore
@@ -780,7 +791,7 @@ public class ControllerTorneo implements Initializable{
 			ioe.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * notifica che la partita non può ancora essere giocata, perchè ne esistono altre preliminari ad essa
 	 */

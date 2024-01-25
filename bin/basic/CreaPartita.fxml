@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basic.ControllerCreaPartita">
    <children>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
@@ -63,7 +62,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                           </rowConstraints>
                            <children>
-                              <TextField fx:id="txtNomeUtente" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="144.0" promptText="nome nuovo utente" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                              <TextField fx:id="txtNomeUtente" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="144.0" promptText="nome utente" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                               <Button fx:id="btnAggiungiUtente" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#aggiungiUtente" stylesheets="@../style3.css" text="Aggiungi Utente" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                  <font>
                                     <Font name="System Bold" size="12.0" />

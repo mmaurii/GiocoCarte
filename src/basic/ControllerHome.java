@@ -396,7 +396,7 @@ public class ControllerHome {
 				@Override
 				public void handle(WindowEvent e) {
 					Platform.exit();
-					if(stage.getScene().equals(interfacciaDiGioco)) {//in questo modo controllo di salvare la partita solo quando esco dall'interfaccia di gioco
+					if(stage.getScene().equals(interfacciaDiGioco)) {//in questo modo controllo di salvare il torneo solo quando esco dall'interfaccia di gioco
 						controller.SalvaTorneo(controller.trn);
 					}
 					System.exit(0);
