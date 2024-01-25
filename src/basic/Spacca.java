@@ -73,7 +73,7 @@ public class Spacca extends Application {
 		try {
 			// Creare un'istanza di VideoBackgroundPane con il percorso del video
 			VideoBackgroundPane videoBackgroundPane = new VideoBackgroundPane("/v1.mp4");
-			Thread.sleep(200);
+			Thread.sleep(250);
 			// Caricare il layout principale dalla classe Home.fxml
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
 			Parent root = loader.load();
