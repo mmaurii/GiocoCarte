@@ -210,6 +210,7 @@ public class ControllerPartita implements Initializable{
 	 */
 	@FXML public void fineTurnoGiocatore(ActionEvent actionEvent) {
 		lblNumPreseNonValido.setVisible(false);
+		lblPrese.setTextFill(Color.BLACK);
 		int numeroPreseGiocatore=0;
 		int giocatoreChePrende;
 
