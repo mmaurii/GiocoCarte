@@ -10,7 +10,6 @@ public class Partita {
 	private int countTurnoGiocatore=0;
 	private ArrayList<Carta> lstCarteBanco = new ArrayList<Carta>();
 	boolean dichiaraPrese=true;
-	boolean primoTurno=true;
 	int numeroCarteAGiocatore;
 	boolean modalitaPrt = true; //il valore true indica che sono in fase di dichiarazione prese, il valore false indica che sono in fase di gioco delle carte
 	public int presePerQuestaMano;
@@ -51,18 +50,6 @@ public class Partita {
 	public void setDichiaraPrese(boolean dichiaraPrese) {
 		this.dichiaraPrese = dichiaraPrese;
 	}
-
-	/**
-	 * controlla se è il primo il turno
-	 * @return
-	 */
-//	public boolean isPrimoTurno() {
-//		return primoTurno;
-//	}
-//
-//	public void setPrimoTurno(boolean primoTurno) {
-//		this.primoTurno = primoTurno;
-//	}
 	
 	/**
 	 * controlla se la partita era già stata lanciata
