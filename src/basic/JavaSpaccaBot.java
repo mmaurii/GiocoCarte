@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 public class JavaSpaccaBot extends TelegramLongPollingBot {
 	final String pathClassifica = "Documenti/Classifica.txt";
 	private final static String USERNAME = "Spacca";
-	private final static String TOKEN = "6312718703:AAEB92VkQqQbEMamxCX92e73IaR5OeoQfI8";
+	private final static String TOKEN = "token";//inserire il proprio token
 	final String idRegolamento="regolamento";
 	final String idClassifica="classifica";
 
