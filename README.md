@@ -6,4 +6,4 @@ Fondamentalmente il gioco permette a non meno di due utenti/robot di giocare tra
 
 * Per maggiori informazioni sulle regole [Regolamento.pdf](Documentazione/Regolamento.pdf) .
 * Per capire meglio come usare l'interfaccia e come giocare [Relazione.docx](Documentazione/Relazione.docx) .
-
+* Requisiti del progetto assegnati dal docente [Requisiti Progetto Spacca.pdf](https://github.com/mmaurii/GiocoCarte/files/15111031/Requisiti.Progetto.Spacca.pdf)
