@@ -1,8 +1,9 @@
-This is a university project so clearly there are some simplifications and stuff that can be done better.
+Questo è un progetto universitario svolto in gruppo motivo per cui ha molte semplificazioni e cose che potrebbero essere migliorate.
 
-The game uses Napolitan cards and provides some simple, sometimes stupid rules to simplify the work and to satisfy the tutor's requests.
-Multiple player can palys through the same pc and have some tournament or play with a bot that randomly responds with a card.
+Il gioco inventato da noi si svolge tramite l'utilizzo di carte napoletane e permette a uno o più partecipanti di giocare fra di loro e/o con dei bot. 
+Le regole sono molto semplici per non complicare troppo il gioco e lo sviluppo, molte regole o requisiti sono inoltre presenti perchè previsti dai docenti che ce lo hanno assegnato. 
+Fondamentalmente il gioco permette a non meno di due utenti/robot di giocare tra di loro scommettendo il numero di prese che faranno a fine mano. chi sbaglierà la scommessa perderà una vita.
 
-* To have some clear information about the rules see [Regolamento.pdf](Documentazione/Regolamento.pdf) .
-* To discover how to play and how to use the interface see [Relazione.docx](Documentazione/Relazione.docx) .
+* Per maggiori informazioni sulle regole [Regolamento.pdf](Documentazione/Regolamento.pdf) .
+* Per capire meglio come usare l'interfaccia e come giocare [Relazione.docx](Documentazione/Relazione.docx) .
 
